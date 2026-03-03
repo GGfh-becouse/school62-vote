@@ -1,8 +1,8 @@
-const supabaseUrl = 'ВАШ_SUPABASE_URL';
-const supabaseKey = 'ВАШ_PUBLISHABLE_KEY';
+const Url = 'ВАШ_SUPABASE_URL';
+const Key = 'ВАШ_PUBLISHABLE_KEY';
 
 // Создание клиента Supabase — только один раз
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+const supabase = window.supabase.createClient(Url,Key);
 
 let currentUser = null;
 
