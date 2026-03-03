@@ -21,3 +21,8 @@ img {
   height: 150px;
   object-fit: cover;
 }
+
+button {
+  margin-top: 10px;
+  padding: 5px 10px;
+}
