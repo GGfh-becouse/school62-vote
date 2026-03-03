@@ -1,6 +1,7 @@
-// ✅ правильное подключение Supabase
-const { createClient } = window.supabase
-
+const supabase = window.supabase.createClient(
+  'https://idmeikdzxpjacpvtkdfc.supabase.co',
+  'sb_publishable_h8RzRh8uNmW70mNEaKbXWw_zakpJS5M'
+)
 // 🔴 ВСТАВЬ СВОИ ДАННЫЕ
 const supabaseUrl = 'https://idmeikdzxpjacpvtkdfc.supabase.co'
 const supabaseKey = 'sb_publishable_h8RzRh8uNmW70mNEaKbXWw_zakpJS5M'
