@@ -1,31 +1,36 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>Пустышка Vote App</title>
-  <style>
-    body { font-family: Arial; text-align: center; margin-top: 50px; }
-    input, button { margin: 5px; padding: 5px 10px; }
-  </style>
-</head>
-<body>
-  <h1>Vote App Пустышка</h1>
+// ⚠️ Вставь сюда свои данные из Supabase
+const supabaseUrl = 'ВАШ_SUPABASE_URL';
+const supabaseKey = 'ВАШ_PUBLISHABLE_KEY';
 
-  <div id="auth">
-    <input id="email" type="email" placeholder="Email" autocomplete="username">
-    <input id="password" type="password" placeholder="Пароль" autocomplete="current-password">
-    <button id="signup">Регистрация</button>
-    <button id="login">Войти</button>
-  </div>
+// Создание клиента Supabase — только один раз
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-  <div id="vote" style="display:none;">
-    <p>Голосование доступно!</p>
-    <button id="vote1">Выбрать 1</button>
-    <button id="vote2">Выбрать 2</button>
-  </div>
+let currentUser = null;
 
-  <!-- Подключаем Supabase -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="script.js"></script>
-</body>
-</html>
+// ---------------- AUTH ----------------
+document.getElementById('signup').onclick = async () => {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const { error } = await supabase.auth.signUp({ email, password });
+  if (error) alert(error.message);
+  else alert('Проверьте почту для подтверждения регистрации.');
+};
+
+document.getElementById('login').onclick = async () => {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) return alert(error.message);
+
+  currentUser = data.user;
+  alert('Вход успешен!');
+
+  document.getElementById('auth').style.display = 'none';
+  document.getElementById('vote').style.display = 'block';
+};
+
+// ---------------- VOTE ----------------
+document.getElementById('vote1').onclick = () => alert('Выбрали 1!');
+document.getElementById('vote2').onclick = () => alert('Выбрали 2!');
