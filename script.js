@@ -1,4 +1,3 @@
-// ⚠️ Вставь сюда свои данные из Supabase
 const supabaseUrl = 'ВАШ_SUPABASE_URL';
 const supabaseKey = 'ВАШ_PUBLISHABLE_KEY';
 
