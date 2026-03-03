@@ -7,32 +7,30 @@
 <body>
     <h2>Регистрация</h2>
     
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Пароль" />
+    <input type="email" id="email" placeholder="Email" value="test@example.com">
+    <input type="password" id="password" placeholder="Пароль" value="123456">
     <button id="register">Зарегистрироваться</button>
     
     <div id="message"></div>
 
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
-        // ТВОИ ДАННЫЕ - вставь БЕЗ ЛИШНИХ СИМВОЛОВ
-        const SUPABASE_URL = 'https://rlgyttzgtwmshppwoucf.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsZ3l0dHpndHdtc2hwcHdvdWNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc1MTY4MjUsImV4cCI6MjA1MzA5MjgyNX0.wfpAnWWxidNpL1NzxZlyS93K46QwwbK_PbCvXJcs4_Y';
+        // Простейший тест
+        console.log('Start...');
         
-        // Создаем клиент
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabase = window.supabase.createClient(
+            'https://rlgyttzgtwmshppwoucf.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsZ3l0dHpndHdtc2hwcHdvdWNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc1MTY4MjUsImV4cCI6MjA1MzA5MjgyNX0.wfpAnWWxidNpL1NzxZlyS93K46QwwbK_PbCvXJcs4_Y'
+        );
         
-        document.getElementById('register').onclick = async function() {
+        console.log('Client created');
+        
+        document.getElementById('register').onclick = async () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const messageDiv = document.getElementById('message');
             
-            if (!email || !password) {
-                messageDiv.innerHTML = 'Заполни все поля';
-                return;
-            }
-            
-            messageDiv.innerHTML = 'Отправка...';
+            console.log('Email:', email);
+            console.log('Password length:', password.length);
             
             try {
                 const { data, error } = await supabase.auth.signUp({
@@ -41,12 +39,13 @@
                 });
                 
                 if (error) {
-                    messageDiv.innerHTML = 'Ошибка: ' + error.message;
+                    document.getElementById('message').innerHTML = 'Ошибка: ' + error.message;
                 } else {
-                    messageDiv.innerHTML = '✅ Успех! Проверь почту';
+                    document.getElementById('message').innerHTML = 'Успех! Проверь почту';
                 }
-            } catch (err) {
-                messageDiv.innerHTML = 'Ошибка: ' + err.message;
+            } catch (e) {
+                console.error('Error:', e);
+                document.getElementById('message').innerHTML = 'Ошибка: ' + e.message;
             }
         };
     </script>
