@@ -2,41 +2,30 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Vote App</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Пустышка Vote App</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    input, button { margin: 5px; padding: 5px 10px; }
+  </style>
 </head>
 <body>
-  <h1>Голосование</h1>
+  <h1>Vote App Пустышка</h1>
 
-  <!-- Авторизация -->
   <div id="auth">
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Пароль">
+    <input id="email" type="email" placeholder="Email" autocomplete="username">
+    <input id="password" type="password" placeholder="Пароль" autocomplete="current-password">
     <button id="signup">Регистрация</button>
     <button id="login">Войти</button>
   </div>
 
-  <!-- Голосование -->
   <div id="vote" style="display:none;">
-    <div class="card">
-      <img id="img1">
-      <p id="name1"></p>
-      <button id="vote1">Выбрать</button>
-    </div>
-
-    <div class="card">
-      <img id="img2">
-      <p id="name2"></p>
-      <button id="vote2">Выбрать</button>
-    </div>
+    <p>Голосование доступно!</p>
+    <button id="vote1">Выбрать 1</button>
+    <button id="vote2">Выбрать 2</button>
   </div>
 
-  <h2>Топ персонажей</h2>
-  <div id="top"></div>
-
-  <!-- Сначала библиотека Supabase -->
+  <!-- Подключаем Supabase -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <!-- Потом твой скрипт -->
   <script src="script.js"></script>
 </body>
 </html>
