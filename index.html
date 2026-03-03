@@ -2,42 +2,19 @@
 <html>
 <head>
     <title>Регистрация</title>
-    <meta charset="UTF-8">
 </head>
 <body>
-    <h2>Регистрация</h2>
-    
-    <input type="email" id="email" placeholder="Email" value="deepseek@email.com">
-    <input type="password" id="password" placeholder="Пароль">
-    <button id="register">Зарегистрироваться</button>
-    
-    <div id="message"></div>
+    <input id="email" value="test">
+    <input id="password" value="123">
+    <button id="btn">OK</button>
+    <div id="out"></div>
 
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
-        const supabase = window.supabase.createClient(
-            'https://rlgyttzgtwmshppwoucf.supabase.co',
-            'sb_publishable_h8RzRh8uNmW70mNEaKbXWw_zakpJS5M');
-        
-        document.getElementById('register').onclick = async () => {
-            const fullEmail = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            // Обрезаем email до первого символа @
-            const shortEmail = fullEmail.split('@')[0] + '@temp.com';
-            
-            document.getElementById('message').innerHTML = 'Отправляем: ' + shortEmail;
-            
-            const { data, error } = await supabase.auth.signUp({
-                email: shortEmail,
-                password: password
-            });
-            
-            if (error) {
-                document.getElementById('message').innerHTML = 'Ошибка: ' + error.message;
-            } else {
-                document.getElementById('message').innerHTML = 'Успех! Проверь почту: ' + shortEmail;
-            }
+        document.getElementById('btn').onclick = function() {
+            let email = document.getElementById('email').value;
+            email = email.split('@')[0] + '@temp.com';
+            document.getElementById('out').innerHTML = email;
         };
     </script>
 </body>
