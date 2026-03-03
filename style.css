@@ -1,2 +1,64 @@
-body { font-family: Arial; text-align: center; margin-top: 50px; }
-input, button { margin: 5px; padding: 5px 10px; }
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.cards-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.card img {
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+#auth {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+input, button {
+    margin: 5px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#top {
+    margin-top: 20px;
+}
+
+#top ul {
+    list-style: none;
+    padding: 0;
+}
+
+#top li {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
