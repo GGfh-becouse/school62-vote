@@ -1,47 +1,25 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Vote App</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Supabase Test</title>
 </head>
 <body>
-  <h1>Голосование за персонажей</h1>
+    <h1>Тест подключения Supabase</h1>
+    <div id="result">Проверяю...</div>
 
-  <!-- Форма авторизации -->
-  <div id="auth">
-    <h3>Авторизация</h3>
-    <input id="email" type="email" placeholder="Email" required>
-    <input id="password" type="password" placeholder="Пароль" required>
-    <button id="signup">Регистрация</button>
-    <button id="login">Вход</button>
-    <button id="logout" style="display:none;">Выйти</button>
-  </div>
-
-  <!-- Блок голосования (скрыт до авторизации) -->
-  <div id="vote" style="display:none;">
-    <h3>Кто лучше?</h3>
-    <div class="cards-container">
-      <div class="card">
-        <img id="img1" src="" alt="Character 1" style="width:200px;height:200px;">
-        <p id="name1"></p>
-        <button id="vote1">Выбрать</button>
-      </div>
-      <div class="card">
-        <img id="img2" src="" alt="Character 2" style="width:200px;height:200px;">
-        <p id="name2"></p>
-        <button id="vote2">Выбрать</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Топ персонажей -->
-  <h2>Топ персонажей</h2>
-  <div id="top"></div>
-
-  <!-- Подключаем Supabase сначала -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <!-- Затем наш скрипт -->
-  <script src="script.js"></script>
+    <!-- Подключаем Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <script>
+        // Простейшая проверка
+        const resultDiv = document.getElementById('result');
+        
+        if (typeof window.supabase !== 'undefined' && window.supabase) {
+            resultDiv.innerHTML = '✅ Supabase загружен! <br>' +
+                                 'createClient функция: ' + (typeof window.supabase.createClient);
+        } else {
+            resultDiv.innerHTML = '❌ Supabase НЕ загружен';
+        }
+    </script>
 </body>
 </html>
