@@ -1,88 +1,31 @@
-// ⚠️ Вставь сюда свои данные
-const supabaseUrl = 'https://idmeikdzxpjacpvtkdfc.supabase.co';          // пример: https://idmeikdzxpjacpvtkdfc.supabase.co
-const supabaseKey = 'sb_publishable_h8RzRh8uNmW70mNEaKbXWw_zakpJS5M';       // anon/public key из Supabase
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Пустышка Vote App</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    input, button { margin: 5px; padding: 5px 10px; }
+  </style>
+</head>
+<body>
+  <h1>Vote App Пустышка</h1>
 
-// Правильное подключение без destructuring
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+  <div id="auth">
+    <input id="email" type="email" placeholder="Email" autocomplete="username">
+    <input id="password" type="password" placeholder="Пароль" autocomplete="current-password">
+    <button id="signup">Регистрация</button>
+    <button id="login">Войти</button>
+  </div>
 
-let currentUser = null;
-let characters = [];
+  <div id="vote" style="display:none;">
+    <p>Голосование доступно!</p>
+    <button id="vote1">Выбрать 1</button>
+    <button id="vote2">Выбрать 2</button>
+  </div>
 
-// ---------------- AUTH ----------------
-
-document.getElementById('signup').onclick = async () => {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  const { error } = await supabase.auth.signUp({ email, password });
-  if (error) alert(error.message);
-  else alert('Проверьте почту для подтверждения регистрации.');
-};
-
-document.getElementById('login').onclick = async () => {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return alert(error.message);
-
-  currentUser = data.user;
-
-  document.getElementById('auth').style.display = 'none';
-  document.getElementById('vote').style.display = 'flex';
-
-  loadCharacters();
-  loadTop();
-};
-
-// ---------------- CHARACTERS ----------------
-
-async function loadCharacters() {
-  const { data } = await supabase
-    .from('characters')
-    .select('*')
-    .limit(2);
-
-  characters = data;
-
-  setCard(0);
-  setCard(1);
-}
-
-function setCard(i) {
-  document.getElementById(`img${i+1}`).src = characters[i].image;
-  document.getElementById(`name${i+1}`).textContent = characters[i].name;
-}
-
-// ---------------- VOTE ----------------
-
-document.getElementById('vote1').onclick = () => vote(0);
-document.getElementById('vote2').onclick = () => vote(1);
-
-async function vote(winnerIndex) {
-  const winner = characters[winnerIndex];
-
-  await supabase
-    .from('characters')
-    .update({ wins: winner.wins + 1 })
-    .eq('id', winner.id);
-
-  loadCharacters();
-  loadTop();
-}
-
-// ---------------- TOP ----------------
-
-async function loadTop() {
-  const { data } = await supabase
-    .from('characters')
-    .select('*')
-    .order('wins', { ascending: false });
-
-  const topDiv = document.getElementById('top');
-  topDiv.innerHTML = '';
-
-  data.forEach((c, i) => {
-    topDiv.innerHTML += `${i+1}. ${c.name} — ${c.wins} побед<br>`;
-  });
-}
+  <!-- Подключаем Supabase -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
