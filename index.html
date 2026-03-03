@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Регистрация</title>
+    <meta charset="UTF-8">
 </head>
 <body>
     <h2>Регистрация</h2>
@@ -14,14 +15,14 @@
 
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
-        // ТВОИ ДАННЫЕ (вставь сюда)
-        const SUPABASE_URL = 'https://твой-проект.supabase.co';
-        const SUPABASE_KEY = 'твой-anon-key';
+        // ТВОИ ДАННЫЕ - вставь БЕЗ ЛИШНИХ СИМВОЛОВ
+        const SUPABASE_URL = 'https://rlgyttzgtwmshppwoucf.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsZ3l0dHpndHdtc2hwcHdvdWNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc1MTY4MjUsImV4cCI6MjA1MzA5MjgyNX0.wfpAnWWxidNpL1NzxZlyS93K46QwwbK_PbCvXJcs4_Y';
         
-        // Используем ДРУГОЕ название переменной
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // Создаем клиент
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
-        document.getElementById('register').onclick = async () => {
+        document.getElementById('register').onclick = async function() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const messageDiv = document.getElementById('message');
@@ -33,16 +34,19 @@
             
             messageDiv.innerHTML = 'Отправка...';
             
-            // Используем supabaseClient вместо supabase
-            const { data, error } = await supabaseClient.auth.signUp({
-                email: email,
-                password: password
-            });
-            
-            if (error) {
-                messageDiv.innerHTML = 'Ошибка: ' + error.message;
-            } else {
-                messageDiv.innerHTML = '✅ Успех! Проверь почту';
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password
+                });
+                
+                if (error) {
+                    messageDiv.innerHTML = 'Ошибка: ' + error.message;
+                } else {
+                    messageDiv.innerHTML = '✅ Успех! Проверь почту';
+                }
+            } catch (err) {
+                messageDiv.innerHTML = 'Ошибка: ' + err.message;
             }
         };
     </script>
