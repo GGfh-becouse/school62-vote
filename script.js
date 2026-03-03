@@ -1,6 +1,6 @@
 // 1️⃣ Подключаем Supabase
-const supabaseUrl = 'ВАШ_SUPABASE_URL'          // вставь свой URL
-const supabaseKey = 'ВАШ_SUPABASE_ANON_KEY'     // вставь свой anon key
+const supabaseUrl = 'https://idmeikdzxpjacpvtkdfc.supabase.co'          // вставь свой URL
+const supabaseKey = 'sb_publishable_h8RzRh8uNmW70mNEaKbXWw_zakpJS5M'     // вставь свой anon key
 const supabase = supabase.createClient(supabaseUrl, supabaseKey)
 
 let currentUser = null
