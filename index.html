@@ -2,19 +2,48 @@
 <html>
 <head>
     <title>Регистрация</title>
+    <meta charset="UTF-8">
 </head>
 <body>
-    <input id="email" value="test">
-    <input id="password" value="123">
-    <button id="btn">OK</button>
-    <div id="out"></div>
+    <h2>Регистрация</h2>
+    
+    <input type="email" id="email" placeholder="Email" value="test@mail.ru">
+    <input type="text" id="username" placeholder="Имя пользователя" value="deepseek">
+    <input type="password" id="password" placeholder="Пароль" value="123456">
+    <button id="register">Зарегистрироваться</button>
+    
+    <div id="message"></div>
 
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
-        document.getElementById('btn').onclick = function() {
-            let email = document.getElementById('email').value;
-            email = email.split('@')[0] + '@temp.com';
-            document.getElementById('out').innerHTML = email;
+        const supabase = window.supabase.createClient(
+            'https://idmeikdzxpjacpvtkdfc.supabase.co',
+            'sb_publishable_h8RzRh8uNmW70mNEaKbXWw_zakpJS5M'
+        );
+        
+        document.getElementById('register').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = 'Регистрируем...';
+            
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        username: username
+                    }
+                }
+            });
+            
+            if (error) {
+                messageDiv.innerHTML = 'Ошибка: ' + error.message;
+            } else {
+                messageDiv.innerHTML = '✅ Готово! Проверь почту ' + email;
+            }
         };
     </script>
 </body>
