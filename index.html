@@ -1,25 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Supabase Test</title>
+    <title>Регистрация</title>
 </head>
 <body>
-    <h1>Тест подключения Supabase</h1>
-    <div id="result">Проверяю...</div>
-
-    <!-- Подключаем Supabase -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <h2>Регистрация</h2>
     
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Пароль" />
+    <button id="register">Зарегистрироваться</button>
+    
+    <div id="message"></div>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
-        // Простейшая проверка
-        const resultDiv = document.getElementById('result');
+        // ТВОИ ДАННЫЕ (вставь сюда)
+        const SUPABASE_URL = 'https://твой-проект.supabase.co';
+        const SUPABASE_KEY = 'твой-anon-key';
         
-        if (typeof window.supabase !== 'undefined' && window.supabase) {
-            resultDiv.innerHTML = '✅ Supabase загружен! <br>' +
-                                 'createClient функция: ' + (typeof window.supabase.createClient);
-        } else {
-            resultDiv.innerHTML = '❌ Supabase НЕ загружен';
-        }
+        // Создаем клиент
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Кнопка регистрации
+        document.getElementById('register').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const messageDiv = document.getElementById('message');
+            
+            if (!email || !password) {
+                messageDiv.innerHTML = 'Заполни все поля';
+                return;
+            }
+            
+            messageDiv.innerHTML = 'Отправка...';
+            
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password
+            });
+            
+            if (error) {
+                messageDiv.innerHTML = 'Ошибка: ' + error.message;
+            } else {
+                messageDiv.innerHTML = '✅ Успех! Проверь почту';
+            }
+        };
     </script>
 </body>
 </html>
