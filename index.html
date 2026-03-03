@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Выбор персонажей</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Vote App</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <h1>Выбирай персонажей</h1>
 
-  <!-- Регистрация и вход -->
+<body>
+  <h1>Голосование</h1>
+
+  <!-- Авторизация -->
   <div id="auth">
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Пароль">
+    <input id="email" type="email" placeholder="Email" />
+    <input id="password" type="password" placeholder="Пароль" />
     <button id="signup">Регистрация</button>
     <button id="login">Войти</button>
   </div>
 
-  <!-- Персонажи для голосования -->
+  <!-- Голосование -->
   <div id="vote" style="display:none;">
-    <div id="character1">
-      <img id="img1" src="" width="150"><br>
-      <span id="name1"></span><br>
+    <div class="card">
+      <img id="img1" />
+      <p id="name1"></p>
       <button id="vote1">Выбрать</button>
     </div>
-    <div id="character2">
-      <img id="img2" src="" width="150"><br>
-      <span id="name2"></span><br>
+
+    <div class="card">
+      <img id="img2" />
+      <p id="name2"></p>
       <button id="vote2">Выбрать</button>
     </div>
   </div>
 
-  <!-- Топ персонажей -->
-  <h2>Топ персонажей</h2>
+  <h2>Топ</h2>
   <div id="top"></div>
 
-  <script src="https://idmeikdzxpjacpvtkdfc.supabase.co"></script>
+  <!-- ВАЖНО: сначала библиотека -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- потом твой код -->
   <script src="script.js"></script>
 </body>
 </html>
