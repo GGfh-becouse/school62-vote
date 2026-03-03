@@ -7,46 +7,24 @@
 <body>
     <h2>Регистрация</h2>
     
-    <input type="email" id="email" placeholder="Email" value="test@example.com">
-    <input type="password" id="password" placeholder="Пароль" value="123456">
-    <button id="register">Зарегистрироваться</button>
+    <input type="text" id="email" placeholder="Email" value="test">
+    <input type="text" id="password" placeholder="Пароль" value="123">
+    <button id="register">Нажать</button>
     
     <div id="message"></div>
 
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script>
-        // Простейший тест
-        console.log('Start...');
-        
         const supabase = window.supabase.createClient(
             'https://rlgyttzgtwmshppwoucf.supabase.co',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJsZ3l0dHpndHdtc2hwcHdvdWNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc1MTY4MjUsImV4cCI6MjA1MzA5MjgyNX0.wfpAnWWxidNpL1NzxZlyS93K46QwwbK_PbCvXJcs4_Y'
         );
         
-        console.log('Client created');
-        
-        document.getElementById('register').onclick = async () => {
+        document.getElementById('register').onclick = function() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            console.log('Email:', email);
-            console.log('Password length:', password.length);
-            
-            try {
-                const { data, error } = await supabase.auth.signUp({
-                    email: email,
-                    password: password
-                });
-                
-                if (error) {
-                    document.getElementById('message').innerHTML = 'Ошибка: ' + error.message;
-                } else {
-                    document.getElementById('message').innerHTML = 'Успех! Проверь почту';
-                }
-            } catch (e) {
-                console.error('Error:', e);
-                document.getElementById('message').innerHTML = 'Ошибка: ' + e.message;
-            }
+            document.getElementById('message').innerHTML = 'Попытка: ' + email;
         };
     </script>
 </body>
