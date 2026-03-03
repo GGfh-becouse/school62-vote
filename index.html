@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Выбор персонажей</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Выбирай персонажей</h1>
+
+  <!-- Регистрация и вход -->
+  <div id="auth">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Пароль">
+    <button id="signup">Регистрация</button>
+    <button id="login">Войти</button>
+  </div>
+
+  <!-- Персонажи для голосования -->
+  <div id="vote" style="display:none;">
+    <div id="character1">
+      <img id="img1" src="" width="150"><br>
+      <span id="name1"></span><br>
+      <button id="vote1">Выбрать</button>
+    </div>
+    <div id="character2">
+      <img id="img2" src="" width="150"><br>
+      <span id="name2"></span><br>
+      <button id="vote2">Выбрать</button>
+    </div>
+  </div>
+
+  <!-- Топ персонажей -->
+  <h2>Топ персонажей</h2>
+  <div id="top"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
