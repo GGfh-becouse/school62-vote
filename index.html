@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>ОПРОСЫ 62 ШКОЛЫ</title>
+    <!-- Подключаем шрифт как в ВК -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -148,24 +149,114 @@
         .header {
             background: linear-gradient(145deg, #4a6fa5 0%, #2c3e50 100%);
             border-radius: 24px;
-            padding: 18px 20px;
-            margin-bottom: 16px;
+            padding: 12px 20px;
+            margin: 16px;
             box-shadow: 0 6px 0 #1a2a3a;
             position: relative;
+            overflow: hidden;
         }
 
-        .header h1 {
-            color: white;
-            font-size: 1.5rem;
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            color: white !important;
+            font-size: 1.3rem;
             font-weight: 700;
-            line-height: 1.3;
+            margin: 0;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
         }
 
-        .header h1 small {
+        .school-badge {
+            background: #ffd966;
+            color: #2c3e50;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-bottom: 3px solid #b38f4a;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Горизонтальное меню */
+        .main-nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
             font-size: 0.9rem;
-            opacity: 0.9;
-            display: block;
-            margin-top: 4px;
+            border-bottom: 3px solid rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            background: #ffd966 !important;
+            color: #2c3e50 !important;
+            border-bottom-color: #b38f4a;
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 217, 102, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 217, 102, 0.8); }
+        }
+
+        .nav-item:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
         }
 
         /* ТОП-1 И ТАЙМЕР */
@@ -195,6 +286,7 @@
             border-radius: 30px;
             border: 3px solid white;
             box-shadow: 0 4px 0 #b38f4a;
+            object-fit: cover;
         }
 
         .top-text h3 {
@@ -406,16 +498,6 @@
             opacity: 0.7;
         }
 
-        .poll-option.voted-yes {
-            background: #d4edda;
-            border-color: #27ae60;
-        }
-
-        .poll-option.voted-no {
-            background: #f8d7da;
-            border-color: #c0392b;
-        }
-
         .option-label {
             font-weight: 700;
             margin-bottom: 8px;
@@ -496,7 +578,462 @@
             font-size: 0.85rem;
         }
 
-        /* СООБЩЕНИЯ */
+        /* Битва (старое, оставляем для совместимости) */
+        .battle-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .candidate-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 0 #c0c0c0;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid #e0e0e0;
+            transition: all 0.1s;
+        }
+
+        .candidate-card.selected {
+            border: 3px solid #4a6fa5;
+            box-shadow: 0 4px 0 #2c3e50;
+            transform: translateY(-2px);
+        }
+
+        .candidate-card.voted {
+            opacity: 0.6;
+            filter: grayscale(0.5);
+        }
+
+        .rarity-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+
+        .rarity-common { background: #95a5a6; color: white; }
+        .rarity-rare { background: #3498db; color: white; }
+        .rarity-epic { background: #9b59b6; color: white; }
+        .rarity-legendary { background: #f1c40f; color: #2c3e50; }
+
+        .candidate-photo {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .candidate-info {
+            padding: 10px;
+        }
+
+        .candidate-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .candidate-class {
+            color: #7f8c8d;
+            font-size: 0.75rem;
+            margin: 2px 0 4px;
+        }
+
+        .rating {
+            background: #4a6fa5;
+            color: #ffd966;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            border-bottom: 3px solid #2c3e50;
+        }
+
+        .vote-button {
+            background: #4a6fa5;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 14px 25px;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #2c3e50;
+            margin: 10px auto 20px;
+            display: block;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .vote-button:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #2c3e50;
+        }
+
+        /* Достижения */
+        .achievements {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            margin: 20px 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .achievement-item {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .achievement-item.unlocked {
+            border-color: #4a6fa5;
+            background: #eef2f7;
+        }
+
+        .achievement-icon {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .achievement-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* БЛОК КОММЕНТАРИЕВ */
+        .comments-section {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .comments-section h3 {
+            color: #2c3e50;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .comment-form {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .comment-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .comment-input:focus {
+            border-color: #4a6fa5;
+            outline: none;
+        }
+
+        .comment-input:disabled {
+            background: #f0f0f0 !important;
+            color: #2c3e50 !important;
+            font-weight: 600 !important;
+            border-color: #4a6fa5 !important;
+            cursor: not-allowed;
+        }
+
+        .comment-textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            min-height: 80px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .comment-textarea:focus {
+            border-color: #4a6fa5;
+            outline: none;
+        }
+
+        .comment-submit {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            border-bottom: 4px solid #2c3e50;
+        }
+
+        .comment-submit:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .comment-item {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 14px;
+            border-left: 4px solid #4a6fa5;
+            transition: all 0.2s;
+        }
+
+        .comment-item.verified-comment {
+            border-left: 4px solid #ffd700;
+            background: #fff9e6;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .comment-name {
+            font-weight: 700;
+            color: #2c3e50;
+            background: #ffd966;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #4a6fa5;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-left: 8px;
+        }
+
+        .comment-date {
+            color: #7f8c8d;
+            font-size: 0.7rem;
+        }
+
+        .comment-message {
+            color: #34495e;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        /* Рейтинг */
+        .rating-table {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            margin: 20px 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .rating-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .rating-position {
+            width: 26px;
+            height: 26px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-right: 10px;
+        }
+
+        .rating-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 2px solid #ffd966;
+        }
+
+        .rating-info {
+            flex: 1;
+        }
+
+        .rating-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #2c3e50;
+        }
+
+        .rating-score {
+            font-weight: 700;
+            color: #4a6fa5;
+            background: #ffd966;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Верификация */
+        .verification-box {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 2px solid #4a6fa5;
+            box-shadow: 0 4px 0 #2c3e50;
+        }
+
+        .verification-box h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .verification-input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .verification-input {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 15px;
+            border: 2px solid #ced4da;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .verification-input:focus {
+            border-color: #4a6fa5;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+        }
+
+        .verification-button {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid #2c3e50;
+            transition: all 0.1s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .verification-button:hover {
+            background: #3a5a8a;
+        }
+
+        .verification-button:active {
+            transform: translateY(2px);
+            border-bottom-width: 1px;
+        }
+
+        .verification-status {
+            margin-top: 12px;
+            padding: 10px 15px;
+            background: #d4edda;
+            border-radius: 12px;
+            color: #155724;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            flex-wrap: wrap;
+        }
+
+        .verification-status.active {
+            display: flex;
+        }
+
+        .verification-status button {
+            background: transparent;
+            border: none;
+            color: #155724;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 0.85rem;
+        }
+
+        /* Сообщения */
         .message {
             position: fixed;
             top: 16px;
@@ -508,7 +1045,8 @@
             z-index: 10001;
             animation: slideIn 0.2s;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            border-bottom: 4px solid rgba(0,0,0,0.2);
+            font-size: 0.9rem;
+            max-width: 280px;
         }
 
         @keyframes slideIn {
@@ -526,7 +1064,7 @@
             width: 30px;
             height: 30px;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 10px auto;
         }
 
         @keyframes spin {
@@ -534,7 +1072,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* АДАПТАЦИЯ */
+        /* Адаптивность */
         @media (max-width: 600px) {
             .poll-options {
                 flex-direction: column;
@@ -553,24 +1091,141 @@
                 width: 100%;
                 justify-content: center;
             }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .main-nav {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .nav-item {
+                flex: 1;
+                justify-content: center;
+            }
+            
+            .nav-text {
+                display: none;
+            }
+            
+            .nav-item:hover .nav-text {
+                display: inline;
+                position: absolute;
+                bottom: -25px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0,0,0,0.8);
+                color: white;
+                padding: 4px 8px;
+                border-radius: 12px;
+                font-size: 0.7rem;
+                white-space: nowrap;
+            }
+        }
+
+        .suggest-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 9999;
+            border-bottom: 4px solid #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .suggest-button:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+
+        .suggest-button:hover {
+            background: #3a5a8a;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- ЭКРАН СОГЛАШЕНИЯ -->
+    <div class="agreement-screen" id="agreementScreen">
+        <div class="agreement-card">
+            <h2>ДОГОВОР СООБЩЕСТВА <span>Школа №62</span></h2>
+            
+            <div class="agreement-text">
+                <p><strong>Статья 1. Общие положения</strong></p>
+                <p>1.1 Сайт является независимой онлайн-площадкой для общения учащихся.</p>
+                <p>1.2 Публикуя сообщения, пользователь соглашается с правилами.</p>
+                
+                <p><strong>Статья 2. Разрешённый контент</strong></p>
+                <p>2.1 Короткие опросы и вопросы</p>
+                <p>2.2 Честное голосование без накруток</p>
+                
+                <p><strong>Статья 3. Запрещённый контент</strong></p>
+                <p>3.1 Оскорбления и травля</p>
+                <p>3.2 Спам и множественные голосования</p>
+            </div>
+            
+            <div class="checkbox-container" id="agreementCheckbox">
+                <input type="checkbox" id="schoolCheckbox">
+                <label for="schoolCheckbox">✅ Я принимаю условия Договора сообщества</label>
+            </div>
+            
+            <button class="agreement-button" id="enterSiteBtn" disabled>Войти на стену</button>
+        </div>
+    </div>
+
     <!-- ОСНОВНОЙ КОНТЕНТ -->
     <div class="container">
         <div class="main-content" id="mainContent">
             <!-- Шапка -->
             <div class="header">
-                <h1>ОПРОСЫ 62 ШКОЛЫ <small>Мнение каждого важно</small></h1>
+                <div class="header-content">
+                    <div class="logo">
+                        <h1>ОПРОСЫ 62</h1>
+                        <span class="school-badge">№62</span>
+                    </div>
+                    
+                    <nav class="main-nav">
+                        <a href="index.html" class="nav-item active">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-text">Опросы</span>
+                        </a>
+                        
+                        <a href="threads.html" class="nav-item">
+                            <span class="nav-icon">💬</span>
+                            <span class="nav-text">Темки</span>
+                        </a>
+                        
+                        <a href="#" class="nav-item disabled">
+                            <span class="nav-icon">👤</span>
+                            <span class="nav-text">Аккаунт</span>
+                        </a>
+                    </nav>
+                </div>
             </div>
+
+            <!-- Сообщения -->
+            <div id="messageContainer"></div>
 
             <!-- ТОП-1 И ТАЙМЕР -->
             <div class="top-banner" id="topBanner">
                 <div class="top-info">
                     <img src="https://i.pravatar.cc/60" class="top-avatar" id="topAvatar">
                     <div class="top-text">
-                        <h3>👑 Топ-1 выбор девочек</h3>
+                        <h3>👑 Топ-1 опрос</h3>
                         <h2 id="topName">Загрузка...</h2>
                         <span class="votes" id="topVotes">❤️ 0</span>
                     </div>
@@ -584,11 +1239,11 @@
 
             <!-- ФОРМА СОЗДАНИЯ ОПРОСА -->
             <div class="create-poll">
-                <h3>📝 Задать вопрос</h3>
+                <h3>📝 Создать опрос</h3>
                 <div class="poll-input-group">
                     <input type="text" id="pollQuestion" class="poll-input" placeholder="Короткий вопрос (до 120 символов)" maxlength="120">
                     <button class="poll-submit" id="createPollBtn">
-                        <span>➕</span> Создать опрос
+                        <span>➕</span> Создать
                     </button>
                 </div>
                 <div class="poll-hint">Только честные вопросы ✨</div>
@@ -598,15 +1253,15 @@
             <div class="stats-container">
                 <div class="stat-item">
                     <div class="stat-value" id="totalPolls">0</div>
-                    <div class="stat-label">всего опросов</div>
+                    <div class="stat-label">опросов</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-value" id="totalVotes">0</div>
-                    <div class="stat-label">всего голосов</div>
+                    <div class="stat-label">голосов</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-value" id="activeUsers">71</div>
-                    <div class="stat-label">сейчас онлайн</div>
+                    <div class="stat-label">онлайн</div>
                 </div>
             </div>
 
@@ -614,17 +1269,100 @@
             <div class="polls-section" id="pollsList">
                 <div class="loader" id="pollsLoader"></div>
             </div>
+
+            <!-- Битва (оставлено для совместимости) -->
+            <div id="battleContainer" style="display: none;">
+                <div style="text-align: center; margin-bottom: 15px; padding: 10px; background: linear-gradient(145deg, #ffd966, #ffb347); border-radius: 40px; color: #1a1a2e; font-weight: bold;">
+                    🌸 С 8 марта, девочки! 🌸
+                </div>
+                
+                <div class="battle-container" id="battleGrid"></div>
+                <button class="vote-button" id="voteBtn">⚡ ГОЛОСОВАТЬ ⚡</button>
+                
+                <div class="prediction-box" id="predictionBox">
+                    <h3>🔮 Шансы на победу</h3>
+                    <div class="prediction-bars" id="predictionBars"></div>
+                </div>
+            </div>
+
+            <!-- Достижения -->
+            <div class="achievements">
+                <h3>🏆 ДОСТИЖЕНИЯ</h3>
+                <div class="achievement-grid">
+                    <div class="achievement-item" id="ach1">
+                        <div class="achievement-icon">🗳️</div>
+                        <div class="achievement-title">Новичок</div>
+                    </div>
+                    <div class="achievement-item" id="ach2">
+                        <div class="achievement-icon">🔥</div>
+                        <div class="achievement-title">Комбо 3</div>
+                    </div>
+                    <div class="achievement-item" id="ach3">
+                        <div class="achievement-icon">⭐</div>
+                        <div class="achievement-title">Предсказатель</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ВЕРИФИКАЦИЯ -->
+            <div class="verification-box" id="verificationBox">
+                <h3>
+                    <img src="verified.png" width="24" height="24" style="display: inline-block;">
+                    <span>ВХОД В PRIME</span>
+                </h3>
+                <div class="verification-input-group">
+                    <input type="text" id="verifyUsername" class="verification-input" placeholder="Ваш ник" maxlength="30">
+                    <input type="password" id="verifyPassword" class="verification-input" placeholder="Пароль" maxlength="50">
+                    <button class="verification-button" id="verifyBtn">
+                        <span>✅</span> Войти
+                    </button>
+                </div>
+                <div class="verification-status" id="verifyStatus">
+                    <span>✅</span> <span id="verifyStatusText"></span>
+                    <button onclick="logoutVerification()">(выйти)</button>
+                </div>
+            </div>
+
+            <!-- КОММЕНТАРИИ -->
+            <div class="comments-section">
+                <h3>💬 КОММЕНТАРИИ</h3>
+                
+                <div class="comment-form">
+                    <div class="comment-input-group">
+                        <input type="text" id="commentName" class="comment-input" placeholder="Ваше имя" maxlength="30">
+                        <textarea id="commentMessage" class="comment-textarea" placeholder="Напишите что-нибудь..." maxlength="200"></textarea>
+                    </div>
+                    <button class="comment-submit" id="submitComment">📝 ОТПРАВИТЬ</button>
+                </div>
+
+                <div class="comments-list" id="commentsList">
+                    <div class="comment-loading">Загрузка комментариев...</div>
+                </div>
+            </div>
+
+            <!-- Рейтинг -->
+            <div id="ratingContainer" class="rating-table" style="display: none;">
+                <h3>🏆 ТОП-10</h3>
+                <div id="ratingList" class="rating-list"></div>
+            </div>
         </div>
     </div>
 
-    <!-- КНОПКА ДЛЯ СВЯЗИ С АДМИНИСТРАЦИЕЙ -->
-    <button class="suggest-button" id="adminBtn" style="position: fixed; bottom: 20px; right: 20px; background: #4a6fa5; color: white; border: none; width: 60px; height: 60px; border-radius: 30px; font-size: 24px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 9999; border-bottom: 4px solid #2c3e50; display: flex; justify-content: center; align-items: center;">📨</button>
+    <!-- КНОПКА СВЯЗИ С АДМИНИСТРАЦИЕЙ -->
+    <button class="suggest-button" id="adminBtn">📨</button>
 
     <!-- МОДАЛЬНОЕ ОКНО ДЛЯ СВЯЗИ -->
     <div class="suggest-modal" id="adminModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10001;">
         <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; padding: 16px;">
-            <div style="background: white; border-radius: 24px; max-width: 500px; width: 100%; padding: 25px;">
+            <div class="suggest-card" style="background: white; border-radius: 24px; max-width: 500px; width: 100%; padding: 25px; border: 2px solid #4a6fa5;">
                 <h3 style="color: #2c3e50; margin-bottom: 20px;">📨 СВЯЗЬ С АДМИНИСТРАЦИЕЙ</h3>
+                
+                <select id="adminType" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #e0e0e0; border-radius: 12px;">
+                    <option value="question">❓ Вопрос</option>
+                    <option value="problem">⚠️ Проблема</option>
+                    <option value="suggestion">💡 Предложение</option>
+                    <option value="bug">🐛 Ошибка</option>
+                </select>
                 
                 <input type="text" id="adminName" placeholder="Ваше имя" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #e0e0e0; border-radius: 12px;">
                 
@@ -637,9 +1375,6 @@
             </div>
         </div>
     </div>
-
-    <!-- КОНТЕЙНЕР ДЛЯ СООБЩЕНИЙ -->
-    <div id="messageContainer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -659,6 +1394,20 @@
         let polls = [];
         let timerInterval = null;
         let lastPollTime = 0;
+        let allCandidates = [];
+        let currentPair = [];
+        let selectedCandidateId = null;
+        let userVotes = {};
+        let userVoteCount = 0;
+        let comboCount = 0;
+        let lastVoteTime = null;
+        let lastCommentTime = null;
+        let comments = [];
+        let verifiedUser = null;
+        let verifiedUserName = null;
+        let verifiedUserData = null;
+
+        const randomNames = ['Аноним'];
 
         // Запрещённые слова
         const bannedWords = [
@@ -668,6 +1417,12 @@
             'казино', 'наркотики', 'меф'
         ];
 
+        function checkBannedWords(text) {
+            if (!text) return false;
+            const lowerText = text.toLowerCase();
+            return bannedWords.some(word => lowerText.includes(word));
+        }
+
         // ============================================
         // СОГЛАШЕНИЕ
         // ============================================
@@ -676,26 +1431,31 @@
         const schoolCheckbox = document.getElementById('schoolCheckbox');
         const enterBtn = document.getElementById('enterSiteBtn');
 
-        // Проверка при загрузке
+        function enterSite() {
+            localStorage.setItem('agreement62', 'accepted');
+            if (agreementScreen) agreementScreen.style.display = 'none';
+            if (mainContent) mainContent.style.display = 'block';
+            initApp();
+        }
+
         if (localStorage.getItem('agreement62') === 'accepted') {
             agreementScreen.style.display = 'none';
             mainContent.style.display = 'block';
             initApp();
         }
 
-        schoolCheckbox?.addEventListener('change', function() {
-            enterBtn.disabled = !this.checked;
-        });
+        if (schoolCheckbox) {
+            schoolCheckbox.addEventListener('change', function() {
+                enterBtn.disabled = !this.checked;
+            });
+        }
 
-        enterBtn?.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (schoolCheckbox?.checked) {
-                localStorage.setItem('agreement62', 'accepted');
-                agreementScreen.style.display = 'none';
-                mainContent.style.display = 'block';
-                initApp();
-            }
-        });
+        if (enterBtn) {
+            enterBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (schoolCheckbox?.checked) enterSite();
+            });
+        }
 
         // ============================================
         // ПОЛУЧЕНИЕ IP
@@ -716,6 +1476,9 @@
         // ТАЙМЕР ДО 15 МАРТА
         // ============================================
         function startTimer() {
+            const timerElement = document.getElementById('timer');
+            if (!timerElement) return;
+            
             const targetDate = new Date('2025-03-15T00:00:00');
             
             function updateTimer() {
@@ -723,7 +1486,7 @@
                 const diff = targetDate - now;
 
                 if (diff <= 0) {
-                    document.getElementById('timer').textContent = '00:00:00:00';
+                    timerElement.textContent = '00:00:00:00';
                     return;
                 }
 
@@ -732,7 +1495,7 @@
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-                document.getElementById('timer').textContent = 
+                timerElement.textContent = 
                     `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
 
@@ -741,32 +1504,13 @@
         }
 
         // ============================================
-        // ПРОВЕРКА ЗАПРЕЩЁННЫХ СЛОВ
-        // ============================================
-        function checkBannedWords(text) {
-            if (!text) return false;
-            const lowerText = text.toLowerCase();
-            return bannedWords.some(word => lowerText.includes(word));
-        }
-
-        // ============================================
-        // ПОКАЗ СООБЩЕНИЙ
-        // ============================================
-        function showMessage(text, type) {
-            const container = document.getElementById('messageContainer');
-            const msg = document.createElement('div');
-            msg.className = `message ${type}`;
-            msg.textContent = text;
-            container.appendChild(msg);
-            setTimeout(() => msg.remove(), 3000);
-        }
-
-        // ============================================
         // ЗАГРУЗКА ОПРОСОВ
         // ============================================
         async function loadPolls() {
             const loader = document.getElementById('pollsLoader');
             const pollsList = document.getElementById('pollsList');
+            
+            if (!pollsList) return;
             
             try {
                 const { data, error } = await supabaseClient
@@ -778,16 +1522,17 @@
 
                 polls = data || [];
                 
-                // Загружаем проголосованные опросы
                 await loadVotedPolls();
                 
                 displayPolls();
                 updateStats();
                 updateTopBanner();
                 
+                if (loader) loader.style.display = 'none';
+                
             } catch (error) {
                 console.error('Ошибка загрузки опросов:', error);
-                loader.style.display = 'none';
+                if (loader) loader.style.display = 'none';
                 pollsList.innerHTML = '<div style="text-align:center; padding:40px; color:#c0392b;">Ошибка загрузки</div>';
             }
         }
@@ -819,9 +1564,7 @@
         // ============================================
         function displayPolls() {
             const pollsList = document.getElementById('pollsList');
-            const loader = document.getElementById('pollsLoader');
-            
-            loader.style.display = 'none';
+            if (!pollsList) return;
             
             if (!polls || polls.length === 0) {
                 pollsList.innerHTML = `
@@ -836,8 +1579,8 @@
             let html = '';
             polls.forEach(poll => {
                 const totalVotes = (poll.yes_votes || 0) + (poll.no_votes || 0);
-                const yesPercent = totalVotes > 0 ? Math.round((poll.yes_votes / totalVotes) * 100) : 0;
-                const noPercent = totalVotes > 0 ? Math.round((poll.no_votes / totalVotes) * 100) : 0;
+                const yesPercent = totalVotes > 0 ? Math.round((poll.yes_votes / totalVotes) * 100) : 50;
+                const noPercent = totalVotes > 0 ? Math.round((poll.no_votes / totalVotes) * 100) : 50;
                 
                 const hasVoted = votedPolls.has(poll.id);
                 const votedClass = hasVoted ? 'voted' : '';
@@ -852,14 +1595,14 @@
                         <div class="poll-votes-total">Всего голосов: ${totalVotes}</div>
                         
                         <div class="poll-options">
-                            <div class="poll-option yes ${hasVoted ? 'disabled' : ''} ${hasVoted && poll.userVote === 'yes' ? 'voted-yes' : ''}" 
+                            <div class="poll-option yes ${hasVoted ? 'disabled' : ''}" 
                                  onclick="${!hasVoted ? `vote(${poll.id}, 'yes')` : ''}">
                                 <div class="option-label">✅ ДА</div>
                                 <div class="option-percent">${yesPercent}%</div>
                                 <div class="option-count">${poll.yes_votes || 0} голосов</div>
                             </div>
                             
-                            <div class="poll-option no ${hasVoted ? 'disabled' : ''} ${hasVoted && poll.userVote === 'no' ? 'voted-no' : ''}" 
+                            <div class="poll-option no ${hasVoted ? 'disabled' : ''}" 
                                  onclick="${!hasVoted ? `vote(${poll.id}, 'no')` : ''}">
                                 <div class="option-label">❌ НЕТ</div>
                                 <div class="option-percent">${noPercent}%</div>
@@ -881,23 +1624,29 @@
         // ============================================
         // ГОЛОСОВАНИЕ
         // ============================================
-        async function vote(pollId, choice) {
+        window.vote = async function(pollId, choice) {
             if (votedPolls.has(pollId)) {
                 showMessage('Вы уже голосовали в этом опросе', 'error');
                 return;
             }
 
             try {
-                // Обновляем счетчики
                 const poll = polls.find(p => p.id === pollId);
-                const updateData = choice === 'yes' 
-                    ? { yes_votes: (poll.yes_votes || 0) + 1 }
-                    : { no_votes: (poll.no_votes || 0) + 1 };
-
-                await supabaseClient
-                    .from('polls')
-                    .update(updateData)
-                    .eq('id', pollId);
+                
+                // Обновляем в базе
+                if (choice === 'yes') {
+                    await supabaseClient
+                        .from('polls')
+                        .update({ yes_votes: (poll.yes_votes || 0) + 1 })
+                        .eq('id', pollId);
+                    poll.yes_votes = (poll.yes_votes || 0) + 1;
+                } else {
+                    await supabaseClient
+                        .from('polls')
+                        .update({ no_votes: (poll.no_votes || 0) + 1 })
+                        .eq('id', pollId);
+                    poll.no_votes = (poll.no_votes || 0) + 1;
+                }
 
                 // Сохраняем голос
                 await supabaseClient
@@ -908,14 +1657,6 @@
                         choice: choice
                     });
 
-                // Обновляем локальные данные
-                if (choice === 'yes') {
-                    poll.yes_votes = (poll.yes_votes || 0) + 1;
-                } else {
-                    poll.no_votes = (poll.no_votes || 0) + 1;
-                }
-                
-                poll.userVote = choice;
                 votedPolls.add(pollId);
                 
                 displayPolls();
@@ -928,7 +1669,7 @@
                 console.error('Ошибка голосования:', error);
                 showMessage('Ошибка: ' + error.message, 'error');
             }
-        }
+        };
 
         // ============================================
         // ОБНОВЛЕНИЕ ТОП-1
@@ -936,14 +1677,13 @@
         function updateTopBanner() {
             if (!polls || polls.length === 0) return;
             
-            // Находим опрос с максимальным количеством голосов
             let topPoll = polls.reduce((max, poll) => {
                 const total = (poll.yes_votes || 0) + (poll.no_votes || 0);
                 return total > (max.total || 0) ? { ...poll, total } : max;
             }, { total: 0 });
 
             if (topPoll.id) {
-                document.getElementById('topName').textContent = topPoll.question.substring(0, 30) + '...';
+                document.getElementById('topName').textContent = topPoll.question.substring(0, 30) + (topPoll.question.length > 30 ? '...' : '');
                 document.getElementById('topVotes').textContent = `❤️ ${topPoll.total}`;
             }
         }
@@ -989,10 +1729,9 @@
                 return;
             }
 
-            // Антиспам
             const now = Date.now();
-            if (now - lastPollTime < 30000) { // 30 секунд
-                showMessage('Подождите 30 секунд перед созданием нового опроса', 'error');
+            if (now - lastPollTime < 30000) {
+                showMessage('Подождите 30 секунд', 'error');
                 return;
             }
 
@@ -1003,7 +1742,7 @@
                     .from('polls')
                     .insert({
                         question: question,
-                        author: currentUser?.nickname || 'Аноним',
+                        author: verifiedUser || 'Аноним',
                         ip_address: userIp,
                         yes_votes: 0,
                         no_votes: 0
@@ -1019,6 +1758,7 @@
                 document.getElementById('pollQuestion').value = '';
                 displayPolls();
                 updateStats();
+                updateTopBanner();
                 
                 showMessage('✅ Опрос создан!', 'success');
                 
@@ -1029,7 +1769,327 @@
         }
 
         // ============================================
-        // ЭКРАНИРОВАНИЕ HTML
+        // ФУНКЦИИ ДЛЯ КАНДИДАТОВ (старые)
+        // ============================================
+        async function loadCandidates() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('candidates')
+                    .select('*')
+                    .order('votes', { ascending: false });
+
+                if (error) throw error;
+
+                allCandidates = (data || []).map(c => ({
+                    ...c,
+                    rarity: getRandomRarity()
+                }));
+
+                if (allCandidates.length < 2) return;
+
+                document.getElementById('battleContainer').style.display = 'block';
+                document.getElementById('ratingContainer').style.display = 'block';
+                
+                updateLeaderboard();
+                selectNewPair();
+            } catch (err) {
+                console.error('Ошибка загрузки кандидатов:', err);
+            }
+        }
+
+        function getRandomRarity() {
+            const rand = Math.random();
+            if (rand < 0.5) return 'common';
+            if (rand < 0.75) return 'rare';
+            if (rand < 0.9) return 'epic';
+            return 'legendary';
+        }
+
+        const rarityNames = { common: 'Обычная', rare: 'Редкая', epic: 'Эпическая', legendary: 'Легендарная' };
+
+        async function loadUserVotes() {
+            if (!userIp) return;
+            try {
+                const { data } = await supabaseClient
+                    .from('votes')
+                    .select('candidate_id')
+                    .eq('ip_address', userIp);
+
+                if (data) {
+                    userVotes = {};
+                    data.forEach(vote => {
+                        userVotes[vote.candidate_id] = true;
+                    });
+                    userVoteCount = data.length;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки голосов:', error);
+            }
+        }
+
+        function selectNewPair() {
+            if (allCandidates.length < 2) return;
+            
+            const available = allCandidates.filter(c => !userVotes[c.id]);
+            
+            if (available.length >= 2) {
+                let first, second;
+                do {
+                    const shuffled = [...available].sort(() => 0.5 - Math.random());
+                    first = shuffled[0];
+                    second = shuffled[1];
+                } while (first.id === second.id);
+                currentPair = [first, second];
+            } else {
+                const shuffled = [...allCandidates].sort(() => 0.5 - Math.random());
+                currentPair = [shuffled[0], shuffled[1]];
+            }
+            
+            renderBattle(currentPair);
+        }
+
+        function renderBattle(pair) {
+            const container = document.getElementById('battleGrid');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <div class="candidate-card ${userVotes[pair[0].id] ? 'voted' : ''}" onclick="selectCandidate(${pair[0].id})" id="card-${pair[0].id}">
+                    <span class="rarity-badge rarity-${pair[0].rarity}">${rarityNames[pair[0].rarity]}</span>
+                    <img src="${pair[0].photo_url || 'https://i.pravatar.cc/300'}" class="candidate-photo">
+                    <div class="candidate-info">
+                        <div class="candidate-name">${pair[0].name}</div>
+                        <div class="candidate-class">${pair[0].class || ''}</div>
+                        <span class="rating">❤️ ${pair[0].votes || 0}</span>
+                    </div>
+                </div>
+                <div class="candidate-card ${userVotes[pair[1].id] ? 'voted' : ''}" onclick="selectCandidate(${pair[1].id})" id="card-${pair[1].id}">
+                    <span class="rarity-badge rarity-${pair[1].rarity}">${rarityNames[pair[1].rarity]}</span>
+                    <img src="${pair[1].photo_url || 'https://i.pravatar.cc/300'}" class="candidate-photo">
+                    <div class="candidate-info">
+                        <div class="candidate-name">${pair[1].name}</div>
+                        <div class="candidate-class">${pair[1].class || ''}</div>
+                        <span class="rating">❤️ ${pair[1].votes || 0}</span>
+                    </div>
+                </div>
+            `;
+            
+            document.querySelectorAll('.candidate-card').forEach(c => c.classList.remove('selected'));
+            selectedCandidateId = null;
+        }
+
+        window.selectCandidate = function(id) {
+            if (userVotes[id]) return;
+            document.querySelectorAll('.candidate-card').forEach(c => c.classList.remove('selected'));
+            const card = document.getElementById(`card-${id}`);
+            if (card) card.classList.add('selected');
+            selectedCandidateId = id;
+        };
+
+        function updateLeaderboard() {
+            const sorted = [...allCandidates].sort((a, b) => (b.votes || 0) - (a.votes || 0));
+            const container = document.getElementById('ratingList');
+            if (!container) return;
+            
+            let html = '';
+            sorted.slice(0, 10).forEach((c, index) => {
+                html += `
+                    <div class="rating-item">
+                        <div class="rating-position">${index + 1}</div>
+                        <img src="${c.photo_url || 'https://i.pravatar.cc/300'}" class="rating-avatar">
+                        <div class="rating-info">
+                            <div class="rating-name">${c.name}</div>
+                        </div>
+                        <div class="rating-score">❤️ ${c.votes || 0}</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // ============================================
+        // КОММЕНТАРИИ
+        // ============================================
+        async function loadComments() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('comments')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(50);
+
+                if (error) throw error;
+                comments = data || [];
+                displayComments();
+            } catch (error) {
+                console.error('Ошибка загрузки комментариев:', error);
+            }
+        }
+
+        function displayComments() {
+            const list = document.getElementById('commentsList');
+            if (!list) return;
+            
+            if (!comments || comments.length === 0) {
+                list.innerHTML = '<div style="text-align:center; padding:20px; color:#7f8c8d;">Пока нет комментариев</div>';
+                return;
+            }
+
+            let html = '';
+            comments.forEach(comment => {
+                const date = new Date(comment.created_at).toLocaleString('ru', {
+                    day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+                });
+                
+                const verifiedBadge = comment.is_verified ? 
+                    '<span class="verified-badge">👑 PRIME</span>' : '';
+                
+                html += `
+                    <div class="comment-item ${comment.is_verified ? 'verified-comment' : ''}">
+                        <div class="comment-header">
+                            <span class="comment-name">
+                                ${escapeHtml(comment.name || 'Аноним')}
+                                ${verifiedBadge}
+                            </span>
+                            <span class="comment-date">${date}</span>
+                        </div>
+                        <div class="comment-message">${escapeHtml(comment.message)}</div>
+                    </div>
+                `;
+            });
+            list.innerHTML = html;
+        }
+
+        // ============================================
+        // ОТПРАВКА КОММЕНТАРИЯ
+        // ============================================
+        document.getElementById('submitComment').addEventListener('click', submitComment);
+
+        async function submitComment() {
+            const nameInput = document.getElementById('commentName');
+            const messageInput = document.getElementById('commentMessage');
+            
+            let name = nameInput.value.trim();
+            let message = messageInput.value.trim();
+
+            if (lastCommentTime && (Date.now() - lastCommentTime) < 5000) {
+                showMessage('Слишком часто! Подождите 5 секунд', 'error');
+                return;
+            }
+
+            if (checkBannedWords(message) || checkBannedWords(name)) {
+                showMessage('Текст содержит запрещённые слова', 'error');
+                return;
+            }
+
+            if (!name) name = randomNames[Math.floor(Math.random() * randomNames.length)];
+            if (!message) {
+                showMessage('Напишите комментарий', 'error');
+                return;
+            }
+
+            if (message.length > 200) {
+                showMessage('Максимум 200 символов', 'error');
+                return;
+            }
+
+            try {
+                const commentData = {
+                    name: name,
+                    message: message,
+                    ip_address: userIp,
+                    is_verified: !!verifiedUser,
+                    verified_as: verifiedUser
+                };
+
+                const { error } = await supabaseClient
+                    .from('comments')
+                    .insert(commentData);
+
+                if (error) throw error;
+
+                lastCommentTime = Date.now();
+                nameInput.value = '';
+                messageInput.value = '';
+                
+                showMessage('Комментарий добавлен!', 'success');
+                await loadComments();
+                
+            } catch (error) {
+                showMessage('Ошибка: ' + error.message, 'error');
+            }
+        }
+
+        // ============================================
+        // ВЕРИФИКАЦИЯ
+        // ============================================
+        document.getElementById('verifyBtn').addEventListener('click', verifyUser);
+
+        async function verifyUser() {
+            const username = document.getElementById('verifyUsername').value.trim();
+            const password = document.getElementById('verifyPassword').value.trim();
+            
+            if (!username || !password) {
+                showMessage('Введите ник и пароль', 'error');
+                return;
+            }
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('verified_users')
+                    .select('*')
+                    .eq('username', username)
+                    .eq('password', password)
+                    .single();
+                
+                if (error || !data) {
+                    showMessage('Неверный ник или пароль', 'error');
+                    return;
+                }
+                
+                verifiedUser = username;
+                verifiedUserName = username;
+                verifiedUserData = data;
+                
+                const commentNameInput = document.getElementById('commentName');
+                if (commentNameInput) {
+                    commentNameInput.value = username;
+                    commentNameInput.disabled = true;
+                }
+                
+                const statusDiv = document.getElementById('verifyStatus');
+                const statusText = document.getElementById('verifyStatusText');
+                statusText.innerHTML = `Вы вошли как <strong>${username}</strong> 👑`;
+                statusDiv.classList.add('active');
+                
+                document.getElementById('verifyUsername').value = '';
+                document.getElementById('verifyPassword').value = '';
+                
+                showMessage('Верификация успешна!', 'success');
+                await loadComments();
+                
+            } catch (error) {
+                showMessage('Ошибка: ' + error.message, 'error');
+            }
+        }
+
+        window.logoutVerification = function() {
+            verifiedUser = null;
+            verifiedUserName = null;
+            verifiedUserData = null;
+            
+            const commentNameInput = document.getElementById('commentName');
+            if (commentNameInput) {
+                commentNameInput.value = '';
+                commentNameInput.disabled = false;
+            }
+            
+            document.getElementById('verifyStatus').classList.remove('active');
+            showMessage('Вы вышли из системы', 'info');
+            loadComments();
+        }
+
+        // ============================================
+        // ВСПОМОГАТЕЛЬНЫЕ
         // ============================================
         function escapeHtml(text) {
             if (!text) return '';
@@ -1038,41 +2098,36 @@
             return div.innerHTML;
         }
 
+        function showMessage(text, type) {
+            const container = document.getElementById('messageContainer');
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            container.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
+        }
+
         // ============================================
         // ИНИЦИАЛИЗАЦИЯ
         // ============================================
         async function initApp() {
             await getUserIp();
             await loadPolls();
+            await loadUserVotes();
+            await loadCandidates();
+            await loadComments();
             startTimer();
             
-            // Загружаем данные пользователя
-            const userId = localStorage.getItem('userId');
-            if (userId) {
-                const { data } = await supabaseClient
-                    .from('users')
-                    .select('*')
-                    .eq('id', userId)
-                    .single();
-                currentUser = data;
-            }
-
-            // Обновляем онлайн
             document.getElementById('activeUsers').textContent = Math.floor(Math.random() * 50) + 50;
         }
 
-        // ============================================
-        // ОБРАБОТЧИКИ
-        // ============================================
+        // Обработчики
         document.getElementById('createPollBtn').addEventListener('click', createPoll);
-        
         document.getElementById('pollQuestion').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                createPoll();
-            }
+            if (e.key === 'Enter') createPoll();
         });
 
-        // КНОПКА СВЯЗИ С АДМИНИСТРАЦИЕЙ
+        // Кнопка связи с администрацией
         const adminBtn = document.getElementById('adminBtn');
         const adminModal = document.getElementById('adminModal');
         const adminCancel = document.getElementById('adminCancel');
@@ -1087,9 +2142,7 @@
         });
 
         adminModal?.addEventListener('click', (e) => {
-            if (e.target === adminModal) {
-                adminModal.style.display = 'none';
-            }
+            if (e.target === adminModal) adminModal.style.display = 'none';
         });
 
         adminSubmit?.addEventListener('click', async () => {
@@ -1122,15 +2175,11 @@
             }
         });
 
-        // Обработка Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && adminModal?.style.display === 'flex') {
                 adminModal.style.display = 'none';
             }
         });
-
-        // Глобальная функция для голосования
-        window.vote = vote;
     </script>
 </body>
 </html>
