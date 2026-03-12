@@ -1,50 +1,1021 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Регистрация</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>СТЕНА 62 ШКОЛЫ</title>
+    <!-- Подключаем шрифт San Francisco (стиль Apple) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple Color Emoji', sans-serif !important;
+        }
+
+        body {
+            background: #f5f5f7;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 0 30px rgba(0,0,0,0.03);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ЭКРАН СОГЛАШЕНИЯ */
+        .agreement-screen {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: rgba(0, 0, 0, 0.85) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            z-index: 10000 !important;
+            padding: 16px !important;
+        }
+
+        .agreement-card {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-radius: 28px !important;
+            max-width: 520px !important;
+            width: 100% !important;
+            max-height: 90vh !important;
+            overflow-y: auto !important;
+            padding: 32px 28px !important;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3) !important;
+            border: 1px solid rgba(74, 111, 165, 0.2) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        .agreement-card h2 {
+            font-size: 1.8rem !important;
+            color: #2c3e50 !important;
+            margin-bottom: 24px !important;
+            padding-bottom: 16px !important;
+            border-bottom: 2px solid #4a6fa5 !important;
+            font-weight: 600 !important;
+            letter-spacing: -0.02em;
+        }
+
+        .agreement-card h2 span {
+            background: #4a6fa5 !important;
+            color: white !important;
+            font-size: 0.9rem !important;
+            padding: 4px 12px !important;
+            border-radius: 30px !important;
+            margin-left: 10px !important;
+            font-weight: 500;
+        }
+
+        .agreement-text {
+            color: #2c3e50 !important;
+            line-height: 1.6 !important;
+            margin-bottom: 24px !important;
+            font-size: 0.95rem !important;
+            opacity: 0.9;
+        }
+
+        .checkbox-container {
+            background: #f8f9fa !important;
+            padding: 18px !important;
+            border-radius: 16px !important;
+            margin: 24px 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            cursor: pointer !important;
+            border: 1px solid #e0e0e0;
+        }
+
+        .checkbox-container input {
+            width: 22px !important;
+            height: 22px !important;
+            cursor: pointer !important;
+            accent-color: #4a6fa5 !important;
+        }
+
+        .checkbox-container label {
+            font-size: 1rem !important;
+            font-weight: 500 !important;
+            color: #2c3e50 !important;
+            cursor: pointer !important;
+            flex: 1 !important;
+        }
+
+        .agreement-button {
+            background: #4a6fa5 !important;
+            color: white !important;
+            border: none !important;
+            width: 100% !important;
+            padding: 16px !important;
+            font-size: 1.1rem !important;
+            font-weight: 600 !important;
+            border-radius: 14px !important;
+            cursor: pointer !important;
+            transition: all 0.2s !important;
+            letter-spacing: -0.01em;
+        }
+
+        .agreement-button:hover {
+            background: #3a5a8a !important;
+            transform: translateY(-1px);
+        }
+
+        .agreement-button:disabled {
+            background: #ccc !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+            transform: none;
+        }
+
+        /* ОСНОВНОЙ КОНТЕНТ */
+        .main-content {
+            display: none;
+            padding-bottom: 80px;
+        }
+
+        /* Шапка */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .school-badge {
+            background: #ffd966;
+            color: #2c3e50;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* Статистика */
+        .stats-container {
+            padding: 16px;
+            margin: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #4a6fa5;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        /* Битва */
+        .battle-section {
+            padding: 16px;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .battle-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .candidate-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+        }
+
+        .candidate-card.selected {
+            border: 2px solid #4a6fa5;
+            box-shadow: 0 4px 12px rgba(74, 111, 165, 0.15);
+        }
+
+        .candidate-card.voted {
+            opacity: 0.6;
+        }
+
+        .rarity-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 2;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .rarity-common { color: #7f8c8d; }
+        .rarity-rare { color: #3498db; }
+        .rarity-epic { color: #9b59b6; }
+        .rarity-legendary { color: #f1c40f; }
+
+        .candidate-photo {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .candidate-info {
+            padding: 12px;
+        }
+
+        .candidate-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 2px;
+        }
+
+        .candidate-class {
+            color: #7f8c8d;
+            font-size: 0.75rem;
+            margin-bottom: 6px;
+        }
+
+        .rating {
+            background: #f8f9fa;
+            color: #4a6fa5;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            border: 1px solid #e0e0e0;
+        }
+
+        .vote-button {
+            background: #4a6fa5;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 16px;
+            border-radius: 14px;
+            cursor: pointer;
+            margin: 16px auto 0;
+            display: block;
+            width: 100%;
+            transition: all 0.2s;
+            border: 1px solid #3a5a8a;
+        }
+
+        .vote-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Предсказания */
+        .prediction-box {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 16px;
+            margin: 16px 0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .prediction-box h3 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .prediction-bars {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .prediction-bar {
+            flex: 1;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .prediction-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a6fa5, #6b8ec9);
+            width: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Достижения */
+        .achievements-section {
+            padding: 16px;
+            margin: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .achievement-item {
+            background: white;
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s;
+        }
+
+        .achievement-item.unlocked {
+            background: #eef2f7;
+            border-color: #4a6fa5;
+        }
+
+        .achievement-icon {
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        .achievement-title {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        /* Комментарии */
+        .comments-section {
+            padding: 16px;
+            margin: 8px 12px;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .comment-form {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .comment-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .comment-input, .comment-textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .comment-input:focus, .comment-textarea:focus {
+            border-color: #4a6fa5;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+        }
+
+        .comment-submit {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .comment-submit:active {
+            transform: scale(0.98);
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .comment-item {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .comment-item.verified-comment {
+            background: #fff9e6;
+            border-color: #ffd700;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .comment-name {
+            font-weight: 600;
+            color: #2c3e50;
+            background: #ffd966;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .verified-badge {
+            background: #4a6fa5;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-left: 8px;
+        }
+
+        .comment-date {
+            color: #7f8c8d;
+            font-size: 0.7rem;
+        }
+
+        .comment-message {
+            color: #2c3e50;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Рейтинг */
+        .rating-section {
+            padding: 16px;
+            margin: 8px 12px;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .rating-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .rating-position {
+            width: 28px;
+            height: 28px;
+            background: #4a6fa5;
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-right: 12px;
+        }
+
+        .rating-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-right: 12px;
+            border: 1px solid #ffd966;
+        }
+
+        .rating-info {
+            flex: 1;
+        }
+
+        .rating-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #2c3e50;
+        }
+
+        .rating-score {
+            font-weight: 600;
+            color: #4a6fa5;
+            background: #ffd966;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Нижняя навигация (как в Instagram) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #7f8c8d;
+            font-size: 0.7rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            flex: 1;
+        }
+
+        .nav-item-bottom.active {
+            color: #4a6fa5;
+        }
+
+        .nav-icon-bottom {
+            font-size: 1.4rem;
+        }
+
+        /* Верификация */
+        .verification-box {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 16px 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .verification-input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .verification-input {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            background: white;
+        }
+
+        .verification-input:focus {
+            border-color: #4a6fa5;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+        }
+
+        .verification-button {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .verification-button:hover {
+            background: #3a5a8a;
+        }
+
+        /* Сообщения */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 14px 24px;
+            border-radius: 30px;
+            color: white;
+            font-weight: 500;
+            z-index: 10001;
+            animation: slideIn 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .message.success { background: #4a6fa5; }
+        .message.error { background: #c0392b; }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4a6fa5;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .battle-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-row {
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+            
+            .achievement-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .verification-input-group {
+                flex-direction: column;
+            }
+            
+            .verification-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Стили для кнопки связи с администрацией */
+        .suggest-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: all 0.2s;
+            border: 1px solid #3a5a8a;
+        }
+
+        .suggest-button:hover {
+            transform: scale(1.05);
+            background: #3a5a8a;
+        }
+
+        .suggest-button:active {
+            transform: scale(0.95);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <h2>Регистрация</h2>
-    
-    <input type="email" id="email" placeholder="Email" value="test@mail.ru">
-    <input type="text" id="username" placeholder="Имя пользователя" value="deepseek">
-    <input type="password" id="password" placeholder="Пароль" value="123456">
-    <button id="register">Зарегистрироваться</button>
-    
-    <div id="message"></div>
+    <!-- ЭКРАН СОГЛАШЕНИЯ -->
+    <div class="agreement-screen" id="agreementScreen">
+        <div class="agreement-card">
+            <h2>ДОГОВОР СООБЩЕСТВА <span>Школа №62</span></h2>
+            
+            <div class="agreement-text">
+                <p><strong>Статья 1. Общие положения</strong></p>
+                <p>1.1 Сайт является независимой онлайн-площадкой для общения учащихся.</p>
+                <p>1.2 Публикуя сообщения, пользователь соглашается с правилами.</p>
+                <p>1.3 Пользователь несёт ответственность за публикуемый контент.</p>
+                
+                <p style="margin-top:15px;"><strong>Статья 2. Разрешённый контент</strong></p>
+                <p>• Анонимное общение</p>
+                <p>• Обсуждение школьных событий</p>
+                <p>• Юмор и мемы</p>
+                <p>• Конструктивная критика</p>
+                
+                <p style="margin-top:15px;"><strong>Статья 3. Запрещённый контент</strong></p>
+                <p>• Травля и оскорбления</p>
+                <p>• Личная информация без согласия</p>
+                <p>• Угрозы и призывы к насилию</p>
+                <p>• Спам и реклама</p>
+            </div>
+            
+            <div class="checkbox-container" id="agreementCheckbox">
+                <input type="checkbox" id="schoolCheckbox">
+                <label for="schoolCheckbox">✅ Я принимаю условия Договора сообщества</label>
+            </div>
+            
+            <button class="agreement-button" id="enterSiteBtn" disabled>Войти на стену</button>
+        </div>
+    </div>
 
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="container">
+        <div class="main-content" id="mainContent">
+            <!-- Шапка -->
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <h1>стена 62</h1>
+                        <span class="school-badge">№62</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статистика -->
+            <div class="stats-container">
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <span class="stat-value" id="voteCountBadge">0</span>
+                        <span class="stat-label">голосов</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="comboCount">0</span>
+                        <span class="stat-label">комбо</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="onlineCount">71</span>
+                        <span class="stat-label">онлайн</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сообщения -->
+            <div id="messageContainer"></div>
+
+            <!-- Битва -->
+            <div class="battle-section" id="battleContainer" style="display: none;">
+                <div class="section-title">
+                    <span>⚔️</span> Битва кандидатов
+                </div>
+                
+                <!-- Праздничная приписка -->
+                <div style="text-align: center; margin-bottom: 16px; padding: 12px; background: linear-gradient(145deg, #ffd966, #ffb347); border-radius: 30px; color: #2c3e50; font-weight: 600;">
+                    🌸 С 8 марта, девочки! 🌸
+                </div>
+                
+                <!-- Карточки кандидатов -->
+                <div class="battle-container" id="battleGrid"></div>
+                
+                <!-- КНОПКА ГОЛОСОВАНИЯ -->
+                <button class="vote-button" id="voteBtn">⚡ ГОЛОСОВАТЬ ⚡</button>
+                
+                <!-- Предсказания -->
+                <div class="prediction-box" id="predictionBox">
+                    <h3>🔮 Шансы на победу</h3>
+                    <div class="prediction-bars" id="predictionBars"></div>
+                </div>
+            </div>
+
+            <!-- Достижения -->
+            <div class="achievements-section">
+                <div class="section-title">
+                    <span>🏆</span> Достижения
+                </div>
+                <div class="achievement-grid">
+                    <div class="achievement-item" id="ach1">
+                        <div class="achievement-icon">🗳️</div>
+                        <div class="achievement-title">Новичок</div>
+                    </div>
+                    <div class="achievement-item" id="ach2">
+                        <div class="achievement-icon">🔥</div>
+                        <div class="achievement-title">Комбо 3</div>
+                    </div>
+                    <div class="achievement-item" id="ach3">
+                        <div class="achievement-icon">⭐</div>
+                        <div class="achievement-title">Предсказатель</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- БЛОК ВЕРИФИКАЦИИ -->
+            <div class="verification-box" id="verificationBox">
+                <h3 style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px; color: #2c3e50;">
+                    <span>👑</span> Вход в PRIME
+                    <span style="font-size: 0.7rem; color: #7f8c8d; background: #f0f0f0; padding: 2px 8px; border-radius: 12px;">скоро</span>
+                </h3>
+                <div class="verification-input-group">
+                    <input type="text" id="verifyUsername" class="verification-input" placeholder="Ваш ник" maxlength="30">
+                    <input type="password" id="verifyPassword" class="verification-input" placeholder="Пароль" maxlength="50">
+                    <button class="verification-button" id="verifyBtn">
+                        <span>✅</span> Войти
+                    </button>
+                </div>
+                <div class="verification-status" id="verifyStatus">
+                    <span>✅</span> <span id="verifyStatusText"></span>
+                    <button onclick="logoutVerification()">(выйти)</button>
+                </div>
+            </div>
+
+            <!-- БЛОК КОММЕНТАРИЕВ -->
+            <div class="comments-section">
+                <div class="section-title">
+                    <span>💬</span> Комментарии
+                </div>
+                
+                <!-- Форма комментария -->
+                <div class="comment-form">
+                    <div class="comment-input-group">
+                        <input type="text" id="commentName" class="comment-input" placeholder="Ваше имя" maxlength="30">
+                        <textarea id="commentMessage" class="comment-textarea" placeholder="Напишите что-нибудь..." maxlength="200"></textarea>
+                    </div>
+                    <button class="comment-submit" id="submitComment">📝 ОТПРАВИТЬ</button>
+                </div>
+
+                <!-- Список комментариев -->
+                <div class="comments-list" id="commentsList">
+                    <div class="comment-loading">Загрузка комментариев...</div>
+                </div>
+            </div>
+
+            <!-- Рейтинг -->
+            <div class="rating-section" id="ratingContainer" style="display: none;">
+                <div class="section-title">
+                    <span>🏆</span> Топ-10 школы №62
+                </div>
+                <div id="ratingList" class="rating-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Нижняя навигация -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item-bottom active">
+            <span class="nav-icon-bottom">🏠</span>
+            <span>Главная</span>
+        </a>
+        <a href="threads.html" class="nav-item-bottom">
+            <span class="nav-icon-bottom">💬</span>
+            <span>Темки</span>
+        </a>
+        <a href="slivy.html" class="nav-item-bottom">
+            <span class="nav-icon-bottom">📸</span>
+            <span>Сливы</span>
+        </a>
+        <a href="login.html" class="nav-item-bottom">
+            <span class="nav-icon-bottom">👤</span>
+            <span>Аккаунт</span>
+        </a>
+    </nav>
+
+    <!-- КНОПКА ДЛЯ СВЯЗИ С АДМИНИСТРАЦИЕЙ -->
+    <button class="suggest-button" id="adminBtn">📨</button>
+
+    <!-- МОДАЛЬНОЕ ОКНО ДЛЯ СВЯЗИ С АДМИНИСТРАЦИЕЙ -->
+    <div class="suggest-modal" id="adminModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10001; backdrop-filter: blur(5px);">
+        <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; padding: 16px;">
+            <div style="background: white; border-radius: 28px; max-width: 500px; width: 100%; padding: 25px;">
+                <h3 style="color: #2c3e50; margin-bottom: 20px;">📨 СВЯЗЬ С АДМИНИСТРАЦИЕЙ</h3>
+                
+                <select id="adminType" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #e0e0e0; border-radius: 12px;">
+                    <option value="question">❓ Вопрос</option>
+                    <option value="problem">⚠️ Проблема</option>
+                    <option value="suggestion">💡 Предложение</option>
+                    <option value="bug">🐛 Ошибка</option>
+                </select>
+                
+                <input type="text" id="adminName" placeholder="Ваше имя" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #e0e0e0; border-radius: 12px;">
+                
+                <textarea id="adminMessage" placeholder="Сообщение..." style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #e0e0e0; border-radius: 12px; min-height: 120px;"></textarea>
+                
+                <div style="display: flex; gap: 10px;">
+                    <button id="adminSubmit" style="flex: 2; background: #4a6fa5; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer;">ОТПРАВИТЬ</button>
+                    <button id="adminCancel" style="flex: 1; background: #e0e0e0; color: #2c3e50; border: none; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer;">❌</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
     <script>
-        const supabase = window.supabase.createClient(
-            'https://idmeikdzxpjacpvtkdfc.supabase.co',
-            'sb_publishable_h8RzRh8uNmW70mNEaKbXWw_zakpJS5M'
-        );
-        
-        document.getElementById('register').onclick = async () => {
-            const email = document.getElementById('email').value;
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            const messageDiv = document.getElementById('message');
-            messageDiv.innerHTML = 'Регистрируем...';
-            
-            const { data, error } = await supabase.auth.signUp({
-                email: email,
-                password: password,
-                options: {
-                    data: {
-                        username: username
-                    }
-                }
-            });
-            
-            if (error) {
-                messageDiv.innerHTML = 'Ошибка: ' + error.message;
-            } else {
-                messageDiv.innerHTML = '✅ Готово! Проверь почту ' + email;
-            }
-        };
+        // Здесь будет ваш существующий JavaScript код
+        // Перенесите сюда все функции из старого index.html
+        // (loadCandidates, loadComments, submitComment и т.д.)
     </script>
 </body>
 </html>
