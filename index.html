@@ -1013,9 +1013,628 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/main.js"></script>
     <script>
-        // Здесь будет ваш существующий JavaScript код
-        // Перенесите сюда все функции из старого index.html
-        // (loadCandidates, loadComments, submitComment и т.д.)
-    </script>
+       <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    // ============================================
+    // SUPABASE КОНФИГ
+    // ============================================
+    const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // ============================================
+    // СОГЛАШЕНИЕ
+    // ============================================
+    const agreementScreen = document.getElementById('agreementScreen');
+    const mainContent = document.getElementById('mainContent');
+    const schoolCheckbox = document.getElementById('schoolCheckbox');
+    const enterBtn = document.getElementById('enterSiteBtn');
+
+    // Функция для входа на сайт
+    function enterSite() {
+        console.log('Вход на сайт');
+        localStorage.setItem('agreement62', 'accepted');
+        
+        if (agreementScreen) {
+            agreementScreen.style.display = 'none';
+        }
+        
+        if (mainContent) {
+            mainContent.style.display = 'block';
+        }
+        
+        initApp();
+    }
+
+    // Проверка при загрузке
+    if (localStorage.getItem('agreement62') === 'accepted') {
+        agreementScreen.style.display = 'none';
+        mainContent.style.display = 'block';
+        initApp();
+    }
+
+    // Обработчик чекбокса
+    if (schoolCheckbox) {
+        schoolCheckbox.addEventListener('change', function() {
+            enterBtn.disabled = !this.checked;
+        });
+    }
+
+    // Обработчик кнопки
+    if (enterBtn) {
+        enterBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (schoolCheckbox && schoolCheckbox.checked) {
+                enterSite();
+            }
+        });
+    }
+
+    // ============================================
+    // ПЕРЕМЕННЫЕ
+    // ============================================
+    let allCandidates = [];
+    let currentPair = [];
+    let selectedCandidateId = null;
+    let userIp = null;
+    let userVotes = {};
+    let userVoteCount = 0;
+    let comboCount = 0;
+    let lastVoteTime = null;
+    let lastCommentTime = null;
+    let comments = [];
+    let verifiedUser = null;
+    let verifiedUserName = null;
+    let verifiedUserData = null;
+
+    const randomNames = ['Аноним'];
+
+    // Запрещённые слова
+    const bannedWords = [
+        'порно', 'секс', 'еблан', 'дебил', 'дурак', 'идиот',
+        'хуй', 'пизда', 'блядь', 'сука', 'гандон', 'шлюха',
+        'porn', 'sex', 'fuck', 'shit', 'bitch',
+        'казино', 'наркотики', 'меф'
+    ];
+
+    function checkBannedWords(text) {
+        if (!text) return false;
+        const lowerText = text.toLowerCase();
+        return bannedWords.some(word => lowerText.includes(word));
+    }
+
+    // ============================================
+    // ПОЛУЧЕНИЕ IP
+    // ============================================
+    async function getUserIp() {
+        try {
+            const response = await fetch('https://api.ipify.org?format=json');
+            const data = await response.json();
+            userIp = data.ip;
+            return userIp;
+        } catch {
+            userIp = 'user-' + Math.random().toString(36).substring(2, 10);
+            return userIp;
+        }
+    }
+
+    // ============================================
+    // ПОКАЗ СООБЩЕНИЙ
+    // ============================================
+    function showMessage(text, type) {
+        const container = document.getElementById('messageContainer');
+        const msg = document.createElement('div');
+        msg.className = `message ${type}`;
+        msg.textContent = text;
+        container.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+    }
+
+    // ============================================
+    // ЗАГРУЗКА КАНДИДАТОВ
+    // ============================================
+    async function loadCandidates() {
+        try {
+            const { data, error } = await supabaseClient
+                .from('candidates')
+                .select('*')
+                .order('votes', { ascending: false });
+
+            if (error) throw error;
+
+            allCandidates = (data || []).map(c => ({
+                ...c,
+                rarity: getRandomRarity()
+            }));
+
+            if (allCandidates.length < 2) {
+                showMessage('Нужно минимум 2 кандидата', 'error');
+                return;
+            }
+
+            document.getElementById('battleContainer').style.display = 'block';
+            document.getElementById('ratingContainer').style.display = 'block';
+            
+            updateLeaderboard();
+            selectNewPair();
+        } catch (err) {
+            showMessage('Ошибка загрузки: ' + err.message, 'error');
+        }
+    }
+
+    function getRandomRarity() {
+        const rand = Math.random();
+        if (rand < 0.5) return 'common';
+        if (rand < 0.75) return 'rare';
+        if (rand < 0.9) return 'epic';
+        return 'legendary';
+    }
+
+    const rarityNames = { common: 'Обычная', rare: 'Редкая', epic: 'Эпическая', legendary: 'Легендарная' };
+
+    // ============================================
+    // ЗАГРУЗКА ГОЛОСОВ
+    // ============================================
+    async function loadUserVotes() {
+        if (!userIp) return;
+        
+        try {
+            const { data } = await supabaseClient
+                .from('votes')
+                .select('candidate_id')
+                .eq('ip_address', userIp);
+
+            if (data) {
+                userVotes = {};
+                data.forEach(vote => {
+                    userVotes[vote.candidate_id] = true;
+                });
+                userVoteCount = data.length;
+                document.getElementById('voteCountBadge').textContent = userVoteCount;
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки голосов:', error);
+        }
+    }
+
+    // ============================================
+    // ВЫБОР ПАРЫ
+    // ============================================
+    function selectNewPair() {
+        if (allCandidates.length < 2) return;
+        
+        const available = allCandidates.filter(c => !userVotes[c.id]);
+        
+        if (available.length >= 2) {
+            let first, second;
+            do {
+                const shuffled = [...available].sort(() => 0.5 - Math.random());
+                first = shuffled[0];
+                second = shuffled[1];
+            } while (first.id === second.id);
+            currentPair = [first, second];
+        } else {
+            const shuffled = [...allCandidates].sort(() => 0.5 - Math.random());
+            currentPair = [shuffled[0], shuffled[1]];
+        }
+        
+        renderBattle(currentPair);
+        updatePrediction();
+    }
+
+    function renderBattle(pair) {
+        const container = document.getElementById('battleGrid');
+        
+        container.innerHTML = `
+            <div class="candidate-card ${userVotes[pair[0].id] ? 'voted' : ''}" 
+                 onclick="selectCandidate(${pair[0].id})" 
+                 id="card-${pair[0].id}">
+                <span class="rarity-badge rarity-${pair[0].rarity}">${rarityNames[pair[0].rarity]}</span>
+                <img src="${pair[0].photo_url || 'https://i.pravatar.cc/300'}" class="candidate-photo">
+                <div class="candidate-info">
+                    <div class="candidate-name">${pair[0].name}</div>
+                    <div class="candidate-class">${pair[0].class || ''}</div>
+                    <span class="rating">❤️ ${pair[0].votes || 0}</span>
+                </div>
+            </div>
+            
+            <div class="candidate-card ${userVotes[pair[1].id] ? 'voted' : ''}" 
+                 onclick="selectCandidate(${pair[1].id})" 
+                 id="card-${pair[1].id}">
+                <span class="rarity-badge rarity-${pair[1].rarity}">${rarityNames[pair[1].rarity]}</span>
+                <img src="${pair[1].photo_url || 'https://i.pravatar.cc/300'}" class="candidate-photo">
+                <div class="candidate-info">
+                    <div class="candidate-name">${pair[1].name}</div>
+                    <div class="candidate-class">${pair[1].class || ''}</div>
+                    <span class="rating">❤️ ${pair[1].votes || 0}</span>
+                </div>
+            </div>
+        `;
+        
+        document.querySelectorAll('.candidate-card').forEach(c => c.classList.remove('selected'));
+        selectedCandidateId = null;
+    }
+
+    window.selectCandidate = function(id) {
+        if (userVotes[id]) return;
+        document.querySelectorAll('.candidate-card').forEach(c => c.classList.remove('selected'));
+        document.getElementById(`card-${id}`).classList.add('selected');
+        selectedCandidateId = id;
+    };
+
+    function updatePrediction() {
+        if (!currentPair || currentPair.length < 2) return;
+        
+        const total = (currentPair[0].votes || 0) + (currentPair[1].votes || 0);
+        const left = total ? Math.round((currentPair[0].votes / total) * 100) : 50;
+        const right = 100 - left;
+        
+        document.getElementById('predictionBars').innerHTML = `
+            <div class="prediction-bar">
+                <div class="prediction-fill" style="width: ${left}%;">${left}%</div>
+            </div>
+            <div class="prediction-bar">
+                <div class="prediction-fill" style="width: ${right}%;">${right}%</div>
+            </div>
+        `;
+    }
+
+    // ============================================
+    // ГОЛОСОВАНИЕ
+    // ============================================
+    document.getElementById('voteBtn').addEventListener('click', async function() {
+        if (!selectedCandidateId) {
+            showMessage('Выберите кандидата', 'error');
+            return;
+        }
+        
+        if (!currentPair || currentPair.length !== 2) return;
+        
+        const winner = currentPair.find(c => c.id === selectedCandidateId);
+        const loser = currentPair.find(c => c.id !== selectedCandidateId);
+        
+        if (!winner || !loser) return;
+        
+        if (userVotes[winner.id]) {
+            showMessage('Вы уже голосовали за этого кандидата', 'error');
+            return;
+        }
+
+        try {
+            const newWinnerVotes = (winner.votes || 0) + 100;
+            const newLoserVotes = Math.max(0, (loser.votes || 0) - 50);
+
+            await Promise.all([
+                supabaseClient.from('candidates').update({ votes: newWinnerVotes }).eq('id', winner.id),
+                supabaseClient.from('candidates').update({ votes: newLoserVotes }).eq('id', loser.id),
+                supabaseClient.from('votes').insert({
+                    candidate_id: winner.id,
+                    ip_address: userIp,
+                    user_agent: navigator.userAgent
+                })
+            ]);
+
+            winner.votes = newWinnerVotes;
+            loser.votes = newLoserVotes;
+            userVotes[winner.id] = true;
+            userVoteCount++;
+            
+            document.getElementById('voteCountBadge').textContent = userVoteCount;
+            
+            if (userVoteCount >= 1) document.getElementById('ach1').classList.add('unlocked');
+            
+            updateLeaderboard();
+            showMessage(`✅ +100 ${winner.name}!`, 'success');
+            
+            selectedCandidateId = null;
+            selectNewPair();
+            
+        } catch (err) {
+            showMessage('Ошибка: ' + err.message, 'error');
+        }
+    });
+
+    // ============================================
+    // РЕЙТИНГ
+    // ============================================
+    function updateLeaderboard() {
+        const sorted = [...allCandidates].sort((a, b) => (b.votes || 0) - (a.votes || 0));
+        const container = document.getElementById('ratingList');
+        
+        let html = '';
+        sorted.slice(0, 10).forEach((c, index) => {
+            html += `
+                <div class="rating-item">
+                    <div class="rating-position">${index + 1}</div>
+                    <img src="${c.photo_url || 'https://i.pravatar.cc/300'}" class="rating-avatar">
+                    <div class="rating-info">
+                        <div class="rating-name">${c.name}</div>
+                    </div>
+                    <div class="rating-score">❤️ ${c.votes || 0}</div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+    }
+
+    // ============================================
+    // ЗАГРУЗКА КОММЕНТАРИЕВ
+    // ============================================
+    async function loadComments() {
+        try {
+            const { data, error } = await supabaseClient
+                .from('comments')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(50);
+
+            if (error) throw error;
+            comments = data || [];
+            displayComments();
+        } catch (error) {
+            console.error('Ошибка загрузки комментариев:', error);
+        }
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function displayComments() {
+        const list = document.getElementById('commentsList');
+        
+        if (!comments || comments.length === 0) {
+            list.innerHTML = '<div style="text-align:center; padding:20px; color:#7f8c8d;">Пока нет комментариев. Будьте первым!</div>';
+            return;
+        }
+
+        let html = '';
+        comments.forEach(comment => {
+            const date = new Date(comment.created_at).toLocaleString('ru', {
+                day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+            });
+            
+            const verifiedBadge = comment.is_verified ? 
+                '<span class="verified-badge">👑 PRIME</span>' : '';
+            
+            html += `
+                <div class="comment-item ${comment.is_verified ? 'verified-comment' : ''}">
+                    <div class="comment-header">
+                        <span class="comment-name">
+                            ${escapeHtml(comment.name || 'Аноним')}
+                            ${verifiedBadge}
+                        </span>
+                        <span class="comment-date">${date}</span>
+                    </div>
+                    <div class="comment-message">${escapeHtml(comment.message)}</div>
+                </div>
+            `;
+        });
+        list.innerHTML = html;
+    }
+
+    // ============================================
+    // ОТПРАВКА КОММЕНТАРИЯ
+    // ============================================
+    document.getElementById('submitComment').addEventListener('click', submitComment);
+
+    async function submitComment() {
+        const nameInput = document.getElementById('commentName');
+        const messageInput = document.getElementById('commentMessage');
+        
+        let name = nameInput.value.trim();
+        let message = messageInput.value.trim();
+
+        if (lastCommentTime && (Date.now() - lastCommentTime) < 5 * 1000) {
+            showMessage('Слишком часто! Подождите 5 секунд', 'error');
+            return;
+        }
+
+        if (checkBannedWords(message)) {
+            showMessage('Сообщение содержит запрещённые слова', 'error');
+            return;
+        }
+
+        if (checkBannedWords(name)) {
+            showMessage('Имя содержит запрещённые слова', 'error');
+            return;
+        }
+
+        if (!name) {
+            name = randomNames[Math.floor(Math.random() * randomNames.length)];
+        }
+
+        if (!message) {
+            showMessage('Напишите комментарий', 'error');
+            return;
+        }
+
+        if (message.length > 200) {
+            showMessage('Максимум 200 символов', 'error');
+            return;
+        }
+
+        try {
+            const commentData = {
+                name: name,
+                message: message,
+                ip_address: userIp,
+                is_verified: !!verifiedUser,
+                verified_as: verifiedUser
+            };
+
+            const { error } = await supabaseClient
+                .from('comments')
+                .insert(commentData);
+
+            if (error) throw error;
+
+            lastCommentTime = Date.now();
+            nameInput.value = '';
+            messageInput.value = '';
+            
+            showMessage('Комментарий добавлен!', 'success');
+            await loadComments();
+            
+        } catch (error) {
+            showMessage('Ошибка: ' + error.message, 'error');
+        }
+    }
+
+    // ============================================
+    // ВЕРИФИКАЦИЯ
+    // ============================================
+    document.getElementById('verifyBtn').addEventListener('click', verifyUser);
+
+    async function verifyUser() {
+        const username = document.getElementById('verifyUsername').value.trim();
+        const password = document.getElementById('verifyPassword').value.trim();
+        
+        if (!username || !password) {
+            showMessage('Введите ник и пароль', 'error');
+            return;
+        }
+        
+        try {
+            const { data, error } = await supabaseClient
+                .from('verified_users')
+                .select('*')
+                .eq('username', username)
+                .eq('password', password)
+                .single();
+            
+            if (error || !data) {
+                showMessage('Неверный ник или пароль', 'error');
+                return;
+            }
+            
+            verifiedUser = username;
+            verifiedUserName = username;
+            verifiedUserData = data;
+            
+            const commentNameInput = document.getElementById('commentName');
+            if (commentNameInput) {
+                commentNameInput.value = username;
+                commentNameInput.disabled = true;
+            }
+            
+            const statusDiv = document.getElementById('verifyStatus');
+            const statusText = document.getElementById('verifyStatusText');
+            statusText.innerHTML = `Вы вошли как <strong>${username}</strong> 👑`;
+            statusDiv.classList.add('active');
+            
+            document.getElementById('verifyUsername').value = '';
+            document.getElementById('verifyPassword').value = '';
+            
+            showMessage('Верификация успешна!', 'success');
+            await loadComments();
+            
+        } catch (error) {
+            showMessage('Ошибка: ' + error.message, 'error');
+        }
+    }
+
+    window.logoutVerification = function() {
+        verifiedUser = null;
+        verifiedUserName = null;
+        verifiedUserData = null;
+        
+        const commentNameInput = document.getElementById('commentName');
+        if (commentNameInput) {
+            commentNameInput.value = '';
+            commentNameInput.disabled = false;
+        }
+        
+        document.getElementById('verifyStatus').classList.remove('active');
+        showMessage('Вы вышли из системы', 'success');
+        loadComments();
+    }
+
+    // ============================================
+    // КНОПКА СВЯЗИ С АДМИНИСТРАЦИЕЙ
+    // ============================================
+    const adminBtn = document.getElementById('adminBtn');
+    const adminModal = document.getElementById('adminModal');
+    const adminCancel = document.getElementById('adminCancel');
+    const adminSubmit = document.getElementById('adminSubmit');
+
+    if (adminBtn && adminModal) {
+        adminBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            adminModal.style.display = 'flex';
+        });
+    }
+
+    if (adminCancel && adminModal) {
+        adminCancel.addEventListener('click', function() {
+            adminModal.style.display = 'none';
+        });
+    }
+
+    if (adminModal) {
+        adminModal.addEventListener('click', function(e) {
+            if (e.target === adminModal) {
+                adminModal.style.display = 'none';
+            }
+        });
+    }
+
+    if (adminSubmit) {
+        adminSubmit.addEventListener('click', async function() {
+            const name = document.getElementById('adminName')?.value.trim() || 'Аноним';
+            const type = document.getElementById('adminType')?.value || 'other';
+            const message = document.getElementById('adminMessage')?.value.trim();
+            
+            if (!message) {
+                alert('Напишите сообщение');
+                return;
+            }
+            
+            try {
+                await supabaseClient
+                    .from('feedback')
+                    .insert({
+                        type: 'admin_message',
+                        sub_type: type,
+                        name: name,
+                        message: message,
+                        ip_address: userIp,
+                        user_agent: navigator.userAgent
+                    });
+                
+                showMessage('✅ Сообщение отправлено', 'success');
+                adminModal.style.display = 'none';
+                document.getElementById('adminName').value = '';
+                document.getElementById('adminMessage').value = '';
+                
+            } catch (error) {
+                showMessage('Ошибка: ' + error.message, 'error');
+            }
+        });
+    }
+
+    // ============================================
+    // ИНИЦИАЛИЗАЦИЯ
+    // ============================================
+    async function initApp() {
+        await getUserIp();
+        await loadUserVotes();
+        await loadCandidates();
+        await loadComments();
+        
+        // Обновляем онлайн счетчик
+        document.getElementById('onlineCount').textContent = Math.floor(Math.random() * 50) + 50;
+    }
+
+    // Обработка Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && adminModal && adminModal.style.display === 'flex') {
+            adminModal.style.display = 'none';
+        }
+    });
+</script>
 </body>
 </html>
