@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>тема - стена 62</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: #f8f9fc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 32px 0;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #f8f9fc;
+            position: relative;
+            padding: 0 16px;
+        }
+
+        /* HEADER */
+        .header {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 16px 20px;
+            margin: 8px 0 24px 0;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #2e3440;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            letter-spacing: -0.5px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .header-icon {
+            font-size: 1.2rem;
+            color: #8b93a6;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        .header-icon:hover {
+            color: #2e3440;
+        }
+
+        /* NAVIGATION */
+        .nav-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .nav-link {
+            padding: 8px 16px;
+            background: #ffffff;
+            border-radius: 30px;
+            color: #8b93a6;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link:hover {
+            color: #2e3440;
+            background: #f0f2f5;
+        }
+
+        .nav-link.active {
+            background: #2e3440;
+            color: white;
+        }
+
+        /* MAIN POST */
+        .main-post {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .post-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f2f5;
+            flex-wrap: wrap;
+        }
+
+        .post-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #8b93a6;
+            font-size: 0.85rem;
+        }
+
+        .post-content {
+            color: #1a1e2b;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+        }
+
+        /* REPLIES SECTION */
+        .replies-section {
+            margin-bottom: 24px;
+        }
+
+        .replies-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .replies-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .replies-count {
+            background: #f0f2f5;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            color: #1a1e2b;
+        }
+
+        .replies-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .reply-item {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s;
+        }
+
+        .reply-item:hover {
+            transform: translateX(2px);
+        }
+
+        .reply-item.verified {
+            border-left: 3px solid #4a6fa5;
+        }
+
+        .reply-item.premium {
+            border-left: 3px solid #f1c40f;
+        }
+
+        .reply-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .reply-author-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .reply-author {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a1e2b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .author-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+
+        .badge-verified {
+            background: #4a6fa5;
+            color: white;
+        }
+
+        .badge-premium {
+            background: #f1c40f;
+            color: #1a1e2b;
+        }
+
+        .reply-date {
+            color: #8b93a6;
+            font-size: 0.7rem;
+        }
+
+        .reply-content {
+            color: #1a1e2b;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        /* MINI PROFILE CARD */
+        .mini-profile-card {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            width: 240px;
+            box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+            pointer-events: none;
+            margin-bottom: 8px;
+        }
+
+        .reply-author-wrapper:hover .mini-profile-card {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
+
+        .mini-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .mini-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: #2e3440;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .mini-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 2px;
+        }
+
+        .mini-info p {
+            font-size: 0.7rem;
+            color: #8b93a6;
+        }
+
+        .mini-stats {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-top: 1px solid #f0f2f5;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .mini-stat {
+            flex: 1;
+            text-align: center;
+        }
+
+        .mini-stat-value {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a1e2b;
+        }
+
+        .mini-stat-label {
+            font-size: 0.6rem;
+            color: #8b93a6;
+        }
+
+        .mini-profile-link {
+            display: block;
+            background: #f8f9fc;
+            color: #1a1e2b;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+            transition: background 0.2s;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .mini-profile-link:hover {
+            background: #eef2f5;
+        }
+
+        /* REPLY FORM */
+        .reply-form {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .reply-form textarea {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            font-size: 0.95rem;
+            min-height: 120px;
+            margin-bottom: 16px;
+            font-family: inherit;
+            resize: vertical;
+            background: #f8f9fc;
+            transition: border-color 0.2s;
+        }
+
+        .reply-form textarea:focus {
+            outline: none;
+            border-color: #2e3440;
+        }
+
+        .reply-btn {
+            background: #2e3440;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .reply-btn:hover {
+            background: #1a1e2b;
+        }
+
+        /* PRIME STATUS BAR */
+        .prime-status-bar {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .prime-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prime-badge {
+            width: 24px;
+            height: 24px;
+            background: #f1c40f;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .prime-info span {
+            font-size: 0.85rem;
+            color: #1a1e2b;
+            font-weight: 500;
+        }
+
+        .prime-logout {
+            background: none;
+            border: none;
+            color: #8b93a6;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 4px 8px;
+        }
+
+        .prime-logout:hover {
+            color: #2e3440;
+        }
+
+        /* BOTTOM NAVIGATION */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 560px;
+            width: calc(100% - 32px);
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 6px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 1000;
+        }
+
+        .nav-item-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8b93a6;
+            text-decoration: none;
+            font-size: 0.6rem;
+            font-weight: 500;
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 30px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item-bottom.active {
+            background: #f0f2f5;
+            color: #2e3440;
+        }
+
+        .nav-item-bottom:hover {
+            color: #2e3440;
+        }
+
+        .nav-icon-bottom {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+
+        /* MESSAGES */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 30px;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            z-index: 10002;
+            animation: slideIn 0.2s;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .message.success { background: #2e3440; }
+        .message.error { background: #c0392b; }
+
+        .loader {
+            border: 2px solid #f0f2f5;
+            border-top: 2px solid #2e3440;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ADMIN BUTTON */
+        .suggest-button {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            background: #ffffff;
+            color: #2e3440;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 8px 16px -6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 999;
+            transition: transform 0.2s;
+        }
+
+        .suggest-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #8b93a6;
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .empty-state-icon {
+            width: 48px;
+            height: 48px;
+            background: #f0f2f5;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: #2e3440;
+            font-weight: 600;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 0;
+            }
+            
+            .post-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .mini-profile-card {
+                width: 200px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">62</div>
+                    <h1>стена</h1>
+                </div>
+                <div class="header-icons">
+                    <i class="far fa-bell header-icon"></i>
+                    <i class="far fa-user header-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <a href="index.html" class="nav-link">
+                <i class="fas fa-home"></i>
+                главная
+            </a>
+            <a href="threads.html" class="nav-link active">
+                <i class="fas fa-arrow-left"></i>
+                к темкам
+            </a>
+        </div>
+
+        <!-- Prime Status (hidden by default) -->
+        <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
+            <div class="prime-info">
+                <div class="prime-badge">P</div>
+                <span id="primeUserName">Prime пользователь</span>
+            </div>
+            <button class="prime-logout" onclick="logoutPrime()">выйти</button>
+        </div>
+
+        <!-- Main Post -->
+        <div class="main-post" id="mainPost">
+            <div class="loader" id="postLoader"></div>
+        </div>
+
+        <!-- Replies Section -->
+        <div class="replies-section">
+            <div class="replies-header">
+                <div class="replies-title">ответы</div>
+                <div class="replies-count" id="repliesCount">0</div>
+            </div>
+            
+            <div class="replies-list" id="repliesList">
+                <div class="loader"></div>
+            </div>
+
+            <!-- Reply Form -->
+            <div class="reply-form">
+                <textarea id="replyContent" placeholder="написать ответ..." maxlength="1000"></textarea>
+                <button class="reply-btn" id="submitReply">отправить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="/index.html" class="nav-item-bottom">
+            <i class="fas fa-home nav-icon-bottom"></i>
+            <span>главная</span>
+        </a>
+        <a href="/votes.html" class="nav-item-bottom">
+            <i class="fas fa-chart-bar nav-icon-bottom"></i>
+            <span>голосования</span>
+        </a>
+        <a href="/threads.html" class="nav-item-bottom active">
+            <i class="fas fa-comment nav-icon-bottom"></i>
+            <span>темки</span>
+        </a>
+        <a href="/slivy.html" class="nav-item-bottom">
+            <i class="fas fa-image nav-icon-bottom"></i>
+            <span>сливы</span>
+        </a>
+        <a href="/account.html" class="nav-item-bottom">
+            <i class="fas fa-user nav-icon-bottom"></i>
+            <span>аккаунт</span>
+        </a>
+    </nav>
+
+    <!-- Admin Button -->
+    <button class="suggest-button" id="adminBtn">✎</button>
+
+    <!-- Admin Modal -->
+    <div class="suggest-modal" id="adminModal">
+        <div class="suggest-card">
+            <h3>связь с администрацией</h3>
+            
+            <select id="adminType">
+                <option value="question">вопрос</option>
+                <option value="problem">проблема</option>
+                <option value="suggestion">предложение</option>
+            </select>
+            
+            <input type="text" id="adminName" placeholder="ваше имя">
+            <textarea id="adminMessage" placeholder="сообщение..." rows="3"></textarea>
+            
+            <div class="modal-buttons">
+                <button class="suggest-submit" id="adminSubmit">отправить</button>
+                <button class="suggest-cancel" id="adminCancel">отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="messageContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let userIp = null;
+        let verifiedUser = null;
+        let primeUser = null;
+        let threadId = null;
+        let threadData = null;
+
+        // Load Prime status from localStorage
+        const savedPrime = localStorage.getItem('primeUser');
+        if (savedPrime) {
+            primeUser = JSON.parse(savedPrime);
+            document.getElementById('primeStatusBar').style.display = 'flex';
+            document.getElementById('primeUserName').textContent = primeUser.name;
+        }
+
+        async function getUserIp() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                userIp = data.ip;
+                return userIp;
+            } catch {
+                userIp = 'user-' + Math.random().toString(36).substring(2, 10);
+                return userIp;
+            }
+        }
+
+        function showMessage(text, type) {
+            const container = document.getElementById('messageContainer');
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            container.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getThreadIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        async function loadThread() {
+            threadId = getThreadIdFromUrl();
+            
+            if (!threadId) {
+                window.location.href = 'threads.html';
+                return;
+            }
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('threads')
+                    .select('*')
+                    .eq('id', threadId)
+                    .single();
+                
+                if (error) throw error;
+                
+                threadData = data;
+                
+                await supabaseClient
+                    .from('threads')
+                    .update({ views: (data.views || 0) + 1 })
+                    .eq('id', threadId);
+                
+                displayMainPost(data);
+                loadReplies();
+                
+            } catch (error) {
+                console.error('Ошибка загрузки темы:', error);
+                document.getElementById('postLoader').style.display = 'none';
+                document.getElementById('mainPost').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">!</div>
+                        <p>тема не найдена</p>
+                        <a href="threads.html" style="color: #2e3440; text-decoration: underline; margin-top: 12px; display: inline-block;">вернуться к темкам</a>
+                    </div>
+                `;
+            }
+        }
+
+        function displayMainPost(thread) {
+            const postLoader = document.getElementById('postLoader');
+            if (postLoader) postLoader.style.display = 'none';
+            
+            const date = new Date(thread.created_at).toLocaleString('ru', {
+                day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+            });
+            
+            document.getElementById('mainPost').innerHTML = `
+                <div class="post-title">${escapeHtml(thread.title)}</div>
+                <div class="post-meta">
+                    <div class="post-meta-item">
+                        <i class="far fa-user"></i>
+                        ${escapeHtml(thread.author_name || 'Аноним')}
+                    </div>
+                    <div class="post-meta-item">
+                        <i class="far fa-clock"></i>
+                        ${date}
+                    </div>
+                    <div class="post-meta-item">
+                        <i class="far fa-eye"></i>
+                        ${thread.views || 0} просмотров
+                    </div>
+                </div>
+                <div class="post-content">${escapeHtml(thread.content || '')}</div>
+            `;
+        }
+
+        async function loadReplies() {
+            const repliesList = document.getElementById('repliesList');
+            const repliesCount = document.getElementById('repliesCount');
+            
+            if (!repliesList) return;
+            
+            try {
+                repliesList.innerHTML = '<div class="loader"></div>';
+                
+                const { data, error } = await supabaseClient
+                    .from('thread_messages')
+                    .select('*')
+                    .eq('thread_id', threadId)
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                
+                const replies = data?.filter(m => !m.is_first) || [];
+                if (repliesCount) repliesCount.textContent = replies.length;
+                
+                if (replies.length === 0) {
+                    repliesList.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">💬</div>
+                            <p>пока нет ответов</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = '';
+                replies.forEach(reply => {
+                    const date = new Date(reply.created_at).toLocaleString('ru', {
+                        day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+                    });
+                    
+                    let replyClass = 'reply-item';
+                    let badges = '';
+                    
+                    if (reply.is_prime) {
+                        replyClass += ' premium';
+                        badges = '<span class="author-badge badge-premium">prime</span>';
+                    } else if (reply.is_verified) {
+                        replyClass += ' verified';
+                        badges = '<span class="author-badge badge-verified">✓ verified</span>';
+                    }
+                    
+                    html += `
+                        <div class="${replyClass}">
+                            <div class="reply-header">
+                                <div class="reply-author-wrapper">
+                                    <span class="reply-author">
+                                        ${escapeHtml(reply.author || 'Аноним')}
+                                        ${badges}
+                                    </span>
+                                    <div class="mini-profile-card">
+                                        <div class="mini-profile-header">
+                                            <div class="mini-avatar">
+                                                ${(reply.author || 'А')[0].toUpperCase()}
+                                            </div>
+                                            <div class="mini-info">
+                                                <h4>${escapeHtml(reply.author || 'Аноним')}</h4>
+                                                <p>${badges ? 'prime участник' : 'обычный участник'}</p>
+                                            </div>
+                                        </div>
+                                        <div class="mini-stats">
+                                            <div class="mini-stat">
+                                                <div class="mini-stat-value">${Math.floor(Math.random() * 50) + 1}</div>
+                                                <div class="mini-stat-label">комменты</div>
+                                            </div>
+                                            <div class="mini-stat">
+                                                <div class="mini-stat-value">${Math.floor(Math.random() * 100)}</div>
+                                                <div class="mini-stat-label">лайки</div>
+                                            </div>
+                                        </div>
+                                        <a href="/account.html?user=${encodeURIComponent(reply.author || '')}" class="mini-profile-link">
+                                            перейти в профиль →
+                                        </a>
+                                    </div>
+                                </div>
+                                <span class="reply-date">${date}</span>
+                            </div>
+                            <div class="reply-content">${escapeHtml(reply.content)}</div>
+                        </div>
+                    `;
+                });
+                
+                repliesList.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Ошибка загрузки ответов:', error);
+                repliesList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">!</div>
+                        <p>ошибка загрузки ответов</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function submitReply() {
+            const content = document.getElementById('replyContent').value.trim();
+            
+            if (!content) {
+                showMessage('напишите ответ', 'error');
+                return;
+            }
+            
+            if (content.length < 2) {
+                showMessage('слишком короткий ответ', 'error');
+                return;
+            }
+            
+            try {
+                if (!userIp) await getUserIp();
+                
+                const now = new Date().toISOString();
+                
+                const { error: insertError } = await supabaseClient
+                    .from('thread_messages')
+                    .insert({
+                        thread_id: threadId,
+                        content: content,
+                        author: primeUser?.name || verifiedUser || 'Аноним',
+                        ip_address: userIp,
+                        user_agent: navigator.userAgent,
+                        is_first: false,
+                        is_prime: !!primeUser,
+                        is_verified: !!verifiedUser,
+                        created_at: now
+                    });
+                
+                if (insertError) {
+                    console.error('Ошибка при создании ответа:', insertError);
+                    showMessage('ошибка: ' + insertError.message, 'error');
+                    return;
+                }
+                
+                await supabaseClient
+                    .from('threads')
+                    .update({ 
+                        last_activity: now
+                    })
+                    .eq('id', threadId);
+                
+                document.getElementById('replyContent').value = '';
+                
+                showMessage('ответ отправлен', 'success');
+                
+                await loadReplies();
+                
+            } catch (error) {
+                console.error('Ошибка отправки ответа:', error);
+                showMessage('ошибка: ' + error.message, 'error');
+            }
+        }
+
+        window.logoutPrime = function() {
+            primeUser = null;
+            localStorage.removeItem('primeUser');
+            document.getElementById('primeStatusBar').style.display = 'none';
+            showMessage('вы вышли из prime', 'success');
+        };
+
+        // Admin modal functionality
+        const adminBtn = document.getElementById('adminBtn');
+        const adminModal = document.getElementById('adminModal');
+        const adminCancel = document.getElementById('adminCancel');
+        const adminSubmit = document.getElementById('adminSubmit');
+
+        adminBtn?.addEventListener('click', () => {
+            adminModal.style.display = 'block';
+        });
+
+        adminCancel?.addEventListener('click', () => {
+            adminModal.style.display = 'none';
+            document.getElementById('adminName').value = '';
+            document.getElementById('adminMessage').value = '';
+        });
+
+        adminModal?.addEventListener('click', (e) => {
+            if (e.target === adminModal) {
+                adminModal.style.display = 'none';
+                document.getElementById('adminName').value = '';
+                document.getElementById('adminMessage').value = '';
+            }
+        });
+
+        adminSubmit?.addEventListener('click', async () => {
+            const name = document.getElementById('adminName').value.trim() || 'Аноним';
+            const message = document.getElementById('adminMessage').value.trim();
+            
+            if (!message) {
+                showMessage('напишите сообщение', 'error');
+                return;
+            }
+
+            try {
+                await supabaseClient
+                    .from('feedback')
+                    .insert({
+                        type: 'admin_message',
+                        name: name,
+                        message: message,
+                        ip_address: userIp,
+                        user_agent: navigator.userAgent
+                    });
+                
+                showMessage('сообщение отправлено', 'success');
+                adminModal.style.display = 'none';
+                document.getElementById('adminName').value = '';
+                document.getElementById('adminMessage').value = '';
+                
+            } catch (error) {
+                showMessage('ошибка: ' + error.message, 'error');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await getUserIp();
+            await loadThread();
+            
+            document.getElementById('submitReply').addEventListener('click', submitReply);
+            
+            document.getElementById('replyContent').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.ctrlKey) {
+                    e.preventDefault();
+                    submitReply();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
