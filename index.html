@@ -95,7 +95,7 @@
             opacity: 1;
         }
 
-        /* STORIES - с logotype.png */
+        /* STORIES - с logotype.png на месте аватарок */
         .stories-container {
             margin-bottom: 24px;
         }
@@ -129,6 +129,9 @@
             padding: 3px;
             box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0,0,0,0.02);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .story-avatar img {
@@ -145,7 +148,7 @@
             opacity: 0.7;
         }
 
-        /* QUICK NOTIFICATIONS - без рандома */
+        /* QUICK NOTIFICATIONS - с logotype.png в иконках статусов */
         .quick-notifications {
             display: flex;
             gap: 8px;
@@ -184,8 +187,10 @@
             color: white;
         }
 
-        .notification-badge i {
-            font-size: 0.8rem;
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
         }
 
         /* PROMO БЛОК для голосований */
@@ -227,7 +232,7 @@
             margin-left: 16px;
         }
 
-        /* STATS - без рандома */
+        /* STATS */
         .stats-container {
             display: flex;
             gap: 12px;
@@ -382,7 +387,7 @@
             gap: 6px;
         }
 
-        /* MINI PROFILE CARD */
+        /* MINI PROFILE CARD - с logotype.png */
         .mini-profile-card {
             position: absolute;
             bottom: 100%;
@@ -419,6 +424,10 @@
             height: 48px;
             border-radius: 16px;
             object-fit: cover;
+            background: #f8f9fc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .mini-info h4 {
@@ -766,7 +775,7 @@
                 </div>
             </div>
 
-            <!-- Stories с logotype.png -->
+            <!-- Stories с logotype.png на месте аватарок -->
             <div class="stories-container">
                 <div class="stories-scroll">
                     <div class="story-item">
@@ -811,19 +820,23 @@
                 <button class="prime-logout" onclick="logoutPrime()">выйти</button>
             </div>
 
-            <!-- Quick Notifications - без рандома -->
+            <!-- Quick Notifications - с logotype.png в статусах -->
             <div class="quick-notifications">
                 <div class="notification-badge highlight">
-                    <i class="fas fa-calendar"></i> 8 марта
+                    <img src="/logotype.png" class="status-icon" alt="">
+                    <span>8 марта</span>
                 </div>
                 <div class="notification-badge">
-                    <i class="fas fa-star"></i> prime
+                    <img src="/logotype.png" class="status-icon" alt="">
+                    <span>prime</span>
                 </div>
                 <div class="notification-badge">
-                    <i class="fas fa-comments"></i> темки
+                    <img src="/logotype.png" class="status-icon" alt="">
+                    <span>темки</span>
                 </div>
                 <div class="notification-badge">
-                    <i class="fas fa-image"></i> сливы
+                    <img src="/logotype.png" class="status-icon" alt="">
+                    <span>сливы</span>
                 </div>
             </div>
 
@@ -836,7 +849,7 @@
                 <div class="promo-icon">📋</div>
             </div>
 
-            <!-- Stats - без рандома -->
+            <!-- Stats -->
             <div class="stats-container">
                 <div class="stat-item">
                     <div class="stat-value" id="commentsCount">0</div>
