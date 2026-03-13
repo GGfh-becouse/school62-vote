@@ -44,7 +44,7 @@
             border-radius: 24px;
             padding: 16px 20px;
             margin: 8px 0 24px 0;
-            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1), 0 2px 4px 0 rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
@@ -63,14 +63,14 @@
         .logo-icon {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, #2e3440, #4a6fa5);
-            border-radius: 10px;
+            background: #2e3440;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .logo h1 {
@@ -94,16 +94,16 @@
 
         .header-icon {
             font-size: 1.2rem;
-            color: #2e3440;
-            opacity: 0.6;
-            transition: opacity 0.2s;
+            color: #8b93a6;
+            transition: color 0.2s;
+            cursor: pointer;
         }
 
         .header-icon:hover {
-            opacity: 1;
+            color: #2e3440;
         }
 
-        /* STORIES - без картинок */
+        /* STORIES - минималистичные */
         .stories-container {
             margin-bottom: 24px;
         }
@@ -133,24 +133,25 @@
             width: 64px;
             height: 64px;
             border-radius: 20px;
-            background: linear-gradient(145deg, #ffffff, #f0f2f5);
-            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0,0,0,0.02);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
             color: #2e3440;
+            font-weight: 500;
+            font-size: 0.8rem;
+            text-transform: uppercase;
         }
 
         .story-name {
             font-size: 0.65rem;
             font-weight: 500;
-            color: #2e3440;
-            opacity: 0.7;
+            color: #8b93a6;
         }
 
-        /* QUICK NOTIFICATIONS */
+        /* QUICK NOTIFICATIONS - без смайликов */
         .quick-notifications {
             display: flex;
             gap: 8px;
@@ -172,16 +173,14 @@
             font-weight: 500;
             color: #1a1e2b;
             white-space: nowrap;
-            box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            cursor: pointer;
         }
 
         .notification-badge:hover {
-            transform: translateY(-1px);
+            background: #f0f2f5;
         }
 
         .notification-badge.highlight {
@@ -189,8 +188,8 @@
             color: white;
         }
 
-        .notification-badge i {
-            font-size: 0.8rem;
+        .notification-badge.highlight:hover {
+            background: #1a1e2b;
         }
 
         /* PROMO БЛОК */
@@ -199,7 +198,7 @@
             border-radius: 24px;
             padding: 20px;
             margin-bottom: 24px;
-            box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.02);
             display: flex;
             align-items: center;
@@ -216,20 +215,30 @@
             margin-bottom: 4px;
         }
 
-        .promo-text a {
+        .promo-link {
             font-weight: 600;
             color: #2e3440;
             text-decoration: none;
             font-size: 0.95rem;
-            border-bottom: 1px dashed #2e3440;
+            border-bottom: 1px solid #2e3440;
             padding-bottom: 2px;
+            transition: opacity 0.2s;
+        }
+
+        .promo-link:hover {
+            opacity: 0.7;
         }
 
         .promo-icon {
-            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            background: #f0f2f5;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: #2e3440;
-            opacity: 0.3;
-            margin-left: 16px;
+            font-weight: 600;
         }
 
         /* STATS */
@@ -245,7 +254,7 @@
             border-radius: 18px;
             padding: 14px;
             text-align: center;
-            box-shadow: 0 10px 18px -8px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
@@ -262,7 +271,58 @@
             color: #8b93a6;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.2px;
+            letter-spacing: 0.3px;
+        }
+
+        /* PRIME СТАТУС */
+        .prime-status-bar {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .prime-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prime-badge {
+            width: 24px;
+            height: 24px;
+            background: #f1c40f;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .prime-info span {
+            font-size: 0.85rem;
+            color: #1a1e2b;
+            font-weight: 500;
+        }
+
+        .prime-logout {
+            background: none;
+            border: none;
+            color: #8b93a6;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 4px 8px;
+        }
+
+        .prime-logout:hover {
+            color: #2e3440;
         }
 
         /* COMMENTS SECTION */
@@ -271,7 +331,7 @@
             border-radius: 24px;
             padding: 24px;
             margin-bottom: 24px;
-            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
@@ -280,7 +340,7 @@
             font-weight: 600;
             color: #8b93a6;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
             margin-bottom: 20px;
         }
 
@@ -299,11 +359,17 @@
             width: 100%;
             padding: 14px 18px;
             border: none;
-            border-radius: 18px;
+            border-radius: 16px;
             font-size: 0.9rem;
             background: #f8f9fc;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
             border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: border-color 0.2s;
+        }
+
+        .comment-input:focus,
+        .comment-textarea:focus {
+            outline: none;
+            border-color: #2e3440;
         }
 
         .comment-textarea {
@@ -322,12 +388,11 @@
             cursor: pointer;
             width: fit-content;
             margin-top: 10px;
-            box-shadow: 0 6px 12px -4px rgba(46, 52, 64, 0.2);
-            transition: transform 0.2s;
+            transition: background 0.2s;
         }
 
         .comment-submit:hover {
-            transform: translateY(-1px);
+            background: #1a1e2b;
         }
 
         /* COMMENTS LIST */
@@ -344,7 +409,6 @@
             background: #f8f9fc;
             border-radius: 18px;
             padding: 16px;
-            box-shadow: 0 4px 8px -4px rgba(0,0,0,0.04);
             border: 1px solid rgba(0, 0, 0, 0.02);
             transition: transform 0.2s;
             position: relative;
@@ -356,12 +420,12 @@
 
         .comment-item.verified {
             border-left: 3px solid #4a6fa5;
-            background: #f0f4fa;
+            background: #f8fafc;
         }
 
         .comment-item.premium {
             border-left: 3px solid #f1c40f;
-            background: #fef9e7;
+            background: #fcf9f0;
         }
 
         .comment-header {
@@ -387,7 +451,7 @@
             gap: 6px;
         }
 
-        /* MINI PROFILE CARD - без картинок */
+        /* MINI PROFILE CARD */
         .mini-profile-card {
             position: absolute;
             bottom: 100%;
@@ -396,7 +460,7 @@
             border-radius: 20px;
             padding: 16px;
             width: 240px;
-            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.15);
             border: 1px solid rgba(0, 0, 0, 0.02);
             z-index: 1000;
             opacity: 0;
@@ -419,11 +483,11 @@
             margin-bottom: 12px;
         }
 
-        .mini-avatar-placeholder {
+        .mini-avatar {
             width: 48px;
             height: 48px;
             border-radius: 16px;
-            background: linear-gradient(135deg, #2e3440, #4a6fa5);
+            background: #2e3440;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -480,6 +544,7 @@
             font-weight: 500;
             text-align: center;
             transition: background 0.2s;
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .mini-profile-link:hover {
@@ -521,46 +586,6 @@
             line-height: 1.5;
         }
 
-        /* PRIME СТАТУС */
-        .prime-status-bar {
-            background: #ffffff;
-            border-radius: 40px;
-            padding: 12px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.06);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .prime-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .prime-info i {
-            color: #f1c40f;
-            font-size: 1.1rem;
-        }
-
-        .prime-info span {
-            font-size: 0.85rem;
-            color: #1a1e2b;
-            font-weight: 500;
-        }
-
-        .prime-logout {
-            background: none;
-            border: none;
-            color: #8b93a6;
-            font-size: 0.75rem;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 4px 8px;
-        }
-
         /* BOTTOM NAVIGATION */
         .bottom-nav {
             position: fixed;
@@ -574,7 +599,7 @@
             padding: 6px;
             display: flex;
             justify-content: space-around;
-            box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0, 0, 0, 0.02);
             z-index: 1000;
         }
@@ -591,10 +616,15 @@
             padding: 8px 0;
             border-radius: 30px;
             transition: all 0.2s;
+            cursor: pointer;
         }
 
         .nav-item-bottom.active {
             background: #f0f2f5;
+            color: #2e3440;
+        }
+
+        .nav-item-bottom:hover {
             color: #2e3440;
         }
 
@@ -603,13 +633,125 @@
             margin-bottom: 2px;
         }
 
+        /* ADMIN BUTTON */
+        .suggest-button {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            background: #ffffff;
+            color: #2e3440;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 8px 16px -6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 999;
+            transition: transform 0.2s;
+        }
+
+        .suggest-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* MODAL */
+        .suggest-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 10001;
+            display: none;
+        }
+
+        .suggest-card {
+            background: #ffffff;
+            border-radius: 28px;
+            max-width: 400px;
+            width: 90%;
+            margin: 80px auto;
+            padding: 24px;
+            box-shadow: 0 25px 35px -15px rgba(0, 0, 0, 0.2);
+        }
+
+        .suggest-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 16px;
+        }
+
+        .suggest-card select,
+        .suggest-card input,
+        .suggest-card textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            margin-bottom: 10px;
+            background: #f8f9fc;
+            font-size: 0.9rem;
+        }
+
+        .suggest-card select:focus,
+        .suggest-card input:focus,
+        .suggest-card textarea:focus {
+            outline: none;
+            border-color: #2e3440;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .suggest-submit {
+            flex: 2;
+            background: #2e3440;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .suggest-submit:hover {
+            background: #1a1e2b;
+        }
+
+        .suggest-cancel {
+            flex: 1;
+            background: #f0f2f5;
+            color: #1a1e2b;
+            border: none;
+            padding: 12px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .suggest-cancel:hover {
+            background: #e4e6e9;
+        }
+
         /* MESSAGES */
         .message {
             position: fixed;
             top: 20px;
             right: 20px;
             padding: 12px 20px;
-            border-radius: 40px;
+            border-radius: 30px;
             color: white;
             font-weight: 500;
             font-size: 0.85rem;
@@ -641,102 +783,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* BUTTONS */
-        .suggest-button {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 48px;
-            height: 48px;
-            border-radius: 24px;
-            background: #ffffff;
-            color: #2e3440;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 10px 18px -6px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            z-index: 999;
-            transition: transform 0.2s;
-        }
-
-        .suggest-button:hover {
-            transform: translateY(-2px);
-        }
-
-        /* MODAL */
-        .suggest-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px);
-            z-index: 10001;
-            display: none;
-        }
-
-        .suggest-card {
-            background: #ffffff;
-            border-radius: 28px;
-            max-width: 400px;
-            width: 90%;
-            margin: 80px auto;
-            padding: 24px;
-            box-shadow: 0 30px 40px -15px rgba(0, 0, 0, 0.2);
-        }
-
-        .suggest-card h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1a1e2b;
-            margin-bottom: 16px;
-        }
-
-        .suggest-card select,
-        .suggest-card input,
-        .suggest-card textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 16px;
-            margin-bottom: 10px;
-            background: #f8f9fc;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
-            font-size: 0.9rem;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .suggest-submit {
-            flex: 2;
-            background: #2e3440;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-        }
-
-        .suggest-cancel {
-            flex: 1;
-            background: #f0f2f5;
-            color: #1a1e2b;
-            border: none;
-            padding: 12px;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-        }
-
         /* RESPONSIVE */
         @media (max-width: 600px) {
             body {
@@ -763,12 +809,12 @@
 <body>
     <div class="container">
         <div class="main-content">
-            <!-- Header с иконкой вместо логотипа -->
+            <!-- Header -->
             <div class="header">
                 <div class="header-content">
                     <div class="logo">
                         <div class="logo-icon">62</div>
-                        <h1>стена<span>62</span></h1>
+                        <h1>стена</h1>
                     </div>
                     <div class="header-icons">
                         <i class="far fa-bell header-icon"></i>
@@ -777,27 +823,27 @@
                 </div>
             </div>
 
-            <!-- Stories с эмодзи вместо картинок -->
+            <!-- Stories -->
             <div class="stories-container">
                 <div class="stories-scroll">
                     <div class="story-item">
-                        <div class="story-avatar">📰</div>
+                        <div class="story-avatar">новости</div>
                         <span class="story-name">новости</span>
                     </div>
                     <div class="story-item">
-                        <div class="story-avatar">🎉</div>
+                        <div class="story-avatar">события</div>
                         <span class="story-name">события</span>
                     </div>
                     <div class="story-item">
-                        <div class="story-avatar">📊</div>
+                        <div class="story-avatar">опросы</div>
                         <span class="story-name">опросы</span>
                     </div>
                     <div class="story-item">
-                        <div class="story-avatar">💬</div>
+                        <div class="story-avatar">темки</div>
                         <span class="story-name">темки</span>
                     </div>
                     <div class="story-item">
-                        <div class="story-avatar">📸</div>
+                        <div class="story-avatar">сливы</div>
                         <span class="story-name">сливы</span>
                     </div>
                 </div>
@@ -806,39 +852,28 @@
             <!-- Prime статус -->
             <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
                 <div class="prime-info">
-                    <i class="fas fa-crown"></i>
+                    <div class="prime-badge">P</div>
                     <span id="primeUserName">Prime пользователь</span>
                 </div>
                 <button class="prime-logout" onclick="logoutPrime()">выйти</button>
             </div>
 
-            <!-- Quick Notifications -->
+            <!-- Quick Notifications - без смайликов -->
             <div class="quick-notifications">
-                <div class="notification-badge highlight">
-                    <i class="fas fa-calendar"></i>
-                    <span>8 марта</span>
-                </div>
-                <div class="notification-badge">
-                    <i class="fas fa-crown"></i>
-                    <span>prime</span>
-                </div>
-                <div class="notification-badge">
-                    <i class="fas fa-comments"></i>
-                    <span>темки</span>
-                </div>
-                <div class="notification-badge">
-                    <i class="fas fa-image"></i>
-                    <span>сливы</span>
-                </div>
+                <div class="notification-badge highlight">8 марта</div>
+                <div class="notification-badge">prime</div>
+                <div class="notification-badge">темки</div>
+                <div class="notification-badge">сливы</div>
+                <div class="notification-badge">новости</div>
             </div>
 
             <!-- Promo блок для голосований -->
             <div class="promo-block">
                 <div class="promo-text">
-                    <p>📊 потеряли голосования?</p>
-                    <a href="/votes.html">они теперь в отдельной вкладке →</a>
+                    <p>голосования перенесены</p>
+                    <a href="/votes.html" class="promo-link">перейти в раздел →</a>
                 </div>
-                <div class="promo-icon">📋</div>
+                <div class="promo-icon">↗</div>
             </div>
 
             <!-- Stats -->
@@ -864,7 +899,7 @@
                 <div class="comment-form">
                     <div class="comment-input-group">
                         <input type="text" id="commentName" class="comment-input" placeholder="ваше имя" maxlength="30">
-                        <textarea id="commentMessage" class="comment-textarea" placeholder="напишите комментарий..." maxlength="200"></textarea>
+                        <textarea id="commentMessage" class="comment-textarea" placeholder="текст комментария..." maxlength="200"></textarea>
                     </div>
                     <button class="comment-submit" id="submitComment">отправить</button>
                 </div>
@@ -876,18 +911,18 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation с правильными путями -->
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
         <a href="/index.html" class="nav-item-bottom active">
             <i class="fas fa-home nav-icon-bottom"></i>
             <span>главная</span>
         </a>
         <a href="/votes.html" class="nav-item-bottom">
-            <i class="fas fa-chart-pie nav-icon-bottom"></i>
+            <i class="fas fa-chart-bar nav-icon-bottom"></i>
             <span>голосования</span>
         </a>
         <a href="/threads.html" class="nav-item-bottom">
-            <i class="fas fa-comments nav-icon-bottom"></i>
+            <i class="fas fa-comment nav-icon-bottom"></i>
             <span>темки</span>
         </a>
         <a href="/slivy.html" class="nav-item-bottom">
@@ -901,17 +936,17 @@
     </nav>
 
     <!-- Admin Button -->
-    <button class="suggest-button" id="adminBtn">📨</button>
+    <button class="suggest-button" id="adminBtn">✎</button>
 
     <!-- Admin Modal -->
     <div class="suggest-modal" id="adminModal">
         <div class="suggest-card">
-            <h3>связь с админом</h3>
+            <h3>связь с администрацией</h3>
             
             <select id="adminType">
-                <option value="question">❓ вопрос</option>
-                <option value="problem">⚠️ проблема</option>
-                <option value="suggestion">💡 предложение</option>
+                <option value="question">вопрос</option>
+                <option value="problem">проблема</option>
+                <option value="suggestion">предложение</option>
             </select>
             
             <input type="text" id="adminName" placeholder="ваше имя">
@@ -1042,10 +1077,10 @@
                 
                 if (comment.is_prime) {
                     commentClass += ' premium';
-                    badges = '<span class="premium-badge"><i class="fas fa-crown"></i> prime</span>';
+                    badges = '<span class="premium-badge">prime</span>';
                 } else if (comment.is_verified) {
                     commentClass += ' verified';
-                    badges = '<span class="verified-badge"><i class="fas fa-check"></i> verified</span>';
+                    badges = '<span class="verified-badge">✓ verified</span>';
                 }
                 
                 html += `
@@ -1058,7 +1093,7 @@
                                 </span>
                                 <div class="mini-profile-card">
                                     <div class="mini-profile-header">
-                                        <div class="mini-avatar-placeholder">
+                                        <div class="mini-avatar">
                                             ${(comment.name || 'А')[0].toUpperCase()}
                                         </div>
                                         <div class="mini-info">
@@ -1198,11 +1233,15 @@
 
         adminCancel?.addEventListener('click', () => {
             adminModal.style.display = 'none';
+            document.getElementById('adminName').value = '';
+            document.getElementById('adminMessage').value = '';
         });
 
         adminModal?.addEventListener('click', (e) => {
             if (e.target === adminModal) {
                 adminModal.style.display = 'none';
+                document.getElementById('adminName').value = '';
+                document.getElementById('adminMessage').value = '';
             }
         });
 
@@ -1226,7 +1265,7 @@
                         user_agent: navigator.userAgent
                     });
                 
-                showMessage('✅ сообщение отправлено', 'success');
+                showMessage('сообщение отправлено', 'success');
                 adminModal.style.display = 'none';
                 document.getElementById('adminName').value = '';
                 document.getElementById('adminMessage').value = '';
