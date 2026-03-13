@@ -38,7 +38,7 @@
             padding-bottom: 90px;
         }
 
-        /* HEADER с логотипом */
+        /* HEADER */
         .header {
             background: #ffffff;
             border-radius: 24px;
@@ -57,12 +57,20 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
-        .logo img {
+        .logo-icon {
+            width: 32px;
             height: 32px;
-            width: auto;
+            background: linear-gradient(135deg, #2e3440, #4a6fa5);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
         }
 
         .logo h1 {
@@ -95,7 +103,7 @@
             opacity: 1;
         }
 
-        /* STORIES - с logotype.png на месте аватарок */
+        /* STORIES - без картинок */
         .stories-container {
             margin-bottom: 24px;
         }
@@ -125,20 +133,14 @@
             width: 64px;
             height: 64px;
             border-radius: 20px;
-            background: #ffffff;
-            padding: 3px;
+            background: linear-gradient(145deg, #ffffff, #f0f2f5);
             box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0,0,0,0.02);
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .story-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 17px;
-            object-fit: cover;
+            font-size: 1.8rem;
+            color: #2e3440;
         }
 
         .story-name {
@@ -148,7 +150,7 @@
             opacity: 0.7;
         }
 
-        /* QUICK NOTIFICATIONS - с logotype.png в иконках статусов */
+        /* QUICK NOTIFICATIONS */
         .quick-notifications {
             display: flex;
             gap: 8px;
@@ -187,13 +189,11 @@
             color: white;
         }
 
-        .status-icon {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
+        .notification-badge i {
+            font-size: 0.8rem;
         }
 
-        /* PROMO БЛОК для голосований */
+        /* PROMO БЛОК */
         .promo-block {
             background: #ffffff;
             border-radius: 24px;
@@ -387,7 +387,7 @@
             gap: 6px;
         }
 
-        /* MINI PROFILE CARD - с logotype.png */
+        /* MINI PROFILE CARD - без картинок */
         .mini-profile-card {
             position: absolute;
             bottom: 100%;
@@ -419,15 +419,17 @@
             margin-bottom: 12px;
         }
 
-        .mini-avatar {
+        .mini-avatar-placeholder {
             width: 48px;
             height: 48px;
             border-radius: 16px;
-            object-fit: cover;
-            background: #f8f9fc;
+            background: linear-gradient(135deg, #2e3440, #4a6fa5);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
         }
 
         .mini-info h4 {
@@ -761,11 +763,11 @@
 <body>
     <div class="container">
         <div class="main-content">
-            <!-- Header с логотипом -->
+            <!-- Header с иконкой вместо логотипа -->
             <div class="header">
                 <div class="header-content">
                     <div class="logo">
-                        <img src="/logotype.png" alt="62">
+                        <div class="logo-icon">62</div>
                         <h1>стена<span>62</span></h1>
                     </div>
                     <div class="header-icons">
@@ -775,37 +777,27 @@
                 </div>
             </div>
 
-            <!-- Stories с logotype.png на месте аватарок -->
+            <!-- Stories с эмодзи вместо картинок -->
             <div class="stories-container">
                 <div class="stories-scroll">
                     <div class="story-item">
-                        <div class="story-avatar">
-                            <img src="/logotype.png" alt="новости">
-                        </div>
+                        <div class="story-avatar">📰</div>
                         <span class="story-name">новости</span>
                     </div>
                     <div class="story-item">
-                        <div class="story-avatar">
-                            <img src="/logotype.png" alt="события">
-                        </div>
+                        <div class="story-avatar">🎉</div>
                         <span class="story-name">события</span>
                     </div>
                     <div class="story-item">
-                        <div class="story-avatar">
-                            <img src="/logotype.png" alt="опросы">
-                        </div>
+                        <div class="story-avatar">📊</div>
                         <span class="story-name">опросы</span>
                     </div>
                     <div class="story-item">
-                        <div class="story-avatar">
-                            <img src="/logotype.png" alt="темки">
-                        </div>
+                        <div class="story-avatar">💬</div>
                         <span class="story-name">темки</span>
                     </div>
                     <div class="story-item">
-                        <div class="story-avatar">
-                            <img src="/logotype.png" alt="сливы">
-                        </div>
+                        <div class="story-avatar">📸</div>
                         <span class="story-name">сливы</span>
                     </div>
                 </div>
@@ -820,22 +812,22 @@
                 <button class="prime-logout" onclick="logoutPrime()">выйти</button>
             </div>
 
-            <!-- Quick Notifications - с logotype.png в статусах -->
+            <!-- Quick Notifications -->
             <div class="quick-notifications">
                 <div class="notification-badge highlight">
-                    <img src="/logotype.png" class="status-icon" alt="">
+                    <i class="fas fa-calendar"></i>
                     <span>8 марта</span>
                 </div>
                 <div class="notification-badge">
-                    <img src="/logotype.png" class="status-icon" alt="">
+                    <i class="fas fa-crown"></i>
                     <span>prime</span>
                 </div>
                 <div class="notification-badge">
-                    <img src="/logotype.png" class="status-icon" alt="">
+                    <i class="fas fa-comments"></i>
                     <span>темки</span>
                 </div>
                 <div class="notification-badge">
-                    <img src="/logotype.png" class="status-icon" alt="">
+                    <i class="fas fa-image"></i>
                     <span>сливы</span>
                 </div>
             </div>
@@ -1000,24 +992,6 @@
         }
 
         // ============================================
-        // ПОЛУЧЕНИЕ ДАННЫХ ПОЛЬЗОВАТЕЛЯ
-        // ============================================
-        async function getUserData(username) {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('users')
-                    .select('*')
-                    .eq('nickname', username)
-                    .single();
-
-                if (error) return null;
-                return data;
-            } catch {
-                return null;
-            }
-        }
-
-        // ============================================
         // ЗАГРУЗКА КОММЕНТАРИЕВ
         // ============================================
         async function loadComments() {
@@ -1084,7 +1058,9 @@
                                 </span>
                                 <div class="mini-profile-card">
                                     <div class="mini-profile-header">
-                                        <img src="/logotype.png" class="mini-avatar" alt="avatar">
+                                        <div class="mini-avatar-placeholder">
+                                            ${(comment.name || 'А')[0].toUpperCase()}
+                                        </div>
                                         <div class="mini-info">
                                             <h4>${escapeHtml(comment.name || 'Аноним')}</h4>
                                             <p>${badges ? 'prime участник' : 'обычный участник'}</p>
