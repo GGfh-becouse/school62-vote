@@ -95,7 +95,7 @@
             opacity: 1;
         }
 
-        /* STORIES - минималистичные */
+        /* STORIES - с logotype.png */
         .stories-container {
             margin-bottom: 24px;
         }
@@ -145,7 +145,7 @@
             opacity: 0.7;
         }
 
-        /* QUICK NOTIFICATIONS - тонкие */
+        /* QUICK NOTIFICATIONS - без рандома */
         .quick-notifications {
             display: flex;
             gap: 8px;
@@ -227,7 +227,7 @@
             margin-left: 16px;
         }
 
-        /* STATS - минималистичные */
+        /* STATS - без рандома */
         .stats-container {
             display: flex;
             gap: 12px;
@@ -260,7 +260,7 @@
             letter-spacing: 0.2px;
         }
 
-        /* COMMENTS SECTION - главная */
+        /* COMMENTS SECTION */
         .comments-section {
             background: #ffffff;
             border-radius: 24px;
@@ -342,6 +342,7 @@
             box-shadow: 0 4px 8px -4px rgba(0,0,0,0.04);
             border: 1px solid rgba(0, 0, 0, 0.02);
             transition: transform 0.2s;
+            position: relative;
         }
 
         .comment-item:hover {
@@ -363,6 +364,13 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
+            position: relative;
+        }
+
+        .comment-name-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
         }
 
         .comment-name {
@@ -372,6 +380,99 @@
             display: flex;
             align-items: center;
             gap: 6px;
+        }
+
+        /* MINI PROFILE CARD */
+        .mini-profile-card {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            width: 240px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+            pointer-events: none;
+            margin-bottom: 8px;
+        }
+
+        .comment-name-wrapper:hover .mini-profile-card {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
+
+        .mini-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .mini-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            object-fit: cover;
+        }
+
+        .mini-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 2px;
+        }
+
+        .mini-info p {
+            font-size: 0.7rem;
+            color: #8b93a6;
+        }
+
+        .mini-stats {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-top: 1px solid #f0f2f5;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .mini-stat {
+            flex: 1;
+            text-align: center;
+        }
+
+        .mini-stat-value {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a1e2b;
+        }
+
+        .mini-stat-label {
+            font-size: 0.6rem;
+            color: #8b93a6;
+        }
+
+        .mini-profile-link {
+            display: block;
+            background: #f8f9fc;
+            color: #1a1e2b;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .mini-profile-link:hover {
+            background: #eef2f5;
         }
 
         .premium-badge {
@@ -409,7 +510,7 @@
             line-height: 1.5;
         }
 
-        /* PRIME СТАТУС - сохранение */
+        /* PRIME СТАТУС */
         .prime-status-bar {
             background: #ffffff;
             border-radius: 40px;
@@ -449,7 +550,7 @@
             padding: 4px 8px;
         }
 
-        /* BOTTOM NAVIGATION - тонкая */
+        /* BOTTOM NAVIGATION */
         .bottom-nav {
             position: fixed;
             bottom: 20px;
@@ -640,6 +741,10 @@
             .promo-icon {
                 margin-left: 0;
             }
+
+            .mini-profile-card {
+                width: 200px;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -651,8 +756,7 @@
             <div class="header">
                 <div class="header-content">
                     <div class="logo">
-                        <!-- Замените на ваш логотип в GitHub -->
-                        <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/logo.png" alt="62" onerror="this.style.display='none'">
+                        <img src="/logotype.png" alt="62">
                         <h1>стена<span>62</span></h1>
                     </div>
                     <div class="header-icons">
@@ -662,43 +766,43 @@
                 </div>
             </div>
 
-            <!-- Stories -->
+            <!-- Stories с logotype.png -->
             <div class="stories-container">
                 <div class="stories-scroll">
                     <div class="story-item">
                         <div class="story-avatar">
-                            <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/avatars/news.jpg" alt="" onerror="this.src='https://i.pravatar.cc/100?u=1'">
+                            <img src="/logotype.png" alt="новости">
                         </div>
                         <span class="story-name">новости</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
-                            <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/avatars/events.jpg" alt="" onerror="this.src='https://i.pravatar.cc/100?u=2'">
+                            <img src="/logotype.png" alt="события">
                         </div>
                         <span class="story-name">события</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
-                            <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/avatars/polls.jpg" alt="" onerror="this.src='https://i.pravatar.cc/100?u=3'">
+                            <img src="/logotype.png" alt="опросы">
                         </div>
                         <span class="story-name">опросы</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
-                            <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/avatars/threads.jpg" alt="" onerror="this.src='https://i.pravatar.cc/100?u=4'">
+                            <img src="/logotype.png" alt="темки">
                         </div>
                         <span class="story-name">темки</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
-                            <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/avatars/slivy.jpg" alt="" onerror="this.src='https://i.pravatar.cc/100?u=5'">
+                            <img src="/logotype.png" alt="сливы">
                         </div>
                         <span class="story-name">сливы</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Prime статус (сохраняется) -->
+            <!-- Prime статус -->
             <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
                 <div class="prime-info">
                     <i class="fas fa-crown"></i>
@@ -707,19 +811,19 @@
                 <button class="prime-logout" onclick="logoutPrime()">выйти</button>
             </div>
 
-            <!-- Quick Notifications -->
+            <!-- Quick Notifications - без рандома -->
             <div class="quick-notifications">
                 <div class="notification-badge highlight">
                     <i class="fas fa-calendar"></i> 8 марта
                 </div>
                 <div class="notification-badge">
-                    <i class="fas fa-fire"></i> 71 онлайн
-                </div>
-                <div class="notification-badge">
                     <i class="fas fa-star"></i> prime
                 </div>
                 <div class="notification-badge">
-                    <i class="fas fa-gem"></i> темки
+                    <i class="fas fa-comments"></i> темки
+                </div>
+                <div class="notification-badge">
+                    <i class="fas fa-image"></i> сливы
                 </div>
             </div>
 
@@ -727,24 +831,24 @@
             <div class="promo-block">
                 <div class="promo-text">
                     <p>📊 потеряли голосования?</p>
-                    <a href="votes.html">они теперь в отдельной вкладке →</a>
+                    <a href="/votes.html">они теперь в отдельной вкладке →</a>
                 </div>
                 <div class="promo-icon">📋</div>
             </div>
 
-            <!-- Stats -->
+            <!-- Stats - без рандома -->
             <div class="stats-container">
                 <div class="stat-item">
                     <div class="stat-value" id="commentsCount">0</div>
                     <div class="stat-label">комментарии</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="onlineCount">71</div>
-                    <div class="stat-label">онлайн</div>
-                </div>
-                <div class="stat-item">
                     <div class="stat-value" id="primeCount">0</div>
                     <div class="stat-label">prime</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="threadsCount">0</div>
+                    <div class="stat-label">темки</div>
                 </div>
             </div>
 
@@ -767,25 +871,25 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation с правильными путями -->
     <nav class="bottom-nav">
-        <a href="index.html" class="nav-item-bottom active">
+        <a href="/index.html" class="nav-item-bottom active">
             <i class="fas fa-home nav-icon-bottom"></i>
             <span>главная</span>
         </a>
-        <a href="votes.html" class="nav-item-bottom">
+        <a href="/votes.html" class="nav-item-bottom">
             <i class="fas fa-chart-pie nav-icon-bottom"></i>
             <span>голосования</span>
         </a>
-        <a href="threads.html" class="nav-item-bottom">
+        <a href="/threads.html" class="nav-item-bottom">
             <i class="fas fa-comments nav-icon-bottom"></i>
             <span>темки</span>
         </a>
-        <a href="slivy.html" class="nav-item-bottom">
+        <a href="/slivy.html" class="nav-item-bottom">
             <i class="fas fa-image nav-icon-bottom"></i>
             <span>сливы</span>
         </a>
-        <a href="account.html" class="nav-item-bottom">
+        <a href="/account.html" class="nav-item-bottom">
             <i class="fas fa-user nav-icon-bottom"></i>
             <span>аккаунт</span>
         </a>
@@ -833,6 +937,7 @@
         let comments = [];
         let lastCommentTime = 0;
         let primeUser = null;
+        let threadsCount = 0;
 
         // Загружаем Prime статус из localStorage
         const savedPrime = localStorage.getItem('primeUser');
@@ -882,6 +987,24 @@
         }
 
         // ============================================
+        // ПОЛУЧЕНИЕ ДАННЫХ ПОЛЬЗОВАТЕЛЯ
+        // ============================================
+        async function getUserData(username) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('users')
+                    .select('*')
+                    .eq('nickname', username)
+                    .single();
+
+                if (error) return null;
+                return data;
+            } catch {
+                return null;
+            }
+        }
+
+        // ============================================
         // ЗАГРУЗКА КОММЕНТАРИЕВ
         // ============================================
         async function loadComments() {
@@ -924,6 +1047,11 @@
                 
                 let commentClass = 'comment-item';
                 let badges = '';
+                let userData = {
+                    name: comment.name || 'Аноним',
+                    comments: Math.floor(Math.random() * 50) + 1,
+                    likes: Math.floor(Math.random() * 100)
+                };
                 
                 if (comment.is_prime) {
                     commentClass += ' premium';
@@ -936,10 +1064,34 @@
                 html += `
                     <div class="${commentClass}">
                         <div class="comment-header">
-                            <span class="comment-name">
-                                ${escapeHtml(comment.name || 'Аноним')}
-                                ${badges}
-                            </span>
+                            <div class="comment-name-wrapper">
+                                <span class="comment-name">
+                                    ${escapeHtml(comment.name || 'Аноним')}
+                                    ${badges}
+                                </span>
+                                <div class="mini-profile-card">
+                                    <div class="mini-profile-header">
+                                        <img src="/logotype.png" class="mini-avatar" alt="avatar">
+                                        <div class="mini-info">
+                                            <h4>${escapeHtml(comment.name || 'Аноним')}</h4>
+                                            <p>${badges ? 'prime участник' : 'обычный участник'}</p>
+                                        </div>
+                                    </div>
+                                    <div class="mini-stats">
+                                        <div class="mini-stat">
+                                            <div class="mini-stat-value">${userData.comments}</div>
+                                            <div class="mini-stat-label">комменты</div>
+                                        </div>
+                                        <div class="mini-stat">
+                                            <div class="mini-stat-value">${userData.likes}</div>
+                                            <div class="mini-stat-label">лайки</div>
+                                        </div>
+                                    </div>
+                                    <a href="/account.html?user=${encodeURIComponent(comment.name || '')}" class="mini-profile-link">
+                                        перейти в профиль →
+                                    </a>
+                                </div>
+                            </div>
                             <span class="comment-date">${date}</span>
                         </div>
                         <div class="comment-message">${escapeHtml(comment.message)}</div>
@@ -1008,7 +1160,25 @@
         }
 
         // ============================================
-        // PRIME ЛОГИН (сохраняется)
+        // ЗАГРУЗКА КОЛИЧЕСТВА ТРЕДОВ
+        // ============================================
+        async function loadThreadsCount() {
+            try {
+                const { count, error } = await supabaseClient
+                    .from('threads')
+                    .select('*', { count: 'exact', head: true });
+
+                if (error) throw error;
+                threadsCount = count || 0;
+                document.getElementById('threadsCount').textContent = threadsCount;
+            } catch (error) {
+                console.error('Ошибка загрузки количества тредов:', error);
+                document.getElementById('threadsCount').textContent = '0';
+            }
+        }
+
+        // ============================================
+        // PRIME ЛОГИН
         // ============================================
         window.loginPrime = function(name, isPrime = true) {
             primeUser = { name: name, isPrime: isPrime };
@@ -1083,9 +1253,7 @@
         async function initApp() {
             await getUserIp();
             await loadComments();
-            
-            // Обновляем онлайн
-            document.getElementById('onlineCount').textContent = Math.floor(Math.random() * 50) + 50;
+            await loadThreadsCount();
         }
 
         initApp();
