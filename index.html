@@ -38,11 +38,11 @@
             padding-bottom: 90px;
         }
 
-        /* HEADER - мягкая силиконовая плашка */
+        /* HEADER с логотипом */
         .header {
             background: #ffffff;
             border-radius: 24px;
-            padding: 20px 24px;
+            padding: 16px 20px;
             margin: 8px 0 24px 0;
             box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1), 0 2px 4px 0 rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
             border: 1px solid rgba(0, 0, 0, 0.02);
@@ -54,8 +54,19 @@
             align-items: center;
         }
 
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
         .logo h1 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 600;
             color: #1a1e2b;
             letter-spacing: -0.5px;
@@ -63,20 +74,20 @@
 
         .logo span {
             color: #8b93a6;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 400;
             margin-left: 4px;
         }
 
         .header-icons {
             display: flex;
-            gap: 20px;
+            gap: 16px;
         }
 
         .header-icon {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: #2e3440;
-            opacity: 0.7;
+            opacity: 0.6;
             transition: opacity 0.2s;
         }
 
@@ -84,7 +95,7 @@
             opacity: 1;
         }
 
-        /* STORIES - силиконовые круги */
+        /* STORIES - минималистичные */
         .stories-container {
             margin-bottom: 24px;
         }
@@ -105,39 +116,39 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            min-width: 72px;
+            gap: 6px;
+            min-width: 64px;
             cursor: pointer;
         }
 
         .story-avatar {
-            width: 72px;
-            height: 72px;
-            border-radius: 24px;
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
             background: #ffffff;
-            padding: 4px;
-            box-shadow: 0 15px 25px -8px rgba(0, 0, 0, 0.15), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.02);
-            border: 1px solid rgba(255,255,255,0.5);
+            padding: 3px;
+            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0,0,0,0.02);
         }
 
         .story-avatar img {
             width: 100%;
             height: 100%;
-            border-radius: 20px;
+            border-radius: 17px;
             object-fit: cover;
         }
 
         .story-name {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 500;
             color: #2e3440;
-            opacity: 0.8;
+            opacity: 0.7;
         }
 
-        /* QUICK NOTIFICATIONS - мягкие силиконовые бейджи */
+        /* QUICK NOTIFICATIONS - тонкие */
         .quick-notifications {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             overflow-x: auto;
             scrollbar-width: none;
             margin-bottom: 24px;
@@ -150,22 +161,22 @@
 
         .notification-badge {
             background: #ffffff;
-            border-radius: 40px;
-            padding: 12px 24px;
-            font-size: 0.9rem;
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 0.8rem;
             font-weight: 500;
             color: #1a1e2b;
             white-space: nowrap;
-            box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.03), inset 0 -2px 0 rgba(0,0,0,0.02);
+            box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(0, 0, 0, 0.02);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: transform 0.2s;
         }
 
         .notification-badge:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
         .notification-badge.highlight {
@@ -174,391 +185,98 @@
         }
 
         .notification-badge i {
-            font-size: 1rem;
+            font-size: 0.8rem;
         }
 
-        /* STATS - силиконовые блоки */
+        /* PROMO БЛОК для голосований */
+        .promo-block {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .promo-text {
+            flex: 1;
+        }
+
+        .promo-text p {
+            font-size: 0.9rem;
+            color: #8b93a6;
+            margin-bottom: 4px;
+        }
+
+        .promo-text a {
+            font-weight: 600;
+            color: #2e3440;
+            text-decoration: none;
+            font-size: 0.95rem;
+            border-bottom: 1px dashed #2e3440;
+            padding-bottom: 2px;
+        }
+
+        .promo-icon {
+            font-size: 2rem;
+            color: #2e3440;
+            opacity: 0.3;
+            margin-left: 16px;
+        }
+
+        /* STATS - минималистичные */
         .stats-container {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             margin-bottom: 24px;
         }
 
         .stat-item {
             flex: 1;
             background: #ffffff;
-            border-radius: 20px;
-            padding: 16px;
+            border-radius: 18px;
+            padding: 14px;
             text-align: center;
-            box-shadow: 0 15px 25px -8px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            box-shadow: 0 10px 18px -8px rgba(0, 0, 0, 0.06);
             border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .stat-value {
-            font-weight: 700;
-            font-size: 1.8rem;
+            font-weight: 600;
+            font-size: 1.4rem;
             color: #1a1e2b;
             line-height: 1;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .stat-label {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             color: #8b93a6;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.2px;
         }
 
-        /* CREATE POLL - силиконовый блок */
-        .create-poll {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .create-poll h3 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #8b93a6;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
-        }
-
-        .poll-input-group {
-            display: flex;
-            gap: 12px;
-        }
-
-        .poll-input {
-            flex: 1;
-            padding: 16px 20px;
-            border: none;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            background: #f8f9fc;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02), inset 0 -2px 4px rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .poll-input:focus {
-            outline: none;
-            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.03), inset 0 -3px 6px rgba(255, 255, 255, 0.9);
-        }
-
-        .poll-submit {
-            background: #2e3440;
-            color: white;
-            border: none;
-            padding: 16px 28px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            box-shadow: 0 10px 15px -5px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
-        .poll-submit:hover {
-            transform: translateY(-2px);
-        }
-
-        /* POLL ITEMS - силиконовые карточки */
-        .poll-item {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .poll-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .poll-question {
-            font-weight: 600;
-            font-size: 1rem;
-            color: #1a1e2b;
-        }
-
-        .poll-author {
-            font-size: 0.8rem;
-            color: #8b93a6;
-            background: #f8f9fc;
-            padding: 6px 12px;
-            border-radius: 40px;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
-        }
-
-        .poll-votes-total {
-            font-size: 0.85rem;
-            color: #8b93a6;
-            margin-bottom: 16px;
-            font-weight: 500;
-        }
-
-        .poll-options {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .poll-option {
-            flex: 1;
-            background: #f8f9fc;
-            border-radius: 20px;
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 4px 6px -2px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .poll-option:hover {
-            transform: translateY(-2px);
-        }
-
-        .option-label {
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        .option-percent {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #1a1e2b;
-            line-height: 1;
-            margin-bottom: 4px;
-        }
-
-        .option-count {
-            font-size: 0.7rem;
-            color: #8b93a6;
-        }
-
-        .progress-bar {
-            height: 6px;
-            background: #f0f2f5;
-            border-radius: 3px;
-            overflow: hidden;
-            display: flex;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-        }
-
-        .progress-yes {
-            height: 100%;
-            background: #2e3440;
-            transition: width 0.3s;
-        }
-
-        .progress-no {
-            height: 100%;
-            background: #8b93a6;
-            transition: width 0.3s;
-        }
-
-        /* BATTLE SECTION */
-        .battle-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-
-        .candidate-card {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 16px;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            transition: transform 0.2s;
-        }
-
-        .candidate-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .candidate-card.selected {
-            box-shadow: 0 25px 35px -12px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 #2e3440;
-        }
-
-        .candidate-photo {
-            width: 100%;
-            aspect-ratio: 1/1;
-            border-radius: 16px;
-            object-fit: cover;
-            margin-bottom: 12px;
-        }
-
-        .candidate-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #1a1e2b;
-            margin-bottom: 4px;
-        }
-
-        .rating {
-            font-size: 0.8rem;
-            color: #8b93a6;
-        }
-
-        .rarity-badge {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            background: #ffffff;
-            padding: 6px 12px;
-            border-radius: 40px;
-            font-size: 0.6rem;
-            font-weight: 600;
-            color: #1a1e2b;
-            box-shadow: 0 4px 8px -2px rgba(0,0,0,0.1), inset 0 -1px 0 rgba(0,0,0,0.02);
-            border: 1px solid rgba(0,0,0,0.02);
-        }
-
-        .vote-button {
-            background: #2e3440;
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 24px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 24px;
-            box-shadow: 0 15px 25px -8px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
-        .vote-button:hover {
-            transform: translateY(-2px);
-        }
-
-        /* PREDICTION BOX */
-        .prediction-box {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .prediction-box h3 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #8b93a6;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
-        }
-
-        .prediction-bars {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .prediction-bar {
-            flex: 1;
-            height: 8px;
-            background: #f0f2f5;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-        }
-
-        .prediction-fill {
-            height: 100%;
-            background: #2e3440;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 4px;
-            color: white;
-            font-size: 0.5rem;
-        }
-
-        /* ACHIEVEMENTS */
-        .achievements {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .achievements h3 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #8b93a6;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
-        }
-
-        .achievement-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .achievement-item {
-            background: #f8f9fc;
-            border-radius: 20px;
-            padding: 16px 12px;
-            text-align: center;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 4px 6px -2px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .achievement-item.unlocked {
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 6px 10px -4px rgba(46, 52, 64, 0.2);
-        }
-
-        .achievement-icon {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-        }
-
-        .achievement-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #1a1e2b;
-        }
-
-        /* COMMENTS */
+        /* COMMENTS SECTION - главная */
         .comments-section {
             background: #ffffff;
             border-radius: 24px;
-            padding: 20px;
+            padding: 24px;
             margin-bottom: 24px;
-            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .comments-section h3 {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: #8b93a6;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+            margin-bottom: 20px;
         }
 
         .comment-form {
@@ -568,23 +286,23 @@
         .comment-input-group {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .comment-input,
         .comment-textarea {
             width: 100%;
-            padding: 16px 20px;
+            padding: 14px 18px;
             border: none;
-            border-radius: 20px;
-            font-size: 0.95rem;
+            border-radius: 18px;
+            font-size: 0.9rem;
             background: #f8f9fc;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02), inset 0 -2px 4px rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
             border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .comment-textarea {
-            min-height: 100px;
+            min-height: 80px;
             resize: none;
         }
 
@@ -592,33 +310,52 @@
             background: #2e3440;
             color: white;
             border: none;
-            padding: 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.95rem;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.85rem;
             cursor: pointer;
-            width: 100%;
-            margin-top: 12px;
-            box-shadow: 0 10px 15px -5px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.1);
+            width: fit-content;
+            margin-top: 10px;
+            box-shadow: 0 6px 12px -4px rgba(46, 52, 64, 0.2);
             transition: transform 0.2s;
         }
 
         .comment-submit:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
+        /* COMMENTS LIST */
         .comments-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 4px;
         }
 
         .comment-item {
             background: #f8f9fc;
-            border-radius: 20px;
+            border-radius: 18px;
             padding: 16px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 4px 6px -2px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 8px -4px rgba(0,0,0,0.04);
             border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s;
+        }
+
+        .comment-item:hover {
+            transform: translateX(2px);
+        }
+
+        .comment-item.verified {
+            border-left: 3px solid #4a6fa5;
+            background: #f0f4fa;
+        }
+
+        .comment-item.premium {
+            border-left: 3px solid #f1c40f;
+            background: #fef9e7;
         }
 
         .comment-header {
@@ -632,10 +369,37 @@
             font-weight: 600;
             font-size: 0.9rem;
             color: #1a1e2b;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .premium-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            background: #f1c40f;
+            color: #1a1e2b;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            background: #4a6fa5;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 600;
         }
 
         .comment-date {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #8b93a6;
         }
 
@@ -645,74 +409,47 @@
             line-height: 1.5;
         }
 
-        /* VERIFICATION */
-        .verification-box {
+        /* PRIME СТАТУС - сохранение */
+        .prime-status-bar {
             background: #ffffff;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border-radius: 40px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.06);
             border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .verification-box h3 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #8b93a6;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
-        }
-
-        .verification-input-group {
-            display: flex;
-            gap: 12px;
-        }
-
-        .verification-input {
-            flex: 1;
-            padding: 16px 20px;
-            border: none;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            background: #f8f9fc;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02), inset 0 -2px 4px rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .verification-button {
-            background: #2e3440;
-            color: white;
-            border: none;
-            padding: 16px 28px;
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 10px 15px -5px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
-        .verification-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .verification-status {
-            margin-top: 16px;
-            padding: 16px;
-            background: #f0f9f0;
-            border-radius: 20px;
-            color: #1e7e34;
-            display: none;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
-        }
-
-        .verification-status.active {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
         }
 
-        /* BOTTOM NAVIGATION - силиконовая панель */
+        .prime-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prime-info i {
+            color: #f1c40f;
+            font-size: 1.1rem;
+        }
+
+        .prime-info span {
+            font-size: 0.85rem;
+            color: #1a1e2b;
+            font-weight: 500;
+        }
+
+        .prime-logout {
+            background: none;
+            border: none;
+            color: #8b93a6;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 4px 8px;
+        }
+
+        /* BOTTOM NAVIGATION - тонкая */
         .bottom-nav {
             position: fixed;
             bottom: 20px;
@@ -721,11 +458,11 @@
             max-width: 560px;
             width: calc(100% - 32px);
             background: #ffffff;
-            border-radius: 32px;
-            padding: 8px;
+            border-radius: 40px;
+            padding: 6px;
             display: flex;
             justify-content: space-around;
-            box-shadow: 0 25px 40px -15px rgba(0, 0, 0, 0.2), 0 2px 8px -4px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.02);
+            box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.15);
             border: 1px solid rgba(0, 0, 0, 0.02);
             z-index: 1000;
         }
@@ -736,23 +473,60 @@
             align-items: center;
             color: #8b93a6;
             text-decoration: none;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 500;
             flex: 1;
-            padding: 12px 0;
-            border-radius: 24px;
+            padding: 8px 0;
+            border-radius: 30px;
             transition: all 0.2s;
         }
 
         .nav-item-bottom.active {
-            background: #f8f9fc;
+            background: #f0f2f5;
             color: #2e3440;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.05);
         }
 
         .nav-icon-bottom {
-            font-size: 1.5rem;
-            margin-bottom: 4px;
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+
+        /* MESSAGES */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            z-index: 10002;
+            animation: slideIn 0.2s;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .message.success { background: #2e3440; }
+        .message.error { background: #c0392b; }
+
+        .loader {
+            border: 2px solid #f0f2f5;
+            border-top: 2px solid #2e3440;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* BUTTONS */
@@ -760,22 +534,22 @@
             position: fixed;
             bottom: 100px;
             right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
             background: #ffffff;
             color: #2e3440;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.15), 0 2px 8px -4px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.02);
+            box-shadow: 0 10px 18px -6px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0, 0, 0, 0.02);
             z-index: 999;
             transition: transform 0.2s;
         }
 
         .suggest-button:hover {
-            transform: translateY(-4px);
+            transform: translateY(-2px);
         }
 
         /* MODAL */
@@ -793,39 +567,38 @@
 
         .suggest-card {
             background: #ffffff;
-            border-radius: 32px;
+            border-radius: 28px;
             max-width: 400px;
             width: 90%;
             margin: 80px auto;
-            padding: 28px;
-            box-shadow: 0 40px 60px -20px rgba(0, 0, 0, 0.3), 0 2px 8px -4px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.02);
-            border: 1px solid rgba(0, 0, 0, 0.02);
+            padding: 24px;
+            box-shadow: 0 30px 40px -15px rgba(0, 0, 0, 0.2);
         }
 
         .suggest-card h3 {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
             color: #1a1e2b;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .suggest-card select,
         .suggest-card input,
         .suggest-card textarea {
             width: 100%;
-            padding: 16px;
+            padding: 12px 16px;
             border: none;
             border-radius: 16px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             background: #f8f9fc;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02), inset 0 -2px 4px rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.02);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02);
+            font-size: 0.9rem;
         }
 
         .modal-buttons {
             display: flex;
-            gap: 12px;
-            margin-top: 20px;
+            gap: 8px;
+            margin-top: 16px;
         }
 
         .suggest-submit {
@@ -833,120 +606,23 @@
             background: #2e3440;
             color: white;
             border: none;
-            padding: 16px;
-            border-radius: 20px;
-            font-weight: 600;
+            padding: 12px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.85rem;
             cursor: pointer;
-            box-shadow: 0 10px 15px -5px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.1);
         }
 
         .suggest-cancel {
             flex: 1;
-            background: #f8f9fc;
+            background: #f0f2f5;
             color: #1a1e2b;
             border: none;
-            padding: 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.05);
-        }
-
-        /* MESSAGES */
-        .message {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 16px 24px;
-            border-radius: 20px;
-            color: white;
-            font-weight: 500;
-            z-index: 10002;
-            animation: slideIn 0.2s;
-            box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.2), 0 2px 8px -4px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .message.success { background: #2e3440; }
-        .message.error { background: #c0392b; }
-
-        .loader {
-            border: 3px solid #f0f2f5;
-            border-top: 3px solid #2e3440;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* RATING LIST */
-        .rating-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .rating-item {
-            display: flex;
-            align-items: center;
             padding: 12px;
-            background: #f8f9fc;
-            border-radius: 16px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .rating-position {
-            width: 30px;
-            height: 30px;
-            background: #2e3440;
-            color: white;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.8rem;
-            margin-right: 12px;
-        }
-
-        .rating-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 12px;
-            object-fit: cover;
-            margin-right: 12px;
-        }
-
-        .rating-info {
-            flex: 1;
-        }
-
-        .rating-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #1a1e2b;
-        }
-
-        .rating-score {
-            font-weight: 600;
-            color: #2e3440;
-            background: #f0f2f5;
-            padding: 4px 12px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
         }
 
         /* RESPONSIVE */
@@ -955,16 +631,14 @@
                 padding: 16px 0;
             }
             
-            .poll-options {
+            .promo-block {
                 flex-direction: column;
+                text-align: center;
+                gap: 12px;
             }
             
-            .verification-input-group {
-                flex-direction: column;
-            }
-            
-            .stats-container {
-                flex-direction: row;
+            .promo-icon {
+                margin-left: 0;
             }
         }
     </style>
@@ -973,15 +647,17 @@
 <body>
     <div class="container">
         <div class="main-content">
-            <!-- Header -->
+            <!-- Header с логотипом -->
             <div class="header">
                 <div class="header-content">
                     <div class="logo">
+                        <!-- Замените на ваш логотип в GitHub -->
+                        <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/logo.png" alt="62" onerror="this.style.display='none'">
                         <h1>стена<span>62</span></h1>
                     </div>
                     <div class="header-icons">
-                        <i class="fas fa-heart header-icon"></i>
-                        <i class="fas fa-paper-plane header-icon"></i>
+                        <i class="far fa-bell header-icon"></i>
+                        <i class="far fa-user header-icon"></i>
                     </div>
                 </div>
             </div>
@@ -991,35 +667,44 @@
                 <div class="stories-scroll">
                     <div class="story-item">
                         <div class="story-avatar">
-                            <img src="https://i.pravatar.cc/100?u=1" alt="">
+                            <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/avatars/news.jpg" alt="" onerror="this.src='https://i.pravatar.cc/100?u=1'">
                         </div>
                         <span class="story-name">новости</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
-                            <img src="https://i.pravatar.cc/100?u=2" alt="">
+                            <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/avatars/events.jpg" alt="" onerror="this.src='https://i.pravatar.cc/100?u=2'">
                         </div>
                         <span class="story-name">события</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
-                            <img src="https://i.pravatar.cc/100?u=3" alt="">
+                            <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/avatars/polls.jpg" alt="" onerror="this.src='https://i.pravatar.cc/100?u=3'">
                         </div>
                         <span class="story-name">опросы</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
-                            <img src="https://i.pravatar.cc/100?u=4" alt="">
+                            <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/avatars/threads.jpg" alt="" onerror="this.src='https://i.pravatar.cc/100?u=4'">
                         </div>
                         <span class="story-name">темки</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
-                            <img src="https://i.pravatar.cc/100?u=5" alt="">
+                            <img src="https://raw.githubusercontent.com/ggfh-becouse/school62-vote/main/avatars/slivy.jpg" alt="" onerror="this.src='https://i.pravatar.cc/100?u=5'">
                         </div>
                         <span class="story-name">сливы</span>
                     </div>
                 </div>
+            </div>
+
+            <!-- Prime статус (сохраняется) -->
+            <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
+                <div class="prime-info">
+                    <i class="fas fa-crown"></i>
+                    <span id="primeUserName">Prime пользователь</span>
+                </div>
+                <button class="prime-logout" onclick="logoutPrime()">выйти</button>
             </div>
 
             <!-- Quick Notifications -->
@@ -1028,114 +713,55 @@
                     <i class="fas fa-calendar"></i> 8 марта
                 </div>
                 <div class="notification-badge">
-                    <i class="fas fa-crown"></i> ТОП-1
-                </div>
-                <div class="notification-badge">
-                    <i class="fas fa-users"></i> 71 онлайн
-                </div>
-                <div class="notification-badge">
-                    <i class="fas fa-fire"></i> горячее
+                    <i class="fas fa-fire"></i> 71 онлайн
                 </div>
                 <div class="notification-badge">
                     <i class="fas fa-star"></i> prime
                 </div>
+                <div class="notification-badge">
+                    <i class="fas fa-gem"></i> темки
+                </div>
+            </div>
+
+            <!-- Promo блок для голосований -->
+            <div class="promo-block">
+                <div class="promo-text">
+                    <p>📊 потеряли голосования?</p>
+                    <a href="votes.html">они теперь в отдельной вкладке →</a>
+                </div>
+                <div class="promo-icon">📋</div>
             </div>
 
             <!-- Stats -->
             <div class="stats-container">
                 <div class="stat-item">
-                    <div class="stat-value" id="voteCountBadge">0</div>
-                    <div class="stat-label">голоса</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="comboCount">0</div>
-                    <div class="stat-label">комбо</div>
+                    <div class="stat-value" id="commentsCount">0</div>
+                    <div class="stat-label">комментарии</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-value" id="onlineCount">71</div>
                     <div class="stat-label">онлайн</div>
                 </div>
-            </div>
-
-            <!-- Create Poll -->
-            <div class="create-poll">
-                <h3>создать опрос</h3>
-                <div class="poll-input-group">
-                    <input type="text" id="pollQuestion" class="poll-input" placeholder="ваш вопрос..." maxlength="120">
-                    <button class="poll-submit" id="createPollBtn">→</button>
+                <div class="stat-item">
+                    <div class="stat-value" id="primeCount">0</div>
+                    <div class="stat-label">prime</div>
                 </div>
             </div>
 
-            <!-- Polls List -->
-            <div id="pollsList"></div>
-
-            <!-- Battle -->
-            <div id="battleContainer" style="display: none;">
-                <div class="prediction-box">
-                    <h3>прогноз</h3>
-                    <div class="prediction-bars" id="predictionBars"></div>
-                </div>
-
-                <div class="battle-container" id="battleGrid"></div>
-                
-                <button class="vote-button" id="voteBtn">голосовать</button>
-            </div>
-
-            <!-- Achievements -->
-            <div class="achievements">
-                <h3>достижения</h3>
-                <div class="achievement-grid">
-                    <div class="achievement-item" id="ach1">
-                        <div class="achievement-icon">🗳️</div>
-                        <div class="achievement-title">новичок</div>
-                    </div>
-                    <div class="achievement-item" id="ach2">
-                        <div class="achievement-icon">🔥</div>
-                        <div class="achievement-title">комбо 3</div>
-                    </div>
-                    <div class="achievement-item" id="ach3">
-                        <div class="achievement-icon">⭐</div>
-                        <div class="achievement-title">предсказатель</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Verification -->
-            <div class="verification-box">
-                <h3>prime вход</h3>
-                <div class="verification-input-group">
-                    <input type="text" id="verifyUsername" class="verification-input" placeholder="ник">
-                    <input type="password" id="verifyPassword" class="verification-input" placeholder="пароль">
-                    <button class="verification-button" id="verifyBtn">→</button>
-                </div>
-                <div class="verification-status" id="verifyStatus">
-                    <span>✓</span> <span id="verifyStatusText"></span>
-                    <button onclick="logoutVerification()">выйти</button>
-                </div>
-            </div>
-
-            <!-- Comments -->
+            <!-- Comments Section -->
             <div class="comments-section">
                 <h3>комментарии</h3>
                 
                 <div class="comment-form">
                     <div class="comment-input-group">
-                        <input type="text" id="commentName" class="comment-input" placeholder="ваше имя">
-                        <textarea id="commentMessage" class="comment-textarea" placeholder="напишите комментарий..."></textarea>
+                        <input type="text" id="commentName" class="comment-input" placeholder="ваше имя" maxlength="30">
+                        <textarea id="commentMessage" class="comment-textarea" placeholder="напишите комментарий..." maxlength="200"></textarea>
                     </div>
                     <button class="comment-submit" id="submitComment">отправить</button>
                 </div>
 
                 <div class="comments-list" id="commentsList">
-                    <div class="comment-loading">загрузка...</div>
-                </div>
-            </div>
-
-            <!-- Rating -->
-            <div id="ratingContainer" style="display: none;">
-                <div class="achievements">
-                    <h3>топ-10</h3>
-                    <div id="ratingList" class="rating-list"></div>
+                    <div class="loader"></div>
                 </div>
             </div>
         </div>
@@ -1143,19 +769,23 @@
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <a href="#" class="nav-item-bottom active">
+        <a href="index.html" class="nav-item-bottom active">
             <i class="fas fa-home nav-icon-bottom"></i>
             <span>главная</span>
         </a>
-        <a href="#" class="nav-item-bottom">
+        <a href="votes.html" class="nav-item-bottom">
             <i class="fas fa-chart-pie nav-icon-bottom"></i>
             <span>голосования</span>
         </a>
-        <a href="#" class="nav-item-bottom">
+        <a href="threads.html" class="nav-item-bottom">
+            <i class="fas fa-comments nav-icon-bottom"></i>
+            <span>темки</span>
+        </a>
+        <a href="slivy.html" class="nav-item-bottom">
             <i class="fas fa-image nav-icon-bottom"></i>
             <span>сливы</span>
         </a>
-        <a href="#" class="nav-item-bottom">
+        <a href="account.html" class="nav-item-bottom">
             <i class="fas fa-user nav-icon-bottom"></i>
             <span>аккаунт</span>
         </a>
@@ -1176,7 +806,7 @@
             </select>
             
             <input type="text" id="adminName" placeholder="ваше имя">
-            <textarea id="adminMessage" placeholder="сообщение..." rows="4"></textarea>
+            <textarea id="adminMessage" placeholder="сообщение..." rows="3"></textarea>
             
             <div class="modal-buttons">
                 <button class="suggest-submit" id="adminSubmit">отправить</button>
@@ -1199,21 +829,21 @@
         // ============================================
         // ПЕРЕМЕННЫЕ
         // ============================================
-        let allCandidates = [];
-        let currentPair = [];
-        let selectedCandidateId = null;
         let userIp = null;
-        let userVotes = {};
-        let userVoteCount = 0;
-        let comboCount = 0;
-        let lastCommentTime = null;
         let comments = [];
-        let verifiedUser = null;
-        let polls = [];
-        let votedPolls = new Set();
-        let lastPollTime = 0;
+        let lastCommentTime = 0;
+        let primeUser = null;
 
-        const randomNames = ['Аноним'];
+        // Загружаем Prime статус из localStorage
+        const savedPrime = localStorage.getItem('primeUser');
+        if (savedPrime) {
+            primeUser = JSON.parse(savedPrime);
+            document.getElementById('primeStatusBar').style.display = 'flex';
+            document.getElementById('primeUserName').textContent = primeUser.name;
+        }
+
+        // Имена для случайных комментаторов
+        const randomNames = ['Аноним', 'Ученик', 'Школьник', 'Выпускник'];
 
         // ============================================
         // ПОЛУЧЕНИЕ IP
@@ -1252,185 +882,6 @@
         }
 
         // ============================================
-        // ЗАГРУЗКА ОПРОСОВ
-        // ============================================
-        async function loadPolls() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('polls')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
-                if (error) throw error;
-
-                polls = data || [];
-                await loadVotedPolls();
-                displayPolls();
-                
-            } catch (error) {
-                console.error('Ошибка загрузки опросов:', error);
-            }
-        }
-
-        async function loadVotedPolls() {
-            if (!userIp) return;
-            
-            try {
-                const { data, error } = await supabaseClient
-                    .from('poll_votes')
-                    .select('poll_id')
-                    .eq('ip_address', userIp);
-
-                if (error) throw error;
-
-                votedPolls.clear();
-                data?.forEach(v => votedPolls.add(v.poll_id));
-                
-            } catch (error) {
-                console.error('Ошибка загрузки голосований:', error);
-            }
-        }
-
-        function displayPolls() {
-            const pollsList = document.getElementById('pollsList');
-            if (!pollsList) return;
-            
-            if (!polls || polls.length === 0) {
-                pollsList.innerHTML = `
-                    <div style="text-align:center; padding:30px; color:#8e8e8e;">
-                        <div style="font-size:36px; margin-bottom:10px;">📊</div>
-                        <p>Пока нет опросов</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            polls.forEach(poll => {
-                const totalVotes = (poll.yes_votes || 0) + (poll.no_votes || 0);
-                const yesPercent = totalVotes > 0 ? Math.round((poll.yes_votes / totalVotes) * 100) : 50;
-                const noPercent = totalVotes > 0 ? Math.round((poll.no_votes / totalVotes) * 100) : 50;
-                const hasVoted = votedPolls.has(poll.id);
-                
-                html += `
-                    <div class="create-poll" style="border-top: 1px solid #dbdbdb;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                            <span style="font-weight: 500;">${escapeHtml(poll.question)}</span>
-                            <span style="color: #8e8e8e;">👤 ${escapeHtml(poll.author || 'Аноним')}</span>
-                        </div>
-                        
-                        <div style="color: #8e8e8e; font-size: 0.8rem; margin-bottom: 12px;">Всего голосов: ${totalVotes}</div>
-                        
-                        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-                            <div onclick="${!hasVoted ? `vote(${poll.id}, 'yes')` : ''}" 
-                                 style="flex: 1; text-align: center; padding: 12px; border: 1px solid #dbdbdb; border-radius: 8px; cursor: ${hasVoted ? 'default' : 'pointer'}; background: ${hasVoted ? '#fafafa' : 'white'}">
-                                <div style="font-weight: 600;">✅ ДА</div>
-                                <div style="font-size: 1.2rem; font-weight: 600;">${yesPercent}%</div>
-                                <div style="font-size: 0.7rem; color: #8e8e8e;">${poll.yes_votes || 0}</div>
-                            </div>
-                            
-                            <div onclick="${!hasVoted ? `vote(${poll.id}, 'no')` : ''}" 
-                                 style="flex: 1; text-align: center; padding: 12px; border: 1px solid #dbdbdb; border-radius: 8px; cursor: ${hasVoted ? 'default' : 'pointer'}; background: ${hasVoted ? '#fafafa' : 'white'}}">
-                                <div style="font-weight: 600;">❌ НЕТ</div>
-                                <div style="font-size: 1.2rem; font-weight: 600;">${noPercent}%</div>
-                                <div style="font-size: 0.7rem; color: #8e8e8e;">${poll.no_votes || 0}</div>
-                            </div>
-                        </div>
-                        
-                        <div style="height: 4px; background: #dbdbdb; border-radius: 2px; overflow: hidden; display: flex;">
-                            <div style="width: ${yesPercent}%; background: #4a6fa5;"></div>
-                            <div style="width: ${noPercent}%; background: #c0392b;"></div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            pollsList.innerHTML = html;
-        }
-
-        window.vote = async function(pollId, choice) {
-            if (votedPolls.has(pollId)) {
-                showMessage('Вы уже голосовали', 'error');
-                return;
-            }
-
-            try {
-                const poll = polls.find(p => p.id === pollId);
-                
-                if (choice === 'yes') {
-                    await supabaseClient
-                        .from('polls')
-                        .update({ yes_votes: (poll.yes_votes || 0) + 1 })
-                        .eq('id', pollId);
-                    poll.yes_votes = (poll.yes_votes || 0) + 1;
-                } else {
-                    await supabaseClient
-                        .from('polls')
-                        .update({ no_votes: (poll.no_votes || 0) + 1 })
-                        .eq('id', pollId);
-                    poll.no_votes = (poll.no_votes || 0) + 1;
-                }
-
-                await supabaseClient
-                    .from('poll_votes')
-                    .insert({
-                        poll_id: pollId,
-                        ip_address: userIp,
-                        choice: choice
-                    });
-
-                votedPolls.add(pollId);
-                displayPolls();
-                showMessage('✅ Голос учтён!', 'success');
-                
-            } catch (error) {
-                showMessage('Ошибка: ' + error.message, 'error');
-            }
-        };
-
-        document.getElementById('createPollBtn').addEventListener('click', async function() {
-            const question = document.getElementById('pollQuestion').value.trim();
-            
-            if (!question) {
-                showMessage('Введите вопрос', 'error');
-                return;
-            }
-
-            const now = Date.now();
-            if (now - lastPollTime < 30000) {
-                showMessage('Подождите 30 секунд', 'error');
-                return;
-            }
-
-            try {
-                if (!userIp) await getUserIp();
-
-                const { data, error } = await supabaseClient
-                    .from('polls')
-                    .insert({
-                        question: question,
-                        author: verifiedUser || 'Аноним',
-                        ip_address: userIp,
-                        yes_votes: 0,
-                        no_votes: 0
-                    })
-                    .select()
-                    .single();
-
-                if (error) throw error;
-
-                polls.unshift(data);
-                lastPollTime = now;
-                document.getElementById('pollQuestion').value = '';
-                displayPolls();
-                showMessage('✅ Опрос создан!', 'success');
-                
-            } catch (error) {
-                showMessage('Ошибка: ' + error.message, 'error');
-            }
-        });
-
-        // ============================================
         // ЗАГРУЗКА КОММЕНТАРИЕВ
         // ============================================
         async function loadComments() {
@@ -1439,13 +890,21 @@
                     .from('comments')
                     .select('*')
                     .order('created_at', { ascending: false })
-                    .limit(20);
+                    .limit(50);
 
                 if (error) throw error;
                 comments = data || [];
                 displayComments();
+                
+                document.getElementById('commentsCount').textContent = comments.length;
+                
+                // Подсчет Prime пользователей
+                const primeCount = comments.filter(c => c.is_prime || c.is_verified).length;
+                document.getElementById('primeCount').textContent = primeCount;
+                
             } catch (error) {
                 console.error('Ошибка загрузки комментариев:', error);
+                document.getElementById('commentsList').innerHTML = '<div style="text-align:center; color:#8b93a6;">ошибка загрузки</div>';
             }
         }
 
@@ -1453,7 +912,7 @@
             const list = document.getElementById('commentsList');
             
             if (!comments || comments.length === 0) {
-                list.innerHTML = '<div style="text-align:center; color:#8e8e8e;">Нет комментариев</div>';
+                list.innerHTML = '<div style="text-align:center; color:#8b93a6; padding:20px;">нет комментариев</div>';
                 return;
             }
 
@@ -1463,10 +922,24 @@
                     day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
                 });
                 
+                let commentClass = 'comment-item';
+                let badges = '';
+                
+                if (comment.is_prime) {
+                    commentClass += ' premium';
+                    badges = '<span class="premium-badge"><i class="fas fa-crown"></i> prime</span>';
+                } else if (comment.is_verified) {
+                    commentClass += ' verified';
+                    badges = '<span class="verified-badge"><i class="fas fa-check"></i> verified</span>';
+                }
+                
                 html += `
-                    <div class="comment-item ${comment.is_verified ? 'verified-comment' : ''}">
+                    <div class="${commentClass}">
                         <div class="comment-header">
-                            <span class="comment-name">${escapeHtml(comment.name || 'Аноним')}</span>
+                            <span class="comment-name">
+                                ${escapeHtml(comment.name || 'Аноним')}
+                                ${badges}
+                            </span>
                             <span class="comment-date">${date}</span>
                         </div>
                         <div class="comment-message">${escapeHtml(comment.message)}</div>
@@ -1476,6 +949,9 @@
             list.innerHTML = html;
         }
 
+        // ============================================
+        // ОТПРАВКА КОММЕНТАРИЯ
+        // ============================================
         document.getElementById('submitComment').addEventListener('click', submitComment);
 
         async function submitComment() {
@@ -1486,13 +962,21 @@
             let message = messageInput.value.trim();
 
             if (lastCommentTime && (Date.now() - lastCommentTime) < 5000) {
-                showMessage('Подождите 5 секунд', 'error');
+                showMessage('подождите 5 секунд', 'error');
                 return;
             }
 
-            if (!name) name = randomNames[Math.floor(Math.random() * randomNames.length)];
+            if (!name) {
+                name = randomNames[Math.floor(Math.random() * randomNames.length)];
+            }
+
             if (!message) {
-                showMessage('Напишите комментарий', 'error');
+                showMessage('напишите комментарий', 'error');
+                return;
+            }
+
+            if (message.length > 200) {
+                showMessage('максимум 200 символов', 'error');
                 return;
             }
 
@@ -1501,7 +985,8 @@
                     name: name,
                     message: message,
                     ip_address: userIp,
-                    is_verified: !!verifiedUser
+                    is_verified: !!primeUser,
+                    is_prime: primeUser?.isPrime || false
                 };
 
                 const { error } = await supabaseClient
@@ -1514,268 +999,31 @@
                 nameInput.value = '';
                 messageInput.value = '';
                 
-                showMessage('Комментарий добавлен!', 'success');
+                showMessage('комментарий добавлен!', 'success');
                 await loadComments();
                 
             } catch (error) {
-                showMessage('Ошибка: ' + error.message, 'error');
+                showMessage('ошибка: ' + error.message, 'error');
             }
         }
 
         // ============================================
-        // ВЕРИФИКАЦИЯ
+        // PRIME ЛОГИН (сохраняется)
         // ============================================
-        document.getElementById('verifyBtn').addEventListener('click', verifyUser);
-
-        async function verifyUser() {
-            const username = document.getElementById('verifyUsername').value.trim();
-            const password = document.getElementById('verifyPassword').value.trim();
-            
-            if (!username || !password) {
-                showMessage('Введите ник и пароль', 'error');
-                return;
-            }
-            
-            try {
-                const { data, error } = await supabaseClient
-                    .from('verified_users')
-                    .select('*')
-                    .eq('username', username)
-                    .eq('password', password)
-                    .single();
-                
-                if (error || !data) {
-                    showMessage('Неверный ник или пароль', 'error');
-                    return;
-                }
-                
-                verifiedUser = username;
-                
-                document.getElementById('verifyStatus').classList.add('active');
-                document.getElementById('verifyStatusText').innerHTML = `Вы вошли как <strong>${username}</strong>`;
-                
-                document.getElementById('verifyUsername').value = '';
-                document.getElementById('verifyPassword').value = '';
-                
-                showMessage('Верификация успешна!', 'success');
-                
-            } catch (error) {
-                showMessage('Ошибка: ' + error.message, 'error');
-            }
-        }
-
-        window.logoutVerification = function() {
-            verifiedUser = null;
-            document.getElementById('verifyStatus').classList.remove('active');
-            showMessage('Вы вышли', 'success');
-        }
-
-        // ============================================
-        // КАНДИДАТЫ (старый код)
-        // ============================================
-        async function loadCandidates() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('candidates')
-                    .select('*')
-                    .order('votes', { ascending: false });
-
-                if (error) throw error;
-
-                allCandidates = (data || []).map(c => ({
-                    ...c,
-                    rarity: getRandomRarity()
-                }));
-
-                if (allCandidates.length < 2) return;
-
-                document.getElementById('battleContainer').style.display = 'block';
-                document.getElementById('ratingContainer').style.display = 'block';
-                
-                updateLeaderboard();
-                selectNewPair();
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        function getRandomRarity() {
-            const rand = Math.random();
-            if (rand < 0.5) return 'common';
-            if (rand < 0.75) return 'rare';
-            if (rand < 0.9) return 'epic';
-            return 'legendary';
-        }
-
-        const rarityNames = { common: 'Обычная', rare: 'Редкая', epic: 'Эпическая', legendary: 'Легендарная' };
-
-        async function loadUserVotes() {
-            if (!userIp) return;
-            
-            try {
-                const { data } = await supabaseClient
-                    .from('votes')
-                    .select('candidate_id')
-                    .eq('ip_address', userIp);
-
-                if (data) {
-                    userVotes = {};
-                    data.forEach(vote => {
-                        userVotes[vote.candidate_id] = true;
-                    });
-                    userVoteCount = data.length;
-                    document.getElementById('voteCountBadge').textContent = userVoteCount;
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        function selectNewPair() {
-            if (allCandidates.length < 2) return;
-            
-            const available = allCandidates.filter(c => !userVotes[c.id]);
-            
-            if (available.length >= 2) {
-                let first, second;
-                do {
-                    const shuffled = [...available].sort(() => 0.5 - Math.random());
-                    first = shuffled[0];
-                    second = shuffled[1];
-                } while (first.id === second.id);
-                currentPair = [first, second];
-            } else {
-                const shuffled = [...allCandidates].sort(() => 0.5 - Math.random());
-                currentPair = [shuffled[0], shuffled[1]];
-            }
-            
-            renderBattle(currentPair);
-            updatePrediction();
-        }
-
-        function renderBattle(pair) {
-            const container = document.getElementById('battleGrid');
-            if (!container) return;
-            
-            container.innerHTML = `
-                <div class="candidate-card ${userVotes[pair[0].id] ? 'voted' : ''}" onclick="selectCandidate(${pair[0].id})" id="card-${pair[0].id}">
-                    <span class="rarity-badge rarity-${pair[0].rarity}">${rarityNames[pair[0].rarity]}</span>
-                    <img src="${pair[0].photo_url || 'https://i.pravatar.cc/300'}" class="candidate-photo">
-                    <div class="candidate-info">
-                        <div class="candidate-name">${pair[0].name}</div>
-                        <span class="rating">❤️ ${pair[0].votes || 0}</span>
-                    </div>
-                </div>
-                
-                <div class="candidate-card ${userVotes[pair[1].id] ? 'voted' : ''}" onclick="selectCandidate(${pair[1].id})" id="card-${pair[1].id}">
-                    <span class="rarity-badge rarity-${pair[1].rarity}">${rarityNames[pair[1].rarity]}</span>
-                    <img src="${pair[1].photo_url || 'https://i.pravatar.cc/300'}" class="candidate-photo">
-                    <div class="candidate-info">
-                        <div class="candidate-name">${pair[1].name}</div>
-                        <span class="rating">❤️ ${pair[1].votes || 0}</span>
-                    </div>
-                </div>
-            `;
-            
-            selectedCandidateId = null;
-        }
-
-        window.selectCandidate = function(id) {
-            if (userVotes[id]) return;
-            document.querySelectorAll('.candidate-card').forEach(c => c.classList.remove('selected'));
-            const card = document.getElementById(`card-${id}`);
-            if (card) card.classList.add('selected');
-            selectedCandidateId = id;
+        window.loginPrime = function(name, isPrime = true) {
+            primeUser = { name: name, isPrime: isPrime };
+            localStorage.setItem('primeUser', JSON.stringify(primeUser));
+            document.getElementById('primeStatusBar').style.display = 'flex';
+            document.getElementById('primeUserName').textContent = name;
+            showMessage('добро пожаловать в prime!', 'success');
         };
 
-        function updatePrediction() {
-            if (!currentPair || currentPair.length < 2) return;
-            
-            const total = (currentPair[0].votes || 0) + (currentPair[1].votes || 0);
-            const left = total ? Math.round((currentPair[0].votes / total) * 100) : 50;
-            const right = 100 - left;
-            
-            const bars = document.getElementById('predictionBars');
-            if (!bars) return;
-            
-            bars.innerHTML = `
-                <div class="prediction-bar">
-                    <div class="prediction-fill" style="width: ${left}%;">${left}%</div>
-                </div>
-                <div class="prediction-bar">
-                    <div class="prediction-fill" style="width: ${right}%;">${right}%</div>
-                </div>
-            `;
-        }
-
-        document.getElementById('voteBtn').addEventListener('click', async function() {
-            if (!selectedCandidateId) {
-                showMessage('Выберите кандидата', 'error');
-                return;
-            }
-            
-            const winner = currentPair.find(c => c.id === selectedCandidateId);
-            const loser = currentPair.find(c => c.id !== selectedCandidateId);
-            
-            if (!winner || !loser) return;
-            
-            if (userVotes[winner.id]) {
-                showMessage('Вы уже голосовали', 'error');
-                return;
-            }
-
-            try {
-                const newWinnerVotes = (winner.votes || 0) + 100;
-                const newLoserVotes = Math.max(0, (loser.votes || 0) - 50);
-
-                await Promise.all([
-                    supabaseClient.from('candidates').update({ votes: newWinnerVotes }).eq('id', winner.id),
-                    supabaseClient.from('candidates').update({ votes: newLoserVotes }).eq('id', loser.id),
-                    supabaseClient.from('votes').insert({
-                        candidate_id: winner.id,
-                        ip_address: userIp,
-                        user_agent: navigator.userAgent
-                    })
-                ]);
-
-                winner.votes = newWinnerVotes;
-                loser.votes = newLoserVotes;
-                userVotes[winner.id] = true;
-                userVoteCount++;
-                
-                document.getElementById('voteCountBadge').textContent = userVoteCount;
-                
-                if (userVoteCount >= 1) document.getElementById('ach1').classList.add('unlocked');
-                
-                updateLeaderboard();
-                showMessage(`✅ +100 ${winner.name}!`, 'success');
-                
-                selectedCandidateId = null;
-                selectNewPair();
-                
-            } catch (err) {
-                showMessage('Ошибка: ' + err.message, 'error');
-            }
-        });
-
-        function updateLeaderboard() {
-            const sorted = [...allCandidates].sort((a, b) => (b.votes || 0) - (a.votes || 0));
-            const container = document.getElementById('ratingList');
-            if (!container) return;
-            
-            let html = '';
-            sorted.slice(0, 10).forEach((c, index) => {
-                html += `
-                    <div class="rating-item" style="display: flex; align-items: center; padding: 8px; border-bottom: 1px solid #dbdbdb;">
-                        <div style="width: 24px; height: 24px; background: #4a6fa5; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; margin-right: 10px;">${index + 1}</div>
-                        <img src="${c.photo_url || 'https://i.pravatar.cc/300'}" style="width: 32px; height: 32px; border-radius: 8px; margin-right: 10px;">
-                        <div style="flex: 1; font-weight: 500;">${c.name}</div>
-                        <div style="color: #4a6fa5;">❤️ ${c.votes || 0}</div>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
+        window.logoutPrime = function() {
+            primeUser = null;
+            localStorage.removeItem('primeUser');
+            document.getElementById('primeStatusBar').style.display = 'none';
+            showMessage('вы вышли из prime', 'success');
+        };
 
         // ============================================
         // КНОПКА СВЯЗИ
@@ -1804,7 +1052,7 @@
             const message = document.getElementById('adminMessage').value.trim();
             
             if (!message) {
-                showMessage('Напишите сообщение', 'error');
+                showMessage('напишите сообщение', 'error');
                 return;
             }
 
@@ -1819,13 +1067,13 @@
                         user_agent: navigator.userAgent
                     });
                 
-                showMessage('✅ Сообщение отправлено', 'success');
+                showMessage('✅ сообщение отправлено', 'success');
                 adminModal.style.display = 'none';
                 document.getElementById('adminName').value = '';
                 document.getElementById('adminMessage').value = '';
                 
             } catch (error) {
-                showMessage('Ошибка: ' + error.message, 'error');
+                showMessage('ошибка: ' + error.message, 'error');
             }
         });
 
@@ -1834,11 +1082,9 @@
         // ============================================
         async function initApp() {
             await getUserIp();
-            await loadUserVotes();
-            await loadCandidates();
             await loadComments();
-            await loadPolls();
             
+            // Обновляем онлайн
             document.getElementById('onlineCount').textContent = Math.floor(Math.random() * 50) + 50;
         }
 
