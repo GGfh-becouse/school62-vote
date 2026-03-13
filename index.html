@@ -6,49 +6,46 @@
     <title>СТЕНА 62 ШКОЛЫ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-            background: #fafafa;
+            background: #f8f9fc;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 0;
-            margin: 0;
+            padding: 32px 0;
         }
 
         .container {
             max-width: 600px;
             width: 100%;
-            background: white;
-            min-height: 100vh;
+            background: #f8f9fc;
             position: relative;
-            border-left: 1px solid #dbdbdb;
-            border-right: 1px solid #dbdbdb;
+            padding: 0 16px;
         }
 
-        /* ОСНОВНОЙ КОНТЕНТ */
+        /* MAIN CONTENT */
         .main-content {
-            padding: 0 0 70px 0;
             display: block;
+            padding-bottom: 90px;
         }
 
-        /* Шапка */
+        /* HEADER - мягкая силиконовая плашка */
         .header {
-            padding: 12px 16px;
-            border-bottom: 1px solid #dbdbdb;
-            background: white;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px 24px;
+            margin: 8px 0 24px 0;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1), 0 2px 4px 0 rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .header-content {
@@ -58,14 +55,14 @@
         }
 
         .logo h1 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 600;
-            color: #262626;
+            color: #1a1e2b;
             letter-spacing: -0.5px;
         }
 
         .logo span {
-            color: #8e8e8e;
+            color: #8b93a6;
             font-size: 0.9rem;
             font-weight: 400;
             margin-left: 4px;
@@ -73,28 +70,31 @@
 
         .header-icons {
             display: flex;
-            gap: 16px;
+            gap: 20px;
         }
 
         .header-icon {
-            font-size: 1.3rem;
-            cursor: pointer;
-            color: #262626;
+            font-size: 1.4rem;
+            color: #2e3440;
+            opacity: 0.7;
+            transition: opacity 0.2s;
         }
 
-        /* STORIES */
+        .header-icon:hover {
+            opacity: 1;
+        }
+
+        /* STORIES - силиконовые круги */
         .stories-container {
-            padding: 12px 0;
-            border-bottom: 1px solid #dbdbdb;
-            background: white;
+            margin-bottom: 24px;
         }
 
         .stories-scroll {
             display: flex;
             gap: 16px;
-            padding: 0 16px;
             overflow-x: auto;
             scrollbar-width: none;
+            padding: 4px 0;
         }
 
         .stories-scroll::-webkit-scrollbar {
@@ -105,45 +105,43 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
-            min-width: 70px;
+            gap: 8px;
+            min-width: 72px;
             cursor: pointer;
         }
 
         .story-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #f09433, #d62976, #962fbf);
-            padding: 2px;
+            width: 72px;
+            height: 72px;
+            border-radius: 24px;
+            background: #ffffff;
+            padding: 4px;
+            box-shadow: 0 15px 25px -8px rgba(0, 0, 0, 0.15), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(255,255,255,0.5);
         }
 
         .story-avatar img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            border: 2px solid white;
+            border-radius: 20px;
             object-fit: cover;
         }
 
         .story-name {
             font-size: 0.7rem;
-            color: #262626;
-            max-width: 70px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            font-weight: 500;
+            color: #2e3440;
+            opacity: 0.8;
         }
 
-        /* БЫСТРЫЕ УВЕДОМЛЕНИЯ */
+        /* QUICK NOTIFICATIONS - мягкие силиконовые бейджи */
         .quick-notifications {
-            padding: 8px 16px;
-            background: #f0f2f5;
-            margin: 8px 0;
             display: flex;
             gap: 12px;
             overflow-x: auto;
             scrollbar-width: none;
+            margin-bottom: 24px;
+            padding: 4px 0;
         }
 
         .quick-notifications::-webkit-scrollbar {
@@ -151,256 +149,462 @@
         }
 
         .notification-badge {
-            background: white;
-            border-radius: 30px;
-            padding: 8px 16px;
-            font-size: 0.85rem;
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 12px 24px;
+            font-size: 0.9rem;
             font-weight: 500;
-            color: #262626;
-            border: 1px solid #dbdbdb;
+            color: #1a1e2b;
+            white-space: nowrap;
+            box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.03), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
             display: flex;
             align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .notification-badge:hover {
+            transform: translateY(-2px);
         }
 
         .notification-badge.highlight {
-            background: #4a6fa5;
+            background: #2e3440;
             color: white;
-            border-color: #4a6fa5;
         }
 
         .notification-badge i {
             font-size: 1rem;
         }
 
-        /* СТАТИСТИКА */
+        /* STATS - силиконовые блоки */
         .stats-container {
             display: flex;
-            justify-content: space-around;
-            padding: 16px;
-            border-bottom: 1px solid #dbdbdb;
-            background: white;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .stat-item {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 16px;
             text-align: center;
+            box-shadow: 0 15px 25px -8px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .stat-value {
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: #262626;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #1a1e2b;
+            line-height: 1;
+            margin-bottom: 4px;
         }
 
         .stat-label {
-            font-size: 0.8rem;
-            color: #8e8e8e;
+            font-size: 0.75rem;
+            color: #8b93a6;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
-        /* ОПРОСЫ */
+        /* CREATE POLL - силиконовый блок */
         .create-poll {
-            background: white;
-            padding: 16px;
-            border-bottom: 1px solid #dbdbdb;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .create-poll h3 {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: #262626;
-            margin-bottom: 12px;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
         }
 
         .poll-input-group {
             display: flex;
-            gap: 8px;
+            gap: 12px;
         }
 
         .poll-input {
             flex: 1;
-            padding: 10px 12px;
-            border: 1px solid #dbdbdb;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            background: #fafafa;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            background: #f8f9fc;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02), inset 0 -2px 4px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .poll-input:focus {
             outline: none;
-            border-color: #a8a8a8;
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.03), inset 0 -3px 6px rgba(255, 255, 255, 0.9);
         }
 
         .poll-submit {
-            background: #4a6fa5;
+            background: #2e3440;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 16px 28px;
+            border-radius: 20px;
             font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
+            box-shadow: 0 10px 15px -5px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.1);
+            transition: transform 0.2s;
         }
 
-        /* БИТВА */
+        .poll-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        /* POLL ITEMS - силиконовые карточки */
+        .poll-item {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .poll-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .poll-question {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1a1e2b;
+        }
+
+        .poll-author {
+            font-size: 0.8rem;
+            color: #8b93a6;
+            background: #f8f9fc;
+            padding: 6px 12px;
+            border-radius: 40px;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .poll-votes-total {
+            font-size: 0.85rem;
+            color: #8b93a6;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .poll-options {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .poll-option {
+            flex: 1;
+            background: #f8f9fc;
+            border-radius: 20px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 4px 6px -2px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .poll-option:hover {
+            transform: translateY(-2px);
+        }
+
+        .option-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .option-percent {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a1e2b;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .option-count {
+            font-size: 0.7rem;
+            color: #8b93a6;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #f0f2f5;
+            border-radius: 3px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .progress-yes {
+            height: 100%;
+            background: #2e3440;
+            transition: width 0.3s;
+        }
+
+        .progress-no {
+            height: 100%;
+            background: #8b93a6;
+            transition: width 0.3s;
+        }
+
+        /* BATTLE SECTION */
         .battle-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2px;
-            background: #dbdbdb;
-            border-bottom: 1px solid #dbdbdb;
+            gap: 16px;
+            margin-bottom: 16px;
         }
 
         .candidate-card {
-            background: white;
-            padding: 12px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 16px;
             position: relative;
             cursor: pointer;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s;
+        }
+
+        .candidate-card:hover {
+            transform: translateY(-4px);
         }
 
         .candidate-card.selected {
-            background: #f0f2f5;
+            box-shadow: 0 25px 35px -12px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 #2e3440;
         }
 
         .candidate-photo {
             width: 100%;
             aspect-ratio: 1/1;
-            border-radius: 8px;
+            border-radius: 16px;
             object-fit: cover;
-        }
-
-        .candidate-info {
-            margin-top: 8px;
+            margin-bottom: 12px;
         }
 
         .candidate-name {
             font-weight: 600;
-            font-size: 0.9rem;
-            color: #262626;
+            font-size: 0.95rem;
+            color: #1a1e2b;
+            margin-bottom: 4px;
         }
 
         .rating {
             font-size: 0.8rem;
-            color: #8e8e8e;
+            color: #8b93a6;
         }
 
         .rarity-badge {
             position: absolute;
-            top: 18px;
-            right: 18px;
-            background: white;
-            padding: 4px 8px;
-            border-radius: 4px;
+            top: 24px;
+            right: 24px;
+            background: #ffffff;
+            padding: 6px 12px;
+            border-radius: 40px;
             font-size: 0.6rem;
             font-weight: 600;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: #1a1e2b;
+            box-shadow: 0 4px 8px -2px rgba(0,0,0,0.1), inset 0 -1px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.02);
         }
 
         .vote-button {
-            background: #4a6fa5;
+            background: #2e3440;
             color: white;
             border: none;
-            padding: 12px;
+            padding: 16px;
+            border-radius: 24px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             cursor: pointer;
             width: 100%;
-            margin-top: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 15px 25px -8px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.1);
+            transition: transform 0.2s;
         }
 
-        /* ПРЕДСКАЗАНИЯ */
+        .vote-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* PREDICTION BOX */
         .prediction-box {
-            background: white;
-            padding: 16px;
-            border-bottom: 1px solid #dbdbdb;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .prediction-box h3 {
             font-size: 0.9rem;
-            color: #262626;
-            margin-bottom: 12px;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
         }
 
         .prediction-bars {
             display: flex;
-            gap: 8px;
+            gap: 12px;
             align-items: center;
         }
 
         .prediction-bar {
             flex: 1;
             height: 8px;
-            background: #dbdbdb;
+            background: #f0f2f5;
             border-radius: 4px;
             overflow: hidden;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
         }
 
         .prediction-fill {
             height: 100%;
-            background: #4a6fa5;
+            background: #2e3440;
             display: flex;
             align-items: center;
             justify-content: flex-end;
             padding-right: 4px;
             color: white;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
         }
 
-        /* КОММЕНТАРИИ */
+        /* ACHIEVEMENTS */
+        .achievements {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .achievements h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .achievement-item {
+            background: #f8f9fc;
+            border-radius: 20px;
+            padding: 16px 12px;
+            text-align: center;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 4px 6px -2px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .achievement-item.unlocked {
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 6px 10px -4px rgba(46, 52, 64, 0.2);
+        }
+
+        .achievement-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .achievement-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1a1e2b;
+        }
+
+        /* COMMENTS */
         .comments-section {
-            background: white;
-            padding: 16px;
-            border-bottom: 1px solid #dbdbdb;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .comments-section h3 {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: #262626;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 16px;
         }
 
         .comment-form {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .comment-input-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .comment-input {
+        .comment-input,
+        .comment-textarea {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #dbdbdb;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            background: #fafafa;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            background: #f8f9fc;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02), inset 0 -2px 4px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .comment-textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #dbdbdb;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            min-height: 80px;
-            background: #fafafa;
+            min-height: 100px;
             resize: none;
         }
 
         .comment-submit {
-            background: #4a6fa5;
+            background: #2e3440;
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 16px;
+            border-radius: 20px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             cursor: pointer;
             width: 100%;
+            margin-top: 12px;
+            box-shadow: 0 10px 15px -5px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .comment-submit:hover {
+            transform: translateY(-2px);
         }
 
         .comments-list {
@@ -410,13 +614,11 @@
         }
 
         .comment-item {
-            background: #fafafa;
-            padding: 12px;
-            border-radius: 8px;
-        }
-
-        .comment-item.verified-comment {
-            background: #f0f2f5;
+            background: #f8f9fc;
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 4px 6px -2px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .comment-header {
@@ -428,140 +630,80 @@
 
         .comment-name {
             font-weight: 600;
-            color: #262626;
             font-size: 0.9rem;
+            color: #1a1e2b;
         }
 
         .comment-date {
-            color: #8e8e8e;
             font-size: 0.7rem;
+            color: #8b93a6;
         }
 
         .comment-message {
-            color: #262626;
             font-size: 0.9rem;
-            line-height: 1.4;
+            color: #1a1e2b;
+            line-height: 1.5;
         }
 
-        /* НИЖНЯЯ НАВИГАЦИЯ (INSTAGRAM СТИЛЬ) */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            max-width: 600px;
-            width: 100%;
-            background: white;
-            border-top: 1px solid #dbdbdb;
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-            z-index: 1000;
-        }
-
-        .nav-item-bottom {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #8e8e8e;
-            text-decoration: none;
-            font-size: 0.7rem;
-            flex: 1;
-        }
-
-        .nav-item-bottom.active {
-            color: #4a6fa5;
-        }
-
-        .nav-icon-bottom {
-            font-size: 1.5rem;
-            margin-bottom: 2px;
-        }
-
-        /* АЧИВКИ */
-        .achievements {
-            background: white;
-            padding: 16px;
-            border-bottom: 1px solid #dbdbdb;
-        }
-
-        .achievements h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #262626;
-            margin-bottom: 12px;
-        }
-
-        .achievement-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-
-        .achievement-item {
-            background: #fafafa;
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .achievement-item.unlocked {
-            background: #f0f2f5;
-        }
-
-        .achievement-icon {
-            font-size: 1.5rem;
-            margin-bottom: 4px;
-        }
-
-        .achievement-title {
-            font-size: 0.75rem;
-            color: #262626;
-        }
-
-        /* ВЕРИФИКАЦИЯ */
+        /* VERIFICATION */
         .verification-box {
-            background: white;
-            padding: 16px;
-            border-bottom: 1px solid #dbdbdb;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.02), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .verification-box h3 {
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: #262626;
-            margin-bottom: 12px;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
         }
 
         .verification-input-group {
             display: flex;
-            gap: 8px;
+            gap: 12px;
         }
 
         .verification-input {
             flex: 1;
-            padding: 10px 12px;
-            border: 1px solid #dbdbdb;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            background: #fafafa;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            background: #f8f9fc;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02), inset 0 -2px 4px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
         .verification-button {
-            background: #4a6fa5;
+            background: #2e3440;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 16px 28px;
+            border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
+            box-shadow: 0 10px 15px -5px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .verification-button:hover {
+            transform: translateY(-2px);
         }
 
         .verification-status {
-            margin-top: 12px;
-            padding: 10px;
-            background: #d4edda;
-            border-radius: 8px;
-            color: #155724;
+            margin-top: 16px;
+            padding: 16px;
+            background: #f0f9f0;
+            border-radius: 20px;
+            color: #1e7e34;
             display: none;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
         }
 
         .verification-status.active {
@@ -570,85 +712,159 @@
             gap: 8px;
         }
 
-        /* КНОПКА СВЯЗИ */
-        .suggest-button {
+        /* BOTTOM NAVIGATION - силиконовая панель */
+        .bottom-nav {
             position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #4a6fa5;
-            color: white;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            z-index: 999;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 560px;
+            width: calc(100% - 32px);
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 8px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 25px 40px -15px rgba(0, 0, 0, 0.2), 0 2px 8px -4px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 1000;
         }
 
-        /* МОДАЛКА */
+        .nav-item-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8b93a6;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 500;
+            flex: 1;
+            padding: 12px 0;
+            border-radius: 24px;
+            transition: all 0.2s;
+        }
+
+        .nav-item-bottom.active {
+            background: #f8f9fc;
+            color: #2e3440;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.05);
+        }
+
+        .nav-icon-bottom {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        /* BUTTONS */
+        .suggest-button {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 20px;
+            background: #ffffff;
+            color: #2e3440;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.15), 0 2px 8px -4px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 999;
+            transition: transform 0.2s;
+        }
+
+        .suggest-button:hover {
+            transform: translateY(-4px);
+        }
+
+        /* MODAL */
         .suggest-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
             z-index: 10001;
             display: none;
         }
 
         .suggest-card {
-            background: white;
-            border-radius: 12px;
+            background: #ffffff;
+            border-radius: 32px;
             max-width: 400px;
             width: 90%;
-            margin: 50px auto;
-            padding: 20px;
+            margin: 80px auto;
+            padding: 28px;
+            box-shadow: 0 40px 60px -20px rgba(0, 0, 0, 0.3), 0 2px 8px -4px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .suggest-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 20px;
         }
 
         .suggest-card select,
         .suggest-card input,
         .suggest-card textarea {
             width: 100%;
-            padding: 10px;
+            padding: 16px;
+            border: none;
+            border-radius: 16px;
             margin-bottom: 12px;
-            border: 1px solid #dbdbdb;
-            border-radius: 8px;
-            background: #fafafa;
+            background: #f8f9fc;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02), inset 0 -2px 4px rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
-        .suggest-card button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
         }
 
         .suggest-submit {
-            background: #4a6fa5;
+            flex: 2;
+            background: #2e3440;
             color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -5px rgba(46, 52, 64, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.05), inset 0 -2px 0 rgba(0,0,0,0.1);
         }
 
         .suggest-cancel {
-            background: #fafafa;
-            color: #262626;
+            flex: 1;
+            background: #f8f9fc;
+            color: #1a1e2b;
+            border: none;
+            padding: 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.05);
         }
 
-        /* СООБЩЕНИЯ */
+        /* MESSAGES */
         .message {
             position: fixed;
-            top: 16px;
-            right: 16px;
-            padding: 12px 20px;
-            border-radius: 8px;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 20px;
             color: white;
             font-weight: 500;
             z-index: 10002;
             animation: slideIn 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.2), 0 2px 8px -4px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         @keyframes slideIn {
@@ -656,12 +872,12 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        .message.success { background: #4a6fa5; }
+        .message.success { background: #2e3440; }
         .message.error { background: #c0392b; }
 
         .loader {
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #4a6fa5;
+            border: 3px solid #f0f2f5;
+            border-top: 3px solid #2e3440;
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -673,17 +889,95 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* RATING LIST */
+        .rating-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .rating-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fc;
+            border-radius: 16px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .rating-position {
+            width: 30px;
+            height: 30px;
+            background: #2e3440;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-right: 12px;
+        }
+
+        .rating-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-right: 12px;
+        }
+
+        .rating-info {
+            flex: 1;
+        }
+
+        .rating-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a1e2b;
+        }
+
+        .rating-score {
+            font-weight: 600;
+            color: #2e3440;
+            background: #f0f2f5;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 0;
+            }
+            
+            .poll-options {
+                flex-direction: column;
+            }
+            
+            .verification-input-group {
+                flex-direction: column;
+            }
+            
+            .stats-container {
+                flex-direction: row;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <div class="main-content" id="mainContent">
-            <!-- Шапка -->
+        <div class="main-content">
+            <!-- Header -->
             <div class="header">
                 <div class="header-content">
                     <div class="logo">
-                        <h1>Стена<span>№62</span></h1>
+                        <h1>стена<span>62</span></h1>
                     </div>
                     <div class="header-icons">
                         <i class="fas fa-heart header-icon"></i>
@@ -699,55 +993,55 @@
                         <div class="story-avatar">
                             <img src="https://i.pravatar.cc/100?u=1" alt="">
                         </div>
-                        <span class="story-name">Новости</span>
+                        <span class="story-name">новости</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
                             <img src="https://i.pravatar.cc/100?u=2" alt="">
                         </div>
-                        <span class="story-name">События</span>
+                        <span class="story-name">события</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
                             <img src="https://i.pravatar.cc/100?u=3" alt="">
                         </div>
-                        <span class="story-name">Опросы</span>
+                        <span class="story-name">опросы</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
                             <img src="https://i.pravatar.cc/100?u=4" alt="">
                         </div>
-                        <span class="story-name">Темки</span>
+                        <span class="story-name">темки</span>
                     </div>
                     <div class="story-item">
                         <div class="story-avatar">
                             <img src="https://i.pravatar.cc/100?u=5" alt="">
                         </div>
-                        <span class="story-name">Сливы</span>
+                        <span class="story-name">сливы</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Быстрые уведомления -->
+            <!-- Quick Notifications -->
             <div class="quick-notifications">
                 <div class="notification-badge highlight">
-                    <i class="fas fa-bell"></i> 8 марта!
+                    <i class="fas fa-calendar"></i> 8 марта
                 </div>
                 <div class="notification-badge">
-                    <i class="fas fa-chart-line"></i> ТОП-1: Анна
+                    <i class="fas fa-crown"></i> ТОП-1
                 </div>
                 <div class="notification-badge">
                     <i class="fas fa-users"></i> 71 онлайн
                 </div>
                 <div class="notification-badge">
-                    <i class="fas fa-fire"></i> Горячее
+                    <i class="fas fa-fire"></i> горячее
                 </div>
                 <div class="notification-badge">
-                    <i class="fas fa-star"></i> Prime
+                    <i class="fas fa-star"></i> prime
                 </div>
             </div>
 
-            <!-- Статистика -->
+            <!-- Stats -->
             <div class="stats-container">
                 <div class="stat-item">
                     <div class="stat-value" id="voteCountBadge">0</div>
@@ -763,131 +1057,130 @@
                 </div>
             </div>
 
-            <!-- Форма создания опроса -->
+            <!-- Create Poll -->
             <div class="create-poll">
-                <h3>Создать опрос</h3>
+                <h3>создать опрос</h3>
                 <div class="poll-input-group">
-                    <input type="text" id="pollQuestion" class="poll-input" placeholder="Ваш вопрос..." maxlength="120">
-                    <button class="poll-submit" id="createPollBtn">➤</button>
+                    <input type="text" id="pollQuestion" class="poll-input" placeholder="ваш вопрос..." maxlength="120">
+                    <button class="poll-submit" id="createPollBtn">→</button>
                 </div>
             </div>
 
-            <!-- Список опросов -->
+            <!-- Polls List -->
             <div id="pollsList"></div>
 
-            <!-- Битва кандидатов -->
+            <!-- Battle -->
             <div id="battleContainer" style="display: none;">
                 <div class="prediction-box">
-                    <h3>🔮 Шансы на победу</h3>
+                    <h3>прогноз</h3>
                     <div class="prediction-bars" id="predictionBars"></div>
                 </div>
 
                 <div class="battle-container" id="battleGrid"></div>
                 
-                <button class="vote-button" id="voteBtn">ГОЛОСОВАТЬ</button>
+                <button class="vote-button" id="voteBtn">голосовать</button>
             </div>
 
-            <!-- Достижения -->
+            <!-- Achievements -->
             <div class="achievements">
-                <h3>Достижения</h3>
+                <h3>достижения</h3>
                 <div class="achievement-grid">
                     <div class="achievement-item" id="ach1">
                         <div class="achievement-icon">🗳️</div>
-                        <div class="achievement-title">Новичок</div>
+                        <div class="achievement-title">новичок</div>
                     </div>
                     <div class="achievement-item" id="ach2">
                         <div class="achievement-icon">🔥</div>
-                        <div class="achievement-title">Комбо 3</div>
+                        <div class="achievement-title">комбо 3</div>
                     </div>
                     <div class="achievement-item" id="ach3">
                         <div class="achievement-icon">⭐</div>
-                        <div class="achievement-title">Предсказатель</div>
+                        <div class="achievement-title">предсказатель</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Верификация -->
+            <!-- Verification -->
             <div class="verification-box">
-                <h3>PRIME вход</h3>
+                <h3>prime вход</h3>
                 <div class="verification-input-group">
-                    <input type="text" id="verifyUsername" class="verification-input" placeholder="Ник">
-                    <input type="password" id="verifyPassword" class="verification-input" placeholder="Пароль">
-                    <button class="verification-button" id="verifyBtn">Войти</button>
+                    <input type="text" id="verifyUsername" class="verification-input" placeholder="ник">
+                    <input type="password" id="verifyPassword" class="verification-input" placeholder="пароль">
+                    <button class="verification-button" id="verifyBtn">→</button>
                 </div>
                 <div class="verification-status" id="verifyStatus">
-                    <span>✅</span> <span id="verifyStatusText"></span>
+                    <span>✓</span> <span id="verifyStatusText"></span>
                     <button onclick="logoutVerification()">выйти</button>
                 </div>
             </div>
 
-            <!-- Комментарии -->
+            <!-- Comments -->
             <div class="comments-section">
-                <h3>Комментарии</h3>
+                <h3>комментарии</h3>
                 
                 <div class="comment-form">
                     <div class="comment-input-group">
-                        <input type="text" id="commentName" class="comment-input" placeholder="Ваше имя">
-                        <textarea id="commentMessage" class="comment-textarea" placeholder="Напишите комментарий..."></textarea>
+                        <input type="text" id="commentName" class="comment-input" placeholder="ваше имя">
+                        <textarea id="commentMessage" class="comment-textarea" placeholder="напишите комментарий..."></textarea>
                     </div>
-                    <button class="comment-submit" id="submitComment">Отправить</button>
+                    <button class="comment-submit" id="submitComment">отправить</button>
                 </div>
 
                 <div class="comments-list" id="commentsList">
-                    <div class="comment-loading">Загрузка...</div>
+                    <div class="comment-loading">загрузка...</div>
                 </div>
             </div>
 
-            <!-- Рейтинг -->
+            <!-- Rating -->
             <div id="ratingContainer" style="display: none;">
                 <div class="achievements">
-                    <h3>ТОП-10</h3>
+                    <h3>топ-10</h3>
                     <div id="ratingList" class="rating-list"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Нижняя навигация -->
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <a href="index.html" class="nav-item-bottom active">
+        <a href="#" class="nav-item-bottom active">
             <i class="fas fa-home nav-icon-bottom"></i>
-            <span>Главная</span>
+            <span>главная</span>
         </a>
         <a href="#" class="nav-item-bottom">
             <i class="fas fa-chart-pie nav-icon-bottom"></i>
-            <span>Голосования</span>
+            <span>голосования</span>
         </a>
-        <a href="slivy.html" class="nav-item-bottom">
+        <a href="#" class="nav-item-bottom">
             <i class="fas fa-image nav-icon-bottom"></i>
-            <span>Сливы</span>
+            <span>сливы</span>
         </a>
         <a href="#" class="nav-item-bottom">
             <i class="fas fa-user nav-icon-bottom"></i>
-            <span>Аккаунт</span>
+            <span>аккаунт</span>
         </a>
     </nav>
 
-    <!-- Кнопка связи -->
+    <!-- Admin Button -->
     <button class="suggest-button" id="adminBtn">📨</button>
 
-    <!-- Модалка связи -->
+    <!-- Admin Modal -->
     <div class="suggest-modal" id="adminModal">
         <div class="suggest-card">
-            <h3 style="margin-bottom: 15px;">Связь с администрацией</h3>
+            <h3>связь с админом</h3>
             
             <select id="adminType">
-                <option value="question">❓ Вопрос</option>
-                <option value="problem">⚠️ Проблема</option>
-                <option value="suggestion">💡 Предложение</option>
+                <option value="question">❓ вопрос</option>
+                <option value="problem">⚠️ проблема</option>
+                <option value="suggestion">💡 предложение</option>
             </select>
             
-            <input type="text" id="adminName" placeholder="Ваше имя">
+            <input type="text" id="adminName" placeholder="ваше имя">
+            <textarea id="adminMessage" placeholder="сообщение..." rows="4"></textarea>
             
-            <textarea id="adminMessage" placeholder="Сообщение..." rows="4"></textarea>
-            
-            <div style="display: flex; gap: 8px;">
-                <button class="suggest-submit" id="adminSubmit">Отправить</button>
-                <button class="suggest-cancel" id="adminCancel">Отмена</button>
+            <div class="modal-buttons">
+                <button class="suggest-submit" id="adminSubmit">отправить</button>
+                <button class="suggest-cancel" id="adminCancel">отмена</button>
             </div>
         </div>
     </div>
