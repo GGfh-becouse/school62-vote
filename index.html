@@ -1775,88 +1775,106 @@
             }
         }
 
-        function displayComments() {
-            const list = document.getElementById('commentsList');
-            
-            if (!comments || comments.length === 0) {
-                list.innerHTML = '<div style="text-align:center; color:#8b93a6; padding:20px;">нет комментариев</div>';
-                return;
-            }
+async function displayComments() {
+    const list = document.getElementById('commentsList');
+    
+    if (!comments || comments.length === 0) {
+        list.innerHTML = '<div style="text-align:center; color:#8b93a6; padding:20px;">нет комментариев</div>';
+        return;
+    }
 
-            let html = '';
-            comments.forEach(comment => {
-                const date = new Date(comment.created_at).toLocaleString('ru', {
-                    day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
-                });
-                
-                let commentClass = 'comment-item';
-                let badges = '';
-                let userData = {
-                    name: comment.name || 'Аноним',
-                    comments: Math.floor(Math.random() * 50) + 1,
-                    likes: Math.floor(Math.random() * 100)
-                };
-                const likes = commentLikes[comment.id] || 0;
-                
-                if (comment.verified_as) {
-                    commentClass += ' premium';
-                    badges = '<span class="premium-badge">prime</span>';
-                } else if (comment.is_verified) {
-                    commentClass += ' verified';
-                    badges = '<span class="verified-badge">✓ verified</span>';
-                }
-                
-                html += `
-                    <div class="${commentClass}">
-                        <div class="comment-header">
-                            <div class="comment-name-wrapper">
-                                <span class="comment-name">
-                                    ${escapeHtml(comment.name || 'Аноним')}
-                                    ${badges}
-                                </span>
-                                <div class="mini-profile-card">
-                                    <div class="mini-profile-header">
-                                        <div class="mini-avatar">
-                                            ${(comment.name || 'А')[0].toUpperCase()}
-                                        </div>
-                                        <div class="mini-info">
-                                            <h4>${escapeHtml(comment.name || 'Аноним')}</h4>
-                                            <p>${badges ? 'prime участник' : 'обычный участник'}</p>
-                                        </div>
-                                    </div>
-                                    <div class="mini-stats">
-                                        <div class="mini-stat">
-                                            <div class="mini-stat-value">${userData.comments}</div>
-                                            <div class="mini-stat-label">комменты</div>
-                                        </div>
-                                        <div class="mini-stat">
-                                            <div class="mini-stat-value">${userData.likes}</div>
-                                            <div class="mini-stat-label">лайки</div>
-                                        </div>
-                                    </div>
-                                    <a href="https://ggfh-becouse.github.io/school62-vote/check_account.html?user=${encodeURIComponent(comment.name || '')}" class="mini-profile-link">
-                                        перейти в профиль →
-                                    </a>
+    let html = '';
+    
+    for (const comment of comments) {
+        const date = new Date(comment.created_at).toLocaleString('ru', {
+            day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+        });
+        
+        let commentClass = 'comment-item';
+        let badges = '';
+        let userData = {
+            name: comment.name || 'Аноним',
+            comments: Math.floor(Math.random() * 50) + 1,
+            likes: Math.floor(Math.random() * 100)
+        };
+        const likes = commentLikes[comment.id] || 0;
+        
+        if (comment.verified_as) {
+            commentClass += ' premium';
+            badges = '<span class="premium-badge">prime</span>';
+        } else if (comment.is_verified) {
+            commentClass += ' verified';
+            badges = '<span class="verified-badge">✓ verified</span>';
+        }
+        
+        // Получаем ID пользователя по имени
+        let userLink = '';
+        if (comment.name && comment.name !== 'Аноним') {
+            const { data: userData } = await supabaseClient
+                .from('users')
+                .select('id')
+                .eq('nickname', comment.name)
+                .maybeSingle();
+            
+            if (userData) {
+                userLink = `<a href="https://ggfh-becouse.github.io/school62-vote/check_account.html?id=${userData.id}" class="mini-profile-link">перейти в профиль →</a>`;
+            } else {
+                userLink = `<span class="mini-profile-link" style="opacity:0.5; pointer-events:none;">профиль не найден</span>`;
+            }
+        } else {
+            userLink = `<span class="mini-profile-link" style="opacity:0.5; pointer-events:none;">нет профиля</span>`;
+        }
+        
+        html += `
+            <div class="${commentClass}">
+                <div class="comment-header">
+                    <div class="comment-name-wrapper">
+                        <span class="comment-name">
+                            ${escapeHtml(comment.name || 'Аноним')}
+                            ${badges}
+                        </span>
+                        <div class="mini-profile-card">
+                            <div class="mini-profile-header">
+                                <div class="mini-avatar">
+                                    ${(comment.name || 'А')[0].toUpperCase()}
+                                </div>
+                                <div class="mini-info">
+                                    <h4>${escapeHtml(comment.name || 'Аноним')}</h4>
+                                    <p>${badges ? 'prime участник' : 'обычный участник'}</p>
                                 </div>
                             </div>
-                            <span class="comment-date">${date}</span>
-                        </div>
-                        <div class="comment-message">${escapeHtml(comment.message)}</div>
-                        <div class="comment-interactions">
-                            <button class="interaction-btn ${likes > 0 ? 'liked' : ''}" onclick="likeComment('${comment.id}')">
-                                <i class="fa${likes > 0 ? 's' : 'r'} fa-heart"></i>
-                                <span>${likes}</span>
-                            </button>
-                            <button class="interaction-btn">
-                                <i class="far fa-comment"></i>
-                                <span>ответить</span>
-                            </button>
+                            <div class="mini-stats">
+                                <div class="mini-stat">
+                                    <div class="mini-stat-value">${userData.comments}</div>
+                                    <div class="mini-stat-label">комменты</div>
+                                </div>
+                                <div class="mini-stat">
+                                    <div class="mini-stat-value">${userData.likes}</div>
+                                    <div class="mini-stat-label">лайки</div>
+                                </div>
+                            </div>
+                            ${userLink}
                         </div>
                     </div>
-                `;
-            });
-            list.innerHTML = html;
-        }
+                    <span class="comment-date">${date}</span>
+                </div>
+                <div class="comment-message">${escapeHtml(comment.message)}</div>
+                <div class="comment-interactions">
+                    <button class="interaction-btn ${likes > 0 ? 'liked' : ''}" onclick="likeComment('${comment.id}')">
+                        <i class="fa${likes > 0 ? 's' : 'r'} fa-heart"></i>
+                        <span>${likes}</span>
+                    </button>
+                    <button class="interaction-btn">
+                        <i class="far fa-comment"></i>
+                        <span>ответить</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
+    list.innerHTML = html;
+}
 
         window.likeComment = function(commentId) {
             commentLikes[commentId] = (commentLikes[commentId] || 0) + 1;
