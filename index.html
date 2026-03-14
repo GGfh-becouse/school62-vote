@@ -1296,7 +1296,18 @@
     opacity: 0.95;
     line-height: 1.4;
 }
+/* Логотип */
+.logo-img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+}
 
+@media (max-width: 600px) {
+    .logo-img {
+        height: 28px;
+    }
+}
 /* Адаптивность для мобильных */
 @media (max-width: 600px) {
     .notice-content {
@@ -1315,19 +1326,19 @@
     <div class="container">
         <div class="main-content">
             <!-- Header -->
-            <div class="header">
-                <div class="header-content">
-                    <div class="logo">
-                        <img src="https://ggfh-becouse.github.io/school62-vote/images/top_logo.png" alt="Школа 62" class="logo-img">
-                        <h1>стена</h1>
-                    </div>
-                    <div class="header-icons">
-                        <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="header-icon">
-                            <i class="far fa-user"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <img src="top_logotype.png" alt="Школа 62" class="logo-img">
+            <h1>стена</h1>
+        </div>
+        <div class="header-icons">
+            <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="header-icon">
+                <i class="far fa-user"></i>
+            </a>
+        </div>
+    </div>
+</div>
 
             <!-- SEARCH BAR -->
             <div class="search-container">
