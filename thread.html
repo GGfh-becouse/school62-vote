@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ... все стили без изменений ... */
         * {
             margin: 0;
             padding: 0;
@@ -982,18 +983,16 @@
                         day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
                     });
                     
-                    const isReplyPremium = reply.author_prime || false;
-                    
+                    // Показываем ответы без премиум выделения, так как нет данных
                     html += `
-                        <div class="reply-item ${isReplyPremium ? 'premium' : ''}">
+                        <div class="reply-item">
                             <div class="reply-header">
                                 <div class="reply-avatar">
                                     <img src="https://i.pravatar.cc/300" alt="">
                                 </div>
                                 <div class="reply-info">
-                                    <div class="reply-author ${isReplyPremium ? 'premium' : ''}">
+                                    <div class="reply-author">
                                         ${escapeHtml(reply.author || 'Аноним')}
-                                        ${isReplyPremium ? '<i class="fas fa-crown" style="font-size:0.7rem;"></i>' : ''}
                                     </div>
                                     <div class="reply-meta">
                                         <span>${date}</span>
@@ -1018,6 +1017,9 @@
             }
         }
 
+        // ============================================
+        // ИСПРАВЛЕННАЯ ФУНКЦИЯ ОТПРАВКИ ОТВЕТА
+        // ============================================
         async function submitReply() {
             const content = document.getElementById('replyContent').value.trim();
             
@@ -1031,7 +1033,7 @@
 
             if (!userId || !userNickname) {
                 showMessage('войдите, чтобы отвечать', 'error');
-                setTimeout(() => window.location.href = 'login.html', 1500);
+                setTimeout(() => window.location.href = 'https://ggfh-becouse.github.io/school62-vote/login.html', 1500);
                 return;
             }
             
@@ -1044,28 +1046,30 @@
                 
                 const now = new Date().toISOString();
                 
-                const { data: userData } = await supabaseClient
-                    .from('users')
-                    .select('class, avatar_url, is_prime')
-                    .eq('id', parseInt(userId))
-                    .single();
+                // ВСТАВЛЯЕМ ТОЛЬКО СУЩЕСТВУЮЩИЕ ПОЛЯ
+                const messageData = {
+                    thread_id: parseInt(threadId),
+                    content: content,
+                    author: verifiedUser || userNickname || 'Аноним',
+                    ip_address: userIp,
+                    user_agent: navigator.userAgent,
+                    is_first: false,
+                    created_at: now
+                    // НЕТ author_prime, updated_at и других лишних полей!
+                };
+
+                console.log('Отправка ответа:', messageData);
 
                 const { error: insertError } = await supabaseClient
                     .from('thread_messages')
-                    .insert({
-                        thread_id: parseInt(threadId),
-                        content: content,
-                        author: verifiedUser || userNickname || 'Аноним',
-                        author_prime: isPremiumUser || userData?.is_prime || false,
-                        ip_address: userIp,
-                        user_agent: navigator.userAgent,
-                        is_first: false,
-                        created_at: now,
-                        updated_at: now
-                    });
+                    .insert([messageData]);
+
+                if (insertError) {
+                    console.error('Ошибка при создании ответа:', insertError);
+                    throw insertError;
+                }
                 
-                if (insertError) throw insertError;
-                
+                // Обновляем счетчик в таблице threads
                 await supabaseClient
                     .from('threads')
                     .update({ 
@@ -1076,11 +1080,13 @@
                 
                 document.getElementById('replyContent').value = '';
                 showMessage('✅ ответ отправлен', 'success');
+                
+                // Перезагружаем ответы
                 await loadReplies();
                 
             } catch (error) {
                 console.error('Ошибка:', error);
-                showMessage('ошибка: ' + error.message, 'error');
+                showMessage('ошибка: ' + (error.message || 'неизвестная ошибка'), 'error');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'отправить';
@@ -1099,11 +1105,15 @@
 
         adminCancel?.addEventListener('click', () => {
             adminModal.style.display = 'none';
+            document.getElementById('adminName').value = '';
+            document.getElementById('adminMessage').value = '';
         });
 
         adminModal?.addEventListener('click', (e) => {
             if (e.target === adminModal) {
                 adminModal.style.display = 'none';
+                document.getElementById('adminName').value = '';
+                document.getElementById('adminMessage').value = '';
             }
         });
 
@@ -1132,6 +1142,7 @@
                 document.getElementById('adminMessage').value = '';
                 
             } catch (error) {
+                console.error('Ошибка:', error);
                 showMessage('ошибка: ' + error.message, 'error');
             }
         });
