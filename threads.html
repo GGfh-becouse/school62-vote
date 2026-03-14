@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ... все стили без изменений ... */
         * {
             margin: 0;
             padding: 0;
@@ -819,6 +820,7 @@
                         day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
                     });
                     
+                    // Проверяем премиум статус автора (если есть поле)
                     const isAuthorPremium = thread.author_prime || false;
                     
                     html += `
@@ -852,7 +854,9 @@
             }
         }
 
-        // Создание новой темы
+        // ============================================
+        // ИСПРАВЛЕННАЯ ФУНКЦИЯ СОЗДАНИЯ ТЕМЫ
+        // ============================================
         async function createThread() {
             const title = document.getElementById('threadTitle').value.trim();
             const content = document.getElementById('threadContent').value.trim();
@@ -867,6 +871,15 @@
                 return;
             }
             
+            const userId = localStorage.getItem('userId');
+            const userNickname = localStorage.getItem('userNickname');
+
+            if (!userId || !userNickname) {
+                showMessage('войдите, чтобы создать тему', 'error');
+                setTimeout(() => window.location.href = 'https://ggfh-becouse.github.io/school62-vote/login.html', 1500);
+                return;
+            }
+            
             const createBtn = document.getElementById('createThreadBtn');
             createBtn.disabled = true;
             createBtn.textContent = 'создание...';
@@ -876,49 +889,77 @@
                 
                 const now = new Date().toISOString();
                 
-                const { data: threadData, error: threadError } = await supabaseClient
+                // Получаем данные пользователя (опционально)
+                const { data: userData } = await supabaseClient
+                    .from('users')
+                    .select('class, avatar_url, is_prime')
+                    .eq('id', parseInt(userId))
+                    .maybeSingle();
+
+                // СОЗДАЕМ ТЕМУ - ТОЛЬКО СУЩЕСТВУЮЩИЕ ПОЛЯ
+                const threadData = {
+                    title: title,
+                    author_name: verifiedUser || userNickname || 'Аноним',
+                    author_class: userData?.class || null,
+                    author_avatar: userData?.avatar_url || null,
+                    // author_prime: isPremiumUser || userData?.is_prime || false, // ЭТОГО ПОЛЯ НЕТ В ТАБЛИЦЕ!
+                    views: 0,
+                    reply_count: 0,
+                    bump_time: now,
+                    created_at: now
+                    // НЕТ updated_at - его тоже нет в таблице!
+                };
+
+                console.log('Создание темы:', threadData);
+
+                const { data: newThread, error: threadError } = await supabaseClient
                     .from('threads')
-                    .insert({
-                        title: title,
-                        author_name: verifiedUser || 'Аноним',
-                        author_prime: isPremiumUser,
-                        views: 0,
-                        reply_count: 0,
-                        bump_time: now,
-                        created_at: now,
-                        updated_at: now
-                    })
+                    .insert([threadData])
                     .select()
                     .single();
-                
-                if (threadError) throw threadError;
-                
+
+                if (threadError) {
+                    console.error('Ошибка создания темы:', threadError);
+                    throw threadError;
+                }
+
+                console.log('Тема создана, ID:', newThread.id);
+
+                // СОЗДАЕМ ПЕРВОЕ СООБЩЕНИЕ - ТОЛЬКО СУЩЕСТВУЮЩИЕ ПОЛЯ
+                const messageData = {
+                    thread_id: newThread.id,
+                    content: content,
+                    author: verifiedUser || userNickname || 'Аноним',
+                    ip_address: userIp,
+                    user_agent: navigator.userAgent,
+                    is_first: true,
+                    created_at: now
+                    // НЕТ author_prime, updated_at, views и других лишних полей!
+                };
+
+                console.log('Создание сообщения:', messageData);
+
                 const { error: messageError } = await supabaseClient
                     .from('thread_messages')
-                    .insert({
-                        thread_id: threadData.id,
-                        content: content,
-                        author: verifiedUser || 'Аноним',
-                        author_prime: isPremiumUser,
-                        ip_address: userIp,
-                        user_agent: navigator.userAgent,
-                        is_first: true,
-                        views: 0,
-                        created_at: now,
-                        updated_at: now
-                    });
+                    .insert([messageData]);
+
+                if (messageError) {
+                    console.error('Ошибка создания сообщения:', messageError);
+                    throw messageError;
+                }
                 
-                if (messageError) throw messageError;
-                
+                // Очищаем поля
                 document.getElementById('threadTitle').value = '';
                 document.getElementById('threadContent').value = '';
                 
                 showMessage('✅ тема создана', 'success');
+                
+                // Перезагружаем список тем
                 await loadThreads();
                 
             } catch (error) {
-                console.error('Ошибка:', error);
-                showMessage('ошибка: ' + error.message, 'error');
+                console.error('Ошибка создания темы:', error);
+                showMessage('ошибка: ' + (error.message || 'неизвестная ошибка'), 'error');
             } finally {
                 createBtn.disabled = false;
                 createBtn.textContent = 'создать тему';
@@ -937,11 +978,15 @@
 
         adminCancel?.addEventListener('click', () => {
             adminModal.style.display = 'none';
+            document.getElementById('adminName').value = '';
+            document.getElementById('adminMessage').value = '';
         });
 
         adminModal?.addEventListener('click', (e) => {
             if (e.target === adminModal) {
                 adminModal.style.display = 'none';
+                document.getElementById('adminName').value = '';
+                document.getElementById('adminMessage').value = '';
             }
         });
 
@@ -970,6 +1015,7 @@
                 document.getElementById('adminMessage').value = '';
                 
             } catch (error) {
+                console.error('Ошибка:', error);
                 showMessage('ошибка: ' + error.message, 'error');
             }
         });
