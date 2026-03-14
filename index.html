@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Все стили такие же, как в предыдущем ответе */
         * {
             margin: 0;
             padding: 0;
@@ -80,13 +79,6 @@
             letter-spacing: -0.5px;
         }
 
-        .logo span {
-            color: #8b93a6;
-            font-size: 0.8rem;
-            font-weight: 400;
-            margin-left: 4px;
-        }
-
         .header-icons {
             display: flex;
             gap: 16px;
@@ -97,13 +89,139 @@
             color: #8b93a6;
             transition: color 0.2s;
             cursor: pointer;
+            text-decoration: none;
         }
 
         .header-icon:hover {
             color: #2e3440;
         }
 
-        /* ТАЙМЕР БЛОК - КРАСНЫЙ */
+        /* SEARCH BAR - НОВЫЙ ЭЛЕМЕНТ */
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .search-icon {
+            color: #8b93a6;
+            font-size: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 12px 0;
+            font-size: 0.95rem;
+            background: transparent;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #b5bcc8;
+            font-weight: 300;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border-radius: 20px;
+            margin-top: 8px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-result-item:hover {
+            background: #f8f9fc;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .result-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .result-info {
+            flex: 1;
+        }
+
+        .result-name {
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .result-class {
+            font-size: 0.7rem;
+            color: #8b93a6;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .result-badge {
+            background: #f1c40f;
+            color: #1a1e2b;
+            padding: 2px 6px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+
+        .no-results {
+            padding: 20px;
+            text-align: center;
+            color: #8b93a6;
+            font-size: 0.9rem;
+        }
+
+        /* ТАЙМЕР БЛОК */
         .timer-block {
             background: linear-gradient(135deg, #ff4d4d, #e63946);
             border-radius: 24px;
@@ -687,6 +805,13 @@
             color: white;
             font-weight: 600;
             font-size: 1.2rem;
+            overflow: hidden;
+        }
+
+        .mini-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .mini-info h4 {
@@ -846,7 +971,6 @@
             padding: 8px 0;
             border-radius: 30px;
             transition: all 0.2s;
-            cursor: pointer;
         }
 
         .nav-item-bottom.active {
@@ -1030,7 +1154,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* RESPONSIVE */
         @media (max-width: 600px) {
             body {
                 padding: 16px 0;
@@ -1067,13 +1190,23 @@
                         <h1>стена</h1>
                     </div>
                     <div class="header-icons">
-                        <i class="far fa-bell header-icon"></i>
-                        <i class="far fa-user header-icon"></i>
+                        <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="header-icon">
+                            <i class="far fa-user"></i>
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- КРАСНЫЙ БЛОК С ТАЙМЕРОМ И ЛИДЕРОМ -->
+            <!-- SEARCH BAR - НОВЫЙ БЛОК -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="searchInput" placeholder="поиск пользователей..." autocomplete="off">
+                </div>
+                <div class="search-results" id="searchResults"></div>
+            </div>
+
+            <!-- Красный блок с таймером и лидером -->
             <div class="timer-block" id="timerBlock">
                 <div class="timer-content">
                     <div class="timer-info">
@@ -1132,7 +1265,7 @@
                 <div class="notification-badge">новости</div>
             </div>
 
-            <!-- АКТИВНЫЕ ГОЛОСОВАНИЯ -->
+            <!-- Активные голосования -->
             <div class="active-polls">
                 <div class="section-header">
                     <h3>активные голосования</h3>
@@ -1178,29 +1311,29 @@
         </div>
     </div>
 
-<!-- Bottom Navigation -->
-<nav class="bottom-nav">
-    <a href="https://ggfh-becouse.github.io/school62-vote/index.html" class="nav-item-bottom active">
-        <i class="fas fa-home nav-icon-bottom"></i>
-        <span>главная</span>
-    </a>
-    <a href="https://ggfh-becouse.github.io/school62-vote/votes.html" class="nav-item-bottom">
-        <i class="fas fa-chart-bar nav-icon-bottom"></i>
-        <span>голосования</span>
-    </a>
-    <a href="https://ggfh-becouse.github.io/school62-vote/threads.html" class="nav-item-bottom">
-        <i class="fas fa-comment nav-icon-bottom"></i>
-        <span>темки</span>
-    </a>
-    <a href="https://ggfh-becouse.github.io/school62-vote/slivy.html" class="nav-item-bottom">
-        <i class="fas fa-image nav-icon-bottom"></i>
-        <span>сливы</span>
-    </a>
-    <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="nav-item-bottom">  <!-- ИЗМЕНЕНО -->
-        <i class="fas fa-user nav-icon-bottom"></i>
-        <span>аккаунт</span>
-    </a>
-</nav>
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="https://ggfh-becouse.github.io/school62-vote/index.html" class="nav-item-bottom active">
+            <i class="fas fa-home nav-icon-bottom"></i>
+            <span>главная</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/votes.html" class="nav-item-bottom">
+            <i class="fas fa-chart-bar nav-icon-bottom"></i>
+            <span>голосования</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/threads.html" class="nav-item-bottom">
+            <i class="fas fa-comment nav-icon-bottom"></i>
+            <span>темки</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/slivy.html" class="nav-item-bottom">
+            <i class="fas fa-image nav-icon-bottom"></i>
+            <span>сливы</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="nav-item-bottom">
+            <i class="fas fa-user nav-icon-bottom"></i>
+            <span>аккаунт</span>
+        </a>
+    </nav>
 
     <!-- Admin Button -->
     <button class="suggest-button" id="adminBtn">✎</button>
@@ -1209,16 +1342,13 @@
     <div class="suggest-modal" id="adminModal">
         <div class="suggest-card">
             <h3>связь с администрацией</h3>
-            
             <select id="adminType">
                 <option value="question">вопрос</option>
                 <option value="problem">проблема</option>
                 <option value="suggestion">предложение</option>
             </select>
-            
             <input type="text" id="adminName" placeholder="ваше имя">
             <textarea id="adminMessage" placeholder="сообщение..." rows="3"></textarea>
-            
             <div class="modal-buttons">
                 <button class="suggest-submit" id="adminSubmit">отправить</button>
                 <button class="suggest-cancel" id="adminCancel">отмена</button>
@@ -1230,9 +1360,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // ============================================
-        // SUPABASE КОНФИГ
-        // ============================================
         const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -1246,9 +1373,9 @@
         let primeUser = null;
         let threadsCount = 0;
         let polls = [];
-        let votedPolls = new Set();
         let allCandidates = [];
         let commentLikes = JSON.parse(localStorage.getItem('commentLikes')) || {};
+        let searchTimeout = null;
 
         // Загружаем Prime статус из localStorage
         const savedPrime = localStorage.getItem('primeUser');
@@ -1262,7 +1389,84 @@
         const randomNames = ['Аноним', 'Ученик', 'Школьник', 'Выпускник'];
 
         // ============================================
-        // ПОЛУЧЕНИЕ IP
+        // ПОИСК ПОЛЬЗОВАТЕЛЕЙ - НОВАЯ ФУНКЦИЯ
+        // ============================================
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const query = this.value.trim();
+            
+            if (query.length < 2) {
+                searchResults.classList.remove('active');
+                return;
+            }
+
+            searchTimeout = setTimeout(() => searchUsers(query), 300);
+        });
+
+        // Закрывать результаты при клике вне
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.remove('active');
+            }
+        });
+
+        async function searchUsers(query) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('users')
+                    .select('id, nickname, display_name, class, avatar_url, is_prime')
+                    .ilike('nickname', `%${query}%`)
+                    .limit(10);
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    searchResults.innerHTML = '<div class="no-results">пользователи не найдены</div>';
+                    searchResults.classList.add('active');
+                    return;
+                }
+
+                let html = '';
+                data.forEach(user => {
+                    const name = user.display_name || user.nickname;
+                    const avatar = user.avatar_url || 'https://i.pravatar.cc/300';
+                    
+                    html += `
+                        <div class="search-result-item" onclick="goToUserProfile(${user.id})">
+                            <div class="result-avatar">
+                                <img src="${avatar}" alt="">
+                            </div>
+                            <div class="result-info">
+                                <div class="result-name">
+                                    ${escapeHtml(name)}
+                                    ${user.is_prime ? '<span class="result-badge">prime</span>' : ''}
+                                </div>
+                                <div class="result-class">
+                                    <i class="far fa-graduation-cap"></i> ${user.class || 'класс не указан'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                searchResults.innerHTML = html;
+                searchResults.classList.add('active');
+
+            } catch (error) {
+                console.error('Ошибка поиска:', error);
+            }
+        }
+
+        // Переход на профиль пользователя
+        window.goToUserProfile = function(userId) {
+            window.location.href = `https://ggfh-becouse.github.io/school62-vote/check_account.html?id=${userId}`;
+        };
+
+        // ============================================
+        // ОСТАЛЬНЫЕ ФУНКЦИИ (без изменений)
         // ============================================
         async function getUserIp() {
             try {
@@ -1276,9 +1480,6 @@
             }
         }
 
-        // ============================================
-        // ПОКАЗ СООБЩЕНИЙ
-        // ============================================
         function showMessage(text, type) {
             const container = document.getElementById('messageContainer');
             const msg = document.createElement('div');
@@ -1288,18 +1489,13 @@
             setTimeout(() => msg.remove(), 3000);
         }
 
-        // ============================================
-        // ЭКРАНИРОВАНИЕ HTML
-        // ============================================
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        // ============================================
-        // ТАЙМЕР ДО 15 МАРТА
-        // ============================================
+        // Таймер до 15 марта
         function startCountdown() {
             const timerElement = document.getElementById('countdownTimer');
             if (!timerElement) return;
@@ -1333,9 +1529,7 @@
             setInterval(updateTimer, 1000);
         }
 
-        // ============================================
-        // ЗАГРУЗКА КАНДИДАТОВ ДЛЯ ЛИДЕРА
-        // ============================================
+        // Загрузка кандидатов для лидера
         async function loadCandidates() {
             try {
                 const { data, error } = await supabaseClient
@@ -1371,9 +1565,7 @@
             }
         }
 
-        // ============================================
-        // ЗАГРУЗКА КОММЕНТАРИЕВ
-        // ============================================
+        // Загрузка комментариев
         async function loadComments() {
             try {
                 const { data, error } = await supabaseClient
@@ -1463,7 +1655,7 @@
                                             <div class="mini-stat-label">лайки</div>
                                         </div>
                                     </div>
-                                    <a href="https://ggfh-becouse.github.io/school62-vote/account.html?user=${encodeURIComponent(comment.name || '')}" class="mini-profile-link">
+                                    <a href="https://ggfh-becouse.github.io/school62-vote/check_account.html?user=${encodeURIComponent(comment.name || '')}" class="mini-profile-link">
                                         перейти в профиль →
                                     </a>
                                 </div>
@@ -1489,9 +1681,7 @@
 
         window.likeComment = likeComment;
 
-        // ============================================
-        // ОТПРАВКА КОММЕНТАРИЯ
-        // ============================================
+        // Отправка комментария
         document.getElementById('submitComment').addEventListener('click', submitComment);
 
         async function submitComment() {
@@ -1547,9 +1737,7 @@
             }
         }
 
-        // ============================================
-        // ЗАГРУЗКА ОПРОСОВ
-        // ============================================
+        // Загрузка опросов
         async function loadPolls() {
             try {
                 const { data, error } = await supabaseClient
@@ -1610,9 +1798,7 @@
             showMessage(`голос учтён (${choice})`, 'success');
         };
 
-        // ============================================
-        // ЗАГРУЗКА КОЛИЧЕСТВА ТРЕДОВ
-        // ============================================
+        // Загрузка количества тредов
         async function loadThreadsCount() {
             try {
                 const { count, error } = await supabaseClient
@@ -1628,17 +1814,7 @@
             }
         }
 
-        // ============================================
-        // PRIME ЛОГИН
-        // ============================================
-        window.loginPrime = function(name, isPrime = true) {
-            primeUser = { name: name, isPrime: isPrime };
-            localStorage.setItem('primeUser', JSON.stringify(primeUser));
-            document.getElementById('primeStatusBar').style.display = 'flex';
-            document.getElementById('primeUserName').textContent = name;
-            showMessage('добро пожаловать в prime!', 'success');
-        };
-
+        // Prime функции
         window.logoutPrime = function() {
             primeUser = null;
             localStorage.removeItem('primeUser');
@@ -1646,9 +1822,7 @@
             showMessage('вы вышли из prime', 'success');
         };
 
-        // ============================================
-        // КНОПКА СВЯЗИ
-        // ============================================
+        // Admin Modal
         const adminBtn = document.getElementById('adminBtn');
         const adminModal = document.getElementById('adminModal');
         const adminCancel = document.getElementById('adminCancel');
@@ -1688,7 +1862,6 @@
                         type: 'admin_message',
                         name: name,
                         message: message,
-                        ip_address: userIp,
                         user_agent: navigator.userAgent
                     });
                 
@@ -1698,13 +1871,12 @@
                 document.getElementById('adminMessage').value = '';
                 
             } catch (error) {
+                console.error('Ошибка:', error);
                 showMessage('ошибка: ' + error.message, 'error');
             }
         });
 
-        // ============================================
-        // ИНИЦИАЛИЗАЦИЯ
-        // ============================================
+        // Инициализация
         async function initApp() {
             await getUserIp();
             await loadComments();
