@@ -102,7 +102,7 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        .nav-item.back-btn {
+        .back-btn {
             background: #ffd966;
             color: #2c3e50;
             border-bottom-color: #b38f4a;
@@ -129,7 +129,6 @@
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid #e0e0e0;
-            word-break: break-word;
         }
 
         .post-meta {
@@ -152,7 +151,6 @@
             line-height: 1.6;
             font-size: 1rem;
             white-space: pre-wrap;
-            word-break: break-word;
         }
 
         /* Ответы */
@@ -181,11 +179,6 @@
             border-radius: 16px;
             padding: 15px;
             border-left: 4px solid #4a6fa5;
-            transition: transform 0.2s;
-        }
-
-        .reply-item:hover {
-            transform: translateX(4px);
         }
 
         .reply-header {
@@ -209,11 +202,6 @@
             gap: 5px;
         }
 
-        .reply-author.prime {
-            background: #f1c40f;
-            border-bottom: 3px solid #b38f4a;
-        }
-
         .reply-date {
             color: #7f8c8d;
             font-size: 0.7rem;
@@ -224,7 +212,6 @@
             font-size: 0.95rem;
             line-height: 1.4;
             white-space: pre-wrap;
-            word-break: break-word;
         }
 
         /* Форма ответа */
@@ -246,7 +233,6 @@
             margin-bottom: 15px;
             font-family: inherit;
             resize: vertical;
-            transition: border-color 0.2s;
         }
 
         .reply-form textarea:focus {
@@ -265,7 +251,6 @@
             cursor: pointer;
             border-bottom: 4px solid #2c3e50;
             width: 100%;
-            transition: all 0.1s;
         }
 
         .reply-btn:active {
@@ -276,6 +261,7 @@
         .reply-btn:disabled {
             background: #95a5a6;
             cursor: not-allowed;
+            border-bottom-color: #7f8c8d;
         }
 
         .message {
@@ -326,6 +312,18 @@
             margin-bottom: 10px;
             opacity: 0.5;
         }
+
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .post-meta {
+                gap: 10px;
+            }
+            
+            .reply-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
     </style>
 </head>
 <body>
@@ -364,7 +362,7 @@
             </div>
             
             <div class="replies-list" id="repliesList">
-                <!-- Загрузка будет показана через JS -->
+                <!-- Loader будет показан через JS -->
             </div>
 
             <!-- Форма ответа -->
@@ -388,7 +386,7 @@
         let threadId = null;
         let threadData = null;
 
-        // Проверяем верифицированного пользователя из localStorage
+        // Проверяем верифицированного пользователя из localStorage (как в твоем коде)
         const savedPrime = localStorage.getItem('primeUser');
         if (savedPrime) {
             verifiedUser = JSON.parse(savedPrime).name;
@@ -436,12 +434,10 @@
             }
             
             try {
-                // Загружаем тему (первое сообщение в треде)
                 const { data, error } = await supabaseClient
-                    .from('thread_messages')
+                    .from('threads')
                     .select('*')
-                    .eq('thread_id', threadId)
-                    .eq('is_first', true)
+                    .eq('id', threadId)
                     .single();
                 
                 if (error) throw error;
@@ -450,9 +446,9 @@
                 
                 // Увеличиваем счетчик просмотров
                 await supabaseClient
-                    .from('thread_messages')
+                    .from('threads')
                     .update({ views: (data.views || 0) + 1 })
-                    .eq('id', data.id);
+                    .eq('id', threadId);
                 
                 displayMainPost(data);
                 loadReplies();
@@ -475,13 +471,13 @@
             if (postLoader) postLoader.style.display = 'none';
             
             const date = new Date(thread.created_at).toLocaleString('ru', {
-                day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
             });
             
             document.getElementById('mainPost').innerHTML = `
-                <div class="post-title">${escapeHtml(thread.title || 'Без названия')}</div>
+                <div class="post-title">${escapeHtml(thread.title)}</div>
                 <div class="post-meta">
-                    <span><span style="font-size: 1rem;">👤</span> ${escapeHtml(thread.author || 'Аноним')}</span>
+                    <span><span style="font-size: 1rem;">👤</span> ${escapeHtml(thread.author_name || 'Аноним')}</span>
                     <span><span style="font-size: 1rem;">🕐</span> ${date}</span>
                     <span><span style="font-size: 1rem;">👁️</span> ${thread.views || 0} просмотров</span>
                 </div>
@@ -566,11 +562,6 @@
                 return;
             }
             
-            // Блокируем кнопку
-            const submitBtn = document.getElementById('submitReply');
-            submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ ОТПРАВКА...';
-            
             try {
                 if (!userIp) await getUserIp();
                 
@@ -580,24 +571,29 @@
                 const { error: insertError } = await supabaseClient
                     .from('thread_messages')
                     .insert({
-                        thread_id: parseInt(threadId),
+                        thread_id: threadId,
                         content: content,
                         author: verifiedUser || 'Аноним',
                         ip_address: userIp,
                         user_agent: navigator.userAgent,
                         is_first: false,
-                        views: 0,
-                        created_at: now,
-                        updated_at: now
+                        created_at: now
                     });
                 
                 if (insertError) {
                     console.error('Ошибка при создании ответа:', insertError);
                     showMessage('Ошибка: ' + insertError.message, 'error');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = '📨 ОТПРАВИТЬ';
                     return;
                 }
+                
+                // Обновляем счетчик в таблице threads
+                await supabaseClient
+                    .from('threads')
+                    .update({ 
+                        reply_count: (threadData.reply_count || 0) + 1,
+                        bump_time: now
+                    })
+                    .eq('id', threadId);
                 
                 // Очищаем поле
                 document.getElementById('replyContent').value = '';
@@ -610,9 +606,6 @@
             } catch (error) {
                 console.error('Ошибка отправки ответа:', error);
                 showMessage('Ошибка: ' + error.message, 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = '📨 ОТПРАВИТЬ';
             }
         }
 
@@ -621,20 +614,14 @@
             await getUserIp();
             await loadThread();
             
-            const submitBtn = document.getElementById('submitReply');
-            if (submitBtn) {
-                submitBtn.addEventListener('click', submitReply);
-            }
+            document.getElementById('submitReply').addEventListener('click', submitReply);
             
-            const replyInput = document.getElementById('replyContent');
-            if (replyInput) {
-                replyInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' && e.ctrlKey) {
-                        e.preventDefault();
-                        submitReply();
-                    }
-                });
-            }
+            document.getElementById('replyContent').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.ctrlKey) {
+                    e.preventDefault();
+                    submitReply();
+                }
+            });
         });
     </script>
 </body>
