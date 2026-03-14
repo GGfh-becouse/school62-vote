@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ... все стили без изменений ... */
         * {
             margin: 0;
             padding: 0;
@@ -219,6 +220,95 @@
             text-align: center;
             color: #8b93a6;
             font-size: 0.9rem;
+        }
+
+        /* AUTH STATUS BAR - НОВОЕ */
+        .auth-status-bar {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideDown 0.3s;
+        }
+
+        .auth-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .auth-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .auth-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .auth-welcome {
+            font-size: 0.9rem;
+            color: #1a1e2b;
+            font-weight: 500;
+        }
+
+        .auth-name {
+            font-weight: 600;
+            color: #2e3440;
+        }
+
+        .auth-badge {
+            background: #f1c40f;
+            color: #1a1e2b;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .auth-btn {
+            background: #f0f2f5;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: #1a1e2b;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .auth-btn:hover {
+            background: #e4e6e9;
+        }
+
+        .auth-btn.primary {
+            background: #2e3440;
+            color: white;
+        }
+
+        .auth-btn.primary:hover {
+            background: #1a1e2b;
         }
 
         /* ТАЙМЕР БЛОК */
@@ -482,65 +572,6 @@
             color: #8b93a6;
         }
 
-        /* PRIME СТАТУС */
-        .prime-status-bar {
-            background: #ffffff;
-            border-radius: 40px;
-            padding: 12px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            animation: slideDown 0.3s;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .prime-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .prime-badge {
-            width: 24px;
-            height: 24px;
-            background: #f1c40f;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.8rem;
-            box-shadow: 0 2px 4px rgba(241, 196, 15, 0.3);
-        }
-
-        .prime-info span {
-            font-size: 0.85rem;
-            color: #1a1e2b;
-            font-weight: 500;
-        }
-
-        .prime-logout {
-            background: none;
-            border: none;
-            color: #8b93a6;
-            font-size: 0.75rem;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 4px 8px;
-            transition: color 0.2s;
-        }
-
-        .prime-logout:hover {
-            color: #e74c3c;
-        }
-
         /* QUICK NOTIFICATIONS */
         .quick-notifications {
             display: flex;
@@ -650,7 +681,6 @@
             gap: 10px;
         }
 
-        .comment-input,
         .comment-textarea {
             width: 100%;
             padding: 14px 18px;
@@ -662,15 +692,9 @@
             transition: border-color 0.2s;
         }
 
-        .comment-input:focus,
         .comment-textarea:focus {
             outline: none;
             border-color: #2e3440;
-        }
-
-        .comment-textarea {
-            min-height: 80px;
-            resize: none;
         }
 
         .comment-submit {
@@ -696,6 +720,11 @@
         .comment-submit:active {
             transform: translateY(1px);
             box-shadow: none;
+        }
+
+        .comment-submit:disabled {
+            background: #8b93a6;
+            cursor: not-allowed;
         }
 
         /* COMMENTS LIST */
@@ -971,7 +1000,6 @@
             padding: 8px 0;
             border-radius: 30px;
             transition: all 0.2s;
-            cursor: pointer;
         }
 
         .nav-item-bottom.active {
@@ -1176,6 +1204,17 @@
             .mini-profile-card {
                 width: 200px;
             }
+
+            .auth-status-bar {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -1207,6 +1246,22 @@
                 <div class="search-results" id="searchResults"></div>
             </div>
 
+            <!-- AUTH STATUS BAR - НОВЫЙ БЛОК -->
+            <div class="auth-status-bar" id="authStatusBar">
+                <div class="auth-info">
+                    <div class="auth-avatar" id="authAvatar">
+                        <img src="https://i.pravatar.cc/300" alt="">
+                    </div>
+                    <span class="auth-welcome" id="authWelcomeText">
+                        <span id="authDisplayName">Гость</span>
+                    </span>
+                </div>
+                <div class="auth-buttons" id="authButtons">
+                    <a href="https://ggfh-becouse.github.io/school62-vote/login.html" class="auth-btn">войти</a>
+                    <a href="https://ggfh-becouse.github.io/school62-vote/register.html" class="auth-btn primary">регистрация</a>
+                </div>
+            </div>
+
             <!-- Красный блок с таймером и лидером -->
             <div class="timer-block" id="timerBlock">
                 <div class="timer-content">
@@ -1220,15 +1275,6 @@
                         <span class="leader-name" id="leaderName">загрузка...</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- Prime статус -->
-            <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
-                <div class="prime-info">
-                    <div class="prime-badge">P</div>
-                    <span id="primeUserName">Prime пользователь</span>
-                </div>
-                <button class="prime-logout" onclick="logoutPrime()">выйти</button>
             </div>
 
             <!-- Stories -->
@@ -1299,7 +1345,7 @@
                 
                 <div class="comment-form">
                     <div class="comment-input-group">
-                        <input type="text" id="commentName" class="comment-input" placeholder="ваше имя" maxlength="30">
+                        <!-- ПОЛЕ ДЛЯ ИМЕНИ УБРАНО! -->
                         <textarea id="commentMessage" class="comment-textarea" placeholder="текст комментария..." maxlength="200"></textarea>
                     </div>
                     <button class="comment-submit" id="submitComment">отправить</button>
@@ -1371,6 +1417,7 @@
         let userIp = null;
         let comments = [];
         let lastCommentTime = 0;
+        let currentUser = null;
         let primeUser = null;
         let threadsCount = 0;
         let polls = [];
@@ -1378,16 +1425,55 @@
         let commentLikes = JSON.parse(localStorage.getItem('commentLikes')) || {};
         let searchTimeout = null;
 
-        // Загружаем Prime статус из localStorage
+        // Загружаем данные пользователя из localStorage
+        const userId = localStorage.getItem('userId');
+        const userNickname = localStorage.getItem('userNickname');
+        const userAvatar = localStorage.getItem('userAvatar');
+
+        // Загружаем Prime статус
         const savedPrime = localStorage.getItem('primeUser');
         if (savedPrime) {
             primeUser = JSON.parse(savedPrime);
-            document.getElementById('primeStatusBar').style.display = 'flex';
-            document.getElementById('primeUserName').textContent = primeUser.name;
         }
 
-        // Имена для случайных комментаторов
-        const randomNames = ['Аноним', 'Ученик', 'Школьник', 'Выпускник'];
+        // ============================================
+        // ОТОБРАЖЕНИЕ СТАТУСА АВТОРИЗАЦИИ
+        // ============================================
+        function updateAuthDisplay() {
+            const authStatusBar = document.getElementById('authStatusBar');
+            const authAvatar = document.getElementById('authAvatar').querySelector('img');
+            const authDisplayName = document.getElementById('authDisplayName');
+            const authButtons = document.getElementById('authButtons');
+
+            if (userId && userNickname) {
+                // Пользователь авторизован
+                authDisplayName.textContent = userNickname;
+                authAvatar.src = userAvatar || 'https://i.pravatar.cc/300';
+                
+                // Добавляем премиум бейдж если есть
+                if (primeUser) {
+                    const badge = document.createElement('span');
+                    badge.className = 'auth-badge';
+                    badge.innerHTML = '<i class="fas fa-crown"></i> prime';
+                    authDisplayName.parentNode.appendChild(badge);
+                }
+
+                // Меняем кнопки
+                authButtons.innerHTML = `
+                    <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="auth-btn">
+                        <i class="far fa-user"></i> профиль
+                    </a>
+                `;
+            } else {
+                // Пользователь не авторизован
+                authDisplayName.textContent = 'Гость';
+                authAvatar.src = 'https://i.pravatar.cc/300';
+                authButtons.innerHTML = `
+                    <a href="https://ggfh-becouse.github.io/school62-vote/login.html" class="auth-btn">войти</a>
+                    <a href="https://ggfh-becouse.github.io/school62-vote/register.html" class="auth-btn primary">регистрация</a>
+                `;
+            }
+        }
 
         // ============================================
         // ПОИСК ПОЛЬЗОВАТЕЛЕЙ
@@ -1564,9 +1650,7 @@
             }
         }
 
-        // ============================================
-        // ИСПРАВЛЕННАЯ ФУНКЦИЯ ЗАГРУЗКИ КОММЕНТАРИЕВ
-        // ============================================
+        // Загрузка комментариев
         async function loadComments() {
             try {
                 const { data, error } = await supabaseClient
@@ -1581,7 +1665,6 @@
                 
                 document.getElementById('commentsCount').textContent = comments.length;
                 
-                // Считаем премиум комментарии по полю verified_as
                 const primeCount = comments.filter(c => c.verified_as).length;
                 document.getElementById('primeCount').textContent = primeCount;
                 
@@ -1687,19 +1770,19 @@
         document.getElementById('submitComment').addEventListener('click', submitComment);
 
         async function submitComment() {
-            const nameInput = document.getElementById('commentName');
             const messageInput = document.getElementById('commentMessage');
-            
-            let name = nameInput.value.trim();
             let message = messageInput.value.trim();
+
+            // Проверка авторизации
+            if (!userId || !userNickname) {
+                showMessage('войдите, чтобы комментировать', 'error');
+                setTimeout(() => window.location.href = 'https://ggfh-becouse.github.io/school62-vote/login.html', 1500);
+                return;
+            }
 
             if (lastCommentTime && (Date.now() - lastCommentTime) < 5000) {
                 showMessage('подождите 5 секунд', 'error');
                 return;
-            }
-
-            if (!name) {
-                name = randomNames[Math.floor(Math.random() * randomNames.length)];
             }
 
             if (!message) {
@@ -1715,15 +1798,14 @@
             try {
                 if (!userIp) await getUserIp();
 
-                // ФОРМИРУЕМ ДАННЫЕ ТОЛЬКО ДЛЯ СУЩЕСТВУЮЩИХ ПОЛЕЙ
+                // Имя берется из авторизации
                 const commentData = {
-                    name: name,
+                    name: userNickname,
                     message: message,
                     ip_address: userIp,
                     is_verified: !!primeUser,
                     verified_as: primeUser?.name || null,
                     created_at: new Date().toISOString()
-                    // НЕТ поля is_prime - его нет в таблице!
                 };
 
                 console.log('Отправка комментария:', commentData);
@@ -1732,13 +1814,9 @@
                     .from('comments')
                     .insert([commentData]);
 
-                if (error) {
-                    console.error('Ошибка при вставке:', error);
-                    throw error;
-                }
+                if (error) throw error;
 
                 lastCommentTime = Date.now();
-                nameInput.value = '';
                 messageInput.value = '';
                 
                 showMessage('комментарий добавлен!', 'success');
@@ -1827,14 +1905,6 @@
             }
         }
 
-        // Prime функции
-        window.logoutPrime = function() {
-            primeUser = null;
-            localStorage.removeItem('primeUser');
-            document.getElementById('primeStatusBar').style.display = 'none';
-            showMessage('вы вышли из prime', 'success');
-        };
-
         // Admin Modal
         const adminBtn = document.getElementById('adminBtn');
         const adminModal = document.getElementById('adminModal');
@@ -1892,6 +1962,7 @@
         // Инициализация
         async function initApp() {
             await getUserIp();
+            updateAuthDisplay();
             await loadComments();
             await loadThreadsCount();
             await loadCandidates();
