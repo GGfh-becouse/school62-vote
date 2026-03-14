@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>сливы | школа 62</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: #f8f9fc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 32px 0;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #f8f9fc;
+            position: relative;
+            padding: 0 16px;
+        }
+
+        .main-content {
+            display: block;
+            padding-bottom: 90px;
+        }
+
+        /* HEADER */
+        .header {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 16px 20px;
+            margin: 8px 0 16px 0;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #2e3440;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            letter-spacing: -0.5px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .header-icon {
+            font-size: 1.2rem;
+            color: #8b93a6;
+            transition: color 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .header-icon:hover {
+            color: #2e3440;
+        }
+
+        /* NAVIGATION BAR */
+        .nav-bar {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 4px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 30px;
+            color: #8b93a6;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-link i {
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            background: #f0f2f5;
+            color: #2e3440;
+        }
+
+        .nav-link.active {
+            background: #f0f2f5;
+            color: #2e3440;
+        }
+
+        /* PRIME STATUS BAR */
+        .prime-status-bar {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .prime-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prime-badge {
+            width: 24px;
+            height: 24px;
+            background: #f1c40f;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 4px rgba(241, 196, 15, 0.3);
+        }
+
+        .prime-info span {
+            font-size: 0.85rem;
+            color: #1a1e2b;
+            font-weight: 500;
+        }
+
+        .prime-logout {
+            background: none;
+            border: none;
+            color: #8b93a6;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 4px 8px;
+            transition: color 0.2s;
+        }
+
+        .prime-logout:hover {
+            color: #e74c3c;
+        }
+
+        /* PAGE TITLE */
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+        .page-title h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-title p {
+            color: #8b93a6;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        /* UPLOAD CARD */
+        .upload-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .upload-card h2 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* UPLOAD AREA */
+        .upload-area {
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8f9fc;
+        }
+
+        .upload-area:hover {
+            border-color: #2e3440;
+            background: #f0f2f5;
+        }
+
+        .upload-area.dragover {
+            border-color: #2e3440;
+            background: #e8ecf2;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: #8b93a6;
+            margin-bottom: 12px;
+        }
+
+        .upload-text {
+            font-weight: 500;
+            color: #1a1e2b;
+            margin-bottom: 4px;
+        }
+
+        .upload-hint {
+            font-size: 0.8rem;
+            color: #8b93a6;
+        }
+
+        /* FILE INFO */
+        .file-info {
+            background: #f8f9fc;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: none;
+        }
+
+        .file-info.active {
+            display: block;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        .file-size {
+            font-size: 0.8rem;
+            color: #8b93a6;
+            margin-bottom: 12px;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* CLASS SELECTOR */
+        .class-section {
+            margin-bottom: 20px;
+        }
+
+        .class-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1a1e2b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .class-option {
+            background: #f8f9fc;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #1a1e2b;
+        }
+
+        .class-option:hover {
+            border-color: #2e3440;
+            transform: translateY(-2px);
+        }
+
+        .class-option.selected {
+            background: #2e3440;
+            color: white;
+            border-color: #2e3440;
+        }
+
+        /* EXAM SELECTOR */
+        .exam-section {
+            margin-bottom: 20px;
+        }
+
+        .exam-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1a1e2b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .exam-grid {
+            display: flex;
+            gap: 12px;
+        }
+
+        .exam-option {
+            flex: 1;
+            background: #f8f9fc;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .exam-option:hover {
+            border-color: #2e3440;
+            transform: translateY(-2px);
+        }
+
+        .exam-option.selected {
+            background: #2e3440;
+            color: white;
+            border-color: #2e3440;
+        }
+
+        .exam-option .exam-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .exam-option .exam-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .exam-option .exam-desc {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        /* COMMENT INPUT */
+        .comment-section {
+            margin-bottom: 20px;
+        }
+
+        .comment-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1a1e2b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 18px;
+            font-size: 0.9rem;
+            background: #f8f9fc;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: #2e3440;
+            background: #ffffff;
+        }
+
+        .comment-input::placeholder {
+            color: #b5bcc8;
+            font-weight: 300;
+        }
+
+        /* UPLOAD BUTTON */
+        .upload-btn {
+            background: #2e3440;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .upload-btn:hover {
+            background: #1a1e2b;
+            transform: translateY(-1px);
+        }
+
+        .upload-btn:active {
+            transform: translateY(0);
+        }
+
+        .upload-btn:disabled {
+            background: #8b93a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            margin: 16px auto;
+            border: 2px solid #f0f2f5;
+            border-top: 2px solid #2e3440;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* FILTER SECTION */
+        .filter-section {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .filter-header h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-badge {
+            background: #2e3440;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .filter-badge:hover {
+            opacity: 0.9;
+        }
+
+        .filter-options {
+            display: none;
+            margin-top: 16px;
+        }
+
+        .filter-options.active {
+            display: block;
+        }
+
+        .filter-classes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .filter-class {
+            background: #f8f9fc;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-class:hover {
+            border-color: #2e3440;
+        }
+
+        .filter-class.active {
+            background: #2e3440;
+            color: white;
+            border-color: #2e3440;
+        }
+
+        .filter-reset {
+            background: none;
+            border: none;
+            color: #8b93a6;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 4px 8px;
+        }
+
+        .filter-reset:hover {
+            color: #2e3440;
+        }
+
+        /* GALLERY */
+        .gallery-section {
+            margin-bottom: 24px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .gallery-item {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -10px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-image {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
+
+        .gallery-info {
+            padding: 12px;
+        }
+
+        .gallery-meta {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .gallery-class {
+            background: #2e3440;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 500;
+        }
+
+        .gallery-exam {
+            background: #f0f2f5;
+            color: #1a1e2b;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 500;
+        }
+
+        .gallery-comment {
+            font-size: 0.8rem;
+            color: #1a1e2b;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .gallery-date {
+            font-size: 0.65rem;
+            color: #8b93a6;
+        }
+
+        .empty-gallery {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8b93a6;
+            grid-column: 1/-1;
+        }
+
+        .empty-gallery-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* MODAL */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 10001;
+            display: none;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 28px;
+            max-width: 500px;
+            width: 90%;
+            margin: 50px auto;
+            padding: 24px;
+            box-shadow: 0 25px 35px -15px rgba(0, 0, 0, 0.2);
+            animation: modalSlide 0.3s;
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 16px;
+        }
+
+        .modal-image {
+            width: 100%;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .modal-info {
+            margin-bottom: 16px;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .modal-class {
+            background: #2e3440;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+        }
+
+        .modal-exam {
+            background: #f0f2f5;
+            color: #1a1e2b;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+        }
+
+        .modal-comment {
+            background: #f8f9fc;
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-style: italic;
+            color: #1a1e2b;
+            border-left: 3px solid #2e3440;
+        }
+
+        .modal-date {
+            font-size: 0.8rem;
+            color: #8b93a6;
+        }
+
+        .modal-close {
+            background: #2e3440;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #1a1e2b;
+        }
+
+        /* BOTTOM NAVIGATION */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 560px;
+            width: calc(100% - 32px);
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 6px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav-item-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8b93a6;
+            text-decoration: none;
+            font-size: 0.6rem;
+            font-weight: 500;
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 30px;
+            transition: all 0.2s;
+        }
+
+        .nav-item-bottom.active {
+            background: #f0f2f5;
+            color: #2e3440;
+        }
+
+        .nav-item-bottom:hover {
+            color: #2e3440;
+            background: #f8f9fc;
+        }
+
+        .nav-icon-bottom {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+
+        /* MESSAGES */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 30px;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            z-index: 10002;
+            animation: slideIn 0.2s;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .message.success { background: #2e3440; }
+        .message.error { background: #c0392b; }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 0;
+            }
+
+            .class-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .exam-grid {
+                flex-direction: column;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 400px) {
+            .class-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-icon">62</div>
+                        <h1>стена</h1>
+                    </div>
+                    <div class="header-icons">
+                        <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="header-icon">
+                            <i class="far fa-user"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="nav-bar">
+                <a href="https://ggfh-becouse.github.io/school62-vote/index.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    главная
+                </a>
+                <a href="https://ggfh-becouse.github.io/school62-vote/votes.html" class="nav-link">
+                    <i class="fas fa-chart-bar"></i>
+                    голосования
+                </a>
+                <a href="https://ggfh-becouse.github.io/school62-vote/threads.html" class="nav-link">
+                    <i class="fas fa-comment"></i>
+                    темки
+                </a>
+                <a href="https://ggfh-becouse.github.io/school62-vote/slivy.html" class="nav-link active">
+                    <i class="fas fa-image"></i>
+                    сливы
+                </a>
+            </div>
+
+            <!-- Prime Status -->
+            <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
+                <div class="prime-info">
+                    <div class="prime-badge">P</div>
+                    <span id="primeUserName">Prime пользователь</span>
+                </div>
+                <button class="prime-logout" onclick="logoutPrime()">выйти</button>
+            </div>
+
+            <!-- Page Title -->
+            <div class="page-title">
+                <h1><i class="fas fa-image"></i> сливы</h1>
+                <p>делись фотками с контрольных</p>
+            </div>
+
+            <!-- Upload Card -->
+            <div class="upload-card">
+                <h2><i class="far fa-cloud-upload"></i> загрузить фото</h2>
+
+                <!-- Upload Area -->
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon"><i class="far fa-image"></i></div>
+                    <div class="upload-text">нажмите для выбора файла</div>
+                    <div class="upload-hint">или перетащите фото сюда</div>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                </div>
+
+                <!-- File Info -->
+                <div class="file-info" id="fileInfo">
+                    <div class="file-name" id="fileName"></div>
+                    <div class="file-size" id="fileSize"></div>
+                    <img class="preview-image" id="preview" alt="Preview">
+                </div>
+
+                <!-- Class Selection -->
+                <div class="class-section">
+                    <div class="class-label">
+                        <i class="far fa-graduation-cap"></i> класс
+                    </div>
+                    <div class="class-grid" id="classSelector"></div>
+                </div>
+
+                <!-- Exam Selection (кириллица) -->
+                <div class="exam-section">
+                    <div class="exam-label">
+                        <i class="far fa-pen"></i> тип работы
+                    </div>
+                    <div class="exam-grid">
+                        <div class="exam-option" data-exam="сор">
+                            <div class="exam-icon">📋</div>
+                            <div class="exam-title">СОР</div>
+                            <div class="exam-desc">суммативное оценивание</div>
+                        </div>
+                        <div class="exam-option" data-exam="соч">
+                            <div class="exam-icon">📊</div>
+                            <div class="exam-title">СОЧ</div>
+                            <div class="exam-desc">итоговое оценивание</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment Input -->
+                <div class="comment-section">
+                    <div class="comment-label">
+                        <i class="far fa-comment"></i> комментарий
+                    </div>
+                    <input type="text" id="photoComment" class="comment-input" placeholder="например: 1 вариант, сложно..." maxlength="100">
+                </div>
+
+                <!-- Upload Button -->
+                <button class="upload-btn" id="uploadBtn" disabled>
+                    <i class="far fa-cloud-upload"></i> загрузить
+                </button>
+                <div class="loading-spinner" id="loadingSpinner"></div>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-header">
+                    <h3><i class="far fa-filter"></i> фильтр</h3>
+                    <span class="filter-badge" id="filterBadge">все классы</span>
+                </div>
+                <div class="filter-options" id="filterOptions">
+                    <div class="filter-classes" id="filterClasses"></div>
+                    <button class="filter-reset" id="resetFilter">сбросить фильтр</button>
+                </div>
+            </div>
+
+            <!-- Gallery -->
+            <div class="gallery-section">
+                <div class="gallery-grid" id="galleryGrid">
+                    <div class="empty-gallery">
+                        <div class="empty-gallery-icon"><i class="far fa-images"></i></div>
+                        <p>пока нет загруженных фото</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="https://ggfh-becouse.github.io/school62-vote/index.html" class="nav-item-bottom">
+            <i class="fas fa-home nav-icon-bottom"></i>
+            <span>главная</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/votes.html" class="nav-item-bottom">
+            <i class="fas fa-chart-bar nav-icon-bottom"></i>
+            <span>голосования</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/threads.html" class="nav-item-bottom">
+            <i class="fas fa-comment nav-icon-bottom"></i>
+            <span>темки</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/slivy.html" class="nav-item-bottom active">
+            <i class="fas fa-image nav-icon-bottom"></i>
+            <span>сливы</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="nav-item-bottom">
+            <i class="fas fa-user nav-icon-bottom"></i>
+            <span>аккаунт</span>
+        </a>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal" id="imageModal">
+        <div class="modal-card">
+            <h3 id="modalTitle">просмотр фото</h3>
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-info">
+                <div class="modal-meta">
+                    <span class="modal-class" id="modalClass"></span>
+                    <span class="modal-exam" id="modalExam"></span>
+                </div>
+                <div class="modal-comment" id="modalComment"></div>
+                <div class="modal-date" id="modalDate"></div>
+            </div>
+            <button class="modal-close" onclick="closeModal()">закрыть</button>
+        </div>
+    </div>
+
+    <div id="messageContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ============================================
+        // ПЕРЕМЕННЫЕ
+        // ============================================
+        const classes = ['5', '6', '7', '8', '9', '10', '11'];
+        let selectedClass = '';
+        let selectedExam = '';
+        let selectedFile = null;
+        let uploadedImages = [];
+        let currentFilter = 'all';
+
+        let primeUser = null;
+        const savedPrime = localStorage.getItem('primeUser');
+        if (savedPrime) {
+            primeUser = JSON.parse(savedPrime);
+            document.getElementById('primeStatusBar').style.display = 'flex';
+            document.getElementById('primeUserName').textContent = primeUser.name;
+        }
+
+        // ============================================
+        // ИНИЦИАЛИЗАЦИЯ
+        // ============================================
+        function init() {
+            // Заполняем классы
+            const classSelector = document.getElementById('classSelector');
+            classes.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'class-option';
+                div.textContent = c;
+                div.onclick = () => selectClass(c, div);
+                classSelector.appendChild(div);
+            });
+
+            // Заполняем фильтр
+            const filterClasses = document.getElementById('filterClasses');
+            classes.forEach(c => {
+                const span = document.createElement('span');
+                span.className = 'filter-class';
+                span.textContent = c;
+                span.onclick = () => filterByClass(c);
+                filterClasses.appendChild(span);
+            });
+
+            // Настраиваем загрузку
+            setupUploadArea();
+            
+            // Загружаем сохраненные изображения
+            loadImages();
+
+            // Фильтр
+            document.getElementById('filterBadge').addEventListener('click', toggleFilter);
+            document.getElementById('resetFilter').addEventListener('click', resetFilter);
+        }
+
+        window.logoutPrime = function() {
+            primeUser = null;
+            localStorage.removeItem('primeUser');
+            document.getElementById('primeStatusBar').style.display = 'none';
+            showMessage('вы вышли из prime', 'success');
+        };
+
+        // ============================================
+        // ВЫБОР КЛАССА
+        // ============================================
+        function selectClass(className, element) {
+            document.querySelectorAll('.class-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedClass = className;
+            checkForm();
+        }
+
+        // ============================================
+        // ВЫБОР ТИПА РАБОТЫ (кириллица)
+        // ============================================
+        document.querySelectorAll('.exam-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.exam-option').forEach(el => {
+                    el.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                selectedExam = this.dataset.exam;
+                checkForm();
+            });
+        });
+
+        // ============================================
+        // ПРОВЕРКА ФОРМЫ
+        // ============================================
+        function checkForm() {
+            const uploadBtn = document.getElementById('uploadBtn');
+            uploadBtn.disabled = !(selectedFile && selectedClass && selectedExam);
+        }
+
+        // ============================================
+        // НАСТРОЙКА ЗАГРУЗКИ
+        // ============================================
+        function setupUploadArea() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+
+            uploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                handleFile(e.target.files[0]);
+            });
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    handleFile(file);
+                } else {
+                    showMessage('пожалуйста, выберите изображение', 'error');
+                }
+            });
+        }
+
+        // ============================================
+        // ОБРАБОТКА ФАЙЛА
+        // ============================================
+        function handleFile(file) {
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                showMessage('пожалуйста, выберите изображение', 'error');
+                return;
+            }
+
+            if (file.size > 10 * 1024 * 1024) {
+                showMessage('файл слишком большой (максимум 10MB)', 'error');
+                return;
+            }
+
+            selectedFile = file;
+
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = 
+                (file.size / 1024 / 1024).toFixed(2) + ' MB';
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('preview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            document.getElementById('fileInfo').classList.add('active');
+            checkForm();
+        }
+
+        // ============================================
+        // ЗАГРУЗКА ФОТО
+        // ============================================
+        async function uploadPhoto() {
+            if (!selectedFile || !selectedClass || !selectedExam) return;
+
+            const uploadBtn = document.getElementById('uploadBtn');
+            const spinner = document.getElementById('loadingSpinner');
+            
+            uploadBtn.disabled = true;
+            spinner.style.display = 'block';
+
+            try {
+                const comment = document.getElementById('photoComment').value.trim() || '';
+
+                const imageData = {
+                    id: Date.now(),
+                    url: await getBase64(selectedFile),
+                    class: selectedClass,
+                    exam: selectedExam,
+                    comment: comment,
+                    date: new Date().toISOString(),
+                    uploader: primeUser?.name || 'Аноним'
+                };
+
+                const saved = localStorage.getItem('slivy_images');
+                const images = saved ? JSON.parse(saved) : [];
+                images.unshift(imageData);
+                localStorage.setItem('slivy_images', JSON.stringify(images));
+
+                await loadImages();
+
+                resetForm();
+                showMessage('✅ фото загружено', 'success');
+
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+                showMessage('ошибка при загрузке фото', 'error');
+            } finally {
+                uploadBtn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // ============================================
+        // СБРОС ФОРМЫ
+        // ============================================
+        function resetForm() {
+            selectedFile = null;
+            selectedClass = '';
+            selectedExam = '';
+            
+            document.getElementById('fileInput').value = '';
+            document.getElementById('fileInfo').classList.remove('active');
+            document.getElementById('photoComment').value = '';
+            
+            document.querySelectorAll('.class-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelectorAll('.exam-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            const uploadBtn = document.getElementById('uploadBtn');
+            uploadBtn.disabled = true;
+        }
+
+        // ============================================
+        // ЗАГРУЗКА ИЗОБРАЖЕНИЙ
+        // ============================================
+        async function loadImages() {
+            const saved = localStorage.getItem('slivy_images');
+            uploadedImages = saved ? JSON.parse(saved) : [];
+            applyFilter();
+        }
+
+        function applyFilter() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            
+            let filtered = uploadedImages;
+            if (currentFilter !== 'all') {
+                filtered = uploadedImages.filter(img => img.class === currentFilter);
+            }
+
+            if (filtered.length === 0) {
+                galleryGrid.innerHTML = `
+                    <div class="empty-gallery">
+                        <div class="empty-gallery-icon"><i class="far fa-images"></i></div>
+                        <p>${currentFilter === 'all' ? 'пока нет загруженных фото' : `нет фото для ${currentFilter} класса`}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            filtered.forEach(img => {
+                const date = new Date(img.date).toLocaleString('ru', {
+                    day: '2-digit', month: '2-digit'
+                });
+                
+                html += `
+                    <div class="gallery-item" onclick="openModal('${img.id}')">
+                        <img src="${img.url}" class="gallery-image" alt="Upload" loading="lazy">
+                        <div class="gallery-info">
+                            <div class="gallery-meta">
+                                <span class="gallery-class">${img.class}</span>
+                                <span class="gallery-exam">${img.exam.toUpperCase()}</span>
+                            </div>
+                            ${img.comment ? `<div class="gallery-comment">💬 ${escapeHtml(img.comment)}</div>` : ''}
+                            <div class="gallery-date">${date}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            galleryGrid.innerHTML = html;
+        }
+
+        // ============================================
+        // ФИЛЬТР
+        // ============================================
+        function toggleFilter() {
+            const options = document.getElementById('filterOptions');
+            options.classList.toggle('active');
+        }
+
+        function filterByClass(className) {
+            document.querySelectorAll('.filter-class').forEach(el => {
+                el.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentFilter = className;
+            document.getElementById('filterBadge').textContent = `${className} класс`;
+            applyFilter();
+        }
+
+        function resetFilter() {
+            document.querySelectorAll('.filter-class').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            currentFilter = 'all';
+            document.getElementById('filterBadge').textContent = 'все классы';
+            document.getElementById('filterOptions').classList.remove('active');
+            applyFilter();
+        }
+
+        // ============================================
+        // МОДАЛЬНОЕ ОКНО
+        // ============================================
+        function openModal(imageId) {
+            const img = uploadedImages.find(i => i.id == imageId);
+            if (!img) return;
+
+            document.getElementById('modalImage').src = img.url;
+            document.getElementById('modalClass').textContent = `${img.class} класс`;
+            document.getElementById('modalExam').textContent = img.exam.toUpperCase();
+            document.getElementById('modalComment').textContent = img.comment || 'без комментария';
+            
+            const date = new Date(img.date).toLocaleString('ru', {
+                day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+            document.getElementById('modalDate').textContent = `загружено: ${date}`;
+            
+            document.getElementById('imageModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // ============================================
+        // ПОКАЗ СООБЩЕНИЙ
+        // ============================================
+        function showMessage(text, type) {
+            const container = document.getElementById('messageContainer');
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            container.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ============================================
+        // ЗАПУСК
+        // ============================================
+        document.addEventListener('DOMContentLoaded', init);
+
+        document.getElementById('uploadBtn').addEventListener('click', uploadPhoto);
+
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('imageModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
