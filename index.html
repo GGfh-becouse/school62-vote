@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>СТЕНА 62 ШКОЛЫ</title>
+    <title>СТЕНА 62 | минимализм</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -32,7 +32,6 @@
             padding: 0 16px;
         }
 
-        /* MAIN CONTENT */
         .main-content {
             display: block;
             padding-bottom: 90px;
@@ -43,7 +42,7 @@
             background: #ffffff;
             border-radius: 24px;
             padding: 16px 20px;
-            margin: 8px 0 24px 0;
+            margin: 8px 0 16px 0;
             box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0, 0, 0, 0.02);
         }
@@ -103,9 +102,217 @@
             color: #2e3440;
         }
 
-        /* STORIES - минималистичные */
-        .stories-container {
+        /* ТАЙМЕР БЛОК - КРАСНЫЙ */
+        .timer-block {
+            background: linear-gradient(135deg, #ff4d4d, #e63946);
+            border-radius: 24px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(230, 57, 70, 0.4), 0 0 0 2px rgba(255, 77, 77, 0.2) inset;
+            animation: pulse 2s infinite;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 10px 20px -5px rgba(230, 57, 70, 0.4); }
+            50% { box-shadow: 0 15px 30px -5px rgba(230, 57, 70, 0.8); }
+            100% { box-shadow: 0 10px 20px -5px rgba(230, 57, 70, 0.4); }
+        }
+
+        .timer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .timer-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 16px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+
+        .timer-icon {
+            font-size: 1.1rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .timer-text {
+            font-weight: 500;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .timer-digits {
+            font-family: 'Inter', monospace;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            background: #1a1e2b;
+            padding: 4px 12px;
+            border-radius: 30px;
+            color: #ffd966;
+        }
+
+        .leader-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 250px;
+        }
+
+        .leader-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .leader-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* АКТИВНЫЕ ГОЛОСОВАНИЯ */
+        .active-polls {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
             margin-bottom: 24px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-header h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-link {
+            color: #2e3440;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border-bottom: 1px solid #2e3440;
+            padding-bottom: 2px;
+            transition: opacity 0.2s;
+        }
+
+        .section-link:hover {
+            opacity: 0.7;
+        }
+
+        .poll-card {
+            background: #f8f9fc;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s;
+        }
+
+        .poll-card:hover {
+            transform: translateX(4px);
+        }
+
+        .poll-question {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1a1e2b;
+            margin-bottom: 12px;
+        }
+
+        .poll-stats {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: #8b93a6;
+            font-size: 0.75rem;
+        }
+
+        .poll-options {
+            display: flex;
+            gap: 8px;
+        }
+
+        .poll-option {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 40px;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poll-option:active {
+            transform: scale(0.97);
+        }
+
+        .poll-option.yes {
+            color: #27ae60;
+        }
+
+        .poll-option.yes:hover {
+            background: #e8f5e9;
+            border-color: #27ae60;
+        }
+
+        .poll-option.no {
+            color: #e74c3c;
+        }
+
+        .poll-option.no:hover {
+            background: #fdedec;
+            border-color: #e74c3c;
+        }
+
+        .poll-progress {
+            margin-top: 8px;
+            height: 4px;
+            background: #f0f2f5;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(90deg, #2e3440, #4a5568);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        /* STORIES */
+        .stories-container {
+            margin-bottom: 20px;
         }
 
         .stories-scroll {
@@ -143,6 +350,11 @@
             font-weight: 500;
             font-size: 0.8rem;
             text-transform: uppercase;
+            transition: transform 0.2s;
+        }
+
+        .story-item:hover .story-avatar {
+            transform: translateY(-2px);
         }
 
         .story-name {
@@ -151,13 +363,72 @@
             color: #8b93a6;
         }
 
-        /* QUICK NOTIFICATIONS - без смайликов */
+        /* PRIME СТАТУС */
+        .prime-status-bar {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideDown 0.3s;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .prime-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prime-badge {
+            width: 24px;
+            height: 24px;
+            background: #f1c40f;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 4px rgba(241, 196, 15, 0.3);
+        }
+
+        .prime-info span {
+            font-size: 0.85rem;
+            color: #1a1e2b;
+            font-weight: 500;
+        }
+
+        .prime-logout {
+            background: none;
+            border: none;
+            color: #8b93a6;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 4px 8px;
+            transition: color 0.2s;
+        }
+
+        .prime-logout:hover {
+            color: #e74c3c;
+        }
+
+        /* QUICK NOTIFICATIONS */
         .quick-notifications {
             display: flex;
             gap: 8px;
             overflow-x: auto;
             scrollbar-width: none;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             padding: 4px 0;
         }
 
@@ -181,6 +452,7 @@
 
         .notification-badge:hover {
             background: #f0f2f5;
+            transform: translateY(-1px);
         }
 
         .notification-badge.highlight {
@@ -190,55 +462,6 @@
 
         .notification-badge.highlight:hover {
             background: #1a1e2b;
-        }
-
-        /* PROMO БЛОК */
-        .promo-block {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .promo-text {
-            flex: 1;
-        }
-
-        .promo-text p {
-            font-size: 0.9rem;
-            color: #8b93a6;
-            margin-bottom: 4px;
-        }
-
-        .promo-link {
-            font-weight: 600;
-            color: #2e3440;
-            text-decoration: none;
-            font-size: 0.95rem;
-            border-bottom: 1px solid #2e3440;
-            padding-bottom: 2px;
-            transition: opacity 0.2s;
-        }
-
-        .promo-link:hover {
-            opacity: 0.7;
-        }
-
-        .promo-icon {
-            width: 40px;
-            height: 40px;
-            background: #f0f2f5;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #2e3440;
-            font-weight: 600;
         }
 
         /* STATS */
@@ -256,6 +479,11 @@
             text-align: center;
             box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
         }
 
         .stat-value {
@@ -272,57 +500,6 @@
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.3px;
-        }
-
-        /* PRIME СТАТУС */
-        .prime-status-bar {
-            background: #ffffff;
-            border-radius: 40px;
-            padding: 12px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .prime-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .prime-badge {
-            width: 24px;
-            height: 24px;
-            background: #f1c40f;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.8rem;
-        }
-
-        .prime-info span {
-            font-size: 0.85rem;
-            color: #1a1e2b;
-            font-weight: 500;
-        }
-
-        .prime-logout {
-            background: none;
-            border: none;
-            color: #8b93a6;
-            font-size: 0.75rem;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 4px 8px;
-        }
-
-        .prime-logout:hover {
-            color: #2e3440;
         }
 
         /* COMMENTS SECTION */
@@ -388,18 +565,25 @@
             cursor: pointer;
             width: fit-content;
             margin-top: 10px;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.2);
         }
 
         .comment-submit:hover {
             background: #1a1e2b;
+            transform: translateY(-1px);
+        }
+
+        .comment-submit:active {
+            transform: translateY(1px);
+            box-shadow: none;
         }
 
         /* COMMENTS LIST */
         .comments-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
             max-height: 500px;
             overflow-y: auto;
             padding-right: 4px;
@@ -410,12 +594,19 @@
             border-radius: 18px;
             padding: 16px;
             border: 1px solid rgba(0, 0, 0, 0.02);
-            transition: transform 0.2s;
+            transition: all 0.2s;
             position: relative;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .comment-item:hover {
-            transform: translateX(2px);
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
         }
 
         .comment-item.verified {
@@ -459,21 +650,22 @@
             background: white;
             border-radius: 20px;
             padding: 16px;
-            width: 240px;
-            box-shadow: 0 15px 25px -10px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(0, 0, 0, 0.02);
+            width: 260px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
             transition: all 0.2s;
             pointer-events: none;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .comment-name-wrapper:hover .mini-profile-card {
             opacity: 1;
             visibility: visible;
             pointer-events: all;
+            transform: translateY(-4px);
         }
 
         .mini-profile-header {
@@ -551,6 +743,41 @@
             background: #eef2f5;
         }
 
+        .comment-interactions {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .interaction-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: #8b93a6;
+            font-size: 0.75rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .interaction-btn:hover {
+            background: #f0f2f5;
+            color: #2e3440;
+        }
+
+        .interaction-btn.liked {
+            color: #e74c3c;
+        }
+
+        .interaction-btn.liked i {
+            color: #e74c3c;
+        }
+
         .premium-badge {
             display: inline-flex;
             align-items: center;
@@ -602,6 +829,8 @@
             box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0, 0, 0, 0.02);
             z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
         }
 
         .nav-item-bottom {
@@ -626,6 +855,7 @@
 
         .nav-item-bottom:hover {
             color: #2e3440;
+            background: #f8f9fc;
         }
 
         .nav-icon-bottom {
@@ -649,11 +879,19 @@
             box-shadow: 0 8px 16px -6px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(0, 0, 0, 0.02);
             z-index: 999;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .suggest-button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.15);
+        }
+
+        .suggest-button:active {
+            transform: translateY(0) scale(0.95);
         }
 
         /* MODAL */
@@ -677,6 +915,12 @@
             margin: 80px auto;
             padding: 24px;
             box-shadow: 0 25px 35px -15px rgba(0, 0, 0, 0.2);
+            animation: modalSlide 0.3s;
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .suggest-card h3 {
@@ -696,6 +940,7 @@
             margin-bottom: 10px;
             background: #f8f9fc;
             font-size: 0.9rem;
+            transition: border-color 0.2s;
         }
 
         .suggest-card select:focus,
@@ -721,11 +966,12 @@
             font-weight: 500;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
 
         .suggest-submit:hover {
             background: #1a1e2b;
+            transform: translateY(-1px);
         }
 
         .suggest-cancel {
@@ -738,7 +984,7 @@
             font-weight: 500;
             font-size: 0.85rem;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
 
         .suggest-cancel:hover {
@@ -789,16 +1035,19 @@
                 padding: 16px 0;
             }
             
-            .promo-block {
+            .timer-content {
                 flex-direction: column;
-                text-align: center;
-                gap: 12px;
+                align-items: stretch;
             }
             
-            .promo-icon {
-                margin-left: 0;
+            .timer-info, .leader-info {
+                justify-content: center;
             }
-
+            
+            .leader-info {
+                max-width: 100%;
+            }
+            
             .mini-profile-card {
                 width: 200px;
             }
@@ -821,6 +1070,30 @@
                         <i class="far fa-user header-icon"></i>
                     </div>
                 </div>
+            </div>
+
+            <!-- КРАСНЫЙ БЛОК С ТАЙМЕРОМ И ЛИДЕРОМ -->
+            <div class="timer-block" id="timerBlock">
+                <div class="timer-content">
+                    <div class="timer-info">
+                        <span class="timer-icon">⏳</span>
+                        <span class="timer-text">до 15 марта</span>
+                        <span class="timer-digits" id="countdownTimer">00д 00:00:00</span>
+                    </div>
+                    <div class="leader-info">
+                        <span class="leader-label">👑 лидер</span>
+                        <span class="leader-name" id="leaderName">загрузка...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prime статус -->
+            <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
+                <div class="prime-info">
+                    <div class="prime-badge">P</div>
+                    <span id="primeUserName">Prime пользователь</span>
+                </div>
+                <button class="prime-logout" onclick="logoutPrime()">выйти</button>
             </div>
 
             <!-- Stories -->
@@ -849,16 +1122,7 @@
                 </div>
             </div>
 
-            <!-- Prime статус -->
-            <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
-                <div class="prime-info">
-                    <div class="prime-badge">P</div>
-                    <span id="primeUserName">Prime пользователь</span>
-                </div>
-                <button class="prime-logout" onclick="logoutPrime()">выйти</button>
-            </div>
-
-            <!-- Quick Notifications - без смайликов -->
+            <!-- Quick Notifications -->
             <div class="quick-notifications">
                 <div class="notification-badge highlight">8 марта</div>
                 <div class="notification-badge">prime</div>
@@ -867,13 +1131,15 @@
                 <div class="notification-badge">новости</div>
             </div>
 
-            <!-- Promo блок для голосований -->
-            <div class="promo-block">
-                <div class="promo-text">
-                    <p>голосования перенесены</p>
-                    <a href="/votes.html" class="promo-link">перейти в раздел →</a>
+            <!-- АКТИВНЫЕ ГОЛОСОВАНИЯ -->
+            <div class="active-polls">
+                <div class="section-header">
+                    <h3>активные голосования</h3>
+                    <a href="/votes.html" class="section-link">все →</a>
                 </div>
-                <div class="promo-icon">↗</div>
+                <div id="pollsList">
+                    <!-- Динамически загружаются опросы -->
+                </div>
             </div>
 
             <!-- Stats -->
@@ -978,6 +1244,10 @@
         let lastCommentTime = 0;
         let primeUser = null;
         let threadsCount = 0;
+        let polls = [];
+        let votedPolls = new Set();
+        let allCandidates = [];
+        let commentLikes = JSON.parse(localStorage.getItem('commentLikes')) || {};
 
         // Загружаем Prime статус из localStorage
         const savedPrime = localStorage.getItem('primeUser');
@@ -1027,6 +1297,80 @@
         }
 
         // ============================================
+        // ТАЙМЕР ДО 15 МАРТА
+        // ============================================
+        function startCountdown() {
+            const timerElement = document.getElementById('countdownTimer');
+            if (!timerElement) return;
+
+            function updateTimer() {
+                const now = new Date();
+                let targetYear = now.getFullYear();
+                const targetDate = new Date(targetYear, 2, 15, 0, 0, 0);
+
+                if (now > targetDate) {
+                    targetYear++;
+                    targetDate.setFullYear(targetYear);
+                }
+
+                const diff = targetDate - now;
+
+                if (diff <= 0) {
+                    timerElement.textContent = '00д 00:00:00';
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                timerElement.textContent = `${days.toString().padStart(2, '0')}д ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        // ============================================
+        // ЗАГРУЗКА КАНДИДАТОВ ДЛЯ ЛИДЕРА
+        // ============================================
+        async function loadCandidates() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('candidates')
+                    .select('*')
+                    .order('votes', { ascending: false });
+
+                if (error) throw error;
+                allCandidates = data || [];
+                updateLeaderInfo();
+            } catch (err) {
+                console.error('Ошибка загрузки кандидатов:', err);
+            }
+        }
+
+        function updateLeaderInfo() {
+            const leaderNameElement = document.getElementById('leaderName');
+            if (!leaderNameElement) return;
+
+            if (!allCandidates || allCandidates.length === 0) {
+                leaderNameElement.textContent = 'нет голосов';
+                return;
+            }
+
+            const leader = allCandidates.reduce((max, candidate) => 
+                (candidate.votes || 0) > (max.votes || 0) ? candidate : max
+            , allCandidates[0]);
+
+            if (leader) {
+                leaderNameElement.textContent = `${leader.name} (${leader.votes || 0} ❤️)`;
+            } else {
+                leaderNameElement.textContent = 'нет голосов';
+            }
+        }
+
+        // ============================================
         // ЗАГРУЗКА КОММЕНТАРИЕВ
         // ============================================
         async function loadComments() {
@@ -1043,7 +1387,6 @@
                 
                 document.getElementById('commentsCount').textContent = comments.length;
                 
-                // Подсчет Prime пользователей
                 const primeCount = comments.filter(c => c.is_prime || c.is_verified).length;
                 document.getElementById('primeCount').textContent = primeCount;
                 
@@ -1051,6 +1394,13 @@
                 console.error('Ошибка загрузки комментариев:', error);
                 document.getElementById('commentsList').innerHTML = '<div style="text-align:center; color:#8b93a6;">ошибка загрузки</div>';
             }
+        }
+
+        function likeComment(commentId) {
+            commentLikes[commentId] = (commentLikes[commentId] || 0) + 1;
+            localStorage.setItem('commentLikes', JSON.stringify(commentLikes));
+            displayComments();
+            showMessage('❤️ лайк добавлен', 'success');
         }
 
         function displayComments() {
@@ -1074,6 +1424,7 @@
                     comments: Math.floor(Math.random() * 50) + 1,
                     likes: Math.floor(Math.random() * 100)
                 };
+                const likes = commentLikes[comment.id] || 0;
                 
                 if (comment.is_prime) {
                     commentClass += ' premium';
@@ -1119,11 +1470,23 @@
                             <span class="comment-date">${date}</span>
                         </div>
                         <div class="comment-message">${escapeHtml(comment.message)}</div>
+                        <div class="comment-interactions">
+                            <button class="interaction-btn ${likes > 0 ? 'liked' : ''}" onclick="likeComment('${comment.id}')">
+                                <i class="fa${likes > 0 ? 's' : 'r'} fa-heart"></i>
+                                <span>${likes}</span>
+                            </button>
+                            <button class="interaction-btn">
+                                <i class="far fa-comment"></i>
+                                <span>ответить</span>
+                            </button>
+                        </div>
                     </div>
                 `;
             });
             list.innerHTML = html;
         }
+
+        window.likeComment = likeComment;
 
         // ============================================
         // ОТПРАВКА КОММЕНТАРИЯ
@@ -1182,6 +1545,69 @@
                 showMessage('ошибка: ' + error.message, 'error');
             }
         }
+
+        // ============================================
+        // ЗАГРУЗКА ОПРОСОВ
+        // ============================================
+        async function loadPolls() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('polls')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(3);
+
+                if (error) throw error;
+                polls = data || [];
+                displayPolls();
+                
+            } catch (error) {
+                console.error('Ошибка загрузки опросов:', error);
+            }
+        }
+
+        function displayPolls() {
+            const pollsList = document.getElementById('pollsList');
+            if (!pollsList) return;
+            
+            if (!polls || polls.length === 0) {
+                pollsList.innerHTML = `
+                    <div style="text-align:center; padding:20px; color:#8b93a6;">
+                        <p>нет активных опросов</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            polls.forEach(poll => {
+                const totalVotes = (poll.yes_votes || 0) + (poll.no_votes || 0);
+                const yesPercent = totalVotes > 0 ? Math.round((poll.yes_votes / totalVotes) * 100) : 50;
+                
+                html += `
+                    <div class="poll-card">
+                        <div class="poll-question">${escapeHtml(poll.question)}</div>
+                        <div class="poll-stats">
+                            <span>👤 ${escapeHtml(poll.author || 'Аноним')}</span>
+                            <span>📊 ${totalVotes} голосов</span>
+                        </div>
+                        <div class="poll-options">
+                            <div class="poll-option yes" onclick="votePoll(${poll.id}, 'yes')">да</div>
+                            <div class="poll-option no" onclick="votePoll(${poll.id}, 'no')">нет</div>
+                        </div>
+                        <div class="poll-progress">
+                            <div class="progress-bar" style="width: ${yesPercent}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            pollsList.innerHTML = html;
+        }
+
+        window.votePoll = function(pollId, choice) {
+            showMessage(`голос учтён (${choice})`, 'success');
+        };
 
         // ============================================
         // ЗАГРУЗКА КОЛИЧЕСТВА ТРЕДОВ
@@ -1282,6 +1708,9 @@
             await getUserIp();
             await loadComments();
             await loadThreadsCount();
+            await loadCandidates();
+            await loadPolls();
+            startCountdown();
         }
 
         initApp();
