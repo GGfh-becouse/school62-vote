@@ -3,463 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>темки - стена 62</title>
+    <title>Темки - Школа №62</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif !important;
         }
 
         body {
-            background: #f8f9fc;
+            background: #f5f5f5;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 32px 0;
+            padding: 0;
+            margin: 0;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 900px;
             width: 100%;
-            background: #f8f9fc;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.05);
+            min-height: 100vh;
             position: relative;
-            padding: 0 16px 90px 16px;
         }
 
-        /* HEADER */
+        /* Шапка */
         .header {
-            background: #ffffff;
+            background: linear-gradient(145deg, #4a6fa5 0%, #2c3e50 100%);
             border-radius: 24px;
-            padding: 16px 20px;
-            margin: 8px 0 24px 0;
-            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.02);
+            padding: 12px 20px;
+            margin: 16px;
+            box-shadow: 0 6px 0 #1a2a3a;
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: #2e3440;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 0.9rem;
+            gap: 10px;
         }
 
         .logo h1 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #1a1e2b;
-            letter-spacing: -0.5px;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
         }
 
-        .header-icons {
-            display: flex;
-            gap: 16px;
+        .school-badge {
+            background: #ffd966;
+            color: #2c3e50;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-bottom: 3px solid #b38f4a;
         }
 
-        .header-icon {
-            font-size: 1.2rem;
-            color: #8b93a6;
-            transition: color 0.2s;
-            cursor: pointer;
-        }
-
-        .header-icon:hover {
-            color: #2e3440;
-        }
-
-        /* NAVIGATION */
-        .nav-bar {
+        .main-nav {
             display: flex;
             gap: 8px;
-            margin-bottom: 24px;
             flex-wrap: wrap;
         }
 
-        .nav-link {
-            padding: 8px 16px;
-            background: #ffffff;
-            border-radius: 30px;
-            color: #8b93a6;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            transition: all 0.2s;
+        .nav-item {
+            position: relative;
             display: flex;
             align-items: center;
             gap: 6px;
-        }
-
-        .nav-link:hover {
-            color: #2e3440;
-            background: #f0f2f5;
-        }
-
-        .nav-link.active {
-            background: #2e3440;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
             color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-bottom: 3px solid rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
         }
 
-        /* CREATE THREAD BUTTON */
-        .create-thread-btn {
-            width: 100%;
-            padding: 16px;
-            background: #2e3440;
-            color: white;
-            border: none;
+        .nav-item:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-item.active {
+            background: #ffd966;
+            color: #2c3e50;
+            border-bottom-color: #b38f4a;
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+        }
+
+        /* Премиум индикатор */
+        .premium-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #f1c40f;
+            color: #2c3e50;
+            padding: 4px 12px;
             border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            margin-bottom: 24px;
-            transition: background 0.2s;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+            border-bottom: 2px solid #b38f4a;
+        }
+
+        /* Форма создания темы */
+        .create-thread {
+            background: white;
+            border-radius: 24px;
+            padding: 20px;
+            margin: 0 16px 20px 16px;
+            border: 2px solid #4a6fa5;
+            box-shadow: 0 4px 0 #2c3e50;
+        }
+
+        .create-thread h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
         }
 
-        .create-thread-btn:hover {
-            background: #1a1e2b;
+        .thread-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
         }
 
-        /* THREADS LIST */
+        .thread-input:focus {
+            border-color: #4a6fa5;
+            outline: none;
+        }
+
+        .thread-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            min-height: 100px;
+            margin-bottom: 10px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .thread-textarea:focus {
+            border-color: #4a6fa5;
+            outline: none;
+        }
+
+        .create-btn {
+            background: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            border-bottom: 4px solid #2c3e50;
+            width: 100%;
+        }
+
+        .create-btn:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+
+        .create-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        /* Список тем */
         .threads-list {
+            margin: 20px 16px;
+        }
+
+        .threads-title {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 24px;
+            align-items: center;
+            gap: 10px;
         }
 
         .thread-item {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            transition: transform 0.2s;
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 4px solid #4a6fa5;
             cursor: pointer;
+            transition: all 0.2s;
             text-decoration: none;
             display: block;
+            color: inherit;
         }
 
         .thread-item:hover {
-            transform: translateX(2px);
-        }
-
-        .thread-item.verified {
-            border-left: 3px solid #4a6fa5;
+            transform: translateX(4px);
+            background: #eef2f7;
         }
 
         .thread-item.premium {
-            border-left: 3px solid #f1c40f;
+            border-left: 4px solid #f1c40f;
+            background: #fff9e6;
         }
 
         .thread-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 5px;
         }
 
         .thread-title {
+            font-weight: 700;
+            color: #2c3e50;
             font-size: 1.1rem;
-            font-weight: 600;
-            color: #1a1e2b;
+        }
+
+        .thread-author {
+            font-size: 0.85rem;
+            color: #4a6fa5;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
         }
 
-        .thread-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 2px 8px;
-            border-radius: 30px;
-            font-size: 0.6rem;
+        .thread-author.premium {
+            color: #f1c40f;
             font-weight: 600;
-        }
-
-        .badge-verified {
-            background: #4a6fa5;
-            color: white;
-        }
-
-        .badge-premium {
-            background: #f1c40f;
-            color: #1a1e2b;
-        }
-
-        .thread-date {
-            color: #8b93a6;
-            font-size: 0.7rem;
         }
 
         .thread-meta {
             display: flex;
-            gap: 16px;
-            margin-bottom: 12px;
-        }
-
-        .thread-meta-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            color: #8b93a6;
+            gap: 15px;
+            color: #7f8c8d;
             font-size: 0.8rem;
+            margin-top: 8px;
         }
 
-        .thread-preview {
-            color: #1a1e2b;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 12px;
-            opacity: 0.8;
-        }
-
-        .thread-footer {
-            display: flex;
-            gap: 16px;
-            padding-top: 12px;
-            border-top: 1px solid #f0f2f5;
-        }
-
-        .thread-stat {
+        .thread-meta span {
             display: flex;
             align-items: center;
-            gap: 4px;
-            color: #8b93a6;
-            font-size: 0.8rem;
+            gap: 3px;
         }
 
-        /* PRIME STATUS BAR */
-        .prime-status-bar {
-            background: #ffffff;
-            border-radius: 40px;
-            padding: 12px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .prime-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .prime-badge {
-            width: 24px;
-            height: 24px;
-            background: #f1c40f;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.8rem;
-        }
-
-        .prime-info span {
-            font-size: 0.85rem;
-            color: #1a1e2b;
-            font-weight: 500;
-        }
-
-        .prime-logout {
-            background: none;
-            border: none;
-            color: #8b93a6;
-            font-size: 0.75rem;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 4px 8px;
-        }
-
-        .prime-logout:hover {
-            color: #2e3440;
-        }
-
-        /* BOTTOM NAVIGATION */
-        .bottom-nav {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            max-width: 600px;
-            width: calc(100% - 32px);
-            background: #ffffff;
-            border-radius: 40px;
-            padding: 6px;
-            display: flex;
-            justify-content: space-around;
-            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            z-index: 1000;
-        }
-
-        .nav-item-bottom {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #8b93a6;
-            text-decoration: none;
-            font-size: 0.6rem;
-            font-weight: 500;
-            flex: 1;
-            padding: 8px 0;
-            border-radius: 30px;
-            transition: all 0.2s;
-        }
-
-        .nav-item-bottom.active {
-            background: #f0f2f5;
-            color: #2e3440;
-        }
-
-        .nav-item-bottom:hover {
-            color: #2e3440;
-        }
-
-        .nav-icon-bottom {
-            font-size: 1.2rem;
-            margin-bottom: 2px;
-        }
-
-        /* MODAL */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(4px);
-            z-index: 10001;
-            display: none;
-        }
-
-        .modal-card {
-            background: #ffffff;
-            border-radius: 28px;
-            max-width: 400px;
-            width: 90%;
-            margin: 80px auto;
-            padding: 24px;
-            box-shadow: 0 25px 35px -15px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-card h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1a1e2b;
-            margin-bottom: 16px;
-        }
-
-        .modal-card input,
-        .modal-card textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-radius: 16px;
-            margin-bottom: 12px;
-            background: #f8f9fc;
-            font-size: 0.9rem;
-        }
-
-        .modal-card textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .modal-card input:focus,
-        .modal-card textarea:focus {
-            outline: none;
-            border-color: #2e3440;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .modal-submit {
-            flex: 2;
-            background: #2e3440;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .modal-submit:hover {
-            background: #1a1e2b;
-        }
-
-        .modal-cancel {
-            flex: 1;
-            background: #f0f2f5;
-            color: #1a1e2b;
-            border: none;
-            padding: 12px;
-            border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .modal-cancel:hover {
-            background: #e4e6e9;
-        }
-
-        /* MESSAGES */
         .message {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 16px;
+            right: 16px;
             padding: 12px 20px;
             border-radius: 30px;
             color: white;
             font-weight: 500;
-            font-size: 0.85rem;
             z-index: 10002;
             animation: slideIn 0.2s;
-            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border-bottom: 4px solid rgba(0,0,0,0.2);
         }
 
         @keyframes slideIn {
@@ -467,15 +298,15 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        .message.success { background: #2e3440; }
+        .message.success { background: #4a6fa5; }
         .message.error { background: #c0392b; }
 
         .loader {
-            border: 2px solid #f0f2f5;
-            border-top: 2px solid #2e3440;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4a6fa5;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
@@ -485,183 +316,71 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* EMPTY STATE */
         .empty-state {
             text-align: center;
             padding: 40px;
-            color: #8b93a6;
-            background: #ffffff;
-            border-radius: 24px;
-            border: 1px solid rgba(0, 0, 0, 0.02);
+            color: #7f8c8d;
         }
 
         .empty-state-icon {
-            width: 48px;
-            height: 48px;
-            background: #f0f2f5;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            color: #2e3440;
-            font-weight: 600;
-        }
-
-        /* ADMIN BUTTON */
-        .admin-button {
-            position: fixed;
-            bottom: 100px;
-            right: 50%;
-            transform: translateX(calc(300px - 50%));
-            width: 48px;
-            height: 48px;
-            border-radius: 24px;
-            background: #ffffff;
-            color: #2e3440;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 8px 16px -6px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            z-index: 999;
-            transition: transform 0.2s;
-        }
-
-        .admin-button:hover {
-            transform: translateX(calc(300px - 50%)) translateY(-2px);
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 600px) {
-            body {
-                padding: 16px 0;
-            }
-            
-            .thread-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .admin-button {
-                transform: translateX(calc(300px - 50%));
-            }
-            
-            .admin-button:hover {
-                transform: translateX(calc(300px - 50%)) translateY(-2px);
-            }
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
+        <!-- Шапка с навигацией -->
         <div class="header">
             <div class="header-content">
                 <div class="logo">
-                    <div class="logo-icon">62</div>
-                    <h1>стена</h1>
+                    <h1>ШКОЛЬНАЯ СТЕНА</h1>
+                    <span class="school-badge">№62</span>
                 </div>
-                <div class="header-icons">
-                    <i class="far fa-bell header-icon"></i>
-                    <i class="far fa-user header-icon"></i>
-                </div>
+                
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-item">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Главная</span>
+                    </a>
+                    
+                    <a href="threads.html" class="nav-item active">
+                        <span class="nav-icon">💬</span>
+                        <span class="nav-text">Темки</span>
+                    </a>
+                </nav>
             </div>
         </div>
 
-        <!-- Navigation -->
-        <div class="nav-bar">
-            <a href="index.html" class="nav-link">
-                <i class="fas fa-home"></i>
-                главная
-            </a>
-            <a href="threads.html" class="nav-link active">
-                <i class="fas fa-comment"></i>
-                темки
-            </a>
+        <!-- Индикатор премиум статуса -->
+        <div style="margin: 0 16px 10px 16px; display: flex; justify-content: flex-end;">
+            <span id="currentUserPremiumIndicator" style="display: none;" class="premium-indicator">
+                <span>👑</span> PREMIUM
+            </span>
         </div>
 
-        <!-- Prime Status -->
-        <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
-            <div class="prime-info">
-                <div class="prime-badge">P</div>
-                <span id="primeUserName">Prime пользователь</span>
+        <!-- Форма создания темы -->
+        <div class="create-thread">
+            <h3><span>📝</span> Создать новую тему</h3>
+            <input type="text" id="threadTitle" class="thread-input" placeholder="Заголовок темы" maxlength="100">
+            <textarea id="threadContent" class="thread-textarea" placeholder="Содержание темы..." maxlength="2000"></textarea>
+            <button class="create-btn" id="createThreadBtn">➕ СОЗДАТЬ ТЕМУ</button>
+        </div>
+
+        <!-- Список тем -->
+        <div class="threads-list">
+            <div class="threads-title">
+                <span style="font-size: 1.3rem;">📋</span> Все темы (<span id="threadsCount">0</span>)
             </div>
-            <button class="prime-logout" onclick="logoutPrime()">выйти</button>
-        </div>
-
-        <!-- Create Thread Button -->
-        <button class="create-thread-btn" id="createThreadBtn">
-            <i class="fas fa-plus"></i>
-            создать тему
-        </button>
-
-        <!-- Threads List -->
-        <div class="threads-list" id="threadsList">
-            <div class="loader"></div>
-        </div>
-    </div>
-
-    <!-- Create Thread Modal -->
-    <div class="modal" id="createThreadModal">
-        <div class="modal-card">
-            <h3>создать тему</h3>
-            <input type="text" id="threadTitle" placeholder="название темы" maxlength="100">
-            <textarea id="threadContent" placeholder="текст сообщения..." maxlength="2000"></textarea>
-            <div class="modal-buttons">
-                <button class="modal-submit" id="submitThread">создать</button>
-                <button class="modal-cancel" id="cancelThread">отмена</button>
+            
+            <div id="threadsContainer">
+                <div class="loader"></div>
             </div>
         </div>
     </div>
-
-    <!-- Admin Modal -->
-    <div class="modal" id="adminModal">
-        <div class="modal-card">
-            <h3>связь с администрацией</h3>
-            <select id="adminType">
-                <option value="question">вопрос</option>
-                <option value="problem">проблема</option>
-                <option value="suggestion">предложение</option>
-            </select>
-            <input type="text" id="adminName" placeholder="ваше имя">
-            <textarea id="adminMessage" placeholder="сообщение..." rows="3"></textarea>
-            <div class="modal-buttons">
-                <button class="modal-submit" id="adminSubmit">отправить</button>
-                <button class="modal-cancel" id="adminCancel">отмена</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Button -->
-    <button class="admin-button" id="adminBtn">✎</button>
 
     <div id="messageContainer"></div>
-
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-item-bottom">
-            <i class="fas fa-home nav-icon-bottom"></i>
-            <span>главная</span>
-        </a>
-        <a href="votes.html" class="nav-item-bottom">
-            <i class="fas fa-chart-bar nav-icon-bottom"></i>
-            <span>голосования</span>
-        </a>
-        <a href="threads.html" class="nav-item-bottom active">
-            <i class="fas fa-comment nav-icon-bottom"></i>
-            <span>темки</span>
-        </a>
-        <a href="slivy.html" class="nav-item-bottom">
-            <i class="fas fa-image nav-icon-bottom"></i>
-            <span>сливы</span>
-        </a>
-        <a href="account.html" class="nav-item-bottom">
-            <i class="fas fa-user nav-icon-bottom"></i>
-            <span>аккаунт</span>
-        </a>
-    </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -670,16 +389,21 @@
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let userIp = null;
-        let primeUser = null;
         let verifiedUser = null;
-        let lastThreadTime = 0;
+        let isPremiumUser = false;
 
-        // Load Prime status from localStorage
+        // Проверяем верифицированного пользователя из localStorage
         const savedPrime = localStorage.getItem('primeUser');
         if (savedPrime) {
-            primeUser = JSON.parse(savedPrime);
-            document.getElementById('primeStatusBar').style.display = 'flex';
-            document.getElementById('primeUserName').textContent = primeUser.name;
+            const primeData = JSON.parse(savedPrime);
+            verifiedUser = primeData.name;
+            isPremiumUser = primeData.isPrime || false;
+            
+            // Показываем премиум индикатор
+            const indicator = document.getElementById('currentUserPremiumIndicator');
+            if (indicator) {
+                indicator.style.display = 'inline-flex';
+            }
         }
 
         async function getUserIp() {
@@ -710,231 +434,171 @@
             return div.innerHTML;
         }
 
+        // Загрузка тем
         async function loadThreads() {
-            const threadsList = document.getElementById('threadsList');
+            const container = document.getElementById('threadsContainer');
+            const countSpan = document.getElementById('threadsCount');
             
             try {
                 const { data, error } = await supabaseClient
                     .from('threads')
                     .select('*')
-                    .order('last_activity', { ascending: false });
-
+                    .order('bump_time', { ascending: false });
+                
                 if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    threadsList.innerHTML = `
+                
+                const threads = data || [];
+                if (countSpan) countSpan.textContent = threads.length;
+                
+                if (threads.length === 0) {
+                    container.innerHTML = `
                         <div class="empty-state">
                             <div class="empty-state-icon">💬</div>
-                            <p>пока нет тем</p>
+                            <p>Пока нет тем. Создайте первую!</p>
                         </div>
                     `;
                     return;
                 }
-
+                
                 let html = '';
-                data.forEach(thread => {
+                threads.forEach(thread => {
                     const date = new Date(thread.created_at).toLocaleString('ru', {
-                        day: '2-digit', month: '2-digit'
+                        day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
                     });
                     
-                    const preview = thread.content?.substring(0, 100) + (thread.content?.length > 100 ? '...' : '');
+                    // Проверяем премиум статус автора
+                    const isAuthorPremium = thread.author_prime || false;
                     
                     html += `
-                        <a href="thread.html?id=${thread.id}" class="thread-item">
+                        <a href="thread.html?id=${thread.id}" class="thread-item ${isAuthorPremium ? 'premium' : ''}">
                             <div class="thread-header">
-                                <div class="thread-title">
-                                    ${escapeHtml(thread.title)}
+                                <div class="thread-title">${escapeHtml(thread.title || 'Без названия')}</div>
+                                <div class="thread-author ${isAuthorPremium ? 'premium' : ''}">
+                                    <span>👤</span> ${escapeHtml(thread.author_name || 'Аноним')}
+                                    ${isAuthorPremium ? '👑' : ''}
                                 </div>
-                                <span class="thread-date">${date}</span>
                             </div>
                             <div class="thread-meta">
-                                <span class="thread-meta-item">
-                                    <i class="far fa-user"></i> ${escapeHtml(thread.author_name || 'Аноним')}
-                                </span>
-                            </div>
-                            <div class="thread-preview">
-                                ${escapeHtml(preview)}
-                            </div>
-                            <div class="thread-footer">
-                                <span class="thread-stat">
-                                    <i class="far fa-comment"></i> ${thread.reply_count || 0}
-                                </span>
-                                <span class="thread-stat">
-                                    <i class="far fa-eye"></i> ${thread.views || 0}
-                                </span>
+                                <span><span style="font-size: 1rem;">🕐</span> ${date}</span>
+                                <span><span style="font-size: 1rem;">💬</span> ${thread.reply_count || 0}</span>
+                                <span><span style="font-size: 1rem;">👁️</span> ${thread.views || 0}</span>
                             </div>
                         </a>
                     `;
                 });
                 
-                threadsList.innerHTML = html;
+                container.innerHTML = html;
                 
             } catch (error) {
                 console.error('Ошибка загрузки тем:', error);
-                threadsList.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">!</div>
-                        <p>ошибка загрузки</p>
+                container.innerHTML = `
+                    <div class="empty-state" style="color: #c0392b;">
+                        <div class="empty-state-icon">❌</div>
+                        <p>Ошибка загрузки тем</p>
                     </div>
                 `;
             }
         }
 
+        // Создание новой темы
         async function createThread() {
             const title = document.getElementById('threadTitle').value.trim();
             const content = document.getElementById('threadContent').value.trim();
-
+            
             if (!title) {
-                showMessage('введите название', 'error');
+                showMessage('Введите заголовок темы', 'error');
                 return;
             }
-
+            
             if (!content) {
-                showMessage('введите текст', 'error');
+                showMessage('Введите содержание темы', 'error');
                 return;
             }
-
-            const now = Date.now();
-            if (now - lastThreadTime < 30000) {
-                showMessage('подождите 30 секунд', 'error');
+            
+            if (title.length < 3) {
+                showMessage('Слишком короткий заголовок', 'error');
                 return;
             }
-
+            
+            // Блокируем кнопку
+            const createBtn = document.getElementById('createThreadBtn');
+            createBtn.disabled = true;
+            createBtn.textContent = '⏳ СОЗДАНИЕ...';
+            
             try {
                 if (!userIp) await getUserIp();
-
-                const { data, error } = await supabaseClient
+                
+                const now = new Date().toISOString();
+                
+                // Сначала создаем запись в threads
+                const { data: threadData, error: threadError } = await supabaseClient
                     .from('threads')
                     .insert({
                         title: title,
-                        content: content,
-                        author_name: primeUser?.name || verifiedUser || 'Аноним',
-                        ip_address: userIp,
-                        user_agent: navigator.userAgent,
+                        author_name: verifiedUser || 'Аноним',
+                        author_prime: isPremiumUser,
                         views: 0,
                         reply_count: 0,
-                        last_activity: new Date().toISOString()
+                        bump_time: now,
+                        created_at: now,
+                        updated_at: now
                     })
                     .select()
                     .single();
-
-                if (error) throw error;
-
-                await supabaseClient
+                
+                if (threadError) {
+                    console.error('Ошибка создания темы:', threadError);
+                    showMessage('Ошибка: ' + threadError.message, 'error');
+                    createBtn.disabled = false;
+                    createBtn.textContent = '➕ СОЗДАТЬ ТЕМУ';
+                    return;
+                }
+                
+                // Затем создаем первое сообщение в thread_messages
+                const { error: messageError } = await supabaseClient
                     .from('thread_messages')
                     .insert({
-                        thread_id: data.id,
+                        thread_id: threadData.id,
                         content: content,
-                        author: primeUser?.name || verifiedUser || 'Аноним',
+                        author: verifiedUser || 'Аноним',
+                        author_prime: isPremiumUser,
                         ip_address: userIp,
                         user_agent: navigator.userAgent,
-                        is_first: true
+                        is_first: true,
+                        views: 0,
+                        created_at: now,
+                        updated_at: now
                     });
-
-                lastThreadTime = now;
-                document.getElementById('createThreadModal').style.display = 'none';
-                document.getElementById('threadTitle').value = '';
-                document.getElementById('threadContent').value = '';
                 
-                showMessage('тема создана', 'success');
-                loadThreads();
+                if (messageError) {
+                    console.error('Ошибка создания сообщения:', messageError);
+                    showMessage('Ошибка: ' + messageError.message, 'error');
+                } else {
+                    // Очищаем поля
+                    document.getElementById('threadTitle').value = '';
+                    document.getElementById('threadContent').value = '';
+                    
+                    showMessage('✅ Тема создана!', 'success');
+                    
+                    // Перезагружаем список тем
+                    await loadThreads();
+                }
                 
             } catch (error) {
                 console.error('Ошибка создания темы:', error);
-                showMessage('ошибка: ' + error.message, 'error');
+                showMessage('Ошибка: ' + error.message, 'error');
+            } finally {
+                createBtn.disabled = false;
+                createBtn.textContent = '➕ СОЗДАТЬ ТЕМУ';
             }
         }
 
-        window.logoutPrime = function() {
-            primeUser = null;
-            localStorage.removeItem('primeUser');
-            document.getElementById('primeStatusBar').style.display = 'none';
-            showMessage('вы вышли из prime', 'success');
-        };
-
-        // Modal functionality
-        const adminBtn = document.getElementById('adminBtn');
-        const adminModal = document.getElementById('adminModal');
-        const adminCancel = document.getElementById('adminCancel');
-        const adminSubmit = document.getElementById('adminSubmit');
-
-        adminBtn?.addEventListener('click', () => {
-            adminModal.style.display = 'block';
-        });
-
-        adminCancel?.addEventListener('click', () => {
-            adminModal.style.display = 'none';
-            document.getElementById('adminName').value = '';
-            document.getElementById('adminMessage').value = '';
-        });
-
-        adminModal?.addEventListener('click', (e) => {
-            if (e.target === adminModal) {
-                adminModal.style.display = 'none';
-                document.getElementById('adminName').value = '';
-                document.getElementById('adminMessage').value = '';
-            }
-        });
-
-        adminSubmit?.addEventListener('click', async () => {
-            const name = document.getElementById('adminName').value.trim() || 'Аноним';
-            const message = document.getElementById('adminMessage').value.trim();
-            
-            if (!message) {
-                showMessage('напишите сообщение', 'error');
-                return;
-            }
-
-            try {
-                await supabaseClient
-                    .from('feedback')
-                    .insert({
-                        type: 'admin_message',
-                        name: name,
-                        message: message,
-                        ip_address: userIp,
-                        user_agent: navigator.userAgent
-                    });
-                
-                showMessage('сообщение отправлено', 'success');
-                adminModal.style.display = 'none';
-                document.getElementById('adminName').value = '';
-                document.getElementById('adminMessage').value = '';
-                
-            } catch (error) {
-                showMessage('ошибка: ' + error.message, 'error');
-            }
-        });
-
-        // Create thread modal
-        const createThreadBtn = document.getElementById('createThreadBtn');
-        const createThreadModal = document.getElementById('createThreadModal');
-        const cancelThread = document.getElementById('cancelThread');
-        const submitThread = document.getElementById('submitThread');
-
-        createThreadBtn?.addEventListener('click', () => {
-            createThreadModal.style.display = 'block';
-        });
-
-        cancelThread?.addEventListener('click', () => {
-            createThreadModal.style.display = 'none';
-            document.getElementById('threadTitle').value = '';
-            document.getElementById('threadContent').value = '';
-        });
-
-        createThreadModal?.addEventListener('click', (e) => {
-            if (e.target === createThreadModal) {
-                createThreadModal.style.display = 'none';
-                document.getElementById('threadTitle').value = '';
-                document.getElementById('threadContent').value = '';
-            }
-        });
-
-        submitThread?.addEventListener('click', createThread);
-
+        // Инициализация
         document.addEventListener('DOMContentLoaded', async () => {
             await getUserIp();
             await loadThreads();
+            
+            document.getElementById('createThreadBtn').addEventListener('click', createThread);
         });
     </script>
 </body>
