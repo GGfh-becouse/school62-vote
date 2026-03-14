@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>тема - стена 62</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ... все те же стили, что я дал в предыдущем ответе ... */
+        /* (полный CSS из предыдущего ответа) */
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">62</div>
+                    <h1>стена</h1>
+                </div>
+                <div class="header-icons">
+                    <i class="far fa-bell header-icon"></i>
+                    <i class="far fa-user header-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <a href="index.html" class="nav-link">
+                <i class="fas fa-home"></i>
+                главная
+            </a>
+            <a href="threads.html" class="nav-link">
+                <i class="fas fa-comment"></i>
+                темки
+            </a>
+            <a href="threads.html" class="nav-link active">
+                <i class="fas fa-arrow-left"></i>
+                ко всем темам
+            </a>
+        </div>
+
+        <!-- Prime Status -->
+        <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
+            <div class="prime-info">
+                <div class="prime-badge">P</div>
+                <span id="primeUserName">Prime пользователь</span>
+            </div>
+            <button class="prime-logout" onclick="logoutPrime()">выйти</button>
+        </div>
+
+        <!-- Main Post -->
+        <div class="main-post" id="mainPost">
+            <div class="loader" id="postLoader"></div>
+        </div>
+
+        <!-- Replies Section -->
+        <div class="replies-section">
+            <div class="replies-header">
+                <div class="replies-title">ответы</div>
+                <div class="replies-count" id="repliesCount">0</div>
+            </div>
+            
+            <div class="replies-list" id="repliesList">
+                <div class="loader"></div>
+            </div>
+
+            <!-- Reply Form -->
+            <div class="reply-form">
+                <textarea id="replyContent" placeholder="написать ответ..." maxlength="1000"></textarea>
+                <button class="reply-btn" id="submitReply">отправить</button>
+            </div>
+        </div>
+
+        <!-- Admin Button -->
+        <button class="admin-button" id="adminBtn">✎</button>
+
+        <!-- Admin Modal -->
+        <div class="modal" id="adminModal">
+            <div class="modal-card">
+                <h3>связь с администрацией</h3>
+                <select id="adminType">
+                    <option value="question">вопрос</option>
+                    <option value="problem">проблема</option>
+                    <option value="suggestion">предложение</option>
+                </select>
+                <input type="text" id="adminName" placeholder="ваше имя">
+                <textarea id="adminMessage" placeholder="сообщение..." rows="3"></textarea>
+                <div class="modal-buttons">
+                    <button class="modal-submit" id="adminSubmit">отправить</button>
+                    <button class="modal-cancel" id="adminCancel">отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="messageContainer"></div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item-bottom">
+            <i class="fas fa-home nav-icon-bottom"></i>
+            <span>главная</span>
+        </a>
+        <a href="votes.html" class="nav-item-bottom">
+            <i class="fas fa-chart-bar nav-icon-bottom"></i>
+            <span>голосования</span>
+        </a>
+        <a href="threads.html" class="nav-item-bottom active">
+            <i class="fas fa-comment nav-icon-bottom"></i>
+            <span>темки</span>
+        </a>
+        <a href="slivy.html" class="nav-item-bottom">
+            <i class="fas fa-image nav-icon-bottom"></i>
+            <span>сливы</span>
+        </a>
+        <a href="account.html" class="nav-item-bottom">
+            <i class="fas fa-user nav-icon-bottom"></i>
+            <span>аккаунт</span>
+        </a>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ... (весь JavaScript из предыдущего ответа для thread.html) ...
+    </script>
+</body>
+</html>
