@@ -1240,6 +1240,74 @@
 .progress-bar.no {
     background: linear-gradient(90deg, #e74c3c, #c0392b);
 }
+        /* ВАЖНОЕ УВЕДОМЛЕНИЕ (в стиле таймера) */
+.important-notice {
+    background: linear-gradient(135deg, #ff4d4d, #e63946);
+    border-radius: 24px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    color: white;
+    box-shadow: 0 10px 20px -5px rgba(230, 57, 70, 0.4), 0 0 0 2px rgba(255, 77, 77, 0.2) inset;
+    animation: pulse 2s infinite;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 10px 20px -5px rgba(230, 57, 70, 0.4); }
+    50% { box-shadow: 0 15px 30px -5px rgba(230, 57, 70, 0.8); }
+    100% { box-shadow: 0 10px 20px -5px rgba(230, 57, 70, 0.4); }
+}
+
+.notice-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.notice-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    background: rgba(0, 0, 0, 0.2);
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.notice-text {
+    flex: 1;
+}
+
+.notice-title {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.notice-message {
+    font-weight: 500;
+    font-size: 0.9rem;
+    opacity: 0.95;
+    line-height: 1.4;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 600px) {
+    .notice-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .notice-icon {
+        margin-bottom: 5px;
+    }
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -1286,20 +1354,18 @@
                 </div>
             </div>
 
-            <!-- Красный блок с таймером и лидером -->
-            <div class="timer-block" id="timerBlock">
-                <div class="timer-content">
-                    <div class="timer-info">
-                        <span class="timer-icon">⏳</span>
-                        <span class="timer-text">до 15 марта</span>
-                        <span class="timer-digits" id="countdownTimer">00д 00:00:00</span>
-                    </div>
-                    <div class="leader-info">
-                        <span class="leader-label">👑 лидер</span>
-                        <span class="leader-name" id="leaderName">загрузка...</span>
-                    </div>
-                </div>
-            </div>
+<!-- Вместо timer-block добавляем важное уведомление -->
+<div class="important-notice" id="importantNotice">
+    <div class="notice-content">
+        <div class="notice-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="notice-text">
+            <div class="notice-title">⚠️ Важное сообщение</div>
+            <div class="notice-message">Уважаемые пользователи! Пожалуйста, воздержитесь от оскорблений учителей и администрации школы. Помните, что сайт может быть закрыт при нарушении правил. Давайте сохраним это место для общения!</div>
+        </div>
+    </div>
+</div>
 
             <!-- Stories -->
             <div class="stories-container">
