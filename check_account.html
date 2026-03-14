@@ -360,7 +360,7 @@
             pointer-events: none;
         }
 
-        /* STICKERS - без обводки */
+        /* STICKERS */
         .sticker {
             position: absolute;
             width: 70px;
@@ -459,6 +459,131 @@
             background: #27ae60;
             transform: none;
             cursor: default;
+        }
+
+        /* FRIENDS SECTION - НОВОЕ */
+        .friends-section {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .friends-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .friends-header h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .friends-count {
+            background: #2e3440;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .friend-card {
+            background: #f8f9fc;
+            border-radius: 18px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: all 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .friend-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.1);
+        }
+
+        .friend-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+        }
+
+        .friend-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .friend-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .friend-name {
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 2px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .friend-class {
+            font-size: 0.65rem;
+            color: #8b93a6;
+            background: #f0f2f5;
+            padding: 2px 8px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+
+        .friend-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            background: #f1c40f;
+            color: #1a1e2b;
+            padding: 2px 6px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .empty-friends {
+            text-align: center;
+            padding: 30px;
+            color: #8b93a6;
+            font-size: 0.9rem;
+            grid-column: 1/-1;
         }
 
         /* STICKERS GRID */
@@ -663,6 +788,10 @@
             .reactions-grid {
                 justify-content: center;
             }
+
+            .friends-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -678,7 +807,7 @@
                         <h1>профиль</h1>
                     </div>
                     <div class="header-icons">
-                        <a href="https://ggfh-becouse.github.io/school62-vote/account.html" class="header-icon">
+                        <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="header-icon">
                             <i class="far fa-user"></i>
                         </a>
                     </div>
@@ -718,7 +847,7 @@
 
             <!-- Profile Card -->
             <div class="profile-card">
-                <!-- Avatar with stickers (без обводки) -->
+                <!-- Avatar with stickers -->
                 <div class="avatar-container" id="avatarContainer">
                     <div class="avatar-wrapper">
                         <img src="https://i.pravatar.cc/300" class="avatar" id="avatar" alt="Аватар">
@@ -733,45 +862,57 @@
                     </div>
                     <div class="status-text" id="statusDisplay">Загрузка...</div>
                 </div>
+            </div>
 
-                <!-- All Stickers Grid -->
-                <div class="stickers-grid-section" id="stickersSection" style="display: none;">
-                    <h3><i class="far fa-star"></i> стикеры</h3>
-                    <div class="stickers-grid" id="stickersGrid"></div>
+            <!-- FRIENDS SECTION - НОВОЕ -->
+            <div class="friends-section">
+                <div class="friends-header">
+                    <h3><i class="far fa-user-friends"></i> кенты</h3>
+                    <span class="friends-count" id="friendsCount">0</span>
                 </div>
+                <div class="friends-grid" id="friendsGrid">
+                    <div class="loader"></div>
+                </div>
+            </div>
 
-                <!-- Reactions -->
-                <div class="reactions-section">
-                    <div class="reactions-title">реакции</div>
-                    <div class="reactions-grid" id="reactionsGrid"></div>
-                </div>
+            <!-- All Stickers Grid -->
+            <div class="stickers-grid-section" id="stickersSection" style="display: none;">
+                <h3><i class="far fa-star"></i> стикеры</h3>
+                <div class="stickers-grid" id="stickersGrid"></div>
+            </div>
+
+            <!-- Reactions -->
+            <div class="reactions-section">
+                <div class="reactions-title">реакции</div>
+                <div class="reactions-grid" id="reactionsGrid"></div>
             </div>
         </div>
     </div>
 
-  <!-- Bottom Navigation -->
-<nav class="bottom-nav">
-    <a href="https://ggfh-becouse.github.io/school62-vote/index.html" class="nav-item-bottom">
-        <i class="fas fa-home nav-icon-bottom"></i>
-        <span>главная</span>
-    </a>
-    <a href="https://ggfh-becouse.github.io/school62-vote/votes.html" class="nav-item-bottom">
-        <i class="fas fa-chart-bar nav-icon-bottom"></i>
-        <span>голосования</span>
-    </a>
-    <a href="https://ggfh-becouse.github.io/school62-vote/threads.html" class="nav-item-bottom">
-        <i class="fas fa-comment nav-icon-bottom"></i>
-        <span>темки</span>
-    </a>
-    <a href="https://ggfh-becouse.github.io/school62-vote/slivy.html" class="nav-item-bottom">
-        <i class="fas fa-image nav-icon-bottom"></i>
-        <span>сливы</span>
-    </a>
-    <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="nav-item-bottom"> <!-- ИЗМЕНЕНО -->
-        <i class="fas fa-user nav-icon-bottom"></i>
-        <span>аккаунт</span>
-    </a>
-</nav>
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="https://ggfh-becouse.github.io/school62-vote/index.html" class="nav-item-bottom">
+            <i class="fas fa-home nav-icon-bottom"></i>
+            <span>главная</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/votes.html" class="nav-item-bottom">
+            <i class="fas fa-chart-bar nav-icon-bottom"></i>
+            <span>голосования</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/threads.html" class="nav-item-bottom">
+            <i class="fas fa-comment nav-icon-bottom"></i>
+            <span>темки</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/slivy.html" class="nav-item-bottom">
+            <i class="fas fa-image nav-icon-bottom"></i>
+            <span>сливы</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="nav-item-bottom">
+            <i class="fas fa-user nav-icon-bottom"></i>
+            <span>аккаунт</span>
+        </a>
+    </nav>
+
     <div id="messageContainer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -785,8 +926,9 @@
         // ============================================
         let profileUser = null;
         let currentUserId = localStorage.getItem('userId');
-        let friendStatus = null; // 'none', 'pending', 'accepted', 'sent'
+        let friendStatus = null;
         let friendRequestId = null;
+        let friends = []; // Массив друзей
 
         // ============================================
         // ЗАГРУЗКА ПРОФИЛЯ
@@ -821,13 +963,13 @@
 
                 profileUser = data;
                 
-                // Загружаем данные
                 await Promise.all([
                     loadUserData(),
                     loadStickers(),
                     loadReactions(),
                     loadFrame(),
-                    checkFriendStatus()
+                    checkFriendStatus(),
+                    loadFriends() // Загружаем друзей пользователя
                 ]);
 
             } catch (error) {
@@ -837,7 +979,109 @@
         }
 
         // ============================================
-        // ЗАГРУЗКА ДАННЫХ ПОЛЬЗОВАТЕЛЯ
+        // ЗАГРУЗКА ДРУЗЕЙ - НОВАЯ ФУНКЦИЯ
+        // ============================================
+        async function loadFriends() {
+            try {
+                const userId = parseInt(profileUser.id);
+                
+                // Загружаем друзей (где пользователь - инициатор)
+                const { data: sentFriends, error: sentError } = await supabaseClient
+                    .from('friends')
+                    .select(`
+                        friend_id,
+                        users!friends_friend_id_fkey (
+                            id,
+                            nickname,
+                            display_name,
+                            class,
+                            avatar_url,
+                            is_prime,
+                            status
+                        )
+                    `)
+                    .eq('user_id', userId)
+                    .eq('status', 'accepted');
+
+                if (sentError) throw sentError;
+
+                // Загружаем друзей (где пользователь - получатель)
+                const { data: receivedFriends, error: receivedError } = await supabaseClient
+                    .from('friends')
+                    .select(`
+                        user_id,
+                        users!friends_user_id_fkey (
+                            id,
+                            nickname,
+                            display_name,
+                            class,
+                            avatar_url,
+                            is_prime,
+                            status
+                        )
+                    `)
+                    .eq('friend_id', userId)
+                    .eq('status', 'accepted');
+
+                if (receivedError) throw receivedError;
+
+                // Объединяем обоих друзей
+                friends = [
+                    ...(sentFriends?.map(f => f.users) || []),
+                    ...(receivedFriends?.map(f => f.users) || [])
+                ];
+                
+                document.getElementById('friendsCount').textContent = friends.length;
+                displayFriends();
+
+            } catch (error) {
+                console.error('Ошибка загрузки друзей:', error);
+                friends = [];
+                document.getElementById('friendsCount').textContent = '0';
+                document.getElementById('friendsGrid').innerHTML = '<div class="empty-friends">⚠️ ошибка загрузки</div>';
+            }
+        }
+
+        // ============================================
+        // ОТОБРАЖЕНИЕ ДРУЗЕЙ
+        // ============================================
+        function displayFriends() {
+            const grid = document.getElementById('friendsGrid');
+            
+            if (!friends || friends.length === 0) {
+                grid.innerHTML = '<div class="empty-friends">🤝 нет кентов</div>';
+                return;
+            }
+
+            let html = '';
+            friends.forEach(friend => {
+                if (!friend) return;
+                
+                const name = friend.display_name || friend.nickname || 'Пользователь';
+                const avatar = friend.avatar_url || 'https://i.pravatar.cc/300';
+                const className = friend.class || 'класс';
+                
+                html += `
+                    <a href="https://ggfh-becouse.github.io/school62-vote/check_account.html?id=${friend.id}" class="friend-card">
+                        <div class="friend-avatar">
+                            <img src="${avatar}" alt="">
+                        </div>
+                        <div class="friend-info">
+                            <div class="friend-name">
+                                ${escapeHtml(name)}
+                                ${friend.is_prime ? '<span class="friend-badge"><i class="fas fa-crown"></i></span>' : ''}
+                            </div>
+                            <span class="friend-class">${escapeHtml(className)}</span>
+                        </div>
+                    </a>
+                `;
+            });
+            
+            grid.innerHTML = html;
+        }
+
+        // ============================================
+        // ОСТАЛЬНЫЕ ФУНКЦИИ (без изменений)
         // ============================================
         async function loadUserData() {
             document.getElementById('userNickname').textContent = profileUser.display_name || profileUser.nickname;
@@ -851,9 +1095,6 @@
             document.getElementById('statusDisplay').textContent = profileUser.status || 'Статус не установлен';
         }
 
-        // ============================================
-        // ЗАГРУЗКА РАМКИ
-        // ============================================
         async function loadFrame() {
             const frameDiv = document.getElementById('avatarFrame');
             const frame = profileUser.frame || 'standard';
@@ -868,9 +1109,6 @@
             frameDiv.innerHTML = frames[frame] || '';
         }
 
-        // ============================================
-        // ЗАГРУЗКА СТИКЕРОВ
-        // ============================================
         async function loadStickers() {
             try {
                 const { data, error } = await supabaseClient
@@ -887,7 +1125,6 @@
 
                 document.getElementById('stickersSection').style.display = 'block';
 
-                // Отображаем стикеры на аватаре
                 const container = document.getElementById('avatarContainer');
                 const existingStickers = container.querySelectorAll('.sticker');
                 existingStickers.forEach(s => s.remove());
@@ -900,7 +1137,6 @@
                     container.appendChild(stickerEl);
                 });
 
-                // Отображаем стикеры в сетке
                 const grid = document.getElementById('stickersGrid');
                 let gridHtml = '';
                 
@@ -920,9 +1156,6 @@
             }
         }
 
-        // ============================================
-        // ПРОВЕРКА СТАТУСА ДРУЖБЫ
-        // ============================================
         async function checkFriendStatus() {
             if (!currentUserId) {
                 friendStatus = 'none';
@@ -931,51 +1164,48 @@
             }
 
             try {
-                // Проверяем, есть ли уже запрос от текущего пользователя к этому профилю
-                const { data: sentData } = await supabaseClient
+                const { data: sentData, error: sentError } = await supabaseClient
                     .from('friends')
-                    .select('id')
-                    .eq('user_id', currentUserId)
-                    .eq('friend_id', profileUser.id)
-                    .eq('status', 'pending')
+                    .select('id, status')
+                    .eq('user_id', parseInt(currentUserId))
+                    .eq('friend_id', parseInt(profileUser.id))
                     .maybeSingle();
+
+                if (sentError) throw sentError;
 
                 if (sentData) {
-                    friendStatus = 'sent';
-                    friendRequestId = sentData.id;
-                    updateFriendButton();
-                    return;
+                    if (sentData.status === 'pending') {
+                        friendStatus = 'sent';
+                        friendRequestId = sentData.id;
+                        updateFriendButton();
+                        return;
+                    } else if (sentData.status === 'accepted') {
+                        friendStatus = 'accepted';
+                        updateFriendButton();
+                        return;
+                    }
                 }
 
-                // Проверяем, есть ли запрос от этого профиля к текущему пользователю
-                const { data: receivedData } = await supabaseClient
+                const { data: receivedData, error: receivedError } = await supabaseClient
                     .from('friends')
-                    .select('id')
-                    .eq('user_id', profileUser.id)
-                    .eq('friend_id', currentUserId)
-                    .eq('status', 'pending')
+                    .select('id, status')
+                    .eq('user_id', parseInt(profileUser.id))
+                    .eq('friend_id', parseInt(currentUserId))
                     .maybeSingle();
+
+                if (receivedError) throw receivedError;
 
                 if (receivedData) {
-                    friendStatus = 'pending';
-                    friendRequestId = receivedData.id;
-                    updateFriendButton();
-                    return;
-                }
-
-                // Проверяем, являются ли они уже друзьями
-                const { data: friendData } = await supabaseClient
-                    .from('friends')
-                    .select('id')
-                    .eq('user_id', currentUserId)
-                    .eq('friend_id', profileUser.id)
-                    .eq('status', 'accepted')
-                    .maybeSingle();
-
-                if (friendData) {
-                    friendStatus = 'accepted';
-                    updateFriendButton();
-                    return;
+                    if (receivedData.status === 'pending') {
+                        friendStatus = 'pending';
+                        friendRequestId = receivedData.id;
+                        updateFriendButton();
+                        return;
+                    } else if (receivedData.status === 'accepted') {
+                        friendStatus = 'accepted';
+                        updateFriendButton();
+                        return;
+                    }
                 }
 
                 friendStatus = 'none';
@@ -1015,9 +1245,6 @@
             btn.className = `friend-action-btn ${state.className}`;
         }
 
-        // ============================================
-        // ОБРАБОТКА ДЕЙСТВИЙ С ДРУЗЬЯМИ
-        // ============================================
         window.handleFriendAction = async function() {
             if (!currentUserId) {
                 showMessage('войдите, чтобы добавлять в кенты', 'error');
@@ -1027,18 +1254,26 @@
             try {
                 switch (friendStatus) {
                     case 'none':
-                        // Отправляем запрос в друзья
                         const { data, error } = await supabaseClient
                             .from('friends')
                             .insert({
-                                user_id: currentUserId,
-                                friend_id: profileUser.id,
-                                status: 'pending'
+                                user_id: parseInt(currentUserId),
+                                friend_id: parseInt(profileUser.id),
+                                status: 'pending',
+                                created_at: new Date().toISOString(),
+                                updated_at: new Date().toISOString()
                             })
                             .select()
                             .single();
 
-                        if (error) throw error;
+                        if (error) {
+                            if (error.code === '23505') {
+                                showMessage('запрос уже отправлен', 'info');
+                                await checkFriendStatus();
+                                return;
+                            }
+                            throw error;
+                        }
 
                         friendStatus = 'sent';
                         friendRequestId = data.id;
@@ -1047,10 +1282,12 @@
                         break;
 
                     case 'pending':
-                        // Принимаем запрос
                         const { error: acceptError } = await supabaseClient
                             .from('friends')
-                            .update({ status: 'accepted' })
+                            .update({ 
+                                status: 'accepted',
+                                updated_at: new Date().toISOString()
+                            })
                             .eq('id', friendRequestId);
 
                         if (acceptError) throw acceptError;
@@ -1061,7 +1298,6 @@
                         break;
 
                     case 'sent':
-                        // Отменяем отправленный запрос
                         if (confirm('Отменить запрос?')) {
                             const { error: deleteError } = await supabaseClient
                                 .from('friends')
@@ -1078,15 +1314,26 @@
                         break;
 
                     case 'accepted':
-                        // Удаляем из друзей
                         if (confirm('Удалить из кентов?')) {
                             const { error: removeError } = await supabaseClient
                                 .from('friends')
                                 .delete()
-                                .eq('user_id', currentUserId)
-                                .eq('friend_id', profileUser.id);
+                                .eq('user_id', parseInt(currentUserId))
+                                .eq('friend_id', parseInt(profileUser.id))
+                                .eq('status', 'accepted');
 
-                            if (removeError) throw removeError;
+                            if (removeError && removeError.code === 'PGRST116') {
+                                const { error: removeError2 } = await supabaseClient
+                                    .from('friends')
+                                    .delete()
+                                    .eq('user_id', parseInt(profileUser.id))
+                                    .eq('friend_id', parseInt(currentUserId))
+                                    .eq('status', 'accepted');
+                                
+                                if (removeError2) throw removeError2;
+                            } else if (removeError) {
+                                throw removeError;
+                            }
 
                             friendStatus = 'none';
                             updateFriendButton();
@@ -1100,9 +1347,6 @@
             }
         };
 
-        // ============================================
-        // ЗАГРУЗКА РЕАКЦИЙ
-        // ============================================
         async function loadReactions() {
             try {
                 const { data, error } = await supabaseClient
@@ -1134,9 +1378,6 @@
             }
         }
 
-        // ============================================
-        // ДОБАВЛЕНИЕ РЕАКЦИИ
-        // ============================================
         window.addReaction = async function(reaction) {
             if (!currentUserId) {
                 showMessage('войдите, чтобы ставить реакции', 'error');
@@ -1168,9 +1409,6 @@
             }
         };
 
-        // ============================================
-        // МИНИ-КАРТОЧКА
-        // ============================================
         async function createMiniCard() {
             const wrapper = document.getElementById('nicknameWrapper');
             
@@ -1218,9 +1456,6 @@
             wrapper.appendChild(miniCard);
         }
 
-        // ============================================
-        // ВСПОМОГАТЕЛЬНЫЕ
-        // ============================================
         function showMessage(text, type) {
             const container = document.getElementById('messageContainer');
             const msg = document.createElement('div');
@@ -1230,9 +1465,13 @@
             setTimeout(() => msg.remove(), 3000);
         }
 
-        // ============================================
-        // ИНИЦИАЛИЗАЦИЯ
-        // ============================================
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         document.addEventListener('DOMContentLoaded', async () => {
             await loadProfile();
             setTimeout(createMiniCard, 500);
