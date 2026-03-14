@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>СТЕНА 62 |2.0 </title>
+    <title>СТЕНА 62 | минимализм</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -96,7 +96,7 @@
             color: #2e3440;
         }
 
-        /* SEARCH BAR - НОВЫЙ ЭЛЕМЕНТ */
+        /* SEARCH BAR */
         .search-container {
             position: relative;
             margin-bottom: 20px;
@@ -971,6 +971,7 @@
             padding: 8px 0;
             border-radius: 30px;
             transition: all 0.2s;
+            cursor: pointer;
         }
 
         .nav-item-bottom.active {
@@ -1197,7 +1198,7 @@
                 </div>
             </div>
 
-            <!-- SEARCH BAR - НОВЫЙ БЛОК -->
+            <!-- SEARCH BAR -->
             <div class="search-container">
                 <div class="search-bar">
                     <i class="fas fa-search search-icon"></i>
@@ -1389,7 +1390,7 @@
         const randomNames = ['Аноним', 'Ученик', 'Школьник', 'Выпускник'];
 
         // ============================================
-        // ПОИСК ПОЛЬЗОВАТЕЛЕЙ - НОВАЯ ФУНКЦИЯ
+        // ПОИСК ПОЛЬЗОВАТЕЛЕЙ
         // ============================================
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
@@ -1406,7 +1407,6 @@
             searchTimeout = setTimeout(() => searchUsers(query), 300);
         });
 
-        // Закрывать результаты при клике вне
         document.addEventListener('click', function(e) {
             if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
                 searchResults.classList.remove('active');
@@ -1460,13 +1460,12 @@
             }
         }
 
-        // Переход на профиль пользователя
         window.goToUserProfile = function(userId) {
             window.location.href = `https://ggfh-becouse.github.io/school62-vote/check_account.html?id=${userId}`;
         };
 
         // ============================================
-        // ОСТАЛЬНЫЕ ФУНКЦИИ (без изменений)
+        // ОСТАЛЬНЫЕ ФУНКЦИИ
         // ============================================
         async function getUserIp() {
             try {
@@ -1565,7 +1564,9 @@
             }
         }
 
-        // Загрузка комментариев
+        // ============================================
+        // ИСПРАВЛЕННАЯ ФУНКЦИЯ ЗАГРУЗКИ КОММЕНТАРИЕВ
+        // ============================================
         async function loadComments() {
             try {
                 const { data, error } = await supabaseClient
@@ -1580,20 +1581,14 @@
                 
                 document.getElementById('commentsCount').textContent = comments.length;
                 
-                const primeCount = comments.filter(c => c.is_prime || c.is_verified).length;
+                // Считаем премиум комментарии по полю verified_as
+                const primeCount = comments.filter(c => c.verified_as).length;
                 document.getElementById('primeCount').textContent = primeCount;
                 
             } catch (error) {
                 console.error('Ошибка загрузки комментариев:', error);
                 document.getElementById('commentsList').innerHTML = '<div style="text-align:center; color:#8b93a6;">ошибка загрузки</div>';
             }
-        }
-
-        function likeComment(commentId) {
-            commentLikes[commentId] = (commentLikes[commentId] || 0) + 1;
-            localStorage.setItem('commentLikes', JSON.stringify(commentLikes));
-            displayComments();
-            showMessage('❤️ лайк добавлен', 'success');
         }
 
         function displayComments() {
@@ -1619,7 +1614,7 @@
                 };
                 const likes = commentLikes[comment.id] || 0;
                 
-                if (comment.is_prime) {
+                if (comment.verified_as) {
                     commentClass += ' premium';
                     badges = '<span class="premium-badge">prime</span>';
                 } else if (comment.is_verified) {
@@ -1679,9 +1674,16 @@
             list.innerHTML = html;
         }
 
-        window.likeComment = likeComment;
+        window.likeComment = function(commentId) {
+            commentLikes[commentId] = (commentLikes[commentId] || 0) + 1;
+            localStorage.setItem('commentLikes', JSON.stringify(commentLikes));
+            displayComments();
+            showMessage('❤️ лайк добавлен', 'success');
+        };
 
-        // Отправка комментария
+        // ============================================
+        // ИСПРАВЛЕННАЯ ФУНКЦИЯ ОТПРАВКИ КОММЕНТАРИЯ
+        // ============================================
         document.getElementById('submitComment').addEventListener('click', submitComment);
 
         async function submitComment() {
@@ -1711,19 +1713,29 @@
             }
 
             try {
+                if (!userIp) await getUserIp();
+
+                // ФОРМИРУЕМ ДАННЫЕ ТОЛЬКО ДЛЯ СУЩЕСТВУЮЩИХ ПОЛЕЙ
                 const commentData = {
                     name: name,
                     message: message,
                     ip_address: userIp,
                     is_verified: !!primeUser,
-                    is_prime: primeUser?.isPrime || false
+                    verified_as: primeUser?.name || null,
+                    created_at: new Date().toISOString()
+                    // НЕТ поля is_prime - его нет в таблице!
                 };
+
+                console.log('Отправка комментария:', commentData);
 
                 const { error } = await supabaseClient
                     .from('comments')
-                    .insert(commentData);
+                    .insert([commentData]);
 
-                if (error) throw error;
+                if (error) {
+                    console.error('Ошибка при вставке:', error);
+                    throw error;
+                }
 
                 lastCommentTime = Date.now();
                 nameInput.value = '';
@@ -1733,7 +1745,8 @@
                 await loadComments();
                 
             } catch (error) {
-                showMessage('ошибка: ' + error.message, 'error');
+                console.error('Ошибка:', error);
+                showMessage('ошибка: ' + (error.message || 'неизвестная ошибка'), 'error');
             }
         }
 
