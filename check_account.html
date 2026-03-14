@@ -79,13 +79,6 @@
             letter-spacing: -0.5px;
         }
 
-        .logo span {
-            color: #8b93a6;
-            font-size: 0.8rem;
-            font-weight: 400;
-            margin-left: 4px;
-        }
-
         .header-icons {
             display: flex;
             gap: 16px;
@@ -283,7 +276,7 @@
             height: 40px;
             border-radius: 10px;
             object-fit: cover;
-            border: 2px solid white;
+            border: none;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -365,24 +358,16 @@
             border: 3px solid #ff6b6b;
             box-shadow: 0 0 15px #ff6b6b;
             pointer-events: none;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
-            background-size: 200% 200%;
-            animation: shine 3s infinite;
         }
 
-        @keyframes shine {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* STICKERS */
+        /* STICKERS - без обводки */
         .sticker {
             position: absolute;
             width: 70px;
             height: 70px;
             border-radius: 16px;
             object-fit: cover;
-            border: 2px solid white;
+            border: none;
             box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.2);
             z-index: 5;
         }
@@ -425,7 +410,58 @@
             line-height: 1.5;
         }
 
-        /* STICKERS GRID (для просмотра всех стикеров) */
+        /* FRIEND ACTION BUTTON */
+        .friend-action {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .friend-action-btn {
+            background: #2e3440;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.2);
+        }
+
+        .friend-action-btn:hover {
+            background: #1a1e2b;
+            transform: translateY(-2px);
+        }
+
+        .friend-action-btn:active {
+            transform: translateY(0);
+        }
+
+        .friend-action-btn.pending {
+            background: #8b93a6;
+            cursor: default;
+        }
+
+        .friend-action-btn.pending:hover {
+            transform: none;
+        }
+
+        .friend-action-btn.accepted {
+            background: #27ae60;
+        }
+
+        .friend-action-btn.accepted:hover {
+            background: #27ae60;
+            transform: none;
+            cursor: default;
+        }
+
+        /* STICKERS GRID */
         .stickers-grid-section {
             background: #f8f9fc;
             border-radius: 20px;
@@ -466,6 +502,7 @@
             object-fit: cover;
             border-radius: 12px;
             margin-bottom: 6px;
+            border: none;
         }
 
         .sticker-rarity {
@@ -672,15 +709,21 @@
                 </div>
             </div>
 
+            <!-- Friend Action Button -->
+            <div class="friend-action">
+                <button class="friend-action-btn" id="friendActionBtn" onclick="handleFriendAction()">
+                    <i class="far fa-user-plus"></i> добавить в кенты
+                </button>
+            </div>
+
             <!-- Profile Card -->
             <div class="profile-card">
-                <!-- Avatar with stickers -->
+                <!-- Avatar with stickers (без обводки) -->
                 <div class="avatar-container" id="avatarContainer">
                     <div class="avatar-wrapper">
                         <img src="https://i.pravatar.cc/300" class="avatar" id="avatar" alt="Аватар">
                         <div id="avatarFrame"></div>
                     </div>
-                    <!-- Стикеры будут добавлены через JS -->
                 </div>
 
                 <!-- Status -->
@@ -743,7 +786,8 @@
         // ============================================
         let profileUser = null;
         let currentUserId = localStorage.getItem('userId');
-        let currentFrame = 'standard';
+        let friendStatus = null; // 'none', 'pending', 'accepted', 'sent'
+        let friendRequestId = null;
 
         // ============================================
         // ЗАГРУЗКА ПРОФИЛЯ
@@ -755,6 +799,11 @@
             if (!profileId) {
                 showMessage('ID пользователя не указан', 'error');
                 setTimeout(() => window.history.back(), 2000);
+                return;
+            }
+
+            if (profileId === currentUserId) {
+                window.location.href = 'https://ggfh-becouse.github.io/school62-vote/your_account.html';
                 return;
             }
 
@@ -773,12 +822,13 @@
 
                 profileUser = data;
                 
-                // Загружаем данные пользователя
+                // Загружаем данные
                 await Promise.all([
                     loadUserData(),
                     loadStickers(),
                     loadReactions(),
-                    loadFrame()
+                    loadFrame(),
+                    checkFriendStatus()
                 ]);
 
             } catch (error) {
@@ -791,17 +841,14 @@
         // ЗАГРУЗКА ДАННЫХ ПОЛЬЗОВАТЕЛЯ
         // ============================================
         async function loadUserData() {
-            // Основная информация
             document.getElementById('userNickname').textContent = profileUser.display_name || profileUser.nickname;
             document.getElementById('userClass').textContent = profileUser.class || 'Класс не указан';
             document.getElementById('userPrime').textContent = profileUser.is_prime ? 'prime' : 'обычный';
             
-            // Аватар (используем URL пользователя)
             const avatarUrl = profileUser.avatar_url || 'https://i.pravatar.cc/300';
             document.getElementById('avatar').src = avatarUrl;
             document.getElementById('miniAvatar').src = avatarUrl;
             
-            // Статус
             document.getElementById('statusDisplay').textContent = profileUser.status || 'Статус не установлен';
         }
 
@@ -810,8 +857,6 @@
         // ============================================
         async function loadFrame() {
             const frameDiv = document.getElementById('avatarFrame');
-            
-            // Пытаемся загрузить рамку из профиля пользователя
             const frame = profileUser.frame || 'standard';
             
             const frames = {
@@ -877,6 +922,186 @@
         }
 
         // ============================================
+        // ПРОВЕРКА СТАТУСА ДРУЖБЫ
+        // ============================================
+        async function checkFriendStatus() {
+            if (!currentUserId) {
+                friendStatus = 'none';
+                updateFriendButton();
+                return;
+            }
+
+            try {
+                // Проверяем, есть ли уже запрос от текущего пользователя к этому профилю
+                const { data: sentData } = await supabaseClient
+                    .from('friends')
+                    .select('id')
+                    .eq('user_id', currentUserId)
+                    .eq('friend_id', profileUser.id)
+                    .eq('status', 'pending')
+                    .maybeSingle();
+
+                if (sentData) {
+                    friendStatus = 'sent';
+                    friendRequestId = sentData.id;
+                    updateFriendButton();
+                    return;
+                }
+
+                // Проверяем, есть ли запрос от этого профиля к текущему пользователю
+                const { data: receivedData } = await supabaseClient
+                    .from('friends')
+                    .select('id')
+                    .eq('user_id', profileUser.id)
+                    .eq('friend_id', currentUserId)
+                    .eq('status', 'pending')
+                    .maybeSingle();
+
+                if (receivedData) {
+                    friendStatus = 'pending';
+                    friendRequestId = receivedData.id;
+                    updateFriendButton();
+                    return;
+                }
+
+                // Проверяем, являются ли они уже друзьями
+                const { data: friendData } = await supabaseClient
+                    .from('friends')
+                    .select('id')
+                    .eq('user_id', currentUserId)
+                    .eq('friend_id', profileUser.id)
+                    .eq('status', 'accepted')
+                    .maybeSingle();
+
+                if (friendData) {
+                    friendStatus = 'accepted';
+                    updateFriendButton();
+                    return;
+                }
+
+                friendStatus = 'none';
+                updateFriendButton();
+
+            } catch (error) {
+                console.error('Ошибка проверки статуса дружбы:', error);
+                friendStatus = 'none';
+                updateFriendButton();
+            }
+        }
+
+        function updateFriendButton() {
+            const btn = document.getElementById('friendActionBtn');
+            
+            const states = {
+                none: {
+                    html: '<i class="far fa-user-plus"></i> добавить в кенты',
+                    className: ''
+                },
+                sent: {
+                    html: '<i class="far fa-clock"></i> запрос отправлен',
+                    className: 'pending'
+                },
+                pending: {
+                    html: '<i class="far fa-bell"></i> принять запрос',
+                    className: ''
+                },
+                accepted: {
+                    html: '<i class="far fa-check"></i> уже в кентах',
+                    className: 'accepted'
+                }
+            };
+
+            const state = states[friendStatus] || states.none;
+            btn.innerHTML = state.html;
+            btn.className = `friend-action-btn ${state.className}`;
+        }
+
+        // ============================================
+        // ОБРАБОТКА ДЕЙСТВИЙ С ДРУЗЬЯМИ
+        // ============================================
+        window.handleFriendAction = async function() {
+            if (!currentUserId) {
+                showMessage('войдите, чтобы добавлять в кенты', 'error');
+                return;
+            }
+
+            try {
+                switch (friendStatus) {
+                    case 'none':
+                        // Отправляем запрос в друзья
+                        const { data, error } = await supabaseClient
+                            .from('friends')
+                            .insert({
+                                user_id: currentUserId,
+                                friend_id: profileUser.id,
+                                status: 'pending'
+                            })
+                            .select()
+                            .single();
+
+                        if (error) throw error;
+
+                        friendStatus = 'sent';
+                        friendRequestId = data.id;
+                        updateFriendButton();
+                        showMessage('✅ запрос отправлен', 'success');
+                        break;
+
+                    case 'pending':
+                        // Принимаем запрос
+                        const { error: acceptError } = await supabaseClient
+                            .from('friends')
+                            .update({ status: 'accepted' })
+                            .eq('id', friendRequestId);
+
+                        if (acceptError) throw acceptError;
+
+                        friendStatus = 'accepted';
+                        updateFriendButton();
+                        showMessage('✅ запрос принят', 'success');
+                        break;
+
+                    case 'sent':
+                        // Отменяем отправленный запрос
+                        if (confirm('Отменить запрос?')) {
+                            const { error: deleteError } = await supabaseClient
+                                .from('friends')
+                                .delete()
+                                .eq('id', friendRequestId);
+
+                            if (deleteError) throw deleteError;
+
+                            friendStatus = 'none';
+                            friendRequestId = null;
+                            updateFriendButton();
+                            showMessage('✖️ запрос отменен', 'success');
+                        }
+                        break;
+
+                    case 'accepted':
+                        // Удаляем из друзей
+                        if (confirm('Удалить из кентов?')) {
+                            const { error: removeError } = await supabaseClient
+                                .from('friends')
+                                .delete()
+                                .eq('user_id', currentUserId)
+                                .eq('friend_id', profileUser.id);
+
+                            if (removeError) throw removeError;
+
+                            friendStatus = 'none';
+                            updateFriendButton();
+                            showMessage('👋 кент удален', 'success');
+                        }
+                        break;
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showMessage('ошибка: ' + error.message, 'error');
+            }
+        };
+
+        // ============================================
         // ЗАГРУЗКА РЕАКЦИЙ
         // ============================================
         async function loadReactions() {
@@ -913,7 +1138,7 @@
         // ============================================
         // ДОБАВЛЕНИЕ РЕАКЦИИ
         // ============================================
-        async function addReaction(reaction) {
+        window.addReaction = async function(reaction) {
             if (!currentUserId) {
                 showMessage('войдите, чтобы ставить реакции', 'error');
                 return;
@@ -935,7 +1160,6 @@
 
                 if (error) throw error;
 
-                // Обновляем отображение
                 await loadReactions();
                 showMessage('✅ реакция добавлена', 'success');
 
@@ -943,15 +1167,14 @@
                 console.error('Ошибка:', error);
                 showMessage('ошибка: ' + error.message, 'error');
             }
-        }
+        };
 
         // ============================================
-        // МИНИ-КАРТОЧКА ПРОФИЛЯ
+        // МИНИ-КАРТОЧКА
         // ============================================
         async function createMiniCard() {
             const wrapper = document.getElementById('nicknameWrapper');
             
-            // Получаем статистику
             const { count: commentsCount } = await supabaseClient
                 .from('comments')
                 .select('*', { count: 'exact', head: true })
@@ -962,7 +1185,6 @@
                 .select('*', { count: 'exact', head: true })
                 .eq('user_id', profileUser.id);
 
-            // Получаем первый стикер
             const { data: stickers } = await supabaseClient
                 .from('user_stickers')
                 .select('*')
@@ -998,7 +1220,7 @@
         }
 
         // ============================================
-        // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+        // ВСПОМОГАТЕЛЬНЫЕ
         // ============================================
         function showMessage(text, type) {
             const container = document.getElementById('messageContainer');
@@ -1014,12 +1236,7 @@
         // ============================================
         document.addEventListener('DOMContentLoaded', async () => {
             await loadProfile();
-            
-            // Создаем мини-карточку после загрузки профиля
             setTimeout(createMiniCard, 500);
-            
-            // Добавляем функции в глобальную область
-            window.addReaction = addReaction;
         });
     </script>
 </body>
