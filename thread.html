@@ -838,9 +838,7 @@
         // ============================================
         let currentThread = null;
         let replies = [];
-        let currentUser = null;
         let primeUser = null;
-        let lastReplyTime = 0;
 
         // Загружаем Prime статус
         const savedPrime = localStorage.getItem('primeUser');
@@ -864,20 +862,10 @@
             }
 
             try {
-                // Загружаем тему
+                // Сначала пробуем загрузить тему без связи с пользователем
                 const { data: thread, error: threadError } = await supabaseClient
                     .from('threads')
-                    .select(`
-                        *,
-                        author:users!threads_author_id_fkey (
-                            id,
-                            nickname,
-                            display_name,
-                            class,
-                            avatar_url,
-                            is_prime
-                        )
-                    `)
+                    .select('*')
                     .eq('id', threadId)
                     .single();
 
@@ -888,10 +876,44 @@
                 }
 
                 currentThread = thread;
-                displayThread();
+
+                // Загружаем информацию об авторе отдельно
+                let author = null;
+                if (thread.author_name) {
+                    // Если в теме есть имя автора, используем его
+                    author = {
+                        display_name: thread.author_name,
+                        class: thread.author_class || 'класс',
+                        avatar_url: thread.author_avatar || 'https://i.pravatar.cc/300',
+                        is_prime: thread.author_prime || false
+                    };
+                } else {
+                    // Пробуем найти пользователя по ID, если есть author_id
+                    try {
+                        const { data: userData } = await supabaseClient
+                            .from('users')
+                            .select('*')
+                            .eq('id', thread.author_id)
+                            .single();
+                        
+                        if (userData) {
+                            author = userData;
+                        }
+                    } catch (e) {
+                        console.log('Автор не найден в users');
+                    }
+                }
+
+                displayThread(author);
 
                 // Загружаем ответы
                 await loadReplies(threadId);
+
+                // Увеличиваем счетчик просмотров
+                await supabaseClient
+                    .from('threads')
+                    .update({ views: (thread.views || 0) + 1 })
+                    .eq('id', threadId);
 
             } catch (error) {
                 console.error('Ошибка:', error);
@@ -899,17 +921,16 @@
             }
         }
 
-        function displayThread() {
+        function displayThread(author) {
             const container = document.getElementById('mainPost');
             const date = new Date(currentThread.created_at).toLocaleString('ru', {
                 day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
             });
 
-            const author = currentThread.author;
-            const authorName = author?.display_name || author?.nickname || 'Пользователь';
-            const authorClass = author?.class || 'класс';
-            const authorAvatar = author?.avatar_url || 'https://i.pravatar.cc/300';
-            const isPrime = author?.is_prime || false;
+            const authorName = author?.display_name || author?.nickname || currentThread.author_name || 'Пользователь';
+            const authorClass = author?.class || currentThread.author_class || 'класс';
+            const authorAvatar = author?.avatar_url || currentThread.author_avatar || 'https://i.pravatar.cc/300';
+            const isPrime = author?.is_prime || currentThread.author_prime || false;
 
             container.innerHTML = `
                 <div class="post-header">
@@ -938,31 +959,51 @@
         // ============================================
         async function loadReplies(threadId) {
             try {
+                // Загружаем ответы без связи с пользователями
                 const { data, error } = await supabaseClient
                     .from('replies')
-                    .select(`
-                        *,
-                        author:users!replies_author_id_fkey (
-                            id,
-                            nickname,
-                            display_name,
-                            class,
-                            avatar_url,
-                            is_prime
-                        )
-                    `)
+                    .select('*')
                     .eq('thread_id', threadId)
                     .order('created_at', { ascending: true });
 
                 if (error) throw error;
 
                 replies = data || [];
-                displayReplies();
+                
+                // Для каждого ответа пробуем найти автора
+                const repliesWithAuthors = await Promise.all(replies.map(async (reply) => {
+                    let author = null;
+                    
+                    if (reply.author_name) {
+                        author = {
+                            display_name: reply.author_name,
+                            class: reply.author_class || 'класс',
+                            avatar_url: reply.author_avatar || 'https://i.pravatar.cc/300',
+                            is_prime: reply.author_prime || false
+                        };
+                    } else if (reply.author_id) {
+                        try {
+                            const { data: userData } = await supabaseClient
+                                .from('users')
+                                .select('*')
+                                .eq('id', reply.author_id)
+                                .single();
+                            
+                            if (userData) {
+                                author = userData;
+                            }
+                        } catch (e) {}
+                    }
+                    
+                    return { ...reply, author };
+                }));
 
-                // Обновляем счетчик
-                document.getElementById('repliesCount').textContent = replies.length;
+                displayReplies(repliesWithAuthors);
 
                 // Обновляем счетчик ответов в теме
+                document.getElementById('repliesCount').textContent = replies.length;
+
+                // Обновляем счетчик в базе
                 await supabaseClient
                     .from('threads')
                     .update({ reply_count: replies.length })
@@ -974,25 +1015,25 @@
             }
         }
 
-        function displayReplies() {
+        function displayReplies(repliesWithAuthors) {
             const list = document.getElementById('repliesList');
             
-            if (!replies || replies.length === 0) {
+            if (!repliesWithAuthors || repliesWithAuthors.length === 0) {
                 list.innerHTML = '<div style="text-align:center; color:#8b93a6; padding:20px;">нет ответов</div>';
                 return;
             }
 
             let html = '';
-            replies.forEach(reply => {
+            repliesWithAuthors.forEach(reply => {
                 const date = new Date(reply.created_at).toLocaleString('ru', {
                     day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
                 });
 
                 const author = reply.author;
-                const authorName = author?.display_name || author?.nickname || 'Пользователь';
-                const authorClass = author?.class || 'класс';
-                const authorAvatar = author?.avatar_url || 'https://i.pravatar.cc/300';
-                const isPrime = author?.is_prime || false;
+                const authorName = author?.display_name || author?.nickname || reply.author_name || 'Пользователь';
+                const authorClass = author?.class || reply.author_class || 'класс';
+                const authorAvatar = author?.avatar_url || reply.author_avatar || 'https://i.pravatar.cc/300';
+                const isPrime = author?.is_prime || reply.author_prime || false;
 
                 html += `
                     <div class="reply-item">
@@ -1029,15 +1070,11 @@
 
             // Проверка авторизации
             const userId = localStorage.getItem('userId');
-            if (!userId) {
+            const userNickname = localStorage.getItem('userNickname');
+
+            if (!userId || !userNickname) {
                 showMessage('войдите, чтобы отвечать', 'error');
                 setTimeout(() => window.location.href = 'https://ggfh-becouse.github.io/school62-vote/login.html', 1500);
-                return;
-            }
-
-            // Антиспам
-            if (lastReplyTime && (Date.now() - lastReplyTime) < 5000) {
-                showMessage('подождите 5 секунд', 'error');
                 return;
             }
 
@@ -1052,9 +1089,20 @@
             }
 
             try {
+                // Сначала получаем данные пользователя
+                const { data: userData } = await supabaseClient
+                    .from('users')
+                    .select('class, avatar_url, is_prime')
+                    .eq('id', userId)
+                    .single();
+
                 const replyData = {
                     thread_id: currentThread.id,
                     author_id: parseInt(userId),
+                    author_name: userNickname,
+                    author_class: userData?.class || 'класс',
+                    author_avatar: userData?.avatar_url || 'https://i.pravatar.cc/300',
+                    author_prime: userData?.is_prime || false,
                     content: content
                 };
 
@@ -1064,7 +1112,6 @@
 
                 if (error) throw error;
 
-                lastReplyTime = Date.now();
                 document.getElementById('replyContent').value = '';
                 
                 showMessage('✅ ответ добавлен', 'success');
