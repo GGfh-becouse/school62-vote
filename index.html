@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>СТЕНА 62 ШКОЛЫ</title>
+    <title>тема - стена 62</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ... все стили без изменений ... */
         * {
             margin: 0;
             padding: 0;
@@ -29,13 +30,7 @@
             width: 100%;
             background: #f8f9fc;
             position: relative;
-            padding: 0 16px;
-        }
-
-        /* MAIN CONTENT */
-        .main-content {
-            display: block;
-            padding-bottom: 90px;
+            padding: 0 16px 90px 16px;
         }
 
         /* HEADER */
@@ -80,13 +75,6 @@
             letter-spacing: -0.5px;
         }
 
-        .logo span {
-            color: #8b93a6;
-            font-size: 0.8rem;
-            font-weight: 400;
-            margin-left: 4px;
-        }
-
         .header-icons {
             display: flex;
             gap: 16px;
@@ -103,230 +91,42 @@
             color: #2e3440;
         }
 
-        /* STORIES - минималистичные */
-        .stories-container {
-            margin-bottom: 24px;
-        }
-
-        .stories-scroll {
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            padding: 4px 0;
-        }
-
-        .stories-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .story-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            min-width: 64px;
-            cursor: pointer;
-        }
-
-        .story-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 20px;
-            background: #ffffff;
-            box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0,0,0,0.02);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #2e3440;
-            font-weight: 500;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        .story-name {
-            font-size: 0.65rem;
-            font-weight: 500;
-            color: #8b93a6;
-        }
-
-        /* QUICK NOTIFICATIONS - без смайликов */
-        .quick-notifications {
+        /* NAVIGATION */
+        .nav-bar {
             display: flex;
             gap: 8px;
-            overflow-x: auto;
-            scrollbar-width: none;
             margin-bottom: 24px;
-            padding: 4px 0;
+            flex-wrap: wrap;
         }
 
-        .quick-notifications::-webkit-scrollbar {
-            display: none;
-        }
-
-        .notification-badge {
+        .nav-link {
+            padding: 8px 16px;
             background: #ffffff;
             border-radius: 30px;
-            padding: 8px 16px;
-            font-size: 0.8rem;
+            color: #8b93a6;
+            text-decoration: none;
+            font-size: 0.85rem;
             font-weight: 500;
-            color: #1a1e2b;
-            white-space: nowrap;
-            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(0, 0, 0, 0.02);
             transition: all 0.2s;
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .notification-badge:hover {
+        .nav-link:hover {
+            color: #2e3440;
             background: #f0f2f5;
         }
 
-        .notification-badge.highlight {
+        .nav-link.active {
             background: #2e3440;
             color: white;
         }
 
-        .notification-badge.highlight:hover {
-            background: #1a1e2b;
-        }
-
-        /* PROMO БЛОК */
-        .promo-block {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .promo-text {
-            flex: 1;
-        }
-
-        .promo-text p {
-            font-size: 0.9rem;
-            color: #8b93a6;
-            margin-bottom: 4px;
-        }
-
-        .promo-link {
-            font-weight: 600;
-            color: #2e3440;
-            text-decoration: none;
-            font-size: 0.95rem;
-            border-bottom: 1px solid #2e3440;
-            padding-bottom: 2px;
-            transition: opacity 0.2s;
-        }
-
-        .promo-link:hover {
-            opacity: 0.7;
-        }
-
-        .promo-icon {
-            width: 40px;
-            height: 40px;
-            background: #f0f2f5;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #2e3440;
-            font-weight: 600;
-        }
-
-        /* STATS */
-        .stats-container {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .stat-item {
-            flex: 1;
-            background: #ffffff;
-            border-radius: 18px;
-            padding: 14px;
-            text-align: center;
-            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .stat-value {
-            font-weight: 600;
-            font-size: 1.4rem;
-            color: #1a1e2b;
-            line-height: 1;
-            margin-bottom: 2px;
-        }
-
-        .stat-label {
-            font-size: 0.65rem;
-            color: #8b93a6;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        /* PRIME СТАТУС */
-        .prime-status-bar {
-            background: #ffffff;
-            border-radius: 40px;
-            padding: 12px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .prime-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .prime-badge {
-            width: 24px;
-            height: 24px;
-            background: #f1c40f;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.8rem;
-        }
-
-        .prime-info span {
-            font-size: 0.85rem;
-            color: #1a1e2b;
-            font-weight: 500;
-        }
-
-        .prime-logout {
-            background: none;
-            border: none;
-            color: #8b93a6;
-            font-size: 0.75rem;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 4px 8px;
-        }
-
-        .prime-logout:hover {
-            color: #2e3440;
-        }
-
-        /* COMMENTS SECTION */
-        .comments-section {
+        /* MAIN POST */
+        .main-post {
             background: #ffffff;
             border-radius: 24px;
             padding: 24px;
@@ -335,120 +135,147 @@
             border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
-        .comments-section h3 {
+        .post-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f2f5;
+            flex-wrap: wrap;
+        }
+
+        .post-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #8b93a6;
+            font-size: 0.85rem;
+        }
+
+        .post-content {
+            color: #1a1e2b;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+        }
+
+        /* REPLIES SECTION */
+        .replies-section {
+            margin-bottom: 24px;
+        }
+
+        .replies-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .replies-title {
             font-size: 0.85rem;
             font-weight: 600;
             color: #8b93a6;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 20px;
         }
 
-        .comment-form {
-            margin-bottom: 24px;
-        }
-
-        .comment-input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .comment-input,
-        .comment-textarea {
-            width: 100%;
-            padding: 14px 18px;
-            border: none;
-            border-radius: 16px;
-            font-size: 0.9rem;
-            background: #f8f9fc;
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            transition: border-color 0.2s;
-        }
-
-        .comment-input:focus,
-        .comment-textarea:focus {
-            outline: none;
-            border-color: #2e3440;
-        }
-
-        .comment-textarea {
-            min-height: 80px;
-            resize: none;
-        }
-
-        .comment-submit {
-            background: #2e3440;
-            color: white;
-            border: none;
-            padding: 12px 24px;
+        .replies-count {
+            background: #f0f2f5;
+            padding: 4px 12px;
             border-radius: 30px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            cursor: pointer;
-            width: fit-content;
-            margin-top: 10px;
-            transition: background 0.2s;
+            font-size: 0.75rem;
+            color: #1a1e2b;
         }
 
-        .comment-submit:hover {
-            background: #1a1e2b;
-        }
-
-        /* COMMENTS LIST */
-        .comments-list {
+        .replies-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 500px;
-            overflow-y: auto;
-            padding-right: 4px;
+            margin-bottom: 24px;
         }
 
-        .comment-item {
-            background: #f8f9fc;
+        .reply-item {
+            background: #ffffff;
             border-radius: 18px;
-            padding: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(0, 0, 0, 0.02);
             transition: transform 0.2s;
-            position: relative;
         }
 
-        .comment-item:hover {
+        .reply-item:hover {
             transform: translateX(2px);
         }
 
-        .comment-item.verified {
+        .reply-item.verified {
             border-left: 3px solid #4a6fa5;
-            background: #f8fafc;
         }
 
-        .comment-item.premium {
+        .reply-item.premium {
             border-left: 3px solid #f1c40f;
-            background: #fcf9f0;
         }
 
-        .comment-header {
+        .reply-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
-            position: relative;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
-        .comment-name-wrapper {
+        .reply-author-wrapper {
             position: relative;
             display: inline-block;
             cursor: pointer;
         }
 
-        .comment-name {
+        .reply-author {
             font-weight: 600;
             font-size: 0.9rem;
             color: #1a1e2b;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+        }
+
+        .author-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+
+        .badge-verified {
+            background: #4a6fa5;
+            color: white;
+        }
+
+        .badge-premium {
+            background: #f1c40f;
+            color: #1a1e2b;
+        }
+
+        .reply-date {
+            color: #8b93a6;
+            font-size: 0.7rem;
+        }
+
+        .reply-content {
+            color: #1a1e2b;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
         }
 
         /* MINI PROFILE CARD */
@@ -470,7 +297,7 @@
             margin-bottom: 8px;
         }
 
-        .comment-name-wrapper:hover .mini-profile-card {
+        .reply-author-wrapper:hover .mini-profile-card {
             opacity: 1;
             visibility: visible;
             pointer-events: all;
@@ -551,39 +378,100 @@
             background: #eef2f5;
         }
 
-        .premium-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 2px;
-            background: #f1c40f;
-            color: #1a1e2b;
-            padding: 2px 8px;
-            border-radius: 30px;
-            font-size: 0.6rem;
-            font-weight: 600;
+        /* REPLY FORM */
+        .reply-form {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
-        .verified-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 2px;
-            background: #4a6fa5;
+        .reply-form textarea {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            font-size: 0.95rem;
+            min-height: 120px;
+            margin-bottom: 16px;
+            font-family: inherit;
+            resize: vertical;
+            background: #f8f9fc;
+            transition: border-color 0.2s;
+        }
+
+        .reply-form textarea:focus {
+            outline: none;
+            border-color: #2e3440;
+        }
+
+        .reply-btn {
+            background: #2e3440;
             color: white;
-            padding: 2px 8px;
+            border: none;
+            padding: 14px 24px;
             border-radius: 30px;
-            font-size: 0.6rem;
-            font-weight: 600;
-        }
-
-        .comment-date {
-            font-size: 0.65rem;
-            color: #8b93a6;
-        }
-
-        .comment-message {
+            font-weight: 500;
             font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .reply-btn:hover {
+            background: #1a1e2b;
+        }
+
+        /* PRIME STATUS BAR */
+        .prime-status-bar {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .prime-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prime-badge {
+            width: 24px;
+            height: 24px;
+            background: #f1c40f;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .prime-info span {
+            font-size: 0.85rem;
             color: #1a1e2b;
-            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .prime-logout {
+            background: none;
+            border: none;
+            color: #8b93a6;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 4px 8px;
+        }
+
+        .prime-logout:hover {
+            color: #2e3440;
         }
 
         /* BOTTOM NAVIGATION */
@@ -592,7 +480,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            max-width: 560px;
+            max-width: 600px;
             width: calc(100% - 32px);
             background: #ffffff;
             border-radius: 40px;
@@ -616,7 +504,6 @@
             padding: 8px 0;
             border-radius: 30px;
             transition: all 0.2s;
-            cursor: pointer;
         }
 
         .nav-item-bottom.active {
@@ -634,10 +521,11 @@
         }
 
         /* ADMIN BUTTON */
-        .suggest-button {
+        .admin-button {
             position: fixed;
             bottom: 100px;
-            right: 20px;
+            right: 50%;
+            transform: translateX(calc(300px - 50%));
             width: 48px;
             height: 48px;
             border-radius: 24px;
@@ -652,8 +540,8 @@
             transition: transform 0.2s;
         }
 
-        .suggest-button:hover {
-            transform: translateY(-2px);
+        .admin-button:hover {
+            transform: translateX(calc(300px - 50%)) translateY(-2px);
         }
 
         /* MODAL */
@@ -783,24 +671,54 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #8b93a6;
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .empty-state-icon {
+            width: 48px;
+            height: 48px;
+            background: #f0f2f5;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: #2e3440;
+            font-weight: 600;
+        }
+
         /* RESPONSIVE */
         @media (max-width: 600px) {
             body {
                 padding: 16px 0;
             }
             
-            .promo-block {
+            .post-meta {
                 flex-direction: column;
-                text-align: center;
-                gap: 12px;
+                gap: 8px;
             }
             
-            .promo-icon {
-                margin-left: 0;
-            }
-
             .mini-profile-card {
                 width: 200px;
+            }
+
+            .admin-button {
+                transform: translateX(calc(300px - 50%));
+            }
+            
+            .admin-button:hover {
+                transform: translateX(calc(300px - 50%)) translateY(-2px);
+            }
+
+            .nav-bar {
+                justify-content: center;
             }
         }
     </style>
@@ -808,178 +726,133 @@
 </head>
 <body>
     <div class="container">
-        <div class="main-content">
-            <!-- Header -->
-            <div class="header">
-                <div class="header-content">
-                    <div class="logo">
-                        <div class="logo-icon">62</div>
-                        <h1>стена</h1>
-                    </div>
-                    <div class="header-icons">
-                        <i class="far fa-bell header-icon"></i>
-                        <i class="far fa-user header-icon"></i>
-                    </div>
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">62</div>
+                    <h1>стена</h1>
                 </div>
-            </div>
-
-            <!-- Stories -->
-            <div class="stories-container">
-                <div class="stories-scroll">
-                    <div class="story-item">
-                        <div class="story-avatar">новости</div>
-                        <span class="story-name">новости</span>
-                    </div>
-                    <div class="story-item">
-                        <div class="story-avatar">события</div>
-                        <span class="story-name">события</span>
-                    </div>
-                    <div class="story-item">
-                        <div class="story-avatar">опросы</div>
-                        <span class="story-name">опросы</span>
-                    </div>
-                    <div class="story-item">
-                        <div class="story-avatar">темки</div>
-                        <span class="story-name">темки</span>
-                    </div>
-                    <div class="story-item">
-                        <div class="story-avatar">сливы</div>
-                        <span class="story-name">сливы</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Prime статус -->
-            <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
-                <div class="prime-info">
-                    <div class="prime-badge">P</div>
-                    <span id="primeUserName">Prime пользователь</span>
-                </div>
-                <button class="prime-logout" onclick="logoutPrime()">выйти</button>
-            </div>
-
-            <!-- Quick Notifications - без смайликов -->
-            <div class="quick-notifications">
-                <div class="notification-badge highlight">8 марта</div>
-                <div class="notification-badge">prime</div>
-                <div class="notification-badge">темки</div>
-                <div class="notification-badge">сливы</div>
-                <div class="notification-badge">новости</div>
-            </div>
-
-            <!-- Promo блок для голосований -->
-            <div class="promo-block">
-                <div class="promo-text">
-                    <p>голосования перенесены</p>
-                    <a href="/votes.html" class="promo-link">перейти в раздел →</a>
-                </div>
-                <div class="promo-icon">↗</div>
-            </div>
-
-            <!-- Stats -->
-            <div class="stats-container">
-                <div class="stat-item">
-                    <div class="stat-value" id="commentsCount">0</div>
-                    <div class="stat-label">комментарии</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="primeCount">0</div>
-                    <div class="stat-label">prime</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="threadsCount">0</div>
-                    <div class="stat-label">темки</div>
-                </div>
-            </div>
-
-            <!-- Comments Section -->
-            <div class="comments-section">
-                <h3>комментарии</h3>
-                
-                <div class="comment-form">
-                    <div class="comment-input-group">
-                        <input type="text" id="commentName" class="comment-input" placeholder="ваше имя" maxlength="30">
-                        <textarea id="commentMessage" class="comment-textarea" placeholder="текст комментария..." maxlength="200"></textarea>
-                    </div>
-                    <button class="comment-submit" id="submitComment">отправить</button>
-                </div>
-
-                <div class="comments-list" id="commentsList">
-                    <div class="loader"></div>
+                <div class="header-icons">
+                    <i class="far fa-bell header-icon"></i>
+                    <i class="far fa-user header-icon"></i>
                 </div>
             </div>
         </div>
+
+        <!-- Navigation с правильными путями -->
+        <div class="nav-bar">
+            <a href="index.html" class="nav-link">
+                <i class="fas fa-home"></i>
+                главная
+            </a>
+            <a href="threads.html" class="nav-link">
+                <i class="fas fa-comment"></i>
+                темки
+            </a>
+            <a href="threads.html" class="nav-link active">
+                <i class="fas fa-arrow-left"></i>
+                назад
+            </a>
+        </div>
+
+        <!-- Prime Status (hidden by default) -->
+        <div class="prime-status-bar" id="primeStatusBar" style="display: none;">
+            <div class="prime-info">
+                <div class="prime-badge">P</div>
+                <span id="primeUserName">Prime пользователь</span>
+            </div>
+            <button class="prime-logout" onclick="logoutPrime()">выйти</button>
+        </div>
+
+        <!-- Main Post -->
+        <div class="main-post" id="mainPost">
+            <div class="loader" id="postLoader"></div>
+        </div>
+
+        <!-- Replies Section -->
+        <div class="replies-section">
+            <div class="replies-header">
+                <div class="replies-title">ответы</div>
+                <div class="replies-count" id="repliesCount">0</div>
+            </div>
+            
+            <div class="replies-list" id="repliesList">
+                <div class="loader"></div>
+            </div>
+
+            <!-- Reply Form -->
+            <div class="reply-form">
+                <textarea id="replyContent" placeholder="написать ответ..." maxlength="1000"></textarea>
+                <button class="reply-btn" id="submitReply">отправить</button>
+            </div>
+        </div>
+
+        <!-- Admin Button -->
+        <button class="admin-button" id="adminBtn">✎</button>
+
+        <!-- Admin Modal -->
+        <div class="suggest-modal" id="adminModal">
+            <div class="suggest-card">
+                <h3>связь с администрацией</h3>
+                
+                <select id="adminType">
+                    <option value="question">вопрос</option>
+                    <option value="problem">проблема</option>
+                    <option value="suggestion">предложение</option>
+                </select>
+                
+                <input type="text" id="adminName" placeholder="ваше имя">
+                <textarea id="adminMessage" placeholder="сообщение..." rows="3"></textarea>
+                
+                <div class="modal-buttons">
+                    <button class="suggest-submit" id="adminSubmit">отправить</button>
+                    <button class="suggest-cancel" id="adminCancel">отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="messageContainer"></div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation с правильными путями -->
     <nav class="bottom-nav">
-        <a href="/index.html" class="nav-item-bottom active">
+        <a href="index.html" class="nav-item-bottom">
             <i class="fas fa-home nav-icon-bottom"></i>
             <span>главная</span>
         </a>
-        <a href="/votes.html" class="nav-item-bottom">
+        <a href="votes.html" class="nav-item-bottom">
             <i class="fas fa-chart-bar nav-icon-bottom"></i>
             <span>голосования</span>
         </a>
-        <a href="/threads.html" class="nav-item-bottom">
+        <a href="threads.html" class="nav-item-bottom active">
             <i class="fas fa-comment nav-icon-bottom"></i>
             <span>темки</span>
         </a>
-        <a href="/slivy.html" class="nav-item-bottom">
+        <a href="slivy.html" class="nav-item-bottom">
             <i class="fas fa-image nav-icon-bottom"></i>
             <span>сливы</span>
         </a>
-        <a href="/account.html" class="nav-item-bottom">
+        <a href="account.html" class="nav-item-bottom">
             <i class="fas fa-user nav-icon-bottom"></i>
             <span>аккаунт</span>
         </a>
     </nav>
 
-    <!-- Admin Button -->
-    <button class="suggest-button" id="adminBtn">✎</button>
-
-    <!-- Admin Modal -->
-    <div class="suggest-modal" id="adminModal">
-        <div class="suggest-card">
-            <h3>связь с администрацией</h3>
-            
-            <select id="adminType">
-                <option value="question">вопрос</option>
-                <option value="problem">проблема</option>
-                <option value="suggestion">предложение</option>
-            </select>
-            
-            <input type="text" id="adminName" placeholder="ваше имя">
-            <textarea id="adminMessage" placeholder="сообщение..." rows="3"></textarea>
-            
-            <div class="modal-buttons">
-                <button class="suggest-submit" id="adminSubmit">отправить</button>
-                <button class="suggest-cancel" id="adminCancel">отмена</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="messageContainer"></div>
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // ============================================
-        // SUPABASE КОНФИГ
-        // ============================================
+        // ... (весь JavaScript код без изменений) ...
         const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ============================================
-        // ПЕРЕМЕННЫЕ
-        // ============================================
         let userIp = null;
-        let comments = [];
-        let lastCommentTime = 0;
+        let verifiedUser = null;
         let primeUser = null;
-        let threadsCount = 0;
+        let threadId = null;
+        let threadData = null;
 
-        // Загружаем Prime статус из localStorage
+        // Load Prime status from localStorage
         const savedPrime = localStorage.getItem('primeUser');
         if (savedPrime) {
             primeUser = JSON.parse(savedPrime);
@@ -987,12 +860,6 @@
             document.getElementById('primeUserName').textContent = primeUser.name;
         }
 
-        // Имена для случайных комментаторов
-        const randomNames = ['Аноним', 'Ученик', 'Школьник', 'Выпускник'];
-
-        // ============================================
-        // ПОЛУЧЕНИЕ IP
-        // ============================================
         async function getUserIp() {
             try {
                 const response = await fetch('https://api.ipify.org?format=json');
@@ -1005,9 +872,6 @@
             }
         }
 
-        // ============================================
-        // ПОКАЗ СООБЩЕНИЙ
-        // ============================================
         function showMessage(text, type) {
             const container = document.getElementById('messageContainer');
             const msg = document.createElement('div');
@@ -1017,200 +881,242 @@
             setTimeout(() => msg.remove(), 3000);
         }
 
-        // ============================================
-        // ЭКРАНИРОВАНИЕ HTML
-        // ============================================
         function escapeHtml(text) {
+            if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        // ============================================
-        // ЗАГРУЗКА КОММЕНТАРИЕВ
-        // ============================================
-        async function loadComments() {
+        function getThreadIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        async function loadThread() {
+            threadId = getThreadIdFromUrl();
+            
+            if (!threadId) {
+                window.location.href = 'threads.html';
+                return;
+            }
+            
             try {
                 const { data, error } = await supabaseClient
-                    .from('comments')
+                    .from('threads')
                     .select('*')
-                    .order('created_at', { ascending: false })
-                    .limit(50);
-
+                    .eq('id', threadId)
+                    .single();
+                
                 if (error) throw error;
-                comments = data || [];
-                displayComments();
                 
-                document.getElementById('commentsCount').textContent = comments.length;
+                threadData = data;
                 
-                // Подсчет Prime пользователей
-                const primeCount = comments.filter(c => c.is_prime || c.is_verified).length;
-                document.getElementById('primeCount').textContent = primeCount;
+                await supabaseClient
+                    .from('threads')
+                    .update({ views: (data.views || 0) + 1 })
+                    .eq('id', threadId);
+                
+                displayMainPost(data);
+                loadReplies();
                 
             } catch (error) {
-                console.error('Ошибка загрузки комментариев:', error);
-                document.getElementById('commentsList').innerHTML = '<div style="text-align:center; color:#8b93a6;">ошибка загрузки</div>';
-            }
-        }
-
-        function displayComments() {
-            const list = document.getElementById('commentsList');
-            
-            if (!comments || comments.length === 0) {
-                list.innerHTML = '<div style="text-align:center; color:#8b93a6; padding:20px;">нет комментариев</div>';
-                return;
-            }
-
-            let html = '';
-            comments.forEach(comment => {
-                const date = new Date(comment.created_at).toLocaleString('ru', {
-                    day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
-                });
-                
-                let commentClass = 'comment-item';
-                let badges = '';
-                let userData = {
-                    name: comment.name || 'Аноним',
-                    comments: Math.floor(Math.random() * 50) + 1,
-                    likes: Math.floor(Math.random() * 100)
-                };
-                
-                if (comment.is_prime) {
-                    commentClass += ' premium';
-                    badges = '<span class="premium-badge">prime</span>';
-                } else if (comment.is_verified) {
-                    commentClass += ' verified';
-                    badges = '<span class="verified-badge">✓ verified</span>';
-                }
-                
-                html += `
-                    <div class="${commentClass}">
-                        <div class="comment-header">
-                            <div class="comment-name-wrapper">
-                                <span class="comment-name">
-                                    ${escapeHtml(comment.name || 'Аноним')}
-                                    ${badges}
-                                </span>
-                                <div class="mini-profile-card">
-                                    <div class="mini-profile-header">
-                                        <div class="mini-avatar">
-                                            ${(comment.name || 'А')[0].toUpperCase()}
-                                        </div>
-                                        <div class="mini-info">
-                                            <h4>${escapeHtml(comment.name || 'Аноним')}</h4>
-                                            <p>${badges ? 'prime участник' : 'обычный участник'}</p>
-                                        </div>
-                                    </div>
-                                    <div class="mini-stats">
-                                        <div class="mini-stat">
-                                            <div class="mini-stat-value">${userData.comments}</div>
-                                            <div class="mini-stat-label">комменты</div>
-                                        </div>
-                                        <div class="mini-stat">
-                                            <div class="mini-stat-value">${userData.likes}</div>
-                                            <div class="mini-stat-label">лайки</div>
-                                        </div>
-                                    </div>
-                                    <a href="/account.html?user=${encodeURIComponent(comment.name || '')}" class="mini-profile-link">
-                                        перейти в профиль →
-                                    </a>
-                                </div>
-                            </div>
-                            <span class="comment-date">${date}</span>
-                        </div>
-                        <div class="comment-message">${escapeHtml(comment.message)}</div>
+                console.error('Ошибка загрузки темы:', error);
+                document.getElementById('postLoader').style.display = 'none';
+                document.getElementById('mainPost').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">!</div>
+                        <p>тема не найдена</p>
+                        <a href="threads.html" style="color: #2e3440; text-decoration: underline; margin-top: 12px; display: inline-block;">вернуться к темкам</a>
                     </div>
                 `;
-            });
-            list.innerHTML = html;
+            }
         }
 
-        // ============================================
-        // ОТПРАВКА КОММЕНТАРИЯ
-        // ============================================
-        document.getElementById('submitComment').addEventListener('click', submitComment);
-
-        async function submitComment() {
-            const nameInput = document.getElementById('commentName');
-            const messageInput = document.getElementById('commentMessage');
+        function displayMainPost(thread) {
+            const postLoader = document.getElementById('postLoader');
+            if (postLoader) postLoader.style.display = 'none';
             
-            let name = nameInput.value.trim();
-            let message = messageInput.value.trim();
+            const date = new Date(thread.created_at).toLocaleString('ru', {
+                day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+            });
+            
+            document.getElementById('mainPost').innerHTML = `
+                <div class="post-title">${escapeHtml(thread.title)}</div>
+                <div class="post-meta">
+                    <div class="post-meta-item">
+                        <i class="far fa-user"></i>
+                        ${escapeHtml(thread.author_name || 'Аноним')}
+                    </div>
+                    <div class="post-meta-item">
+                        <i class="far fa-clock"></i>
+                        ${date}
+                    </div>
+                    <div class="post-meta-item">
+                        <i class="far fa-eye"></i>
+                        ${thread.views || 0} просмотров
+                    </div>
+                </div>
+                <div class="post-content">${escapeHtml(thread.content || '')}</div>
+            `;
+        }
 
-            if (lastCommentTime && (Date.now() - lastCommentTime) < 5000) {
-                showMessage('подождите 5 секунд', 'error');
-                return;
-            }
-
-            if (!name) {
-                name = randomNames[Math.floor(Math.random() * randomNames.length)];
-            }
-
-            if (!message) {
-                showMessage('напишите комментарий', 'error');
-                return;
-            }
-
-            if (message.length > 200) {
-                showMessage('максимум 200 символов', 'error');
-                return;
-            }
-
+        async function loadReplies() {
+            const repliesList = document.getElementById('repliesList');
+            const repliesCount = document.getElementById('repliesCount');
+            
+            if (!repliesList) return;
+            
             try {
-                const commentData = {
-                    name: name,
-                    message: message,
-                    ip_address: userIp,
-                    is_verified: !!primeUser,
-                    is_prime: primeUser?.isPrime || false
-                };
-
-                const { error } = await supabaseClient
-                    .from('comments')
-                    .insert(commentData);
-
-                if (error) throw error;
-
-                lastCommentTime = Date.now();
-                nameInput.value = '';
-                messageInput.value = '';
+                repliesList.innerHTML = '<div class="loader"></div>';
                 
-                showMessage('комментарий добавлен!', 'success');
-                await loadComments();
+                const { data, error } = await supabaseClient
+                    .from('thread_messages')
+                    .select('*')
+                    .eq('thread_id', threadId)
+                    .order('created_at', { ascending: true });
+                
+                if (error) throw error;
+                
+                const replies = data?.filter(m => !m.is_first) || [];
+                if (repliesCount) repliesCount.textContent = replies.length;
+                
+                if (replies.length === 0) {
+                    repliesList.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">💬</div>
+                            <p>пока нет ответов</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = '';
+                replies.forEach(reply => {
+                    const date = new Date(reply.created_at).toLocaleString('ru', {
+                        day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+                    });
+                    
+                    let replyClass = 'reply-item';
+                    let badges = '';
+                    
+                    if (reply.is_prime) {
+                        replyClass += ' premium';
+                        badges = '<span class="author-badge badge-premium">prime</span>';
+                    } else if (reply.is_verified) {
+                        replyClass += ' verified';
+                        badges = '<span class="author-badge badge-verified">✓ verified</span>';
+                    }
+                    
+                    html += `
+                        <div class="${replyClass}">
+                            <div class="reply-header">
+                                <div class="reply-author-wrapper">
+                                    <span class="reply-author">
+                                        ${escapeHtml(reply.author || 'Аноним')}
+                                        ${badges}
+                                    </span>
+                                    <div class="mini-profile-card">
+                                        <div class="mini-profile-header">
+                                            <div class="mini-avatar">
+                                                ${(reply.author || 'А')[0].toUpperCase()}
+                                            </div>
+                                            <div class="mini-info">
+                                                <h4>${escapeHtml(reply.author || 'Аноним')}</h4>
+                                                <p>${badges ? 'prime участник' : 'обычный участник'}</p>
+                                            </div>
+                                        </div>
+                                        <div class="mini-stats">
+                                            <div class="mini-stat">
+                                                <div class="mini-stat-value">${Math.floor(Math.random() * 50) + 1}</div>
+                                                <div class="mini-stat-label">комменты</div>
+                                            </div>
+                                            <div class="mini-stat">
+                                                <div class="mini-stat-value">${Math.floor(Math.random() * 100)}</div>
+                                                <div class="mini-stat-label">лайки</div>
+                                            </div>
+                                        </div>
+                                        <a href="account.html?user=${encodeURIComponent(reply.author || '')}" class="mini-profile-link">
+                                            перейти в профиль →
+                                        </a>
+                                    </div>
+                                </div>
+                                <span class="reply-date">${date}</span>
+                            </div>
+                            <div class="reply-content">${escapeHtml(reply.content)}</div>
+                        </div>
+                    `;
+                });
+                
+                repliesList.innerHTML = html;
                 
             } catch (error) {
+                console.error('Ошибка загрузки ответов:', error);
+                repliesList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">!</div>
+                        <p>ошибка загрузки ответов</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function submitReply() {
+            const content = document.getElementById('replyContent').value.trim();
+            
+            if (!content) {
+                showMessage('напишите ответ', 'error');
+                return;
+            }
+            
+            if (content.length < 2) {
+                showMessage('слишком короткий ответ', 'error');
+                return;
+            }
+            
+            try {
+                if (!userIp) await getUserIp();
+                
+                const now = new Date().toISOString();
+                
+                const { error: insertError } = await supabaseClient
+                    .from('thread_messages')
+                    .insert({
+                        thread_id: threadId,
+                        content: content,
+                        author: primeUser?.name || verifiedUser || 'Аноним',
+                        ip_address: userIp,
+                        user_agent: navigator.userAgent,
+                        is_first: false,
+                        is_prime: !!primeUser,
+                        is_verified: !!verifiedUser,
+                        created_at: now
+                    });
+                
+                if (insertError) {
+                    console.error('Ошибка при создании ответа:', insertError);
+                    showMessage('ошибка: ' + insertError.message, 'error');
+                    return;
+                }
+                
+                await supabaseClient
+                    .from('threads')
+                    .update({ 
+                        last_activity: now
+                    })
+                    .eq('id', threadId);
+                
+                document.getElementById('replyContent').value = '';
+                
+                showMessage('ответ отправлен', 'success');
+                
+                await loadReplies();
+                
+            } catch (error) {
+                console.error('Ошибка отправки ответа:', error);
                 showMessage('ошибка: ' + error.message, 'error');
             }
         }
-
-        // ============================================
-        // ЗАГРУЗКА КОЛИЧЕСТВА ТРЕДОВ
-        // ============================================
-        async function loadThreadsCount() {
-            try {
-                const { count, error } = await supabaseClient
-                    .from('threads')
-                    .select('*', { count: 'exact', head: true });
-
-                if (error) throw error;
-                threadsCount = count || 0;
-                document.getElementById('threadsCount').textContent = threadsCount;
-            } catch (error) {
-                console.error('Ошибка загрузки количества тредов:', error);
-                document.getElementById('threadsCount').textContent = '0';
-            }
-        }
-
-        // ============================================
-        // PRIME ЛОГИН
-        // ============================================
-        window.loginPrime = function(name, isPrime = true) {
-            primeUser = { name: name, isPrime: isPrime };
-            localStorage.setItem('primeUser', JSON.stringify(primeUser));
-            document.getElementById('primeStatusBar').style.display = 'flex';
-            document.getElementById('primeUserName').textContent = name;
-            showMessage('добро пожаловать в prime!', 'success');
-        };
 
         window.logoutPrime = function() {
             primeUser = null;
@@ -1219,9 +1125,7 @@
             showMessage('вы вышли из prime', 'success');
         };
 
-        // ============================================
-        // КНОПКА СВЯЗИ
-        // ============================================
+        // Admin modal functionality
         const adminBtn = document.getElementById('adminBtn');
         const adminModal = document.getElementById('adminModal');
         const adminCancel = document.getElementById('adminCancel');
@@ -1275,16 +1179,19 @@
             }
         });
 
-        // ============================================
-        // ИНИЦИАЛИЗАЦИЯ
-        // ============================================
-        async function initApp() {
+        document.addEventListener('DOMContentLoaded', async () => {
             await getUserIp();
-            await loadComments();
-            await loadThreadsCount();
-        }
-
-        initApp();
+            await loadThread();
+            
+            document.getElementById('submitReply').addEventListener('click', submitReply);
+            
+            document.getElementById('replyContent').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.ctrlKey) {
+                    e.preventDefault();
+                    submitReply();
+                }
+            });
+        });
     </script>
 </body>
 </html>
