@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>премиум | школа 62</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fc 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        /* HEADER */
+        .header {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: #2e3440;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            letter-spacing: -0.5px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .header-icon {
+            font-size: 1.2rem;
+            color: #8b93a6;
+            transition: color 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .header-icon:hover {
+            color: #2e3440;
+        }
+
+        /* PRIME CARD */
+        .prime-card {
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 32px 28px;
+            box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(241, 196, 15, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prime-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(241,196,15,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .prime-header {
+            text-align: center;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .prime-icon {
+            font-size: 64px;
+            color: #f1c40f;
+            margin-bottom: 16px;
+            filter: drop-shadow(0 10px 10px rgba(241,196,15,0.3));
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 10px 10px rgba(241,196,15,0.3)); }
+            50% { filter: drop-shadow(0 20px 20px rgba(241,196,15,0.5)); }
+        }
+
+        .prime-header h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1a1e2b;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .prime-header p {
+            color: #8b93a6;
+            font-size: 0.95rem;
+        }
+
+        /* INFO CARD */
+        .info-card {
+            background: #fcf9f0;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 28px;
+            border: 1px solid #f1c40f;
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-card p {
+            color: #1a1e2b;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .info-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight {
+            color: #f1c40f;
+            font-weight: 600;
+        }
+
+        /* FORM */
+        .prime-form {
+            position: relative;
+            z-index: 2;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1a1e2b;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid rgba(0, 0, 0, 0.05);
+            border-radius: 18px;
+            font-size: 0.95rem;
+            background: #f8f9fc;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #f1c40f;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(241, 196, 15, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #b5bcc8;
+            font-weight: 300;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hint {
+            margin-top: 6px;
+            font-size: 0.7rem;
+            color: #8b93a6;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .hint i {
+            font-size: 0.8rem;
+        }
+
+        /* SUBMIT BUTTON */
+        .submit-btn {
+            background: linear-gradient(135deg, #f1c40f, #e67e22);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 20px -8px rgba(241, 196, 15, 0.4);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -10px rgba(241, 196, 15, 0.6);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            background: #8b93a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* FOOTER */
+        .prime-footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #8b93a6;
+            font-size: 0.8rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .prime-footer a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .prime-footer a:hover {
+            opacity: 0.8;
+        }
+
+        /* MESSAGES */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 30px;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            z-index: 10002;
+            animation: slideIn 0.2s;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .message.success { background: #2e3440; }
+        .message.error { background: #c0392b; }
+
+        .loader {
+            border: 2px solid #f0f2f5;
+            border-top: 2px solid #2e3440;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .prime-card {
+                padding: 24px 20px;
+            }
+
+            .prime-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .prime-icon {
+                font-size: 48px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">62</div>
+                    <h1>стена</h1>
+                </div>
+                <div class="header-icons">
+                    <a href="https://ggfh-becouse.github.io/school62-vote/index.html" class="header-icon">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prime Card -->
+        <div class="prime-card">
+            <div class="prime-header">
+                <div class="prime-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h2>PREMIUM</h2>
+                <p>особый статус на стене 62</p>
+            </div>
+
+            <!-- Info Card -->
+            <div class="info-card">
+                <h3>
+                    <i class="fas fa-gift" style="color: #f1c40f;"></i>
+                    розыгрыш премиум-аккаунтов
+                </h3>
+                <p>
+                    В настоящий момент регистрация на премиум-аккаунты временно приостановлена. 
+                    Но у вас есть уникальная возможность попасть в число избранных!
+                </p>
+                <p>
+                    <span class="highlight">🎁 10 премиум-аккаунтов</span> будут разыграны среди самых активных 
+                    и достойных участников нашего сообщества.
+                </p>
+                <p>
+                    Заполните заявку ниже, расскажите, почему именно вы достойны премиум-статуса, 
+                    и возможно, удача улыбнётся именно вам!
+                </p>
+            </div>
+
+            <!-- Form -->
+            <div class="prime-form">
+                <div class="form-group">
+                    <label>
+                        <i class="far fa-user" style="color: #f1c40f;"></i>
+                        ваше имя
+                    </label>
+                    <input type="text" id="primeName" class="form-control" placeholder="как вас зовут?" maxlength="50">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <i class="far fa-graduation-cap" style="color: #f1c40f;"></i>
+                        класс
+                    </label>
+                    <input type="text" id="primeClass" class="form-control" placeholder="например: 10А" maxlength="10">
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <i class="far fa-star" style="color: #f1c40f;"></i>
+                        почему премиум именно вам?
+                    </label>
+                    <textarea id="primeReason" class="form-control form-textarea" placeholder="расскажите о себе, почему вы достойны премиум-статуса..." maxlength="500"></textarea>
+                    <div class="hint">
+                        <i class="far fa-info-circle"></i>
+                        <span id="reasonCounter">0</span>/500 символов
+                    </div>
+                </div>
+
+                <button class="submit-btn" id="submitPrimeRequest">
+                    <i class="fas fa-crown"></i>
+                    отправить заявку
+                </button>
+
+                <div class="loader" id="loadingSpinner" style="display: none;"></div>
+            </div>
+
+            <div class="prime-footer">
+                <p>заявки рассматриваются в течение 7 дней</p>
+                <p style="margin-top: 8px;">
+                    <i class="far fa-clock"></i>
+                    результаты розыгрыша будут объявлены 1 апреля
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="messageContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ============================================
+        // ПЕРЕМЕННЫЕ
+        // ============================================
+        let userIp = null;
+
+        // Счетчик символов
+        const reasonInput = document.getElementById('primeReason');
+        const counter = document.getElementById('reasonCounter');
+
+        reasonInput.addEventListener('input', function() {
+            const length = this.value.length;
+            counter.textContent = length;
+            if (length > 500) {
+                this.value = this.value.substring(0, 500);
+                counter.textContent = 500;
+            }
+        });
+
+        // ============================================
+        // ПОЛУЧЕНИЕ IP
+        // ============================================
+        async function getUserIp() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                userIp = data.ip;
+            } catch {
+                userIp = 'user-' + Math.random().toString(36).substring(2, 10);
+            }
+        }
+
+        // ============================================
+        // ПОКАЗ СООБЩЕНИЙ
+        // ============================================
+        function showMessage(text, type) {
+            const container = document.getElementById('messageContainer');
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            container.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
+        }
+
+        // ============================================
+        // ОТПРАВКА ЗАЯВКИ
+        // ============================================
+        document.getElementById('submitPrimeRequest').addEventListener('click', async function() {
+            const name = document.getElementById('primeName').value.trim();
+            const className = document.getElementById('primeClass').value.trim();
+            const reason = document.getElementById('primeReason').value.trim();
+
+            if (!name || !className || !reason) {
+                showMessage('заполните все поля', 'error');
+                return;
+            }
+
+            if (reason.length < 20) {
+                showMessage('расскажите подробнее (минимум 20 символов)', 'error');
+                return;
+            }
+
+            const submitBtn = this;
+            const spinner = document.getElementById('loadingSpinner');
+            
+            submitBtn.disabled = true;
+            submitBtn.style.display = 'none';
+            spinner.style.display = 'block';
+
+            try {
+                if (!userIp) await getUserIp();
+
+                const { error } = await supabaseClient
+                    .from('prime_requests')
+                    .insert({
+                        name: name,
+                        class: className,
+                        reason: reason,
+                        ip_address: userIp,
+                        user_agent: navigator.userAgent,
+                        status: 'pending',
+                        created_at: new Date().toISOString()
+                    });
+
+                if (error) throw error;
+
+                // Очищаем форму
+                document.getElementById('primeName').value = '';
+                document.getElementById('primeClass').value = '';
+                document.getElementById('primeReason').value = '';
+                counter.textContent = '0';
+
+                showMessage('✅ заявка отправлена! ждите результатов 1 апреля', 'success');
+
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showMessage('ошибка: ' + error.message, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.style.display = 'block';
+                spinner.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
