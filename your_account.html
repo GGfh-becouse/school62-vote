@@ -1227,291 +1227,157 @@
         // ============================================
         // ФУНКЦИЯ "КЕНТЫ"
         // ============================================
-        async function loadFriends() {
-            try {
-                // Загружаем друзей
-                const { data: friendsData, error: friendsError } = await supabaseClient
-                    .from('friends')
-                    .select(`
-                        friend_id,
-                        users!friends_friend_id_fkey (
-                            id,
-                            nickname,
-                            display_name,
-                            class,
-                            avatar_url,
-                            is_prime,
-                            status
-                        )
-                    `)
-                    .eq('user_id', currentUser.id)
-                    .eq('status', 'accepted');
+async function loadFriends() {
+    try {
+        const userId = parseInt(currentUser.id);
+        
+        // Загружаем друзей (где пользователь - инициатор)
+        const { data: sentFriends, error: sentError } = await supabaseClient
+            .from('friends')
+            .select(`
+                friend_id,
+                users!friends_friend_id_fkey (
+                    id,
+                    nickname,
+                    display_name,
+                    class,
+                    avatar_url,
+                    is_prime,
+                    status
+                )
+            `)
+            .eq('user_id', userId)
+            .eq('status', 'accepted');
 
-                if (friendsError) throw friendsError;
-                
-                friends = friendsData?.map(f => f.users) || [];
-                document.getElementById('friendsCount').textContent = friends.length;
+        if (sentError) throw sentError;
 
-                // Загружаем входящие запросы
-                const { data: requestsData, error: requestsError } = await supabaseClient
-                    .from('friends')
-                    .select(`
-                        id,
-                        user_id,
-                        users!friends_user_id_fkey (
-                            id,
-                            nickname,
-                            display_name,
-                            class,
-                            avatar_url,
-                            is_prime,
-                            status
-                        )
-                    `)
-                    .eq('friend_id', currentUser.id)
-                    .eq('status', 'pending');
+        // Загружаем друзей (где пользователь - получатель)
+        const { data: receivedFriends, error: receivedError } = await supabaseClient
+            .from('friends')
+            .select(`
+                user_id,
+                users!friends_user_id_fkey (
+                    id,
+                    nickname,
+                    display_name,
+                    class,
+                    avatar_url,
+                    is_prime,
+                    status
+                )
+            `)
+            .eq('friend_id', userId)
+            .eq('status', 'accepted');
 
-                if (requestsError) throw requestsError;
-                
-                friendRequests = requestsData?.map(r => ({
-                    id: r.id,
-                    user: r.users
-                })) || [];
+        if (receivedError) throw receivedError;
 
-                // Загружаем отправленные запросы
-                const { data: sentData, error: sentError } = await supabaseClient
-                    .from('friends')
-                    .select(`
-                        id,
-                        friend_id,
-                        users!friends_friend_id_fkey (
-                            id,
-                            nickname,
-                            display_name,
-                            class,
-                            avatar_url,
-                            is_prime,
-                            status
-                        )
-                    `)
-                    .eq('user_id', currentUser.id)
-                    .eq('status', 'pending');
+        // Объединяем обоих друзей
+        const allFriends = [
+            ...(sentFriends?.map(f => f.users) || []),
+            ...(receivedFriends?.map(f => f.users) || [])
+        ];
+        
+        friends = allFriends;
+        document.getElementById('friendsCount').textContent = friends.length;
 
-                if (sentError) throw sentError;
-                
-                sentRequests = sentData?.map(s => ({
-                    id: s.id,
-                    user: s.users
-                })) || [];
+        // Загружаем входящие запросы (кто хочет добавить текущего пользователя)
+        const { data: requestsData, error: requestsError } = await supabaseClient
+            .from('friends')
+            .select(`
+                id,
+                user_id,
+                users!friends_user_id_fkey (
+                    id,
+                    nickname,
+                    display_name,
+                    class,
+                    avatar_url,
+                    is_prime,
+                    status
+                )
+            `)
+            .eq('friend_id', userId)
+            .eq('status', 'pending');
 
-                // Отображаем активную вкладку
-                switchFriendsTab('friends');
+        if (requestsError) throw requestsError;
 
-            } catch (error) {
-                console.error('Ошибка загрузки друзей:', error);
-            }
+        // Загружаем отправленные запросы (кого хочет добавить текущий пользователь)
+        const { data: sentData, error: sentError2 } = await supabaseClient
+            .from('friends')
+            .select(`
+                id,
+                friend_id,
+                users!friends_friend_id_fkey (
+                    id,
+                    nickname,
+                    display_name,
+                    class,
+                    avatar_url,
+                    is_prime,
+                    status
+                )
+            `)
+            .eq('user_id', userId)
+            .eq('status', 'pending');
+
+        if (sentError2) throw sentError2;
+
+        friendRequests = requestsData?.map(r => ({
+            id: r.id,
+            user: r.users
+        })) || [];
+
+        sentRequests = sentData?.map(s => ({
+            id: s.id,
+            user: s.users
+        })) || [];
+
+        // Отображаем активную вкладку
+        switchFriendsTab('friends');
+
+    } catch (error) {
+        console.error('Ошибка загрузки друзей:', error);
+    }
+}
+
+window.removeFriend = async function(friendId) {
+    if (!confirm('Удалить из кентов?')) return;
+
+    const userId = parseInt(currentUser.id);
+    const friendIdNum = parseInt(friendId);
+
+    try {
+        // Пытаемся удалить связь где текущий пользователь - инициатор
+        const { error: error1 } = await supabaseClient
+            .from('friends')
+            .delete()
+            .eq('user_id', userId)
+            .eq('friend_id', friendIdNum)
+            .eq('status', 'accepted');
+
+        // Если первая попытка не удалась (запись не найдена), 
+        // пробуем удалить связь где текущий пользователь - получатель
+        if (error1 && error1.code === 'PGRST116') {
+            const { error: error2 } = await supabaseClient
+                .from('friends')
+                .delete()
+                .eq('user_id', friendIdNum)
+                .eq('friend_id', userId)
+                .eq('status', 'accepted');
+
+            if (error2) throw error2;
+        } else if (error1) {
+            throw error1;
         }
 
-        window.switchFriendsTab = function(tab) {
-            const tabs = document.querySelectorAll('.friend-tab');
-            tabs.forEach(t => t.classList.remove('active'));
-            
-            const activeTab = Array.from(tabs).find(t => 
-                t.textContent.includes(tab === 'friends' ? 'мои кенты' : 
-                                    tab === 'requests' ? 'запросы' : 'отправленные')
-            );
-            if (activeTab) activeTab.classList.add('active');
+        showMessage('👋 кент удален', 'success');
+        await loadFriends();
 
-            const friendsList = document.getElementById('friendsList');
-            
-            if (tab === 'friends') {
-                displayFriends();
-            } else if (tab === 'requests') {
-                displayFriendRequests();
-            } else if (tab === 'sent') {
-                displaySentRequests();
-            }
-        };
-
-        function displayFriends() {
-            const list = document.getElementById('friendsList');
-            
-            if (!friends || friends.length === 0) {
-                list.innerHTML = '<div class="empty-friends">🤝 пока нет кентов</div>';
-                return;
-            }
-
-            let html = '';
-            friends.forEach(friend => {
-                html += `
-                    <div class="friend-item">
-                        <div class="friend-avatar">
-                            <img src="${friend.avatar_url || 'https://i.pravatar.cc/300'}" alt="">
-                        </div>
-                        <div class="friend-info">
-                            <div class="friend-name">${friend.display_name || friend.nickname}</div>
-                            <div class="friend-meta">
-                                <span class="friend-class">${friend.class || 'класс'}</span>
-                                ${friend.status ? `<span class="friend-status">"${friend.status.substring(0, 20)}${friend.status.length > 20 ? '...' : ''}"</span>` : ''}
-                            </div>
-                        </div>
-                        <div class="friend-actions">
-                            <button class="friend-btn remove" onclick="removeFriend('${friend.id}')">
-                                <i class="fas fa-user-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            list.innerHTML = html;
-        }
-
-        function displayFriendRequests() {
-            const list = document.getElementById('friendsList');
-            
-            if (!friendRequests || friendRequests.length === 0) {
-                list.innerHTML = '<div class="empty-friends">📭 нет запросов в друзья</div>';
-                return;
-            }
-
-            let html = '';
-            friendRequests.forEach(request => {
-                html += `
-                    <div class="friend-item">
-                        <div class="friend-avatar">
-                            <img src="${request.user.avatar_url || 'https://i.pravatar.cc/300'}" alt="">
-                        </div>
-                        <div class="friend-info">
-                            <div class="friend-name">${request.user.display_name || request.user.nickname}</div>
-                            <div class="friend-meta">
-                                <span class="friend-class">${request.user.class || 'класс'}</span>
-                                ${request.user.is_prime ? '<span class="friend-status" style="color:#f1c40f;">prime</span>' : ''}
-                            </div>
-                        </div>
-                        <div class="friend-actions">
-                            <button class="friend-btn accept" onclick="acceptFriendRequest('${request.id}', '${request.user.id}')">
-                                <i class="fas fa-check"></i>
-                            </button>
-                            <button class="friend-btn reject" onclick="rejectFriendRequest('${request.id}')">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            list.innerHTML = html;
-        }
-
-        function displaySentRequests() {
-            const list = document.getElementById('friendsList');
-            
-            if (!sentRequests || sentRequests.length === 0) {
-                list.innerHTML = '<div class="empty-friends">📤 нет отправленных запросов</div>';
-                return;
-            }
-
-            let html = '';
-            sentRequests.forEach(request => {
-                html += `
-                    <div class="friend-item">
-                        <div class="friend-avatar">
-                            <img src="${request.user.avatar_url || 'https://i.pravatar.cc/300'}" alt="">
-                        </div>
-                        <div class="friend-info">
-                            <div class="friend-name">${request.user.display_name || request.user.nickname}</div>
-                            <div class="friend-meta">
-                                <span class="friend-class">${request.user.class || 'класс'}</span>
-                                <span class="friend-status" style="color:#8b93a6;">ожидание</span>
-                            </div>
-                        </div>
-                        <div class="friend-actions">
-                            <button class="friend-btn reject" onclick="cancelFriendRequest('${request.id}')">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            list.innerHTML = html;
-        }
-
-        window.acceptFriendRequest = async function(requestId, friendId) {
-            try {
-                const { error } = await supabaseClient
-                    .from('friends')
-                    .update({ status: 'accepted' })
-                    .eq('id', requestId);
-
-                if (error) throw error;
-
-                showMessage('✅ запрос принят', 'success');
-                await loadFriends();
-
-            } catch (error) {
-                console.error('Ошибка:', error);
-                showMessage('ошибка: ' + error.message, 'error');
-            }
-        };
-
-        window.rejectFriendRequest = async function(requestId) {
-            try {
-                const { error } = await supabaseClient
-                    .from('friends')
-                    .delete()
-                    .eq('id', requestId);
-
-                if (error) throw error;
-
-                showMessage('❌ запрос отклонен', 'success');
-                await loadFriends();
-
-            } catch (error) {
-                console.error('Ошибка:', error);
-                showMessage('ошибка: ' + error.message, 'error');
-            }
-        };
-
-        window.cancelFriendRequest = async function(requestId) {
-            try {
-                const { error } = await supabaseClient
-                    .from('friends')
-                    .delete()
-                    .eq('id', requestId);
-
-                if (error) throw error;
-
-                showMessage('✖️ запрос отменен', 'success');
-                await loadFriends();
-
-            } catch (error) {
-                console.error('Ошибка:', error);
-                showMessage('ошибка: ' + error.message, 'error');
-            }
-        };
-
-        window.removeFriend = async function(friendId) {
-            if (!confirm('Удалить из кентов?')) return;
-
-            try {
-                const { error } = await supabaseClient
-                    .from('friends')
-                    .delete()
-                    .eq('user_id', currentUser.id)
-                    .eq('friend_id', friendId);
-
-                if (error) throw error;
-
-                showMessage('👋 кент удален', 'success');
-                await loadFriends();
-
-            } catch (error) {
-                console.error('Ошибка:', error);
-                showMessage('ошибка: ' + error.message, 'error');
-            }
-        };
+    } catch (error) {
+        console.error('Ошибка:', error);
+        showMessage('ошибка: ' + error.message, 'error');
+    }
+};
 
         // ============================================
         // СТИКЕРЫ
