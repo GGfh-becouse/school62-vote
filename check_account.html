@@ -792,6 +792,29 @@
             .friends-grid {
                 grid-template-columns: 1fr;
             }
+            /* Логотип */
+.logo-img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 600px) {
+    .logo-img {
+        height: 28px;
+    }
+}
+/* Адаптивность для мобильных */
+@media (max-width: 600px) {
+    .notice-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .notice-icon {
+        margin-bottom: 5px;
+    }
+
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
