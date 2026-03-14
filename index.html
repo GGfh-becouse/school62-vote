@@ -1216,6 +1216,30 @@
                 justify-content: center;
             }
         }
+        .poll-progress {
+    margin-top: 8px;
+    height: 6px;
+    background: #f0f2f5;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #2e3440, #4a5568);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* Для цветного варианта */
+.progress-bar.yes {
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+}
+
+.progress-bar.no {
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -1846,49 +1870,53 @@
             }
         }
 
-        function displayPolls() {
-            const pollsList = document.getElementById('pollsList');
-            if (!pollsList) return;
-            
-            if (!polls || polls.length === 0) {
-                pollsList.innerHTML = `
-                    <div style="text-align:center; padding:20px; color:#8b93a6;">
-                        <p>нет активных опросов</p>
+function displayPolls() {
+    const pollsList = document.getElementById('pollsList');
+    if (!pollsList) return;
+    
+    if (!polls || polls.length === 0) {
+        pollsList.innerHTML = `
+            <div style="text-align:center; padding:20px; color:#8b93a6;">
+                <p>нет активных опросов</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '';
+    polls.forEach(poll => {
+        const totalVotes = (poll.yes_votes || 0) + (poll.no_votes || 0);
+        const yesPercent = totalVotes > 0 ? Math.round((poll.yes_votes / totalVotes) * 100) : 0;
+        const noPercent = totalVotes > 0 ? Math.round((poll.no_votes / totalVotes) * 100) : 0;
+        
+        html += `
+            <div class="poll-card">
+                <div class="poll-question">${escapeHtml(poll.question)}</div>
+                <div class="poll-stats">
+                    <span>👤 ${escapeHtml(poll.author || 'Аноним')}</span>
+                    <span>📊 ${totalVotes} голосов</span>
+                </div>
+                <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                    <div style="flex: 1; text-align: center; color: #27ae60; font-weight: 500;">
+                        да: ${yesPercent}%
                     </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            polls.forEach(poll => {
-                const totalVotes = (poll.yes_votes || 0) + (poll.no_votes || 0);
-                const yesPercent = totalVotes > 0 ? Math.round((poll.yes_votes / totalVotes) * 100) : 50;
-                
-                html += `
-                    <div class="poll-card">
-                        <div class="poll-question">${escapeHtml(poll.question)}</div>
-                        <div class="poll-stats">
-                            <span>👤 ${escapeHtml(poll.author || 'Аноним')}</span>
-                            <span>📊 ${totalVotes} голосов</span>
-                        </div>
-                        <div class="poll-options">
-                            <div class="poll-option yes" onclick="votePoll(${poll.id}, 'yes')">да</div>
-                            <div class="poll-option no" onclick="votePoll(${poll.id}, 'no')">нет</div>
-                        </div>
-                        <div class="poll-progress">
-                            <div class="progress-bar" style="width: ${yesPercent}%"></div>
-                        </div>
+                    <div style="flex: 1; text-align: center; color: #e74c3c; font-weight: 500;">
+                        нет: ${noPercent}%
                     </div>
-                `;
-            });
-            
-            pollsList.innerHTML = html;
-        }
-
-        window.votePoll = function(pollId, choice) {
-            showMessage(`голос учтён (${choice})`, 'success');
-        };
-
+                </div>
+                <div class="poll-options">
+                    <div class="poll-option yes" onclick="votePoll(${poll.id}, 'yes')">да</div>
+                    <div class="poll-option no" onclick="votePoll(${poll.id}, 'no')">нет</div>
+                </div>
+                <div class="poll-progress">
+                    <div class="progress-bar" style="width: ${yesPercent}%"></div>
+                </div>
+            </div>
+        `;
+    });
+    
+    pollsList.innerHTML = html;
+}
         // Загрузка количества тредов
         async function loadThreadsCount() {
             try {
