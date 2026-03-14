@@ -330,26 +330,38 @@
             .bottom-nav {
                 bottom: 16px;
             }
+            /* Логотип */
+.logo-img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+}
+
+@media (max-width: 600px) {
+    .logo-img {
+        height: 28px;
+    }
+}
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-content">
-                <div class="logo">
-                    <div class="logo-icon">62</div>
-                    <h1>стена</h1>
-                </div>
-                <div class="header-icons">
-                    <a href="https://ggfh-becouse.github.io/school62-vote/index.html" class="header-icon">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </div>
-            </div>
+       <!-- Header -->
+<div class="header">
+    <div class="header-content">
+        <div class="logo">
+            <img src="top_logotype.png" alt="Школа 62" class="logo-img">
+            <h1>стена</h1>
         </div>
+        <div class="header-icons">
+            <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="header-icon">
+                <i class="far fa-user"></i>
+            </a>
+        </div>
+    </div>
+</div>
 
         <!-- Login Card -->
         <div class="login-card">
