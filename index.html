@@ -311,6 +311,139 @@
             background: #1a1e2b;
         }
 
+
+        .fortune-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .fortune-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .fortune-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .fortune-status {
+            font-size: 0.75rem;
+            color: #2e3440;
+            background: #f0f2f5;
+            border-radius: 20px;
+            padding: 6px 10px;
+        }
+
+        .fortune-wheel-wrap {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            margin: 0 auto 14px;
+        }
+
+        .fortune-pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 22px solid #1a1e2b;
+            z-index: 3;
+        }
+
+        .fortune-wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid #fff;
+            box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.2);
+            background: conic-gradient(
+                #ffd166 0deg 60deg,
+                #ef476f 60deg 120deg,
+                #06d6a0 120deg 180deg,
+                #118ab2 180deg 240deg,
+                #7f5af0 240deg 300deg,
+                #ff9f1c 300deg 360deg
+            );
+            transition: transform 4.3s cubic-bezier(.12,.96,.19,1);
+            position: relative;
+        }
+
+        .fortune-center {
+            position: absolute;
+            inset: 50% auto auto 50%;
+            transform: translate(-50%, -50%);
+            width: 82px;
+            height: 82px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #1a1e2b;
+            z-index: 2;
+            border: 2px solid #f0f2f5;
+        }
+
+        .fortune-labels {
+            display: grid;
+            gap: 6px;
+            margin-bottom: 14px;
+            font-size: 0.76rem;
+            color: #5f6677;
+        }
+
+        .fortune-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .fortune-spin {
+            border: none;
+            background: #2e3440;
+            color: #fff;
+            border-radius: 30px;
+            padding: 10px 18px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .fortune-spin:disabled {
+            background: #a5adbd;
+            cursor: not-allowed;
+        }
+
+        .fortune-rewards {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: #f8f9fc;
+            font-size: 0.78rem;
+            color: #2e3440;
+            line-height: 1.45;
+        }
+
         /* ТАЙМЕР БЛОК */
         .timer-block {
             background: linear-gradient(135deg, #ff4d4d, #e63946);
@@ -1365,6 +1498,27 @@
                 </div>
             </div>
 
+
+            <div class="fortune-card" id="fortuneCard">
+                <div class="fortune-header">
+                    <div class="fortune-title">колесо фортуны</div>
+                    <div class="fortune-status" id="fortuneStatus">войдите, чтобы крутить</div>
+                </div>
+                <div class="fortune-wheel-wrap">
+                    <div class="fortune-pointer"></div>
+                    <div class="fortune-wheel" id="fortuneWheel"></div>
+                    <div class="fortune-center">крути<br>меня</div>
+                </div>
+                <div class="fortune-labels">
+                    <span>🎁 Призы: дополнительный смайлик, выделение сообщений, буст профиля</span>
+                    <span>👑 Самый редкий приз: премиум аккаунт</span>
+                </div>
+                <div class="fortune-actions">
+                    <button class="fortune-spin" id="spinWheelBtn">крутить колесо</button>
+                </div>
+                <div class="fortune-rewards" id="fortuneRewards">ваши призы: пока пусто</div>
+            </div>
+
 <!-- Вместо timer-block добавляем важное уведомление -->
 <div class="important-notice" id="importantNotice">
     <div class="notice-content">
@@ -1545,6 +1699,7 @@
             const authAvatar = document.getElementById('authAvatar').querySelector('img');
             const authDisplayName = document.getElementById('authDisplayName');
             const authButtons = document.getElementById('authButtons');
+            document.querySelectorAll('#authStatusBar .auth-badge').forEach((el) => el.remove());
 
             if (userId && userNickname) {
                 // Пользователь авторизован
@@ -1574,6 +1729,147 @@
                     <a href="https://ggfh-becouse.github.io/school62-vote/register.html" class="auth-btn primary">регистрация</a>
                 `;
             }
+        }
+
+
+        const wheelRewards = [
+            { id: 'extra_emoji', label: 'Дополнительный смайлик 😎', weight: 32 },
+            { id: 'highlight', label: 'Выделение сообщения ✨', weight: 24 },
+            { id: 'boost', label: 'Буст профиля 🚀', weight: 20 },
+            { id: 'theme', label: 'Особая тема профиля 🎨', weight: 16 },
+            { id: 'sticker', label: 'Набор стикеров 🎯', weight: 7 },
+            { id: 'premium', label: 'Премиум аккаунт 👑', weight: 1 }
+        ];
+        let wheelRotation = 0;
+        let isWheelSpinning = false;
+
+        function getUserRewardState() {
+            if (!userId) return {};
+            return JSON.parse(localStorage.getItem(`userRewardState_${userId}`) || '{}');
+        }
+
+        function saveUserRewardState(state) {
+            if (!userId) return;
+            localStorage.setItem(`userRewardState_${userId}`, JSON.stringify(state));
+        }
+
+        function drawRewardsSummary() {
+            const rewardsBox = document.getElementById('fortuneRewards');
+            if (!rewardsBox) return;
+
+            if (!userId) {
+                rewardsBox.textContent = 'ваши призы: авторизуйтесь, чтобы начать собирать';
+                return;
+            }
+
+            const state = getUserRewardState();
+            const lines = Object.entries(state)
+                .filter(([, count]) => count > 0)
+                .map(([id, count]) => {
+                    const reward = wheelRewards.find(r => r.id === id);
+                    const label = reward ? reward.label : id;
+                    return `${label} ×${count}`;
+                });
+
+            rewardsBox.textContent = lines.length ? `ваши призы: ${lines.join(' • ')}` : 'ваши призы: пока пусто';
+        }
+
+        function getWheelCooldownText() {
+            if (!userId) return 'войдите, чтобы крутить';
+
+            const key = `fortuneLastSpin_${userId}`;
+            const lastSpin = Number(localStorage.getItem(key) || 0);
+            const cooldownMs = 12 * 60 * 60 * 1000;
+            const now = Date.now();
+            const left = cooldownMs - (now - lastSpin);
+
+            if (left <= 0) return 'доступно сейчас';
+
+            const hours = Math.floor(left / (1000 * 60 * 60));
+            const minutes = Math.floor((left % (1000 * 60 * 60)) / (1000 * 60));
+            return `следующая попытка через ${hours}ч ${minutes}м`;
+        }
+
+        function updateWheelUiState() {
+            const status = document.getElementById('fortuneStatus');
+            const spinBtn = document.getElementById('spinWheelBtn');
+            if (!status || !spinBtn) return;
+
+            const statusText = getWheelCooldownText();
+            status.textContent = statusText;
+            spinBtn.disabled = !userId || statusText !== 'доступно сейчас' || isWheelSpinning;
+        }
+
+        function pickReward() {
+            const totalWeight = wheelRewards.reduce((sum, item) => sum + item.weight, 0);
+            let random = Math.random() * totalWeight;
+            for (const item of wheelRewards) {
+                random -= item.weight;
+                if (random <= 0) return item;
+            }
+            return wheelRewards[0];
+        }
+
+        function applyReward(reward) {
+            const state = getUserRewardState();
+            state[reward.id] = (state[reward.id] || 0) + 1;
+            saveUserRewardState(state);
+
+            if (reward.id === 'premium') {
+                primeUser = { nickname: userNickname, activatedBy: 'wheel' };
+                localStorage.setItem('primeUser', JSON.stringify(primeUser));
+                updateAuthDisplay();
+            }
+
+            if (reward.id === 'highlight') {
+                localStorage.setItem('messageHighlightUnlocked', 'true');
+            }
+
+            if (reward.id === 'extra_emoji') {
+                const emojis = JSON.parse(localStorage.getItem('bonusEmojis') || '[]');
+                emojis.push('😎');
+                localStorage.setItem('bonusEmojis', JSON.stringify(emojis));
+            }
+
+            drawRewardsSummary();
+        }
+
+        function spinWheel() {
+            if (!userId || isWheelSpinning) return;
+
+            const cooldownText = getWheelCooldownText();
+            if (cooldownText !== 'доступно сейчас') {
+                showMessage(cooldownText, 'error');
+                return;
+            }
+
+            const reward = pickReward();
+            const rewardIndex = wheelRewards.findIndex(item => item.id === reward.id);
+            const segmentAngle = 360 / wheelRewards.length;
+            const targetAngle = rewardIndex * segmentAngle + segmentAngle / 2;
+            const stopAngle = 360 - targetAngle;
+
+            isWheelSpinning = true;
+            updateWheelUiState();
+
+            wheelRotation += 360 * 6 + stopAngle;
+            const wheel = document.getElementById('fortuneWheel');
+            wheel.style.transform = `rotate(${wheelRotation}deg)`;
+
+            setTimeout(() => {
+                localStorage.setItem(`fortuneLastSpin_${userId}`, String(Date.now()));
+                applyReward(reward);
+                showMessage(`вы выиграли: ${reward.label}`, 'success');
+                isWheelSpinning = false;
+                updateWheelUiState();
+            }, 4400);
+        }
+
+        function initFortuneWheel() {
+            drawRewardsSummary();
+            updateWheelUiState();
+            document.getElementById('spinWheelBtn')?.addEventListener('click', spinWheel);
+            setInterval(updateWheelUiState, 60000);
         }
 
         // ============================================
@@ -2086,6 +2382,7 @@ function displayPolls() {
         async function initApp() {
             await getUserIp();
             updateAuthDisplay();
+            initFortuneWheel();
             await loadComments();
             await loadThreadsCount();
             await loadCandidates();
