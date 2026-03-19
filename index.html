@@ -1,74 +1,995 @@
-async function sendNotification() {
-    const type = document.getElementById('notificationType').value;
-    const title = document.getElementById('notificationTitle').value.trim();
-    const message = document.getElementById('notificationMessage').value.trim();
-    const icon = document.getElementById('notificationIcon').value.trim() || '📢';
-    const target = document.getElementById('notificationTarget').value;
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>стена 62 | главная</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
 
-    if (!title || !message) {
-        showMessage('заполните заголовок и сообщение', 'error');
-        return;
-    }
+        body {
+            background: #f8f9fc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 32px 0;
+        }
 
-    try {
-        // Создаём уведомление
-        const { data: notification, error } = await supabaseClient
-            .from('notifications')
-            .insert({
-                type: type,
-                title: title,
-                message: message,
-                icon: icon,
-                created_by: 1, // ID админа
-                target_all: target === 'all',
-                created_at: new Date().toISOString()
-            })
-            .select()
-            .single();
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #f8f9fc;
+            position: relative;
+            padding: 0 16px;
+        }
 
-        if (error) throw error;
+        .main-content {
+            display: block;
+            padding-bottom: 90px;
+        }
 
-        if (target === 'all') {
-            // Получаем всех пользователей
-            const { data: users } = await supabaseClient
-                .from('users')
-                .select('id');
+        /* HEADER */
+        .header {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 16px 20px;
+            margin: 8px 0 16px 0;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
 
-            // Создаём связи для всех пользователей
-            const userNotifications = users.map(u => ({
-                user_id: u.id,
-                notification_id: notification.id
-            }));
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-            await supabaseClient
-                .from('user_notifications')
-                .insert(userNotifications);
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-            showMessage(`✅ уведомление отправлено ${users.length} пользователям`, 'success');
-        } else {
-            // Отправляем конкретному пользователю
-            const userId = document.getElementById('notificationUserId').value;
-            if (!userId) {
-                showMessage('введите ID пользователя', 'error');
+        .logo-img {
+            height: 36px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            letter-spacing: -0.5px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .header-icon {
+            font-size: 1.2rem;
+            color: #8b93a6;
+            transition: color 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .header-icon:hover {
+            color: #2e3440;
+        }
+
+        /* NOTIFICATION BADGE */
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 600;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* NOTIFICATION CENTER */
+        .notification-center {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: #ffffff;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notification-center.active {
+            right: 0;
+        }
+
+        .notification-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notification-close {
+            background: #f0f2f5;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .notification-close:hover {
+            background: #e4e6e9;
+        }
+
+        .notification-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .notification-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .notification-tab {
+            background: #f0f2f5;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #8b93a6;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .notification-tab:hover {
+            background: #e4e6e9;
+            color: #2e3440;
+        }
+
+        .notification-tab.active {
+            background: #2e3440;
+            color: white;
+        }
+
+        .notification-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .notification-item {
+            background: #f8f9fc;
+            border-radius: 18px;
+            padding: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-item.unread {
+            border-left: 4px solid #2e3440;
+            background: #ffffff;
+        }
+
+        .notification-item.urgent {
+            border-left-color: #e74c3c;
+        }
+
+        .notification-item.urgent .notification-title {
+            color: #e74c3c;
+        }
+
+        .notification-item.automatic {
+            border-left-color: #3498db;
+        }
+
+        .notification-item.manual {
+            border-left-color: #f1c40f;
+        }
+
+        .notification-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: #1a1e2b;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .notification-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .notification-type-badge {
+            background: #f0f2f5;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: #8b93a6;
+        }
+
+        .notification-message {
+            color: #1a1e2b;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .notification-meta {
+            display: flex;
+            gap: 16px;
+            color: #8b93a6;
+            font-size: 0.7rem;
+        }
+
+        .notification-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background: #2e3440;
+            position: absolute;
+            top: 16px;
+            right: 16px;
+        }
+
+        .empty-notifications {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8b93a6;
+        }
+
+        .empty-notifications i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* OVERLAY */
+        .notification-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: none;
+        }
+
+        .notification-overlay.active {
+            display: block;
+        }
+
+        /* AUTH STATUS BAR */
+        .auth-status-bar {
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideDown 0.3s;
+        }
+
+        .auth-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .auth-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .auth-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .auth-welcome {
+            font-size: 0.9rem;
+            color: #1a1e2b;
+            font-weight: 500;
+        }
+
+        .auth-name {
+            font-weight: 600;
+            color: #2e3440;
+        }
+
+        .auth-badge {
+            background: #f1c40f;
+            color: #1a1e2b;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .auth-btn {
+            background: #f0f2f5;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: #1a1e2b;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .auth-btn:hover {
+            background: #e4e6e9;
+        }
+
+        .auth-btn.primary {
+            background: #2e3440;
+            color: white;
+        }
+
+        .auth-btn.primary:hover {
+            background: #1a1e2b;
+        }
+
+        /* BOTTOM NAVIGATION */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 560px;
+            width: calc(100% - 32px);
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 6px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav-item-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8b93a6;
+            text-decoration: none;
+            font-size: 0.6rem;
+            font-weight: 500;
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 30px;
+            transition: all 0.2s;
+        }
+
+        .nav-item-bottom.active {
+            background: #f0f2f5;
+            color: #2e3440;
+        }
+
+        .nav-item-bottom:hover {
+            color: #2e3440;
+            background: #f8f9fc;
+        }
+
+        .nav-icon-bottom {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 16px 0;
+            }
+            
+            .auth-status-bar {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .notification-center {
+                max-width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <img src="top_logotype.png" alt="Школа 62" class="logo-img">
+                        <h1>стена</h1>
+                    </div>
+                    <div class="header-icons">
+                        <div class="header-icon" onclick="toggleNotifications()">
+                            <i class="far fa-bell"></i>
+                            <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                        </div>
+                        <a href="your_account.html" class="header-icon">
+                            <i class="far fa-user"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AUTH STATUS BAR -->
+            <div class="auth-status-bar" id="authStatusBar">
+                <div class="auth-info">
+                    <div class="auth-avatar" id="authAvatar">
+                        <img src="https://i.pravatar.cc/300" alt="">
+                    </div>
+                    <span class="auth-welcome" id="authWelcomeText">
+                        <span id="authDisplayName">Гость</span>
+                    </span>
+                </div>
+                <div class="auth-buttons" id="authButtons">
+                    <a href="login.html" class="auth-btn">войти</a>
+                    <a href="register.html" class="auth-btn primary">регистрация</a>
+                </div>
+            </div>
+
+            <!-- REST OF YOUR CONTENT HERE -->
+            <div class="important-notice" id="importantNotice">
+                <div class="notice-content">
+                    <div class="notice-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="notice-text">
+                        <div class="notice-title">⚠️ Важное сообщение</div>
+                        <div class="notice-message">Обновление KRG62 2.1: Теперь с системой уведомлений!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION OVERLAY -->
+    <div class="notification-overlay" id="notificationOverlay" onclick="closeNotifications()"></div>
+
+    <!-- NOTIFICATION CENTER -->
+    <div class="notification-center" id="notificationCenter">
+        <div class="notification-header">
+            <h2>
+                <i class="far fa-bell"></i>
+                уведомления
+            </h2>
+            <button class="notification-close" onclick="closeNotifications()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="notification-tabs">
+            <button class="notification-tab active" onclick="filterNotifications('all')">все</button>
+            <button class="notification-tab" onclick="filterNotifications('urgent')">срочные</button>
+            <button class="notification-tab" onclick="filterNotifications('automatic')">автоматические</button>
+            <button class="notification-tab" onclick="filterNotifications('manual')">ручные</button>
+            <button class="notification-tab" onclick="filterNotifications('unread')">непрочитанные</button>
+        </div>
+
+        <div class="notification-list" id="notificationList">
+            <!-- Динамически загружаются -->
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item-bottom active">
+            <i class="fas fa-home nav-icon-bottom"></i>
+            <span>главная</span>
+        </a>
+        <a href="votes.html" class="nav-item-bottom">
+            <i class="fas fa-chart-bar nav-icon-bottom"></i>
+            <span>голосования</span>
+        </a>
+        <a href="threads.html" class="nav-item-bottom">
+            <i class="fas fa-comment nav-icon-bottom"></i>
+            <span>темки</span>
+        </a>
+        <a href="slivy.html" class="nav-item-bottom">
+            <i class="fas fa-image nav-icon-bottom"></i>
+            <span>сливы</span>
+        </a>
+        <a href="your_account.html" class="nav-item-bottom">
+            <i class="fas fa-user nav-icon-bottom"></i>
+            <span>аккаунт</span>
+        </a>
+    </nav>
+
+    <div id="messageContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ============================================
+        // ПЕРЕМЕННЫЕ
+        // ============================================
+        let notifications = [];
+        let unreadCount = 0;
+        let currentFilter = 'all';
+        let currentUser = null;
+        let primeUser = null;
+        let notificationRealtime = null;
+
+        // Загружаем данные пользователя из localStorage
+        const userId = localStorage.getItem('userId');
+        const userNickname = localStorage.getItem('userNickname');
+        const userAvatar = localStorage.getItem('userAvatar');
+
+        // Загружаем Prime статус
+        const savedPrime = localStorage.getItem('primeUser');
+        if (savedPrime) {
+            primeUser = JSON.parse(savedPrime);
+        }
+
+        // ============================================
+        // СИСТЕМА УВЕДОМЛЕНИЙ
+        // ============================================
+        async function loadNotifications() {
+            if (!userId) return;
+
+            try {
+                // Загружаем уведомления пользователя
+                const { data, error } = await supabaseClient
+                    .from('user_notifications')
+                    .select(`
+                        *,
+                        notification:notifications (*)
+                    `)
+                    .eq('user_id', parseInt(userId))
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                notifications = data || [];
+                unreadCount = notifications.filter(n => !n.is_read).length;
+                
+                updateNotificationBadge();
+                displayNotifications();
+
+                // Подписываемся на новые уведомления в реальном времени
+                setupRealtimeNotifications();
+
+            } catch (error) {
+                console.error('Ошибка загрузки уведомлений:', error);
+            }
+        }
+
+        function setupRealtimeNotifications() {
+            if (!userId) return;
+
+            // Отписываемся от предыдущего подписания
+            if (notificationRealtime) {
+                notificationRealtime.unsubscribe();
+            }
+
+            // Подписываемся на новые уведомления для этого пользователя
+            notificationRealtime = supabaseClient
+                .channel('user_notifications')
+                .on(
+                    'postgres_changes',
+                    {
+                        event: 'INSERT',
+                        schema: 'public',
+                        table: 'user_notifications',
+                        filter: `user_id=eq.${userId}`
+                    },
+                    async (payload) => {
+                        // Загружаем полные данные уведомления
+                        const { data: notificationData } = await supabaseClient
+                            .from('notifications')
+                            .select('*')
+                            .eq('id', payload.new.notification_id)
+                            .single();
+
+                        const newNotification = {
+                            ...payload.new,
+                            notification: notificationData
+                        };
+
+                        notifications.unshift(newNotification);
+                        unreadCount++;
+                        
+                        updateNotificationBadge();
+                        displayNotifications();
+                        showNotificationPopup(notificationData);
+                    }
+                )
+                .subscribe();
+        }
+
+        function showNotificationPopup(notification) {
+            // Показываем всплывающее уведомление
+            const popup = document.createElement('div');
+            popup.className = `notification-popup ${notification.type}`;
+            popup.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: white;
+                border-radius: 16px;
+                padding: 16px;
+                box-shadow: 0 10px 20px -8px rgba(0,0,0,0.2);
+                border-left: 4px solid ${notification.type === 'urgent' ? '#e74c3c' : notification.type === 'automatic' ? '#3498db' : '#f1c40f'};
+                z-index: 10002;
+                max-width: 300px;
+                animation: slideIn 0.3s;
+            `;
+            popup.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="font-size: 24px;">${notification.icon || '📢'}</div>
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 4px;">${notification.title}</div>
+                        <div style="font-size: 0.85rem; color: #8b93a6;">${notification.message}</div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(popup);
+            setTimeout(() => popup.remove(), 5000);
+        }
+
+        function updateNotificationBadge() {
+            const badge = document.getElementById('notificationBadge');
+            if (unreadCount > 0) {
+                badge.style.display = 'flex';
+                badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        async function markAsRead(notificationId) {
+            if (!userId) return;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('user_notifications')
+                    .update({ 
+                        is_read: true,
+                        read_at: new Date().toISOString()
+                    })
+                    .eq('id', notificationId);
+
+                if (error) throw error;
+
+                const notification = notifications.find(n => n.id === notificationId);
+                if (notification && !notification.is_read) {
+                    notification.is_read = true;
+                    unreadCount--;
+                    updateNotificationBadge();
+                    displayNotifications();
+                }
+
+            } catch (error) {
+                console.error('Ошибка при отметке прочитанным:', error);
+            }
+        }
+
+        async function markAllAsRead() {
+            if (!userId) return;
+
+            try {
+                const unreadIds = notifications
+                    .filter(n => !n.is_read)
+                    .map(n => n.id);
+
+                if (unreadIds.length === 0) return;
+
+                const { error } = await supabaseClient
+                    .from('user_notifications')
+                    .update({ 
+                        is_read: true,
+                        read_at: new Date().toISOString()
+                    })
+                    .in('id', unreadIds);
+
+                if (error) throw error;
+
+                notifications.forEach(n => { n.is_read = true; });
+                unreadCount = 0;
+                updateNotificationBadge();
+                displayNotifications();
+                showMessage('все уведомления прочитаны', 'success');
+
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showMessage('ошибка: ' + error.message, 'error');
+            }
+        }
+
+        function displayNotifications() {
+            const list = document.getElementById('notificationList');
+            
+            let filtered = notifications;
+            
+            switch (currentFilter) {
+                case 'urgent':
+                    filtered = notifications.filter(n => n.notification?.type === 'urgent');
+                    break;
+                case 'automatic':
+                    filtered = notifications.filter(n => n.notification?.type === 'automatic');
+                    break;
+                case 'manual':
+                    filtered = notifications.filter(n => n.notification?.type === 'manual');
+                    break;
+                case 'unread':
+                    filtered = notifications.filter(n => !n.is_read);
+                    break;
+                default:
+                    break;
+            }
+
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-notifications">
+                        <i class="far fa-bell-slash"></i>
+                        <p>нет уведомлений</p>
+                    </div>
+                `;
                 return;
             }
 
-            await supabaseClient
-                .from('user_notifications')
-                .insert({
-                    user_id: parseInt(userId),
-                    notification_id: notification.id
+            let html = '';
+            filtered.forEach(item => {
+                const notif = item.notification;
+                const date = new Date(item.created_at).toLocaleString('ru', {
+                    day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
                 });
+                
+                const typeClasses = {
+                    urgent: 'urgent',
+                    automatic: 'automatic',
+                    manual: 'manual'
+                };
 
-            showMessage(`✅ уведомление отправлено пользователю ${userId}`, 'success');
+                const typeLabels = {
+                    urgent: 'срочное',
+                    automatic: 'автоматическое',
+                    manual: 'ручное'
+                };
+
+                html += `
+                    <div class="notification-item ${item.is_read ? '' : 'unread'} ${typeClasses[notif?.type] || ''}" 
+                         onclick="markAsRead(${item.id})">
+                        <div class="notification-header-row">
+                            <span class="notification-title">
+                                <span class="notification-icon">${notif?.icon || '📢'}</span>
+                                ${escapeHtml(notif?.title || 'Уведомление')}
+                            </span>
+                            <span class="notification-type-badge">${typeLabels[notif?.type] || 'системное'}</span>
+                        </div>
+                        <div class="notification-message">${escapeHtml(notif?.message || '')}</div>
+                        <div class="notification-meta">
+                            <span><i class="far fa-clock"></i> ${date}</span>
+                            ${notif?.link ? `<span><i class="fas fa-external-link-alt"></i> подробнее</span>` : ''}
+                        </div>
+                        ${!item.is_read ? '<div class="notification-dot"></div>' : ''}
+                    </div>
+                `;
+            });
+
+            list.innerHTML = html;
         }
 
-        // Очищаем форму
-        document.getElementById('notificationTitle').value = '';
-        document.getElementById('notificationMessage').value = '';
-        document.getElementById('notificationIcon').value = '📢';
-        
-    } catch (error) {
-        showMessage('ошибка: ' + error.message, 'error');
-    }
-}
+        function filterNotifications(filter) {
+            currentFilter = filter;
+            
+            // Обновляем активную вкладку
+            document.querySelectorAll('.notification-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            displayNotifications();
+        }
+
+        window.toggleNotifications = function() {
+            const center = document.getElementById('notificationCenter');
+            const overlay = document.getElementById('notificationOverlay');
+            
+            if (center.classList.contains('active')) {
+                closeNotifications();
+            } else {
+                center.classList.add('active');
+                overlay.classList.add('active');
+            }
+        };
+
+        window.closeNotifications = function() {
+            document.getElementById('notificationCenter').classList.remove('active');
+            document.getElementById('notificationOverlay').classList.remove('active');
+        };
+
+        // ============================================
+        // ОТОБРАЖЕНИЕ СТАТУСА АВТОРИЗАЦИИ
+        // ============================================
+        function updateAuthDisplay() {
+            const authAvatar = document.getElementById('authAvatar').querySelector('img');
+            const authDisplayName = document.getElementById('authDisplayName');
+            const authButtons = document.getElementById('authButtons');
+
+            if (userId && userNickname) {
+                authDisplayName.textContent = userNickname;
+                authAvatar.src = userAvatar || 'https://i.pravatar.cc/300';
+                
+                const oldBadge = document.querySelector('.auth-badge');
+                if (oldBadge) oldBadge.remove();
+                
+                if (primeUser) {
+                    const badge = document.createElement('span');
+                    badge.className = 'auth-badge';
+                    badge.innerHTML = '<i class="fas fa-crown"></i> prime';
+                    authDisplayName.parentNode.appendChild(badge);
+                }
+
+                authButtons.innerHTML = `
+                    <a href="your_account.html" class="auth-btn">
+                        <i class="far fa-user"></i> профиль
+                    </a>
+                `;
+            } else {
+                authDisplayName.textContent = 'Гость';
+                authAvatar.src = 'https://i.pravatar.cc/300';
+                authButtons.innerHTML = `
+                    <a href="login.html" class="auth-btn">войти</a>
+                    <a href="register.html" class="auth-btn primary">регистрация</a>
+                `;
+            }
+        }
+
+        // ============================================
+        // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+        // ============================================
+        function showMessage(text, type) {
+            const container = document.getElementById('messageContainer');
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            container.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ============================================
+        // ИНИЦИАЛИЗАЦИЯ
+        // ============================================
+        async function initApp() {
+            updateAuthDisplay();
+            await loadNotifications();
+
+            // Добавляем кнопку "прочитать все" в центр уведомлений
+            const header = document.querySelector('.notification-header');
+            if (header && notifications.length > 0) {
+                const markAllBtn = document.createElement('button');
+                markAllBtn.className = 'notification-tab';
+                markAllBtn.style.marginLeft = 'auto';
+                markAllBtn.innerHTML = '<i class="far fa-check-double"></i>';
+                markAllBtn.onclick = markAllAllRead;
+                markAllBtn.title = 'отметить все как прочитанные';
+                header.appendChild(markAllBtn);
+            }
+        }
+
+        initApp();
+    </script>
+</body>
+</html>
