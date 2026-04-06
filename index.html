@@ -651,6 +651,28 @@
             box-shadow: 0 4px 12px -4px rgba(102, 126, 234, 0.4);
         }
 
+        .recommended-btn.friend-request-sent {
+            background: #2ecc71;
+            color: white;
+            cursor: default;
+        }
+
+        .recommended-btn.friend-request-sent:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .recommended-btn.already-friends {
+            background: #3498db;
+            color: white;
+            cursor: default;
+        }
+
+        .recommended-btn.already-friends:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
         .empty-recommended {
             text-align: center;
             padding: 40px 20px;
@@ -734,7 +756,86 @@
             flex-direction: column;
             gap: 12px;
         }
-        /* ========== КОНЕЦ НОВОГО БЛОКА ========== */
+
+        /* TOGGLE SWITCH ДЛЯ "ИЩУ КЕНТОВ" */
+        .looking-toggle {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .looking-toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .looking-toggle-label i {
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+
+        .looking-toggle-label span {
+            font-weight: 500;
+            color: #1a1e2b;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .looking-hint {
+            font-size: 0.7rem;
+            color: #8b93a6;
+            margin-top: 8px;
+        }
 
         /* NOTIFICATION BADGE */
         .notification-badge {
@@ -1885,7 +1986,19 @@
                 <div class="notification-badge-quick">новости</div>
             </div>
 
-            <!-- ========== НОВЫЙ БЛОК: РЕКОМЕНДУЕМЫЕ АККАУНТЫ ========== -->
+            <!-- TOGGLE "ИЩУ КЕНТОВ" -->
+            <div class="looking-toggle" id="lookingToggleContainer" style="display: none;">
+                <div class="looking-toggle-label">
+                    <i class="fas fa-user-friends"></i>
+                    <span>я ищу кентов</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="lookingForFriendsToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- ========== БЛОК: РЕКОМЕНДУЕМЫЕ АККАУНТЫ ========== -->
             <div class="recommended-section" id="recommendedSection" style="display: none;">
                 <div class="recommended-header">
                     <h3>
@@ -1901,7 +2014,6 @@
                     <div class="loader"></div>
                 </div>
             </div>
-            <!-- ========== КОНЕЦ НОВОГО БЛОКА ========== -->
 
             <!-- CREATE POLL SECTION -->
             <div class="create-poll">
@@ -1918,9 +2030,6 @@
                 </div>
                 <div id="pollsList">
                     <!-- Динамически загружается последний опрос -->
-                </div>
-            </div>
-                    <!-- Динамически загружаются опросы -->
                 </div>
             </div>
 
@@ -2030,7 +2139,7 @@
         <div class="notification-list" id="notificationList"></div>
     </div>
 
-    <!-- ========== НОВАЯ МОДАЛКА ДЛЯ ВСЕХ РЕКОМЕНДАЦИЙ ========== -->
+    <!-- МОДАЛКА ДЛЯ ВСЕХ РЕКОМЕНДАЦИЙ -->
     <div class="recommended-modal" id="recommendedModal">
         <div class="recommended-modal-card">
             <div class="recommended-modal-header">
@@ -2044,7 +2153,6 @@
             </div>
         </div>
     </div>
-    <!-- ========== КОНЕЦ НОВОЙ МОДАЛКИ ========== -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -2070,6 +2178,7 @@
         let unreadCount = 0;
         let currentFilter = 'all';
         let notificationRealtime = null;
+        let friendRequestsCache = new Map(); // Кеш статусов дружбы
 
         // Загружаем данные пользователя из localStorage
         const userId = localStorage.getItem('userId');
@@ -2109,6 +2218,10 @@
                         <i class="far fa-user"></i> профиль
                     </a>
                 `;
+                
+                // Показать toggle для "ищу кентов"
+                document.getElementById('lookingToggleContainer').style.display = 'flex';
+                loadLookingForFriendsStatus();
             } else {
                 authDisplayName.textContent = 'Гость';
                 authAvatar.src = 'https://i.pravatar.cc/300';
@@ -2116,6 +2229,55 @@
                     <a href="login.html" class="auth-btn">войти</a>
                     <a href="register.html" class="auth-btn primary">регистрация</a>
                 `;
+                document.getElementById('lookingToggleContainer').style.display = 'none';
+            }
+        }
+
+        // Загрузка статуса "ищу кентов" для текущего пользователя
+        async function loadLookingForFriendsStatus() {
+            if (!userId) return;
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('users')
+                    .select('looking_for_friends')
+                    .eq('id', parseInt(userId))
+                    .single();
+                
+                if (error) throw error;
+                
+                const toggle = document.getElementById('lookingForFriendsToggle');
+                if (toggle) {
+                    toggle.checked = data?.looking_for_friends || false;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки статуса:', error);
+            }
+        }
+
+        // Обновление статуса "ищу кентов"
+        async function updateLookingForFriendsStatus(value) {
+            if (!userId) return;
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('users')
+                    .update({ looking_for_friends: value })
+                    .eq('id', parseInt(userId));
+                
+                if (error) throw error;
+                
+                showMessage(value ? '✅ вы появитесь в поиске кентов' : '❌ вы скрыты из поиска кентов', 'success');
+                
+                // Перезагружаем рекомендации
+                await loadRecommendedUsers();
+                
+            } catch (error) {
+                console.error('Ошибка обновления статуса:', error);
+                showMessage('ошибка: ' + error.message, 'error');
+                // Возвращаем переключатель в исходное состояние
+                const toggle = document.getElementById('lookingForFriendsToggle');
+                if (toggle) toggle.checked = !value;
             }
         }
 
@@ -2160,9 +2322,10 @@
                 }
 
                 let html = '';
-                data.forEach(user => {
+                for (const user of data) {
                     const name = user.display_name || user.nickname;
                     const avatar = user.avatar_url || 'https://i.pravatar.cc/300';
+                    const friendshipStatus = await checkFriendshipStatus(parseInt(user.id));
                     
                     html += `
                         <div class="search-result-item" onclick="goToUserProfile(${user.id})">
@@ -2180,7 +2343,7 @@
                             </div>
                         </div>
                     `;
-                });
+                }
 
                 searchResults.innerHTML = html;
                 searchResults.classList.add('active');
@@ -2193,6 +2356,162 @@
         window.goToUserProfile = function(userId) {
             window.location.href = `check_account.html?id=${userId}`;
         };
+
+        // ============================================
+        // ФУНКЦИИ ДЛЯ ДРУЗЕЙ
+        // ============================================
+        
+        // Проверка статуса дружбы между текущим пользователем и указанным
+        async function checkFriendshipStatus(targetUserId) {
+            if (!userId) return null;
+            
+            const cacheKey = `${userId}-${targetUserId}`;
+            if (friendRequestsCache.has(cacheKey)) {
+                return friendRequestsCache.get(cacheKey);
+            }
+            
+            try {
+                const currentUserId = parseInt(userId);
+                const friendId = parseInt(targetUserId);
+                
+                // Проверяем, есть ли уже запрос или дружба
+                const { data, error } = await supabaseClient
+                    .from('friends')
+                    .select('status')
+                    .or(`and(user_id.eq.${currentUserId},friend_id.eq.${friendId}),and(user_id.eq.${friendId},friend_id.eq.${currentUserId})`)
+                    .maybeSingle();
+                
+                if (error) throw error;
+                
+                let status = null;
+                if (data) {
+                    if (data.status === 'accepted') {
+                        status = 'friends';
+                    } else if (data.status === 'pending') {
+                        // Определяем, кто отправил запрос
+                        status = 'pending_sent';
+                    }
+                }
+                
+                friendRequestsCache.set(cacheKey, status);
+                return status;
+                
+            } catch (error) {
+                console.error('Ошибка проверки статуса дружбы:', error);
+                return null;
+            }
+        }
+        
+        // Отправка запроса в друзья
+        window.sendFriendRequest = async function(friendId, friendName, buttonElement) {
+            if (!userId || !userNickname) {
+                showMessage('войдите, чтобы добавить в друзья', 'error');
+                setTimeout(() => window.location.href = 'login.html', 1500);
+                return;
+            }
+            
+            const currentUserId = parseInt(userId);
+            const targetId = parseInt(friendId);
+            
+            if (currentUserId === targetId) {
+                showMessage('нельзя добавить себя', 'error');
+                return;
+            }
+            
+            // Проверяем текущий статус
+            const status = await checkFriendshipStatus(targetId);
+            if (status === 'friends') {
+                showMessage('этот пользователь уже в друзьях', 'error');
+                return;
+            }
+            if (status === 'pending_sent') {
+                showMessage('запрос уже отправлен', 'error');
+                return;
+            }
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('friends')
+                    .insert({
+                        user_id: currentUserId,
+                        friend_id: targetId,
+                        status: 'pending',
+                        created_at: new Date().toISOString()
+                    });
+                
+                if (error) throw error;
+                
+                // Обновляем кеш
+                friendRequestsCache.set(`${userId}-${friendId}`, 'pending_sent');
+                
+                showMessage(`✅ запрос дружбы отправлен ${friendName}`, 'success');
+                
+                // Отправляем уведомление
+                await sendFriendRequestNotification(targetId, userNickname);
+                
+                // Обновляем кнопку, если передан элемент
+                if (buttonElement) {
+                    updateFriendButtonUI(buttonElement, 'pending_sent');
+                }
+                
+                // Перезагружаем рекомендации для обновления кнопок
+                await loadRecommendedUsers();
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showMessage('ошибка: ' + error.message, 'error');
+            }
+        };
+        
+        // Обновление UI кнопки в зависимости от статуса
+        function updateFriendButtonUI(button, status) {
+            if (status === 'friends') {
+                button.innerHTML = '<i class="fas fa-check"></i> друзья';
+                button.classList.add('already-friends');
+                button.classList.remove('primary');
+                button.disabled = true;
+            } else if (status === 'pending_sent') {
+                button.innerHTML = '<i class="fas fa-clock"></i> запрос отправлен';
+                button.classList.add('friend-request-sent');
+                button.classList.remove('primary');
+                button.disabled = true;
+            } else {
+                button.innerHTML = '<i class="fas fa-user-plus"></i> добавить';
+                button.classList.remove('friend-request-sent', 'already-friends');
+                button.classList.add('primary');
+                button.disabled = false;
+            }
+        }
+        
+        async function sendFriendRequestNotification(toUserId, fromUserName) {
+            try {
+                const { data: notif, error: notifError } = await supabaseClient
+                    .from('notifications')
+                    .insert({
+                        type: 'automatic',
+                        title: '👋 Новый запрос в друзья!',
+                        message: `${fromUserName} хочет добавить вас в друзья. Зайдите в профиль, чтобы принять запрос.`,
+                        icon: '👋',
+                        color: '#667eea',
+                        target_all: false
+                    })
+                    .select()
+                    .single();
+                
+                if (notifError) throw notifError;
+                
+                await supabaseClient
+                    .from('user_notifications')
+                    .insert({
+                        user_id: toUserId,
+                        notification_id: notif.id,
+                        is_read: false
+                    });
+                    
+            } catch (error) {
+                console.error('Ошибка отправки уведомления:', error);
+            }
+        }
 
         // ============================================
         // ФУНКЦИИ ДЛЯ ГОЛОСОВАНИЙ
@@ -2541,11 +2860,12 @@
         // РЕКОМЕНДУЕМЫЕ АККАУНТЫ - ИЩУ КЕНТОВ
         // ============================================
         let recommendedUsers = [];
-        let recommendedOffset = 0;
-        const RECOMMENDED_LIMIT = 5;
         let totalRecommended = 0;
 
-        async function loadRecommendedUsers(limit = RECOMMENDED_LIMIT, offset = 0, append = false) {
+        async function loadRecommendedUsers() {
+            const list = document.getElementById('recommendedList');
+            list.innerHTML = '<div class="loader"></div>';
+            
             try {
                 const currentUserId = userId ? parseInt(userId) : 0;
                 
@@ -2562,24 +2882,18 @@
                         looking_for_friends
                     `, { count: 'exact' })
                     .eq('looking_for_friends', true)
-                    .neq('id', currentUserId)
-                    .order('created_at', { ascending: false });
+                    .order('created_at', { ascending: false })
+                    .limit(5);
                 
-                if (limit) {
-                    query = query.range(offset, offset + limit - 1);
+                if (currentUserId > 0) {
+                    query = query.neq('id', currentUserId);
                 }
                 
                 const { data, error, count } = await query;
                 
                 if (error) throw error;
                 
-                if (append) {
-                    recommendedUsers = [...recommendedUsers, ...(data || [])];
-                } else {
-                    recommendedUsers = data || [];
-                    recommendedOffset = 0;
-                }
-                
+                recommendedUsers = data || [];
                 totalRecommended = count || 0;
                 
                 const section = document.getElementById('recommendedSection');
@@ -2590,13 +2904,13 @@
                     section.style.display = 'block';
                     if (countSpan) countSpan.textContent = totalRecommended;
                     
-                    if (totalRecommended > RECOMMENDED_LIMIT) {
+                    if (totalRecommended > 5) {
                         showMoreBtn.style.display = 'inline-flex';
                     } else {
                         showMoreBtn.style.display = 'none';
                     }
                     
-                    displayRecommendedUsers();
+                    await displayRecommendedUsers();
                 } else {
                     section.style.display = 'none';
                 }
@@ -2605,7 +2919,7 @@
                 
             } catch (error) {
                 console.error('Ошибка загрузки рекомендаций:', error);
-                document.getElementById('recommendedList').innerHTML = `
+                list.innerHTML = `
                     <div class="empty-recommended">
                         <i class="fas fa-user-friends"></i>
                         <p>ошибка загрузки</p>
@@ -2616,7 +2930,7 @@
             }
         }
 
-        function displayRecommendedUsers() {
+        async function displayRecommendedUsers() {
             const list = document.getElementById('recommendedList');
             
             if (!recommendedUsers || recommendedUsers.length === 0) {
@@ -2631,11 +2945,29 @@
             }
             
             let html = '';
-            recommendedUsers.forEach(user => {
+            for (const user of recommendedUsers) {
                 const displayName = user.display_name || user.nickname;
                 const avatarUrl = user.avatar_url;
                 const initial = displayName.charAt(0).toUpperCase();
                 const statusText = user.status && user.status !== 'Статус не установлен' ? user.status : null;
+                
+                // Проверяем статус дружбы
+                let friendshipStatus = null;
+                let buttonHtml = '';
+                
+                if (userId) {
+                    friendshipStatus = await checkFriendshipStatus(user.id);
+                    
+                    if (friendshipStatus === 'friends') {
+                        buttonHtml = `<button class="recommended-btn already-friends" disabled><i class="fas fa-check"></i> друзья</button>`;
+                    } else if (friendshipStatus === 'pending_sent') {
+                        buttonHtml = `<button class="recommended-btn friend-request-sent" disabled><i class="fas fa-clock"></i> запрос отправлен</button>`;
+                    } else {
+                        buttonHtml = `<button class="recommended-btn primary" onclick="sendFriendRequest(${user.id}, '${escapeHtml(displayName)}', this)"><i class="fas fa-user-plus"></i> добавить</button>`;
+                    }
+                } else {
+                    buttonHtml = `<button class="recommended-btn primary" onclick="showMessage('войдите, чтобы добавить в друзья', 'error')"><i class="fas fa-user-plus"></i> добавить</button>`;
+                }
                 
                 html += `
                     <div class="recommended-card">
@@ -2655,102 +2987,16 @@
                             </div>
                         </div>
                         <div class="recommended-actions">
-                            <button class="recommended-btn" onclick="sendFriendRequest(${user.id}, '${escapeHtml(displayName)}')">
-                                <i class="fas fa-user-plus"></i> добавить
-                            </button>
-                            <button class="recommended-btn primary" onclick="goToUserProfile(${user.id})">
+                            ${buttonHtml}
+                            <button class="recommended-btn" onclick="goToUserProfile(${user.id})">
                                 <i class="far fa-user"></i> профиль
                             </button>
                         </div>
                     </div>
                 `;
-            });
+            }
             
             list.innerHTML = html;
-        }
-
-        // Отправка запроса в друзья
-        window.sendFriendRequest = async function(friendId, friendName) {
-            if (!userId || !userNickname) {
-                showMessage('войдите, чтобы добавить в друзья', 'error');
-                setTimeout(() => window.location.href = 'login.html', 1500);
-                return;
-            }
-            
-            if (parseInt(friendId) === parseInt(userId)) {
-                showMessage('нельзя добавить себя', 'error');
-                return;
-            }
-            
-            try {
-                const { data: existing, error: checkError } = await supabaseClient
-                    .from('friends')
-                    .select('*')
-                    .or(`and(user_id.eq.${userId},friend_id.eq.${friendId}),and(user_id.eq.${friendId},friend_id.eq.${userId})`)
-                    .maybeSingle();
-                
-                if (existing) {
-                    if (existing.status === 'accepted') {
-                        showMessage('этот пользователь уже в друзьях', 'error');
-                    } else if (existing.status === 'pending') {
-                        if (existing.user_id === parseInt(userId)) {
-                            showMessage('запрос уже отправлен', 'error');
-                        } else {
-                            showMessage('у вас есть входящий запрос от этого пользователя', 'error');
-                        }
-                    }
-                    return;
-                }
-                
-                const { error } = await supabaseClient
-                    .from('friends')
-                    .insert({
-                        user_id: parseInt(userId),
-                        friend_id: parseInt(friendId),
-                        status: 'pending',
-                        created_at: new Date().toISOString()
-                    });
-                
-                if (error) throw error;
-                
-                showMessage(`✅ запрос дружбы отправлен ${friendName}`, 'success');
-                
-                await sendFriendRequestNotification(friendId, userNickname);
-                
-            } catch (error) {
-                console.error('Ошибка:', error);
-                showMessage('ошибка: ' + error.message, 'error');
-            }
-        };
-        
-        async function sendFriendRequestNotification(toUserId, fromUserName) {
-            try {
-                const { data: notif, error: notifError } = await supabaseClient
-                    .from('notifications')
-                    .insert({
-                        type: 'automatic',
-                        title: '👋 Новый запрос в друзья!',
-                        message: `${fromUserName} хочет добавить вас в друзья. Зайдите в профиль, чтобы принять запрос.`,
-                        icon: '👋',
-                        color: '#667eea',
-                        target_all: false
-                    })
-                    .select()
-                    .single();
-                
-                if (notifError) throw notifError;
-                
-                await supabaseClient
-                    .from('user_notifications')
-                    .insert({
-                        user_id: toUserId,
-                        notification_id: notif.id,
-                        is_read: false
-                    });
-                    
-            } catch (error) {
-                console.error('Ошибка отправки уведомления:', error);
-            }
         }
 
         window.showAllRecommendations = async function() {
@@ -2763,7 +3009,7 @@
             try {
                 const currentUserId = userId ? parseInt(userId) : 0;
                 
-                const { data, error } = await supabaseClient
+                let query = supabaseClient
                     .from('users')
                     .select(`
                         id,
@@ -2775,8 +3021,13 @@
                         status
                     `)
                     .eq('looking_for_friends', true)
-                    .neq('id', currentUserId)
                     .order('created_at', { ascending: false });
+                
+                if (currentUserId > 0) {
+                    query = query.neq('id', currentUserId);
+                }
+                
+                const { data, error } = await query;
                 
                 if (error) throw error;
                 
@@ -2791,10 +3042,25 @@
                 }
                 
                 let html = '';
-                data.forEach(user => {
+                for (const user of data) {
                     const displayName = user.display_name || user.nickname;
                     const avatarUrl = user.avatar_url;
                     const initial = displayName.charAt(0).toUpperCase();
+                    
+                    let buttonHtml = '';
+                    if (userId) {
+                        const friendshipStatus = await checkFriendshipStatus(user.id);
+                        
+                        if (friendshipStatus === 'friends') {
+                            buttonHtml = `<button class="recommended-btn already-friends" disabled><i class="fas fa-check"></i> друзья</button>`;
+                        } else if (friendshipStatus === 'pending_sent') {
+                            buttonHtml = `<button class="recommended-btn friend-request-sent" disabled><i class="fas fa-clock"></i> запрос отправлен</button>`;
+                        } else {
+                            buttonHtml = `<button class="recommended-btn primary" onclick="sendFriendRequest(${user.id}, '${escapeHtml(displayName)}', this)"><i class="fas fa-user-plus"></i> добавить</button>`;
+                        }
+                    } else {
+                        buttonHtml = `<button class="recommended-btn primary" onclick="showMessage('войдите, чтобы добавить в друзья', 'error')"><i class="fas fa-user-plus"></i> добавить</button>`;
+                    }
                     
                     html += `
                         <div class="recommended-card">
@@ -2810,20 +3076,17 @@
                                     <div class="recommended-class">
                                         <i class="fas fa-graduation-cap"></i> ${user.class || 'класс не указан'}
                                     </div>
-                                    ${user.status && user.status !== 'Статус не установлен' ? `<div class="recommended-status"><i class="fas fa-comment"></i> ${escapeHtml(user.status.substring(0, 50))}</div>` : ''}
                                 </div>
                             </div>
                             <div class="recommended-actions">
-                                <button class="recommended-btn" onclick="sendFriendRequest(${user.id}, '${escapeHtml(displayName)}')">
-                                    <i class="fas fa-user-plus"></i> добавить
-                                </button>
-                                <button class="recommended-btn primary" onclick="goToUserProfile(${user.id})">
+                                ${buttonHtml}
+                                <button class="recommended-btn" onclick="goToUserProfile(${user.id})">
                                     <i class="far fa-user"></i> профиль
                                 </button>
                             </div>
                         </div>
                     `;
-                });
+                }
                 
                 modalList.innerHTML = html;
                 
@@ -2851,6 +3114,11 @@
         document.getElementById('showMoreBtn')?.addEventListener('click', (e) => {
             e.preventDefault();
             showAllRecommendations();
+        });
+        
+        // Обработчик переключателя "ищу кентов"
+        document.getElementById('lookingForFriendsToggle')?.addEventListener('change', (e) => {
+            updateLookingForFriendsStatus(e.target.checked);
         });
 
         // ============================================
@@ -3252,7 +3520,7 @@
             await loadCandidates();
             await loadPolls();
             await loadNotifications();
-            await loadRecommendedUsers();  // <-- НОВАЯ СТРОКА
+            await loadRecommendedUsers();
 
             document.getElementById('createPollBtn').addEventListener('click', createPoll);
         }
