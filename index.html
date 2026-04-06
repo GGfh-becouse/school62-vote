@@ -463,12 +463,12 @@
             background: #1a1e2b;
         }
 
-        /* ========== НОВЫЙ БЛОК: РЕКОМЕНДУЕМЫЕ АККАУНТЫ ========== */
+        /* ========== БЛОК: ИЩУ КЕНТОВ (В ВЕРХНЕЙ ЧАСТИ) ========== */
         .recommended-section {
             background: #ffffff;
             border-radius: 24px;
             padding: 20px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.02);
             animation: fadeIn 0.3s;
@@ -757,84 +757,32 @@
             gap: 12px;
         }
 
-        /* TOGGLE SWITCH ДЛЯ "ИЩУ КЕНТОВ" */
-        .looking-toggle {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 16px 20px;
+        /* INFO БЛОК О НАСТРОЙКЕ */
+        .looking-info {
+            background: #f0f2f5;
+            border-radius: 16px;
+            padding: 12px 16px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .looking-toggle-label {
-            display: flex;
-            align-items: center;
             gap: 12px;
+            font-size: 0.8rem;
+            color: #1a1e2b;
         }
 
-        .looking-toggle-label i {
+        .looking-info i {
             font-size: 1.2rem;
             color: #667eea;
         }
 
-        .looking-toggle-label span {
-            font-weight: 500;
-            color: #1a1e2b;
+        .looking-info a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
         }
 
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 52px;
-            height: 28px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.3s;
-            border-radius: 28px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: 0.3s;
-            border-radius: 50%;
-        }
-
-        input:checked + .toggle-slider {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(24px);
-        }
-
-        .looking-hint {
-            font-size: 0.7rem;
-            color: #8b93a6;
-            margin-top: 8px;
+        .looking-info a:hover {
+            text-decoration: underline;
         }
 
         /* NOTIFICATION BADGE */
@@ -1951,6 +1899,29 @@
                 </div>
             </div>
 
+            <!-- ========== БЛОК: ИЩУ КЕНТОВ (В САМОМ ВЕРХУ) ========== -->
+            <div class="recommended-section" id="recommendedSection" style="display: none;">
+                <div class="recommended-header">
+                    <h3>
+                        <i class="fas fa-user-friends"></i>
+                        👥 ищу кентов
+                        <span class="recommended-badge" id="recommendedCount">0</span>
+                    </h3>
+                    <a href="#" class="recommended-show-more" id="showMoreBtn" style="display: none;">
+                        все <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="recommended-list" id="recommendedList">
+                    <div class="loader"></div>
+                </div>
+            </div>
+
+            <!-- Информация о настройке для незалогиненных -->
+            <div class="looking-info" id="lookingInfo" style="display: none;">
+                <i class="fas fa-info-circle"></i>
+                <span>Чтобы появиться в этом списке, включите опцию <strong>"я ищу кентов"</strong> в <a href="your_account.html">настройках профиля</a></span>
+            </div>
+
             <!-- Stories -->
             <div class="stories-container">
                 <div class="stories-scroll">
@@ -1984,35 +1955,6 @@
                 <div class="notification-badge-quick">темки</div>
                 <div class="notification-badge-quick">сливы</div>
                 <div class="notification-badge-quick">новости</div>
-            </div>
-
-            <!-- TOGGLE "ИЩУ КЕНТОВ" -->
-            <div class="looking-toggle" id="lookingToggleContainer" style="display: none;">
-                <div class="looking-toggle-label">
-                    <i class="fas fa-user-friends"></i>
-                    <span>я ищу кентов</span>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="lookingForFriendsToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-
-            <!-- ========== БЛОК: РЕКОМЕНДУЕМЫЕ АККАУНТЫ ========== -->
-            <div class="recommended-section" id="recommendedSection" style="display: none;">
-                <div class="recommended-header">
-                    <h3>
-                        <i class="fas fa-user-friends"></i>
-                        ищу кентов
-                        <span class="recommended-badge" id="recommendedCount">0</span>
-                    </h3>
-                    <a href="#" class="recommended-show-more" id="showMoreBtn" style="display: none;">
-                        все <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-                <div class="recommended-list" id="recommendedList">
-                    <div class="loader"></div>
-                </div>
             </div>
 
             <!-- CREATE POLL SECTION -->
@@ -2166,7 +2108,6 @@
         let userIp = null;
         let comments = [];
         let lastCommentTime = 0;
-        let currentUser = null;
         let primeUser = null;
         let threadsCount = 0;
         let polls = [];
@@ -2178,7 +2119,7 @@
         let unreadCount = 0;
         let currentFilter = 'all';
         let notificationRealtime = null;
-        let friendRequestsCache = new Map(); // Кеш статусов дружбы
+        let friendRequestsCache = new Map();
 
         // Загружаем данные пользователя из localStorage
         const userId = localStorage.getItem('userId');
@@ -2219,9 +2160,8 @@
                     </a>
                 `;
                 
-                // Показать toggle для "ищу кентов"
-                document.getElementById('lookingToggleContainer').style.display = 'flex';
-                loadLookingForFriendsStatus();
+                // Скрываем информационный блок для незалогиненных
+                document.getElementById('lookingInfo').style.display = 'none';
             } else {
                 authDisplayName.textContent = 'Гость';
                 authAvatar.src = 'https://i.pravatar.cc/300';
@@ -2229,55 +2169,8 @@
                     <a href="login.html" class="auth-btn">войти</a>
                     <a href="register.html" class="auth-btn primary">регистрация</a>
                 `;
-                document.getElementById('lookingToggleContainer').style.display = 'none';
-            }
-        }
-
-        // Загрузка статуса "ищу кентов" для текущего пользователя
-        async function loadLookingForFriendsStatus() {
-            if (!userId) return;
-            
-            try {
-                const { data, error } = await supabaseClient
-                    .from('users')
-                    .select('looking_for_friends')
-                    .eq('id', parseInt(userId))
-                    .single();
-                
-                if (error) throw error;
-                
-                const toggle = document.getElementById('lookingForFriendsToggle');
-                if (toggle) {
-                    toggle.checked = data?.looking_for_friends || false;
-                }
-            } catch (error) {
-                console.error('Ошибка загрузки статуса:', error);
-            }
-        }
-
-        // Обновление статуса "ищу кентов"
-        async function updateLookingForFriendsStatus(value) {
-            if (!userId) return;
-            
-            try {
-                const { error } = await supabaseClient
-                    .from('users')
-                    .update({ looking_for_friends: value })
-                    .eq('id', parseInt(userId));
-                
-                if (error) throw error;
-                
-                showMessage(value ? '✅ вы появитесь в поиске кентов' : '❌ вы скрыты из поиска кентов', 'success');
-                
-                // Перезагружаем рекомендации
-                await loadRecommendedUsers();
-                
-            } catch (error) {
-                console.error('Ошибка обновления статуса:', error);
-                showMessage('ошибка: ' + error.message, 'error');
-                // Возвращаем переключатель в исходное состояние
-                const toggle = document.getElementById('lookingForFriendsToggle');
-                if (toggle) toggle.checked = !value;
+                // Показываем информационный блок для гостей
+                document.getElementById('lookingInfo').style.display = 'flex';
             }
         }
 
@@ -2325,7 +2218,6 @@
                 for (const user of data) {
                     const name = user.display_name || user.nickname;
                     const avatar = user.avatar_url || 'https://i.pravatar.cc/300';
-                    const friendshipStatus = await checkFriendshipStatus(parseInt(user.id));
                     
                     html += `
                         <div class="search-result-item" onclick="goToUserProfile(${user.id})">
@@ -2361,7 +2253,6 @@
         // ФУНКЦИИ ДЛЯ ДРУЗЕЙ
         // ============================================
         
-        // Проверка статуса дружбы между текущим пользователем и указанным
         async function checkFriendshipStatus(targetUserId) {
             if (!userId) return null;
             
@@ -2374,7 +2265,6 @@
                 const currentUserId = parseInt(userId);
                 const friendId = parseInt(targetUserId);
                 
-                // Проверяем, есть ли уже запрос или дружба
                 const { data, error } = await supabaseClient
                     .from('friends')
                     .select('status')
@@ -2388,7 +2278,6 @@
                     if (data.status === 'accepted') {
                         status = 'friends';
                     } else if (data.status === 'pending') {
-                        // Определяем, кто отправил запрос
                         status = 'pending_sent';
                     }
                 }
@@ -2402,7 +2291,6 @@
             }
         }
         
-        // Отправка запроса в друзья
         window.sendFriendRequest = async function(friendId, friendName, buttonElement) {
             if (!userId || !userNickname) {
                 showMessage('войдите, чтобы добавить в друзья', 'error');
@@ -2418,7 +2306,6 @@
                 return;
             }
             
-            // Проверяем текущий статус
             const status = await checkFriendshipStatus(targetId);
             if (status === 'friends') {
                 showMessage('этот пользователь уже в друзьях', 'error');
@@ -2441,20 +2328,16 @@
                 
                 if (error) throw error;
                 
-                // Обновляем кеш
                 friendRequestsCache.set(`${userId}-${friendId}`, 'pending_sent');
                 
                 showMessage(`✅ запрос дружбы отправлен ${friendName}`, 'success');
                 
-                // Отправляем уведомление
                 await sendFriendRequestNotification(targetId, userNickname);
                 
-                // Обновляем кнопку, если передан элемент
                 if (buttonElement) {
                     updateFriendButtonUI(buttonElement, 'pending_sent');
                 }
                 
-                // Перезагружаем рекомендации для обновления кнопок
                 await loadRecommendedUsers();
                 
             } catch (error) {
@@ -2463,7 +2346,6 @@
             }
         };
         
-        // Обновление UI кнопки в зависимости от статуса
         function updateFriendButtonUI(button, status) {
             if (status === 'friends') {
                 button.innerHTML = '<i class="fas fa-check"></i> друзья';
@@ -2951,7 +2833,6 @@
                 const initial = displayName.charAt(0).toUpperCase();
                 const statusText = user.status && user.status !== 'Статус не установлен' ? user.status : null;
                 
-                // Проверяем статус дружбы
                 let friendshipStatus = null;
                 let buttonHtml = '';
                 
@@ -3114,11 +2995,6 @@
         document.getElementById('showMoreBtn')?.addEventListener('click', (e) => {
             e.preventDefault();
             showAllRecommendations();
-        });
-        
-        // Обработчик переключателя "ищу кентов"
-        document.getElementById('lookingForFriendsToggle')?.addEventListener('change', (e) => {
-            updateLookingForFriendsStatus(e.target.checked);
         });
 
         // ============================================
