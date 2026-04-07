@@ -368,101 +368,6 @@
             line-height: 1.4;
         }
 
-        /* STORIES */
-        .stories-container {
-            margin-bottom: 20px;
-        }
-
-        .stories-scroll {
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            padding: 4px 0;
-        }
-
-        .stories-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .story-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            min-width: 64px;
-            cursor: pointer;
-        }
-
-        .story-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 20px;
-            background: #ffffff;
-            box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0,0,0,0.02);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #2e3440;
-            font-weight: 500;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            transition: transform 0.2s;
-        }
-
-        .story-item:hover .story-avatar {
-            transform: translateY(-2px);
-        }
-
-        .story-name {
-            font-size: 0.65rem;
-            font-weight: 500;
-            color: #8b93a6;
-        }
-
-        /* QUICK NOTIFICATIONS */
-        .quick-notifications {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            margin-bottom: 20px;
-            padding: 4px 0;
-        }
-
-        .quick-notifications::-webkit-scrollbar {
-            display: none;
-        }
-
-        .notification-badge-quick {
-            background: #ffffff;
-            border-radius: 30px;
-            padding: 8px 16px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #1a1e2b;
-            white-space: nowrap;
-            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .notification-badge-quick:hover {
-            background: #f0f2f5;
-            transform: translateY(-1px);
-        }
-
-        .notification-badge-quick.highlight {
-            background: #2e3440;
-            color: white;
-        }
-
-        .notification-badge-quick.highlight:hover {
-            background: #1a1e2b;
-        }
-
         /* ========== БЛОК: ИЩУ КЕНТОВ (В ВЕРХНЕЙ ЧАСТИ) ========== */
         .recommended-section {
             background: #ffffff;
@@ -695,6 +600,34 @@
             color: #b5bcc8;
         }
 
+        /* INFO БЛОК О НАСТРОЙКЕ */
+        .looking-info {
+            background: #f0f2f5;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: #1a1e2b;
+        }
+
+        .looking-info i {
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+
+        .looking-info a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .looking-info a:hover {
+            text-decoration: underline;
+        }
+
         /* Модалка всех рекомендаций */
         .recommended-modal {
             position: fixed;
@@ -757,32 +690,99 @@
             gap: 12px;
         }
 
-        /* INFO БЛОК О НАСТРОЙКЕ */
-        .looking-info {
-            background: #f0f2f5;
-            border-radius: 16px;
-            padding: 12px 16px;
+        /* STORIES */
+        .stories-container {
             margin-bottom: 20px;
+        }
+
+        .stories-scroll {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 4px 0;
+        }
+
+        .stories-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .story-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            min-width: 64px;
+            cursor: pointer;
+        }
+
+        .story-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            background: #ffffff;
+            box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0,0,0,0.02);
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            color: #2e3440;
+            font-weight: 500;
             font-size: 0.8rem;
+            text-transform: uppercase;
+            transition: transform 0.2s;
+        }
+
+        .story-item:hover .story-avatar {
+            transform: translateY(-2px);
+        }
+
+        .story-name {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: #8b93a6;
+        }
+
+        /* QUICK NOTIFICATIONS */
+        .quick-notifications {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            margin-bottom: 20px;
+            padding: 4px 0;
+        }
+
+        .quick-notifications::-webkit-scrollbar {
+            display: none;
+        }
+
+        .notification-badge-quick {
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            font-weight: 500;
             color: #1a1e2b;
+            white-space: nowrap;
+            box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: all 0.2s;
+            cursor: pointer;
         }
 
-        .looking-info i {
-            font-size: 1.2rem;
-            color: #667eea;
+        .notification-badge-quick:hover {
+            background: #f0f2f5;
+            transform: translateY(-1px);
         }
 
-        .looking-info a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
+        .notification-badge-quick.highlight {
+            background: #2e3440;
+            color: white;
         }
 
-        .looking-info a:hover {
-            text-decoration: underline;
+        .notification-badge-quick.highlight:hover {
+            background: #1a1e2b;
         }
 
         /* NOTIFICATION BADGE */
@@ -1899,7 +1899,7 @@
                 </div>
             </div>
 
-            <!-- ========== БЛОК: ИЩУ КЕНТОВ (В САМОМ ВЕРХУ) ========== -->
+            <!-- ========== БЛОК: ИЩУ КЕНТОВ (В ВЕРХНЕЙ ЧАСТИ) ========== -->
             <div class="recommended-section" id="recommendedSection" style="display: none;">
                 <div class="recommended-header">
                     <h3>
