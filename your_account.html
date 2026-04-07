@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ... все стили без изменений ... */
         * {
             margin: 0;
             padding: 0;
@@ -336,6 +335,93 @@
 
         .change-avatar-btn:hover {
             background: #e4e6e9;
+        }
+
+        /* LOOKING FOR FRIENDS TOGGLE */
+        .looking-toggle-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .looking-toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .looking-toggle-label i {
+            font-size: 1.4rem;
+            color: #667eea;
+        }
+
+        .looking-toggle-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .looking-toggle-text .title {
+            font-weight: 600;
+            color: #1a1e2b;
+            font-size: 1rem;
+        }
+
+        .looking-toggle-text .subtitle {
+            font-size: 0.7rem;
+            color: #8b93a6;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
         }
 
         /* STATUS SECTION */
@@ -883,40 +969,49 @@
                 flex-wrap: wrap;
                 justify-content: center;
             }
-        }
-        /* Логотип */
-.logo-img {
-    height: 36px;
-    width: auto;
-    object-fit: contain;
-}
 
-@media (max-width: 600px) {
-    .logo-img {
-        height: 28px;
-    }
-}
-/* 👆 Здесь только одна закрывающая скобка */
+            .looking-toggle-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .looking-toggle-label {
+                justify-content: center;
+            }
+        }
+
+        .logo-img {
+            height: 36px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        @media (max-width: 600px) {
+            .logo-img {
+                height: 28px;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div class="main-content">
-<!-- Header -->
-<div class="header">
-    <div class="header-content">
-        <div class="logo">
-            <img src="top_logotype.png" alt="Школа 62" class="logo-img">
-            <h1>стена</h1>
-        </div>
-        <div class="header-icons">
-            <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="header-icon">
-                <i class="far fa-user"></i>
-            </a>
-        </div>
-    </div>
-</div>
+            <!-- Header -->
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <img src="top_logotype.png" alt="Школа 62" class="logo-img">
+                        <h1>профиль</h1>
+                    </div>
+                    <div class="header-icons">
+                        <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="header-icon">
+                            <i class="far fa-user"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
             <!-- User Info Bar -->
             <div class="user-info-bar" id="userInfoBar">
@@ -972,6 +1067,21 @@
                         <i class="far fa-graduation-cap"></i> сменить класс
                     </button>
                 </div>
+            </div>
+
+            <!-- ========== НОВЫЙ БЛОК: ИЩУ КЕНТОВ (TOGGLE) ========== -->
+            <div class="looking-toggle-card" id="lookingToggleCard">
+                <div class="looking-toggle-label">
+                    <i class="fas fa-user-friends"></i>
+                    <div class="looking-toggle-text">
+                        <div class="title">🤝 я ищу кентов</div>
+                        <div class="subtitle">другие пользователи смогут найти вас в списке</div>
+                    </div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="lookingForFriendsToggle">
+                    <span class="toggle-slider"></span>
+                </label>
             </div>
 
             <!-- FRIENDS SECTION -->
@@ -1034,13 +1144,13 @@
                 </div>
             </div>
             
-    <!-- В нижней части профиля -->
-<div style="text-align: center; margin-top: 20px; padding: 10px;">
-    <a href="https://ggfh-becouse.github.io/school62-vote/rules.html" 
-       style="color: #8b93a6; font-size: 0.75rem; text-decoration: none;">
-        <i class="fas fa-scroll"></i> правила сообщества
-    </a>
-</div>
+            <!-- Правила -->
+            <div style="text-align: center; margin-top: 20px; padding: 10px;">
+                <a href="https://ggfh-becouse.github.io/school62-vote/rules.html" 
+                   style="color: #8b93a6; font-size: 0.75rem; text-decoration: none;">
+                    <i class="fas fa-scroll"></i> правила сообщества
+                </a>
+            </div>
         </div>
     </div>
 
@@ -1093,7 +1203,7 @@
         ];
 
         // ============================================
-        // БАЗОВЫЕ ФУНКЦИИ (ОПРЕДЕЛЯЕМ ПЕРВЫМИ)
+        // БАЗОВЫЕ ФУНКЦИИ
         // ============================================
         function showMessage(text, type) {
             const container = document.getElementById('messageContainer');
@@ -1109,6 +1219,55 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        // ============================================
+        // ФУНКЦИИ ДЛЯ "ИЩУ КЕНТОВ"
+        // ============================================
+        async function loadLookingForFriendsStatus() {
+            if (!currentUser) return;
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('users')
+                    .select('looking_for_friends')
+                    .eq('id', currentUser.id)
+                    .single();
+                
+                if (error) throw error;
+                
+                const toggle = document.getElementById('lookingForFriendsToggle');
+                if (toggle) {
+                    toggle.checked = data?.looking_for_friends || false;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки статуса:', error);
+            }
+        }
+
+        async function updateLookingForFriendsStatus(value) {
+            if (!currentUser) return;
+            
+            try {
+                const { error } = await supabaseClient
+                    .from('users')
+                    .update({ looking_for_friends: value })
+                    .eq('id', currentUser.id);
+                
+                if (error) throw error;
+                
+                showMessage(value ? '✅ вы появитесь в поиске кентов' : '❌ вы скрыты из поиска кентов', 'success');
+                
+                // Обновляем локальное состояние
+                currentUser.looking_for_friends = value;
+                
+            } catch (error) {
+                console.error('Ошибка обновления статуса:', error);
+                showMessage('ошибка: ' + error.message, 'error');
+                // Возвращаем переключатель в исходное состояние
+                const toggle = document.getElementById('lookingForFriendsToggle');
+                if (toggle) toggle.checked = !value;
+            }
         }
 
         // ============================================
@@ -1154,6 +1313,7 @@
                 status: currentUser.status,
                 is_prime: currentUser.is_prime,
                 display_name: currentUser.display_name || currentUser.nickname,
+                looking_for_friends: currentUser.looking_for_friends,
                 frame: currentFrame,
                 stickers: currentStickers.map(s => ({
                     id: s.id,
@@ -1438,7 +1598,6 @@
             const friendIdNum = parseInt(friendId);
 
             try {
-                // Пытаемся удалить связь где текущий пользователь - инициатор
                 const { error: error1 } = await supabaseClient
                     .from('friends')
                     .delete()
@@ -1446,7 +1605,6 @@
                     .eq('friend_id', friendIdNum)
                     .eq('status', 'accepted');
 
-                // Если первая попытка не удалась, пробуем обратную связь
                 if (error1 && error1.code === 'PGRST116') {
                     const { error: error2 } = await supabaseClient
                         .from('friends')
@@ -1473,7 +1631,6 @@
             try {
                 const userId = parseInt(currentUser.id);
                 
-                // Загружаем друзей (где пользователь - инициатор)
                 const { data: sentFriends, error: sentError } = await supabaseClient
                     .from('friends')
                     .select(`
@@ -1493,7 +1650,6 @@
 
                 if (sentError) throw sentError;
 
-                // Загружаем друзей (где пользователь - получатель)
                 const { data: receivedFriends, error: receivedError } = await supabaseClient
                     .from('friends')
                     .select(`
@@ -1513,7 +1669,6 @@
 
                 if (receivedError) throw receivedError;
 
-                // Объединяем обоих друзей
                 friends = [
                     ...(sentFriends?.map(f => f.users) || []),
                     ...(receivedFriends?.map(f => f.users) || [])
@@ -1521,7 +1676,6 @@
                 
                 document.getElementById('friendsCount').textContent = friends.length;
 
-                // Загружаем входящие запросы
                 const { data: requestsData, error: requestsError } = await supabaseClient
                     .from('friends')
                     .select(`
@@ -1542,7 +1696,6 @@
 
                 if (requestsError) throw requestsError;
 
-                // Загружаем отправленные запросы
                 const { data: sentData, error: sentError2 } = await supabaseClient
                     .from('friends')
                     .select(`
@@ -1573,7 +1726,6 @@
                     user: s.users
                 })) || [];
 
-                // Отображаем активную вкладку
                 switchFriendsTab('friends');
 
             } catch (error) {
@@ -1872,7 +2024,8 @@
                 
                 await Promise.all([
                     loadStickers(),
-                    loadFriends()
+                    loadFriends(),
+                    loadLookingForFriendsStatus()
                 ]);
                 
                 saveProfileToLocalStorage();
@@ -1898,6 +2051,14 @@
                 localStorage.clear();
                 window.location.href = 'https://ggfh-becouse.github.io/school62-vote/login.html';
             });
+            
+            // Обработчик для переключателя "ищу кентов"
+            const lookingToggle = document.getElementById('lookingForFriendsToggle');
+            if (lookingToggle) {
+                lookingToggle.addEventListener('change', (e) => {
+                    updateLookingForFriendsStatus(e.target.checked);
+                });
+            }
 
             // Enter для полей
             document.getElementById('stickerUrlInput').addEventListener('keypress', (e) => {
