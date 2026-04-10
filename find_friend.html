@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>krg62 | найди кентов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+/* БАЗОВЫЕ СТИЛИ (из index.html) */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 32px 0; }
+.container { max-width: 600px; width: 100%; background: #f8f9fc; position: relative; padding: 0 16px; }
+.main-content { display: block; padding-bottom: 90px; }
+
+/* ШАПКА */
+.header { background: #ffffff; border-radius: 24px; padding: 16px 20px; margin: 8px 0 20px 0; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.02); display: flex; align-items: center; gap: 15px; }
+.back-btn { background: #f0f2f5; border: none; width: 36px; height: 36px; border-radius: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #1a1e2b; text-decoration: none; transition: background 0.2s; }
+.back-btn:hover { background: #e4e6e9; }
+.header-title { font-size: 1.1rem; font-weight: 600; color: #1a1e2b; }
+
+/* ПОИСК */
+.search-container { margin-bottom: 24px; }
+.search-bar { background: #ffffff; border-radius: 40px; padding: 12px 20px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 8px -4px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); }
+.search-icon { color: #8b93a6; font-size: 1rem; }
+.search-input { flex: 1; border: none; font-size: 0.95rem; background: transparent; outline: none; }
+.search-input::placeholder { color: #b5bcc8; font-weight: 300; }
+
+/* СПИСОК КЕНТОВ */
+.friends-list-container { background: #ffffff; border-radius: 24px; padding: 20px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); min-height: 300px; }
+.friend-suggestion-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fc; border-radius: 18px; margin-bottom: 12px; border: 1px solid rgba(0,0,0,0.02); transition: transform 0.2s; }
+.friend-suggestion-item:last-child { margin-bottom: 0; }
+.suggestion-avatar { width: 52px; height: 52px; border-radius: 16px; overflow: hidden; border: 2px solid rgba(0,0,0,0.05); flex-shrink: 0; cursor: pointer; }
+.suggestion-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.suggestion-info { flex: 1; min-width: 0; }
+.suggestion-name { font-weight: 600; color: #1a1e2b; font-size: 0.95rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; cursor: pointer; }
+.suggestion-meta { font-size: 0.75rem; color: #8b93a6; display: flex; flex-direction: column; gap: 2px; }
+.suggestion-class { color: #4a6fa5; font-weight: 500; }
+.suggestion-status { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; font-style: italic; }
+
+.add-friend-btn { background: #2e3440; color: white; border: none; padding: 10px 18px; border-radius: 30px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+.add-friend-btn:hover { background: #1a1e2b; transform: scale(1.03); }
+.add-friend-btn.sent { background: #f0f2f5; color: #8b93a6; cursor: default; }
+.add-friend-btn.sent:hover { transform: none; background: #f0f2f5; }
+
+.loader { border: 2px solid #f0f2f5; border-top: 2px solid #2e3440; border-radius: 50%; width: 28px; height: 28px; animation: spin 1s linear infinite; margin: 40px auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.empty-state { text-align: center; padding: 40px 20px; color: #8b93a6; font-size: 0.95rem; }
+
+/* УВЕДОМЛЕНИЯ (ТОСТЫ) */
+.message { position: fixed; top: 20px; right: 20px; padding: 12px 20px; border-radius: 30px; color: white; font-weight: 500; font-size: 0.85rem; z-index: 10002; animation: slideIn 0.2s; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.15); }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.message.success { background: #2e3440; }
+.message.error { background: #c0392b; }
+
+/* НИЖНЯЯ НАВИГАЦИЯ */
+.bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); max-width: 560px; width: calc(100% - 32px); border-radius: 40px; padding: 6px; display: flex; justify-content: space-around; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.02); z-index: 1000; backdrop-filter: blur(10px); background: rgba(255,255,255,0.95); }
+.nav-item-bottom { display: flex; flex-direction: column; align-items: center; color: #8b93a6; text-decoration: none; font-size: 0.6rem; font-weight: 500; flex: 1; padding: 8px 0; border-radius: 30px; transition: all 0.2s; }
+.nav-item-bottom.active { background: #f0f2f5; color: #2e3440; }
+.nav-item-bottom:hover { color: #2e3440; background: #f8f9fc; }
+.nav-icon-bottom { font-size: 1.2rem; margin-bottom: 2px; }
+
+@media (max-width: 600px) {
+    body { padding: 16px 0; }
+    .friend-suggestion-item { flex-wrap: wrap; }
+    .add-friend-btn { width: 100%; margin-top: 8px; }
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            
+            <div class="header">
+                <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+                <div class="header-title">🤝 Найди кентов</div>
+            </div>
+
+            <div class="search-container">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="filterInput" placeholder="поиск по имени или классу..." autocomplete="off">
+                </div>
+            </div>
+
+            <div class="friends-list-container" id="friendsListContainer">
+                <div class="loader"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item-bottom">
+            <i class="fas fa-home nav-icon-bottom"></i><span>главная</span>
+        </a>
+        <a href="votes.html" class="nav-item-bottom">
+            <i class="fas fa-chart-bar nav-icon-bottom"></i><span>голосования</span>
+        </a>
+        <a href="threads.html" class="nav-item-bottom">
+            <i class="fas fa-comment nav-icon-bottom"></i><span>темки</span>
+        </a>
+        <a href="slivy.html" class="nav-item-bottom">
+            <i class="fas fa-image nav-icon-bottom"></i><span>сливы</span>
+        </a>
+        <a href="your_account.html" class="nav-item-bottom">
+            <i class="fas fa-user nav-icon-bottom"></i><span>аккаунт</span>
+        </a>
+    </nav>
+
+    <div id="messageContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Твои доступы к Supabase (как в index.html)
+        const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const userId = localStorage.getItem('userId');
+        let allCandidates = []; // Здесь будем хранить всех найденных юзеров
+        let sentFriendRequests = {}; // Отправленные заявки
+
+        // Вспомогательные функции
+        function showMessage(text, type) {
+            const container = document.getElementById('messageContainer');
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            container.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function goToUserProfile(id) {
+            window.location.href = `check_account.html?id=${id}`;
+        }
+
+        // Основная загрузка данных
+        async function loadAllFriends() {
+            const container = document.getElementById('friendsListContainer');
+
+            try {
+                // 1. Загружаем всех, кто ищет друзей
+                let query = supabaseClient
+                    .from('users')
+                    .select('id, nickname, display_name, class, avatar_url, is_prime, status')
+                    .eq('looking_for_friends', true)
+                    .order('created_at', { ascending: false });
+
+                // Не показываем самого себя
+                if (userId) query = query.neq('id', parseInt(userId));
+
+                const { data, error } = await query;
+                if (error) throw error;
+
+                allCandidates = data || [];
+
+                // 2. Если юзер залогинен, проверяем кому он уже кинул заявки
+                if (userId) {
+                    const { data: sent } = await supabaseClient
+                        .from('friends')
+                        .select('friend_id')
+                        .eq('user_id', parseInt(userId));
+                    
+                    (sent || []).forEach(s => { sentFriendRequests[s.friend_id] = true; });
+                }
+
+                renderList(allCandidates);
+
+            } catch (e) {
+                console.error('Ошибка загрузки:', e);
+                container.innerHTML = '<div class="empty-state">❌ Ошибка загрузки списка</div>';
+            }
+        }
+
+        // Отрисовка списка
+        function renderList(usersArray) {
+            const container = document.getElementById('friendsListContainer');
+
+            if (usersArray.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-ghost" style="font-size: 40px; margin-bottom: 15px; opacity: 0.5;"></i><br>
+                        Никого не найдено
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = usersArray.map(user => {
+                const alreadySent = sentFriendRequests[user.id];
+                const displayName = escapeHtml(user.display_name || user.nickname);
+                const userClass = escapeHtml(user.class || 'Класс не указан');
+                const userStatus = user.status ? `"${escapeHtml(user.status)}"` : 'Нет статуса';
+                const avatar = escapeHtml(user.avatar_url || 'https://i.pravatar.cc/300');
+
+                return `
+                    <div class="friend-suggestion-item">
+                        <div class="suggestion-avatar" onclick="goToUserProfile(${user.id})">
+                            <img src="${avatar}" alt="" onerror="this.src='https://i.pravatar.cc/300'">
+                        </div>
+                        <div class="suggestion-info">
+                            <div class="suggestion-name" onclick="goToUserProfile(${user.id})">
+                                ${displayName}
+                                ${user.is_prime ? '<span style="background:#f1c40f;color:#1a1e2b;padding:1px 6px;border-radius:20px;font-size:0.6rem;font-weight:600;margin-left:4px;">prime</span>' : ''}
+                            </div>
+                            <div class="suggestion-meta">
+                                <span class="suggestion-class"><i class="fas fa-user-graduate"></i> ${userClass}</span>
+                                <span class="suggestion-status">${userStatus}</span>
+                            </div>
+                        </div>
+                        <button class="add-friend-btn ${alreadySent ? 'sent' : ''}" 
+                                onclick="addFriend(${user.id}, this)" 
+                                ${alreadySent ? 'disabled' : ''}>
+                            ${alreadySent ? '<i class="fas fa-check"></i> отправлено' : '<i class="fas fa-user-plus"></i> добавить'}
+                        </button>
+                    </div>`;
+            }).join('');
+        }
+
+        // Логика добавления в друзья
+        window.addFriend = async function(targetId, btn) {
+            if (!userId) {
+                showMessage('Нужно войти в аккаунт', 'error');
+                setTimeout(() => window.location.href = 'login.html', 1500);
+                return;
+            }
+            if (sentFriendRequests[targetId]) return;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+            try {
+                const { error } = await supabaseClient
+                    .from('friends')
+                    .insert({ user_id: parseInt(userId), friend_id: targetId, status: 'pending' });
+
+                if (error) {
+                    if (error.code === '23505') { // Уникальное ограничение (уже отправлено)
+                        sentFriendRequests[targetId] = true;
+                        btn.innerHTML = '<i class="fas fa-check"></i> отправлено';
+                        btn.classList.add('sent');
+                        return;
+                    }
+                    throw error;
+                }
+
+                sentFriendRequests[targetId] = true;
+                btn.innerHTML = '<i class="fas fa-check"></i> отправлено';
+                btn.classList.add('sent');
+                showMessage('✅ Заявка отправлена!', 'success');
+
+            } catch (e) {
+                console.error('Ошибка:', e);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-user-plus"></i> добавить';
+                showMessage('Ошибка: ' + e.message, 'error');
+            }
+        };
+
+        // Логика локального поиска по списку
+        document.getElementById('filterInput').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) {
+                renderList(allCandidates);
+                return;
+            }
+            
+            const filtered = allCandidates.filter(user => {
+                const name = (user.display_name || user.nickname || '').toLowerCase();
+                const uClass = (user.class || '').toLowerCase();
+                return name.includes(query) || uClass.includes(query);
+            });
+            
+            renderList(filtered);
+        });
+
+        // Запуск
+        loadAllFriends();
+    </script>
+</body>
+</html>
