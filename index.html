@@ -9,353 +9,201 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-
 body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 32px 0; }
-
 .container { max-width: 600px; width: 100%; background: #f8f9fc; position: relative; padding: 0 16px; }
-
 .main-content { display: block; padding-bottom: 90px; }
-
 .header { background: #ffffff; border-radius: 24px; padding: 16px 20px; margin: 8px 0 16px 0; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.02); }
-
 .header-content { display: flex; justify-content: space-between; align-items: center; }
-
 .logo { display: flex; align-items: center; gap: 8px; }
-
 .logo-img { height: 36px; width: auto; object-fit: contain; }
-
 .logo h1 { font-size: 1.4rem; font-weight: 600; color: #1a1e2b; letter-spacing: -0.5px; }
-
 .header-icons { display: flex; gap: 16px; align-items: center; }
-
 .header-icon { font-size: 1.2rem; color: #8b93a6; transition: color 0.2s; cursor: pointer; text-decoration: none; position: relative; }
-
 .header-icon:hover { color: #2e3440; }
-
 @media (max-width: 600px) { .logo-img { height: 28px; } }
-
 .search-container { position: relative; margin-bottom: 20px; }
-
 .search-bar { background: #ffffff; border-radius: 40px; padding: 8px 20px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 8px -4px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); }
-
 .search-icon { color: #8b93a6; font-size: 1rem; }
-
 .search-input { flex: 1; border: none; padding: 12px 0; font-size: 0.95rem; background: transparent; outline: none; }
-
 .search-input::placeholder { color: #b5bcc8; font-weight: 300; }
-
 .search-results { position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border-radius: 20px; margin-top: 8px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.02); z-index: 1000; max-height: 300px; overflow-y: auto; display: none; }
-
 .search-results.active { display: block; }
-
 .search-result-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgba(0,0,0,0.02); cursor: pointer; transition: background 0.2s; }
-
 .search-result-item:hover { background: #f8f9fc; }
-
 .search-result-item:last-child { border-bottom: none; }
-
 .result-avatar { width: 40px; height: 40px; border-radius: 12px; overflow: hidden; border: 2px solid rgba(0,0,0,0.05); }
-
 .result-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
 .result-info { flex: 1; }
-
 .result-name { font-weight: 600; color: #1a1e2b; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
-
 .result-class { font-size: 0.7rem; color: #8b93a6; display: flex; align-items: center; gap: 4px; }
-
 .result-badge { background: #f1c40f; color: #1a1e2b; padding: 2px 6px; border-radius: 30px; font-size: 0.6rem; font-weight: 600; }
-
 .no-results { padding: 20px; text-align: center; color: #8b93a6; font-size: 0.9rem; }
-
 .auth-status-bar { background: #ffffff; border-radius: 40px; padding: 12px 20px; margin-bottom: 20px; box-shadow: 0 4px 8px -4px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); display: flex; align-items: center; justify-content: space-between; animation: slideDown 0.3s; }
-
 @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
 .auth-info { display: flex; align-items: center; gap: 10px; }
-
 .auth-avatar { width: 32px; height: 32px; border-radius: 10px; overflow: hidden; border: 2px solid rgba(0,0,0,0.05); }
-
 .auth-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
 .auth-welcome { font-size: 0.9rem; color: #1a1e2b; font-weight: 500; }
-
-.auth-name { font-weight: 600; color: #2e3440; }
-
 .auth-badge { background: #f1c40f; color: #1a1e2b; padding: 2px 8px; border-radius: 30px; font-size: 0.65rem; font-weight: 600; margin-left: 6px; }
-
 .auth-buttons { display: flex; gap: 8px; }
-
 .auth-btn { background: #f0f2f5; border: none; padding: 8px 16px; border-radius: 30px; font-weight: 500; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; text-decoration: none; color: #1a1e2b; display: inline-flex; align-items: center; gap: 4px; }
-
 .auth-btn:hover { background: #e4e6e9; }
-
 .auth-btn.primary { background: #2e3440; color: white; }
-
 .auth-btn.primary:hover { background: #1a1e2b; }
-
 .important-notice { background: linear-gradient(135deg, #ff4d4d, #e63946); border-radius: 24px; padding: 16px 20px; margin-bottom: 20px; color: white; box-shadow: 0 10px 20px -5px rgba(230,57,70,0.4); animation: pulse 2s infinite; border: 1px solid rgba(255,255,255,0.2); }
-
 @keyframes pulse { 0% { box-shadow: 0 10px 20px -5px rgba(230,57,70,0.4); } 50% { box-shadow: 0 15px 30px -5px rgba(230,57,70,0.8); } 100% { box-shadow: 0 10px 20px -5px rgba(230,57,70,0.4); } }
-
 .notice-content { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-
 .notice-icon { font-size: 2rem; background: rgba(0,0,0,0.2); width: 50px; height: 50px; border-radius: 25px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-
 .notice-text { flex: 1; }
-
 .notice-title { font-weight: 700; font-size: 1rem; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-
 .notice-message { font-weight: 500; font-size: 0.9rem; opacity: 0.95; line-height: 1.4; }
-
 .stories-container { margin-bottom: 20px; }
-
 .stories-scroll { display: flex; gap: 16px; overflow-x: auto; scrollbar-width: none; padding: 4px 0; }
-
 .stories-scroll::-webkit-scrollbar { display: none; }
-
 .story-item { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 64px; cursor: pointer; }
-
 .story-avatar { width: 64px; height: 64px; border-radius: 20px; background: #ffffff; box-shadow: 0 8px 16px -8px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.02); display: flex; align-items: center; justify-content: center; color: #2e3440; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; transition: transform 0.2s; }
-
 .story-item:hover .story-avatar { transform: translateY(-2px); }
-
 .story-name { font-size: 0.65rem; font-weight: 500; color: #8b93a6; }
-
 .quick-notifications { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin-bottom: 20px; padding: 4px 0; }
-
 .quick-notifications::-webkit-scrollbar { display: none; }
-
 .notification-badge-quick { background: #ffffff; border-radius: 30px; padding: 8px 16px; font-size: 0.8rem; font-weight: 500; color: #1a1e2b; white-space: nowrap; box-shadow: 0 4px 8px -4px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); transition: all 0.2s; cursor: pointer; }
-
 .notification-badge-quick:hover { background: #f0f2f5; transform: translateY(-1px); }
-
 .notification-badge-quick.highlight { background: #2e3440; color: white; }
-
 .notification-badge { position: absolute; top: -5px; right: -8px; background: #e74c3c; color: white; font-size: 0.65rem; font-weight: 600; min-width: 18px; height: 18px; border-radius: 9px; display: flex; align-items: center; justify-content: center; padding: 0 4px; border: 2px solid #ffffff; }
-
 .notification-center { position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100vh; background: #ffffff; box-shadow: -5px 0 20px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 10000; display: flex; flex-direction: column; }
-
 .notification-center.active { right: 0; }
-
 .notification-header { padding: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
-
 .notification-header h2 { font-size: 1.2rem; font-weight: 600; color: #1a1e2b; display: flex; align-items: center; gap: 8px; }
-
 .notification-close { background: #f0f2f5; border: none; width: 36px; height: 36px; border-radius: 18px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-
 .notification-tabs { display: flex; gap: 8px; padding: 16px 20px; border-bottom: 1px solid rgba(0,0,0,0.05); overflow-x: auto; scrollbar-width: none; }
-
 .notification-tabs::-webkit-scrollbar { display: none; }
-
 .notification-tab { background: #f0f2f5; border: none; padding: 8px 16px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; color: #8b93a6; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
-
 .notification-tab.active { background: #2e3440; color: white; }
-
 .notification-list { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-
 .notification-item { background: #f8f9fc; border-radius: 18px; padding: 16px; border: 1px solid rgba(0,0,0,0.02); transition: all 0.2s; cursor: pointer; position: relative; }
-
 .notification-item.unread { border-left: 4px solid #2e3440; background: #ffffff; }
-
 .notification-item.urgent { border-left-color: #e74c3c; }
-
 .notification-item.urgent .notification-title { color: #e74c3c; }
-
 .notification-item.automatic { border-left-color: #3498db; }
-
 .notification-item.manual { border-left-color: #f1c40f; }
-
 .notification-header-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-
 .notification-title { font-weight: 600; color: #1a1e2b; font-size: 0.95rem; display: flex; align-items: center; gap: 6px; }
-
 .notification-type-badge { background: #f0f2f5; padding: 2px 8px; border-radius: 30px; font-size: 0.65rem; font-weight: 600; color: #8b93a6; }
-
 .notification-message { color: #1a1e2b; font-size: 0.9rem; line-height: 1.5; margin-bottom: 12px; }
-
 .notification-meta { display: flex; gap: 16px; color: #8b93a6; font-size: 0.7rem; }
-
 .notification-dot { width: 8px; height: 8px; border-radius: 4px; background: #2e3440; position: absolute; top: 16px; right: 16px; }
-
 .empty-notifications { text-align: center; padding: 40px 20px; color: #8b93a6; }
-
 .notification-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); z-index: 9999; display: none; }
-
 .notification-overlay.active { display: block; }
 
+/* РЕКОМЕНДАЦИИ КЕНТОВ */
+.find-friends-block { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 24px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); }
+.find-friends-hint { background: #f8f9fc; border-radius: 16px; padding: 12px 16px; font-size: 0.8rem; color: #8b93a6; margin-bottom: 16px; border: 1px solid rgba(0,0,0,0.02); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.find-friends-hint a { color: #2e3440; font-weight: 600; text-decoration: none; border-bottom: 1px solid #2e3440; }
+.friend-suggestion-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #f8f9fc; border-radius: 18px; margin-bottom: 10px; border: 1px solid rgba(0,0,0,0.02); transition: transform 0.2s; }
+.friend-suggestion-item:hover { transform: translateX(4px); }
+.friend-suggestion-item:last-child { margin-bottom: 0; }
+.suggestion-avatar { width: 48px; height: 48px; border-radius: 16px; overflow: hidden; border: 2px solid rgba(0,0,0,0.05); flex-shrink: 0; }
+.suggestion-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.suggestion-info { flex: 1; min-width: 0; }
+.suggestion-name { font-weight: 600; color: #1a1e2b; font-size: 0.95rem; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.suggestion-meta { font-size: 0.7rem; color: #8b93a6; display: flex; align-items: center; gap: 6px; }
+.suggestion-status { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
+.add-friend-btn { background: #2e3440; color: white; border: none; padding: 8px 16px; border-radius: 30px; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+.add-friend-btn:hover { background: #1a1e2b; transform: scale(1.03); }
+.add-friend-btn.sent { background: #f0f2f5; color: #8b93a6; cursor: default; }
+.add-friend-btn.sent:hover { transform: none; background: #f0f2f5; }
+
 .create-poll { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 24px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); }
-
 .create-poll h3 { font-size: 0.85rem; font-weight: 600; color: #8b93a6; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-
 .poll-input { width: 100%; padding: 14px 18px; border: 1px solid rgba(0,0,0,0.05); border-radius: 18px; font-size: 0.95rem; background: #f8f9fc; transition: border-color 0.2s; margin-bottom: 12px; }
-
 .poll-input:focus { outline: none; border-color: #2e3440; background: #ffffff; }
-
 .create-poll-btn { background: #2e3440; color: white; border: none; padding: 12px 20px; border-radius: 30px; font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; width: 100%; }
-
 .create-poll-btn:hover { background: #1a1e2b; }
-
 .create-poll-btn:disabled { background: #8b93a6; cursor: not-allowed; }
-
 .active-polls { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 24px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); }
-
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-
 .section-header h3 { font-size: 0.85rem; font-weight: 600; color: #8b93a6; text-transform: uppercase; letter-spacing: 0.5px; }
-
 .section-link { color: #2e3440; text-decoration: none; font-size: 0.8rem; font-weight: 500; border-bottom: 1px solid #2e3440; padding-bottom: 2px; }
-
 .poll-card { background: #f8f9fc; border-radius: 20px; padding: 16px; margin-bottom: 12px; border: 1px solid rgba(0,0,0,0.02); transition: transform 0.2s; }
-
 .poll-card:hover { transform: translateX(4px); }
-
 .poll-card.voted { opacity: 0.85; }
-
 .poll-question { font-weight: 600; font-size: 0.95rem; color: #1a1e2b; margin-bottom: 12px; }
-
-.poll-stats { display: flex; gap: 8px; margin-bottom: 12px; color: #8b93a6; font-size: 0.75rem; }
-
+.poll-stats { display: flex; gap: 8px; margin-bottom: 12px; color: #8b93a6; font-size: 0.75rem; flex-wrap: wrap; }
 .poll-options { display: flex; gap: 8px; }
-
 .poll-option { flex: 1; background: #ffffff; border: 1px solid rgba(0,0,0,0.05); border-radius: 40px; padding: 8px; text-align: center; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
-
 .poll-option:active { transform: scale(0.97); }
-
 .poll-option.yes { color: #27ae60; }
-
 .poll-option.yes:hover { background: #e8f5e9; border-color: #27ae60; }
-
 .poll-option.no { color: #e74c3c; }
-
 .poll-option.no:hover { background: #fdedec; border-color: #e74c3c; }
-
 .poll-option.voted-yes { background: #e8f5e9; border-color: #27ae60; color: #27ae60; font-weight: 600; cursor: default; }
-
 .poll-option.voted-no { background: #fdedec; border-color: #e74c3c; color: #e74c3c; font-weight: 600; cursor: default; }
-
 .poll-option.disabled { cursor: default; opacity: 0.7; }
-
 .poll-progress { margin-top: 8px; height: 6px; background: #f0f2f5; border-radius: 3px; overflow: hidden; }
-
 .progress-bar { height: 100%; border-radius: 3px; transition: width 0.3s; }
-
 .progress-bar.yes { background: linear-gradient(90deg, #27ae60, #2ecc71); }
-
 .progress-bar.no { background: linear-gradient(90deg, #e74c3c, #c0392b); }
-
 .stats-container { display: flex; gap: 12px; margin-bottom: 24px; }
-
 .stat-item { flex: 1; background: #ffffff; border-radius: 18px; padding: 14px; text-align: center; box-shadow: 0 4px 8px -4px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); transition: transform 0.2s; }
-
 .stat-item:hover { transform: translateY(-2px); }
-
 .stat-value { font-weight: 600; font-size: 1.4rem; color: #1a1e2b; line-height: 1; margin-bottom: 2px; }
-
 .stat-label { font-size: 0.65rem; color: #8b93a6; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
-
 .comments-section { background: #ffffff; border-radius: 24px; padding: 24px; margin-bottom: 24px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); }
-
 .comments-section h3 { font-size: 0.85rem; font-weight: 600; color: #8b93a6; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px; }
-
 .comment-form { margin-bottom: 24px; }
-
 .comment-input-group { display: flex; flex-direction: column; gap: 10px; }
-
 .comment-textarea { width: 100%; padding: 14px 18px; border-radius: 16px; font-size: 0.9rem; background: #f8f9fc; border: 1px solid rgba(0,0,0,0.02); transition: border-color 0.2s; }
-
 .comment-textarea:focus { outline: none; border-color: #2e3440; }
-
 .comment-submit { background: #2e3440; color: white; border: none; padding: 12px 24px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; width: fit-content; margin-top: 10px; transition: all 0.2s; }
-
 .comment-submit:hover { background: #1a1e2b; transform: translateY(-1px); }
-
 .comment-submit:disabled { background: #8b93a6; cursor: not-allowed; }
-
 .comments-list { display: flex; flex-direction: column; gap: 16px; max-height: 500px; overflow-y: auto; padding-right: 4px; }
-
 .comment-item { background: #f8f9fc; border-radius: 18px; padding: 16px; border: 1px solid rgba(0,0,0,0.02); transition: all 0.2s; position: relative; animation: fadeIn 0.3s; }
-
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
 .comment-item:hover { transform: translateX(4px); box-shadow: 0 4px 12px -4px rgba(0,0,0,0.1); }
-
 .comment-item.verified { border-left: 3px solid #4a6fa5; background: #f8fafc; }
-
 .comment-item.premium { border-left: 3px solid #f1c40f; background: #fcf9f0; }
-
 .comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-
 .comment-name { font-weight: 600; font-size: 0.9rem; color: #1a1e2b; display: flex; align-items: center; gap: 6px; }
-
 .comment-date { font-size: 0.65rem; color: #8b93a6; }
-
 .comment-message { font-size: 0.9rem; color: #1a1e2b; line-height: 1.5; }
-
 .comment-interactions { display: flex; gap: 16px; margin-top: 12px; padding-top: 8px; border-top: 1px solid rgba(0,0,0,0.03); }
-
 .interaction-btn { display: flex; align-items: center; gap: 6px; background: none; border: none; color: #8b93a6; font-size: 0.75rem; cursor: pointer; padding: 4px 8px; border-radius: 20px; transition: all 0.2s; }
-
 .interaction-btn:hover { background: #f0f2f5; color: #2e3440; }
-
 .interaction-btn.liked { color: #e74c3c; }
-
 .interaction-btn.disabled { cursor: default; opacity: 0.6; }
-
 .premium-badge { display: inline-flex; align-items: center; gap: 2px; background: #f1c40f; color: #1a1e2b; padding: 2px 8px; border-radius: 30px; font-size: 0.6rem; font-weight: 600; }
-
 .verified-badge { display: inline-flex; align-items: center; gap: 2px; background: #4a6fa5; color: white; padding: 2px 8px; border-radius: 30px; font-size: 0.6rem; font-weight: 600; }
-
 .bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); max-width: 560px; width: calc(100% - 32px); border-radius: 40px; padding: 6px; display: flex; justify-content: space-around; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.02); z-index: 1000; backdrop-filter: blur(10px); background: rgba(255,255,255,0.95); }
-
 .nav-item-bottom { display: flex; flex-direction: column; align-items: center; color: #8b93a6; text-decoration: none; font-size: 0.6rem; font-weight: 500; flex: 1; padding: 8px 0; border-radius: 30px; transition: all 0.2s; }
-
 .nav-item-bottom.active { background: #f0f2f5; color: #2e3440; }
-
 .nav-item-bottom:hover { color: #2e3440; background: #f8f9fc; }
-
 .nav-icon-bottom { font-size: 1.2rem; margin-bottom: 2px; }
-
 .suggest-button { position: fixed; bottom: 100px; right: 20px; width: 48px; height: 48px; border-radius: 24px; background: #ffffff; color: #2e3440; border: 1px solid rgba(0,0,0,0.02); font-size: 1.2rem; cursor: pointer; box-shadow: 0 8px 16px -6px rgba(0,0,0,0.1); z-index: 999; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-
 .suggest-button:hover { transform: translateY(-4px) scale(1.05); }
-
 .suggest-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); z-index: 10001; display: none; }
-
 .suggest-card { background: #ffffff; border-radius: 28px; max-width: 400px; width: 90%; margin: 80px auto; padding: 24px; box-shadow: 0 25px 35px -15px rgba(0,0,0,0.2); animation: modalSlide 0.3s; }
-
 @keyframes modalSlide { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-
 .suggest-card h3 { font-size: 1rem; font-weight: 600; color: #1a1e2b; margin-bottom: 16px; }
-
 .suggest-card select, .suggest-card input, .suggest-card textarea { width: 100%; padding: 12px 16px; border: 1px solid rgba(0,0,0,0.05); border-radius: 16px; margin-bottom: 10px; background: #f8f9fc; font-size: 0.9rem; transition: border-color 0.2s; }
-
 .suggest-card select:focus, .suggest-card input:focus, .suggest-card textarea:focus { outline: none; border-color: #2e3440; }
-
 .modal-buttons { display: flex; gap: 8px; margin-top: 16px; }
-
 .suggest-submit { flex: 2; background: #2e3440; color: white; border: none; padding: 12px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
-
 .suggest-submit:hover { background: #1a1e2b; }
-
 .suggest-cancel { flex: 1; background: #f0f2f5; color: #1a1e2b; border: none; padding: 12px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; }
-
 .message { position: fixed; top: 20px; right: 20px; padding: 12px 20px; border-radius: 30px; color: white; font-weight: 500; font-size: 0.85rem; z-index: 10002; animation: slideIn 0.2s; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.15); }
-
 @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
 .message.success { background: #2e3440; }
 .message.error { background: #c0392b; }
-
 .loader { border: 2px solid #f0f2f5; border-top: 2px solid #2e3440; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 20px auto; }
-
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
 @media (max-width: 600px) {
     body { padding: 16px 0; }
     .notice-content { flex-direction: column; text-align: center; }
     .auth-status-bar { flex-direction: column; text-align: center; gap: 10px; }
     .auth-buttons { width: 100%; justify-content: center; }
+    .friend-suggestion-item { flex-wrap: wrap; }
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -404,7 +252,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 </div>
             </div>
 
-            <div class="important-notice" id="importantNotice">
+            <div class="important-notice">
                 <div class="notice-content">
                     <div class="notice-icon"><i class="fas fa-exclamation-triangle"></i></div>
                     <div class="notice-text">
@@ -430,6 +278,23 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 <div class="notification-badge-quick">темки</div>
                 <div class="notification-badge-quick">сливы</div>
                 <div class="notification-badge-quick">новости</div>
+            </div>
+
+            <!-- БЛОК РЕКОМЕНДАЦИЙ КЕНТОВ -->
+            <div class="find-friends-block">
+                <div class="section-header">
+                    <h3>🤝 найди кентов</h3>
+                    <a href="find_friends.html" class="section-link">все →</a>
+                </div>
+                <div class="find-friends-hint">
+                    <i class="fas fa-info-circle"></i>
+                    хочешь появиться здесь? перейди в
+                    <a href="your_account.html">профиль</a>
+                    и включи «я ищу кентов»
+                </div>
+                <div id="friendSuggestions">
+                    <div class="loader"></div>
+                </div>
             </div>
 
             <div class="create-poll">
@@ -539,17 +404,14 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ============================================
-        // ПЕРЕМЕННЫЕ
-        // ============================================
         let userIp = null;
         let comments = [];
         let lastCommentTime = 0;
         let primeUser = null;
-        let threadsCount = 0;
         let polls = [];
         let votedPolls = {};
         let likedComments = {};
+        let sentFriendRequests = {};
         let searchTimeout = null;
         let lastPollTime = 0;
         let notifications = [];
@@ -562,9 +424,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         const userAvatar = localStorage.getItem('userAvatar');
 
         const savedPrime = localStorage.getItem('primeUser');
-        if (savedPrime) {
-            try { primeUser = JSON.parse(savedPrime); } catch(e) {}
-        }
+        if (savedPrime) { try { primeUser = JSON.parse(savedPrime); } catch(e) {} }
 
         // ============================================
         // ВСПОМОГАТЕЛЬНЫЕ
@@ -607,21 +467,15 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
             if (userId && userNickname) {
                 authDisplayName.textContent = userNickname;
                 authAvatar.src = userAvatar || 'https://i.pravatar.cc/300';
-
                 const oldBadge = document.querySelector('.auth-badge');
                 if (oldBadge) oldBadge.remove();
-
                 if (primeUser) {
                     const badge = document.createElement('span');
                     badge.className = 'auth-badge';
                     badge.innerHTML = '<i class="fas fa-crown"></i> prime';
                     authDisplayName.parentNode.appendChild(badge);
                 }
-
-                authButtons.innerHTML = `
-                    <a href="your_account.html" class="auth-btn">
-                        <i class="far fa-user"></i> профиль
-                    </a>`;
+                authButtons.innerHTML = `<a href="your_account.html" class="auth-btn"><i class="far fa-user"></i> профиль</a>`;
             } else {
                 authDisplayName.textContent = 'Гость';
                 authAvatar.src = 'https://i.pravatar.cc/300';
@@ -645,9 +499,8 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         });
 
         document.addEventListener('click', function(e) {
-            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target))
                 searchResults.classList.remove('active');
-            }
         });
 
         async function searchUsers(query) {
@@ -657,39 +510,25 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                     .select('id, nickname, display_name, class, avatar_url, is_prime')
                     .ilike('nickname', `%${query}%`)
                     .limit(10);
-
                 if (error) throw error;
-
                 if (!data || data.length === 0) {
                     searchResults.innerHTML = '<div class="no-results">пользователи не найдены</div>';
                     searchResults.classList.add('active');
                     return;
                 }
-
-                let html = '';
-                data.forEach(user => {
-                    const name = user.display_name || user.nickname;
-                    const avatar = user.avatar_url || 'https://i.pravatar.cc/300';
-                    html += `
-                        <div class="search-result-item" onclick="goToUserProfile(${user.id})">
-                            <div class="result-avatar"><img src="${avatar}" alt=""></div>
-                            <div class="result-info">
-                                <div class="result-name">
-                                    ${escapeHtml(name)}
-                                    ${user.is_prime ? '<span class="result-badge">prime</span>' : ''}
-                                </div>
-                                <div class="result-class">
-                                    <i class="far fa-graduation-cap"></i> ${user.class || 'класс не указан'}
-                                </div>
+                searchResults.innerHTML = data.map(user => `
+                    <div class="search-result-item" onclick="goToUserProfile(${user.id})">
+                        <div class="result-avatar"><img src="${user.avatar_url || 'https://i.pravatar.cc/300'}" alt=""></div>
+                        <div class="result-info">
+                            <div class="result-name">
+                                ${escapeHtml(user.display_name || user.nickname)}
+                                ${user.is_prime ? '<span class="result-badge">prime</span>' : ''}
                             </div>
-                        </div>`;
-                });
-
-                searchResults.innerHTML = html;
+                            <div class="result-class"><i class="far fa-graduation-cap"></i> ${user.class || 'класс не указан'}</div>
+                        </div>
+                    </div>`).join('');
                 searchResults.classList.add('active');
-            } catch (error) {
-                console.error('Ошибка поиска:', error);
-            }
+            } catch (e) { console.error('Ошибка поиска:', e); }
         }
 
         window.goToUserProfile = function(id) {
@@ -697,74 +536,158 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         };
 
         // ============================================
-        // ГОЛОСОВАНИЯ — С ЗАЩИТОЙ
+        // РЕКОМЕНДАЦИИ КЕНТОВ
         // ============================================
-        async function loadVotedPolls() {
-            if (!userId && !userIp) return;
+        async function loadFriendSuggestions() {
+            const container = document.getElementById('friendSuggestions');
+            if (!container) return;
 
             try {
                 let query = supabaseClient
-                    .from('poll_votes')
-                    .select('poll_id, choice');
+                    .from('users')
+                    .select('id, nickname, display_name, class, avatar_url, is_prime, status')
+                    .eq('looking_for_friends', true)
+                    .limit(3);
 
-                if (userId) {
-                    query = query.eq('user_id', parseInt(userId));
-                } else {
-                    query = query.eq('ip_address', userIp);
-                }
+                if (userId) query = query.neq('id', parseInt(userId));
 
                 const { data, error } = await query;
                 if (error) throw error;
 
-                votedPolls = {};
-                (data || []).forEach(v => {
-                    votedPolls[v.poll_id] = v.choice;
-                });
-            } catch (error) {
-                console.error('Ошибка загрузки голосов:', error);
+                if (!data || data.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align:center;padding:20px;color:#8b93a6;font-size:0.9rem;">
+                            😔 пока никто не ищет кентов
+                        </div>`;
+                    return;
+                }
+
+                // Загружаем уже отправленные запросы если залогинен
+                if (userId) {
+                    const { data: sent } = await supabaseClient
+                        .from('friends')
+                        .select('friend_id')
+                        .eq('user_id', parseInt(userId));
+                    (sent || []).forEach(s => { sentFriendRequests[s.friend_id] = true; });
+                }
+
+                container.innerHTML = data.map(user => {
+                    const alreadySent = sentFriendRequests[user.id];
+                    return `
+                        <div class="friend-suggestion-item">
+                            <div class="suggestion-avatar">
+                                <img src="${escapeHtml(user.avatar_url || 'https://i.pravatar.cc/300')}" alt=""
+                                     onerror="this.src='https://i.pravatar.cc/300'">
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-name">
+                                    ${escapeHtml(user.display_name || user.nickname)}
+                                    ${user.is_prime ? '<span style="background:#f1c40f;color:#1a1e2b;padding:1px 6px;border-radius:20px;font-size:0.6rem;font-weight:600;">prime</span>' : ''}
+                                </div>
+                                <div class="suggestion-meta">
+                                    <span>${escapeHtml(user.class || 'класс не указан')}</span>
+                                    ${user.status ? `<span>· "${escapeHtml(user.status.substring(0, 25))}${user.status.length > 25 ? '...' : ''}"</span>` : ''}
+                                </div>
+                            </div>
+                            <button class="add-friend-btn ${alreadySent ? 'sent' : ''}"
+                                    onclick="addFriendFromSuggestion(${user.id}, this)"
+                                    ${alreadySent ? 'disabled' : ''}>
+                                ${alreadySent ? 'отправлено' : '+ добавить'}
+                            </button>
+                        </div>`;
+                }).join('');
+
+            } catch (e) {
+                console.error('Ошибка рекомендаций:', e);
+                container.innerHTML = '';
             }
+        }
+
+        window.addFriendFromSuggestion = async function(targetId, btn) {
+            if (!userId) {
+                window.location.href = 'register.html';
+                return;
+            }
+            if (sentFriendRequests[targetId]) return;
+
+            btn.disabled = true;
+            btn.textContent = '...';
+
+            try {
+                const { error } = await supabaseClient
+                    .from('friends')
+                    .insert({ user_id: parseInt(userId), friend_id: targetId, status: 'pending' });
+
+                if (error) {
+                    if (error.code === '23505') {
+                        sentFriendRequests[targetId] = true;
+                        btn.textContent = 'отправлено';
+                        btn.classList.add('sent');
+                        return;
+                    }
+                    throw error;
+                }
+
+                sentFriendRequests[targetId] = true;
+                btn.textContent = 'отправлено';
+                btn.classList.add('sent');
+                showMessage('✅ запрос отправлен!', 'success');
+
+            } catch (e) {
+                console.error('Ошибка:', e);
+                btn.disabled = false;
+                btn.textContent = '+ добавить';
+                showMessage('ошибка: ' + e.message, 'error');
+            }
+        };
+
+        // ============================================
+        // ГОЛОСОВАНИЯ
+        // ============================================
+        async function loadVotedPolls() {
+            if (!userId && !userIp) return;
+            try {
+                let query = supabaseClient.from('poll_votes').select('poll_id, choice');
+                if (userId) query = query.eq('user_id', parseInt(userId));
+                else query = query.eq('ip_address', userIp);
+                const { data, error } = await query;
+                if (error) throw error;
+                votedPolls = {};
+                (data || []).forEach(v => { votedPolls[v.poll_id] = v.choice; });
+            } catch (e) { console.error('Ошибка загрузки голосов:', e); }
         }
 
         async function loadPolls() {
             try {
                 const { data, error } = await supabaseClient
-                    .from('polls')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
+                    .from('polls').select('*').order('created_at', { ascending: false });
                 if (error) throw error;
                 polls = data || [];
                 await loadVotedPolls();
                 displayPolls();
-            } catch (error) {
-                console.error('Ошибка загрузки опросов:', error);
-            }
+            } catch (e) { console.error('Ошибка загрузки опросов:', e); }
         }
 
         function displayPolls() {
             const pollsList = document.getElementById('pollsList');
             if (!pollsList) return;
-
             if (!polls || polls.length === 0) {
                 pollsList.innerHTML = '<div style="text-align:center;padding:20px;color:#8b93a6;">нет активных опросов</div>';
                 return;
             }
-
-            let html = '';
-            polls.forEach(poll => {
+            pollsList.innerHTML = polls.map(poll => {
                 const total = (poll.yes_votes || 0) + (poll.no_votes || 0);
                 const yesP = total > 0 ? Math.round((poll.yes_votes / total) * 100) : 0;
                 const noP = total > 0 ? Math.round((poll.no_votes / total) * 100) : 0;
                 const myVote = votedPolls[poll.id];
                 const hasVoted = !!myVote;
-
-                html += `
+                return `
                     <div class="poll-card ${hasVoted ? 'voted' : ''}">
                         <div class="poll-question">${escapeHtml(poll.question)}</div>
                         <div class="poll-stats">
                             <span>👤 ${escapeHtml(poll.author || 'Аноним')}</span>
                             <span>📊 ${total} голосов</span>
-                            ${hasVoted ? `<span style="color:#27ae60;">✓ вы проголосовали: ${myVote === 'yes' ? 'да' : 'нет'}</span>` : ''}
+                            ${hasVoted ? `<span style="color:#27ae60;">✓ ${myVote === 'yes' ? 'да' : 'нет'}</span>` : ''}
                         </div>
                         <div style="display:flex;gap:8px;margin-bottom:8px;">
                             <div style="flex:1;text-align:center;color:#27ae60;font-weight:500;">да: ${yesP}%</div>
@@ -780,185 +703,85 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                             <div class="progress-bar yes" style="width:${yesP}%"></div>
                         </div>
                     </div>`;
-            });
-
-            pollsList.innerHTML = html;
+            }).join('');
         }
 
         async function createPoll() {
             const question = document.getElementById('pollQuestionInput').value.trim();
-
-            if (!question || question.length < 5) {
-                showMessage('слишком короткий вопрос', 'error');
-                return;
-            }
-
-            if (!userId || !userNickname) {
-                showMessage('войдите, чтобы создать опрос', 'error');
-                setTimeout(() => window.location.href = 'login.html', 1500);
-                return;
-            }
-
+            if (!question || question.length < 5) { showMessage('слишком короткий вопрос', 'error'); return; }
+            if (!userId) { showMessage('войдите, чтобы создать опрос', 'error'); setTimeout(() => window.location.href = 'login.html', 1500); return; }
             const now = Date.now();
-            if (now - lastPollTime < 30000) {
-                showMessage('подождите 30 секунд', 'error');
-                return;
-            }
-
-            const createBtn = document.getElementById('createPollBtn');
-            createBtn.disabled = true;
-            createBtn.textContent = '⏳ создание...';
-
+            if (now - lastPollTime < 30000) { showMessage('подождите 30 секунд', 'error'); return; }
+            const btn = document.getElementById('createPollBtn');
+            btn.disabled = true; btn.textContent = '⏳ создание...';
             try {
                 if (!userIp) await getUserIp();
-
-                const { data, error } = await supabaseClient
-                    .from('polls')
+                const { data, error } = await supabaseClient.from('polls')
                     .insert({ question, author: userNickname, ip_address: userIp, yes_votes: 0, no_votes: 0 })
-                    .select()
-                    .single();
-
+                    .select().single();
                 if (error) throw error;
-
                 polls.unshift(data);
                 lastPollTime = now;
                 document.getElementById('pollQuestionInput').value = '';
                 displayPolls();
                 showMessage('✅ опрос создан!', 'success');
-            } catch (error) {
-                showMessage('ошибка: ' + error.message, 'error');
-            } finally {
-                createBtn.disabled = false;
-                createBtn.textContent = '➕ создать опрос';
-            }
+            } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+            finally { btn.disabled = false; btn.textContent = '➕ создать опрос'; }
         }
 
         window.votePoll = async function(pollId, choice) {
-            if (!userId || !userNickname) {
-                showMessage('войдите, чтобы голосовать', 'error');
-                setTimeout(() => window.location.href = 'login.html', 1500);
-                return;
-            }
-
-            // Двойная проверка
-            if (votedPolls[pollId]) {
-                showMessage('вы уже голосовали в этом опросе', 'error');
-                return;
-            }
-
+            if (!userId) { showMessage('войдите, чтобы голосовать', 'error'); setTimeout(() => window.location.href = 'login.html', 1500); return; }
+            if (votedPolls[pollId]) { showMessage('вы уже голосовали', 'error'); return; }
             try {
                 if (!userIp) await getUserIp();
-
-                // Записываем голос
-                const { error: voteError } = await supabaseClient
-                    .from('poll_votes')
-                    .insert({
-                        poll_id: pollId,
-                        user_id: parseInt(userId),
-                        ip_address: userIp,
-                        choice: choice
-                    });
-
+                const { error: voteError } = await supabaseClient.from('poll_votes')
+                    .insert({ poll_id: pollId, user_id: parseInt(userId), ip_address: userIp, choice });
                 if (voteError) {
-                    // Unique constraint — уже голосовал
-                    if (voteError.code === '23505') {
-                        showMessage('вы уже голосовали в этом опросе', 'error');
-                        votedPolls[pollId] = choice;
-                        displayPolls();
-                        return;
-                    }
+                    if (voteError.code === '23505') { votedPolls[pollId] = choice; displayPolls(); showMessage('вы уже голосовали', 'error'); return; }
                     throw voteError;
                 }
-
-                // Обновляем счётчик
                 const poll = polls.find(p => p.id === pollId);
                 const field = choice === 'yes' ? 'yes_votes' : 'no_votes';
                 const newCount = (poll[field] || 0) + 1;
-
-                const { error: updateError } = await supabaseClient
-                    .from('polls')
-                    .update({ [field]: newCount })
-                    .eq('id', pollId);
-
-                if (updateError) throw updateError;
-
+                await supabaseClient.from('polls').update({ [field]: newCount }).eq('id', pollId);
                 poll[field] = newCount;
                 votedPolls[pollId] = choice;
                 displayPolls();
                 showMessage('✅ голос учтён!', 'success');
-
-            } catch (error) {
-                console.error('Ошибка голосования:', error);
-                showMessage('ошибка: ' + error.message, 'error');
-            }
+            } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
         };
 
         // ============================================
-        // ЛАЙКИ — С ЗАЩИТОЙ
+        // ЛАЙКИ
         // ============================================
         async function loadLikedComments() {
             if (!userId && !userIp) return;
-
             try {
-                let query = supabaseClient
-                    .from('comment_likes')
-                    .select('comment_id');
-
-                if (userId) {
-                    query = query.eq('user_id', parseInt(userId));
-                } else {
-                    query = query.eq('ip_address', userIp);
-                }
-
+                let query = supabaseClient.from('comment_likes').select('comment_id');
+                if (userId) query = query.eq('user_id', parseInt(userId));
+                else query = query.eq('ip_address', userIp);
                 const { data, error } = await query;
                 if (error) throw error;
-
                 likedComments = {};
                 (data || []).forEach(l => { likedComments[l.comment_id] = true; });
-            } catch (error) {
-                console.error('Ошибка загрузки лайков:', error);
-            }
+            } catch (e) { console.error('Ошибка загрузки лайков:', e); }
         }
 
         window.likeComment = async function(commentId) {
-            if (!userId) {
-                showMessage('войдите, чтобы ставить лайки', 'error');
-                return;
-            }
-
-            if (likedComments[commentId]) {
-                showMessage('вы уже лайкнули этот комментарий', 'error');
-                return;
-            }
-
+            if (!userId) { showMessage('войдите, чтобы ставить лайки', 'error'); return; }
+            if (likedComments[commentId]) { showMessage('вы уже лайкнули', 'error'); return; }
             try {
                 if (!userIp) await getUserIp();
-
-                const { error } = await supabaseClient
-                    .from('comment_likes')
-                    .insert({
-                        comment_id: commentId,
-                        user_id: parseInt(userId),
-                        ip_address: userIp
-                    });
-
+                const { error } = await supabaseClient.from('comment_likes')
+                    .insert({ comment_id: commentId, user_id: parseInt(userId), ip_address: userIp });
                 if (error) {
-                    if (error.code === '23505') {
-                        likedComments[commentId] = true;
-                        showMessage('вы уже лайкнули этот комментарий', 'error');
-                        displayComments();
-                        return;
-                    }
+                    if (error.code === '23505') { likedComments[commentId] = true; displayComments(); return; }
                     throw error;
                 }
-
                 likedComments[commentId] = true;
                 displayComments();
                 showMessage('❤️ лайк добавлен', 'success');
-            } catch (error) {
-                console.error('Ошибка лайка:', error);
-                showMessage('ошибка: ' + error.message, 'error');
-            }
+            } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
         };
 
         // ============================================
@@ -966,62 +789,36 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         // ============================================
         async function loadComments() {
             try {
-                const { data, error } = await supabaseClient
-                    .from('comments')
-                    .select('*')
-                    .order('created_at', { ascending: false })
-                    .limit(50);
-
+                const { data, error } = await supabaseClient.from('comments')
+                    .select('*').order('created_at', { ascending: false }).limit(50);
                 if (error) throw error;
                 comments = data || [];
-
                 await loadLikedComments();
                 displayComments();
-
                 document.getElementById('commentsCount').textContent = comments.length;
-                document.getElementById('primeCount').textContent =
-                    comments.filter(c => c.verified_as).length;
-
-            } catch (error) {
-                console.error('Ошибка загрузки комментариев:', error);
-                document.getElementById('commentsList').innerHTML =
-                    '<div style="text-align:center;color:#8b93a6;">ошибка загрузки</div>';
+                document.getElementById('primeCount').textContent = comments.filter(c => c.verified_as).length;
+            } catch (e) {
+                document.getElementById('commentsList').innerHTML = '<div style="text-align:center;color:#8b93a6;">ошибка загрузки</div>';
             }
         }
 
         function displayComments() {
             const list = document.getElementById('commentsList');
-
             if (!comments || comments.length === 0) {
                 list.innerHTML = '<div style="text-align:center;color:#8b93a6;padding:20px;">нет комментариев</div>';
                 return;
             }
-
-            let html = '';
-            comments.forEach(comment => {
-                const date = new Date(comment.created_at).toLocaleString('ru', {
-                    day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
-                });
-
+            list.innerHTML = comments.map(comment => {
+                const date = new Date(comment.created_at).toLocaleString('ru', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
                 let cls = 'comment-item';
                 let badges = '';
-
-                if (comment.verified_as) {
-                    cls += ' premium';
-                    badges = '<span class="premium-badge">prime</span>';
-                } else if (comment.is_verified) {
-                    cls += ' verified';
-                    badges = '<span class="verified-badge">✓ verified</span>';
-                }
-
+                if (comment.verified_as) { cls += ' premium'; badges = '<span class="premium-badge">prime</span>'; }
+                else if (comment.is_verified) { cls += ' verified'; badges = '<span class="verified-badge">✓ verified</span>'; }
                 const liked = likedComments[comment.id];
-
-                html += `
+                return `
                     <div class="${cls}">
                         <div class="comment-header">
-                            <span class="comment-name">
-                                ${escapeHtml(comment.name || 'Аноним')} ${badges}
-                            </span>
+                            <span class="comment-name">${escapeHtml(comment.name || 'Аноним')} ${badges}</span>
                             <span class="comment-date">${date}</span>
                         </div>
                         <div class="comment-message">${escapeHtml(comment.message)}</div>
@@ -1029,55 +826,32 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                             <button class="interaction-btn ${liked ? 'liked disabled' : ''}"
                                     onclick="${liked ? '' : `likeComment(${comment.id})`}">
                                 <i class="fa${liked ? 's' : 'r'} fa-heart"></i>
-                                <span>${liked ? 'нравится' : 'нравится'}</span>
+                                <span>нравится</span>
                             </button>
                         </div>
                     </div>`;
-            });
-
-            list.innerHTML = html;
+            }).join('');
         }
 
         async function submitComment() {
             const messageInput = document.getElementById('commentMessage');
             const message = messageInput.value.trim();
-
-            if (!userId || !userNickname) {
-                showMessage('войдите, чтобы комментировать', 'error');
-                setTimeout(() => window.location.href = 'login.html', 1500);
-                return;
-            }
-
-            if (lastCommentTime && (Date.now() - lastCommentTime) < 5000) {
-                showMessage('подождите 5 секунд', 'error');
-                return;
-            }
-
+            if (!userId) { showMessage('войдите, чтобы комментировать', 'error'); setTimeout(() => window.location.href = 'login.html', 1500); return; }
+            if (lastCommentTime && (Date.now() - lastCommentTime) < 5000) { showMessage('подождите 5 секунд', 'error'); return; }
             if (!message) { showMessage('напишите комментарий', 'error'); return; }
             if (message.length > 200) { showMessage('максимум 200 символов', 'error'); return; }
-
             try {
                 if (!userIp) await getUserIp();
-
-                const { error } = await supabaseClient
-                    .from('comments')
-                    .insert([{
-                        name: userNickname,
-                        message,
-                        ip_address: userIp,
-                        is_verified: !!primeUser,
-                        verified_as: primeUser?.name || null
-                    }]);
-
+                const { error } = await supabaseClient.from('comments').insert([{
+                    name: userNickname, message, ip_address: userIp,
+                    is_verified: !!primeUser, verified_as: primeUser?.name || null
+                }]);
                 if (error) throw error;
-
                 lastCommentTime = Date.now();
                 messageInput.value = '';
                 showMessage('комментарий добавлен!', 'success');
                 await loadComments();
-            } catch (error) {
-                showMessage('ошибка: ' + error.message, 'error');
-            }
+            } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
         }
 
         // ============================================
@@ -1091,140 +865,94 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                     .select('*, notification:notifications(*)')
                     .eq('user_id', parseInt(userId))
                     .order('created_at', { ascending: false });
-
                 if (error) throw error;
-
                 notifications = data || [];
                 unreadCount = notifications.filter(n => !n.is_read).length;
                 updateNotificationBadge();
                 displayNotifications();
                 setupRealtimeNotifications();
-            } catch (error) {
-                console.error('Ошибка уведомлений:', error);
-            }
+            } catch (e) { console.error('Ошибка уведомлений:', e); }
         }
 
         function setupRealtimeNotifications() {
             if (!userId) return;
             if (notificationRealtime) notificationRealtime.unsubscribe();
-
-            notificationRealtime = supabaseClient
-                .channel('user_notifications')
-                .on('postgres_changes', {
-                    event: 'INSERT', schema: 'public',
-                    table: 'user_notifications',
-                    filter: `user_id=eq.${userId}`
-                }, async (payload) => {
-                    const { data } = await supabaseClient
-                        .from('notifications').select('*')
-                        .eq('id', payload.new.notification_id).single();
-
-                    notifications.unshift({ ...payload.new, notification: data });
-                    unreadCount++;
-                    updateNotificationBadge();
-                    displayNotifications();
-                    showNotificationPopup(data);
-                })
+            notificationRealtime = supabaseClient.channel('user_notifications')
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'user_notifications', filter: `user_id=eq.${userId}` },
+                    async (payload) => {
+                        const { data } = await supabaseClient.from('notifications').select('*').eq('id', payload.new.notification_id).single();
+                        notifications.unshift({ ...payload.new, notification: data });
+                        unreadCount++;
+                        updateNotificationBadge();
+                        displayNotifications();
+                        showNotificationPopup(data);
+                    })
                 .subscribe();
         }
 
-        function showNotificationPopup(notification) {
+        function showNotificationPopup(n) {
             const popup = document.createElement('div');
-            popup.style.cssText = `position:fixed;top:20px;right:20px;background:white;border-radius:16px;
-                padding:16px;box-shadow:0 10px 20px -8px rgba(0,0,0,0.2);
-                border-left:4px solid ${notification.type === 'urgent' ? '#e74c3c' : notification.type === 'automatic' ? '#3498db' : '#f1c40f'};
+            popup.style.cssText = `position:fixed;top:20px;right:20px;background:white;border-radius:16px;padding:16px;
+                box-shadow:0 10px 20px -8px rgba(0,0,0,0.2);
+                border-left:4px solid ${n.type === 'urgent' ? '#e74c3c' : n.type === 'automatic' ? '#3498db' : '#f1c40f'};
                 z-index:10002;max-width:300px;animation:slideIn 0.3s;`;
-            popup.innerHTML = `
-                <div style="display:flex;align-items:center;gap:12px;">
-                    <div style="font-size:24px;">${notification.icon || '📢'}</div>
-                    <div>
-                        <div style="font-weight:600;margin-bottom:4px;">${escapeHtml(notification.title)}</div>
-                        <div style="font-size:0.85rem;color:#8b93a6;">${escapeHtml(notification.message)}</div>
-                    </div>
-                </div>`;
+            popup.innerHTML = `<div style="display:flex;align-items:center;gap:12px;">
+                <div style="font-size:24px;">${n.icon || '📢'}</div>
+                <div><div style="font-weight:600;margin-bottom:4px;">${escapeHtml(n.title)}</div>
+                <div style="font-size:0.85rem;color:#8b93a6;">${escapeHtml(n.message)}</div></div></div>`;
             document.body.appendChild(popup);
             setTimeout(() => popup.remove(), 5000);
         }
 
         function updateNotificationBadge() {
             const badge = document.getElementById('notificationBadge');
-            if (unreadCount > 0) {
-                badge.style.display = 'flex';
-                badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
-            } else {
-                badge.style.display = 'none';
-            }
+            if (unreadCount > 0) { badge.style.display = 'flex'; badge.textContent = unreadCount > 99 ? '99+' : unreadCount; }
+            else { badge.style.display = 'none'; }
         }
 
         async function markAsRead(notificationId) {
             if (!userId) return;
             try {
-                await supabaseClient
-                    .from('user_notifications')
-                    .update({ is_read: true, read_at: new Date().toISOString() })
-                    .eq('id', notificationId);
-
+                await supabaseClient.from('user_notifications')
+                    .update({ is_read: true, read_at: new Date().toISOString() }).eq('id', notificationId);
                 const n = notifications.find(n => n.id === notificationId);
-                if (n && !n.is_read) {
-                    n.is_read = true;
-                    unreadCount--;
-                    updateNotificationBadge();
-                    displayNotifications();
-                }
-            } catch (error) {
-                console.error('Ошибка:', error);
-            }
+                if (n && !n.is_read) { n.is_read = true; unreadCount--; updateNotificationBadge(); displayNotifications(); }
+            } catch (e) { console.error(e); }
         }
 
         function displayNotifications() {
             const list = document.getElementById('notificationList');
             if (!list) return;
-
             let filtered = notifications;
             if (currentFilter === 'urgent') filtered = notifications.filter(n => n.notification?.type === 'urgent');
             else if (currentFilter === 'automatic') filtered = notifications.filter(n => n.notification?.type === 'automatic');
             else if (currentFilter === 'manual') filtered = notifications.filter(n => n.notification?.type === 'manual');
             else if (currentFilter === 'unread') filtered = notifications.filter(n => !n.is_read);
-
             if (filtered.length === 0) {
                 list.innerHTML = '<div class="empty-notifications"><i class="far fa-bell-slash" style="font-size:48px;opacity:0.5;display:block;margin-bottom:16px;"></i><p>нет уведомлений</p></div>';
                 return;
             }
-
             const typeLabels = { urgent: 'срочное', automatic: 'автоматическое', manual: 'ручное' };
-
             list.innerHTML = filtered.map(item => {
                 const notif = item.notification;
-                const date = new Date(item.created_at).toLocaleString('ru', {
-                    day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
-                });
-                return `
-                    <div class="notification-item ${item.is_read ? '' : 'unread'} ${notif?.type || ''}"
-                         onclick="markAsRead(${item.id})">
-                        <div class="notification-header-row">
-                            <span class="notification-title">
-                                ${notif?.icon || '📢'} ${escapeHtml(notif?.title || 'Уведомление')}
-                            </span>
-                            <span class="notification-type-badge">${typeLabels[notif?.type] || 'системное'}</span>
-                        </div>
-                        <div class="notification-message">${escapeHtml(notif?.message || '')}</div>
-                        <div class="notification-meta">
-                            <span><i class="far fa-clock"></i> ${date}</span>
-                        </div>
-                        ${!item.is_read ? '<div class="notification-dot"></div>' : ''}
-                    </div>`;
+                const date = new Date(item.created_at).toLocaleString('ru', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+                return `<div class="notification-item ${item.is_read ? '' : 'unread'} ${notif?.type || ''}" onclick="markAsRead(${item.id})">
+                    <div class="notification-header-row">
+                        <span class="notification-title">${notif?.icon || '📢'} ${escapeHtml(notif?.title || 'Уведомление')}</span>
+                        <span class="notification-type-badge">${typeLabels[notif?.type] || 'системное'}</span>
+                    </div>
+                    <div class="notification-message">${escapeHtml(notif?.message || '')}</div>
+                    <div class="notification-meta"><span><i class="far fa-clock"></i> ${date}</span></div>
+                    ${!item.is_read ? '<div class="notification-dot"></div>' : ''}
+                </div>`;
             }).join('');
         }
 
         window.toggleNotifications = function() {
             const center = document.getElementById('notificationCenter');
             const overlay = document.getElementById('notificationOverlay');
-            if (center.classList.contains('active')) {
-                closeNotifications();
-            } else {
-                center.classList.add('active');
-                overlay.classList.add('active');
-            }
+            if (center.classList.contains('active')) { closeNotifications(); }
+            else { center.classList.add('active'); overlay.classList.add('active'); }
         };
 
         window.closeNotifications = function() {
@@ -1244,40 +972,26 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         // ============================================
         async function loadThreadsCount() {
             try {
-                const { count, error } = await supabaseClient
-                    .from('threads').select('*', { count: 'exact', head: true });
+                const { count, error } = await supabaseClient.from('threads').select('*', { count: 'exact', head: true });
                 if (error) throw error;
                 document.getElementById('threadsCount').textContent = count || 0;
             } catch { document.getElementById('threadsCount').textContent = '0'; }
         }
 
-        // Admin Modal
-        document.getElementById('adminBtn').addEventListener('click', () => {
-            document.getElementById('adminModal').style.display = 'block';
-        });
-        document.getElementById('adminCancel').addEventListener('click', () => {
-            document.getElementById('adminModal').style.display = 'none';
-        });
-        document.getElementById('adminModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('adminModal'))
-                document.getElementById('adminModal').style.display = 'none';
-        });
+        document.getElementById('adminBtn').addEventListener('click', () => { document.getElementById('adminModal').style.display = 'block'; });
+        document.getElementById('adminCancel').addEventListener('click', () => { document.getElementById('adminModal').style.display = 'none'; });
+        document.getElementById('adminModal').addEventListener('click', (e) => { if (e.target === document.getElementById('adminModal')) document.getElementById('adminModal').style.display = 'none'; });
         document.getElementById('adminSubmit').addEventListener('click', async () => {
             const name = document.getElementById('adminName').value.trim() || 'Аноним';
             const message = document.getElementById('adminMessage').value.trim();
             if (!message) { showMessage('напишите сообщение', 'error'); return; }
             try {
-                await supabaseClient.from('feedback').insert({
-                    type: 'admin_message', name, message,
-                    user_agent: navigator.userAgent
-                });
+                await supabaseClient.from('feedback').insert({ type: 'admin_message', name, message, user_agent: navigator.userAgent });
                 showMessage('сообщение отправлено', 'success');
                 document.getElementById('adminModal').style.display = 'none';
                 document.getElementById('adminName').value = '';
                 document.getElementById('adminMessage').value = '';
-            } catch (error) {
-                showMessage('ошибка: ' + error.message, 'error');
-            }
+            } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
         });
 
         document.getElementById('submitComment').addEventListener('click', submitComment);
@@ -1293,7 +1007,8 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 loadComments(),
                 loadPolls(),
                 loadThreadsCount(),
-                loadNotifications()
+                loadNotifications(),
+                loadFriendSuggestions()
             ]);
         }
 
