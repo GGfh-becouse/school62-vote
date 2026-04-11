@@ -50,26 +50,11 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
 .auth-btn:hover { background: #e4e6e9; }
 .auth-btn.primary { background: #2e3440; color: white; }
 .auth-btn.primary:hover { background: #1a1e2b; }
-.important-notice { background: linear-gradient(135deg, #ff4d4d, #e63946); border-radius: 24px; padding: 16px 20px; margin-bottom: 20px; color: white; box-shadow: 0 10px 20px -5px rgba(230,57,70,0.4); animation: pulse 2s infinite; border: 1px solid rgba(255,255,255,0.2); }
-@keyframes pulse { 0% { box-shadow: 0 10px 20px -5px rgba(230,57,70,0.4); } 50% { box-shadow: 0 15px 30px -5px rgba(230,57,70,0.8); } 100% { box-shadow: 0 10px 20px -5px rgba(230,57,70,0.4); } }
-.notice-content { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-.notice-icon { font-size: 2rem; background: rgba(0,0,0,0.2); width: 50px; height: 50px; border-radius: 25px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-.notice-text { flex: 1; }
-.notice-title { font-weight: 700; font-size: 1rem; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-.notice-message { font-weight: 500; font-size: 0.9rem; opacity: 0.95; line-height: 1.4; }
-.stories-container { margin-bottom: 20px; }
-.stories-scroll { display: flex; gap: 16px; overflow-x: auto; scrollbar-width: none; padding: 4px 0; }
-.stories-scroll::-webkit-scrollbar { display: none; }
-.story-item { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 64px; cursor: pointer; }
-.story-avatar { width: 64px; height: 64px; border-radius: 20px; background: #ffffff; box-shadow: 0 8px 16px -8px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.02); display: flex; align-items: center; justify-content: center; color: #2e3440; font-weight: 500; font-size: 0.8rem; text-transform: uppercase; transition: transform 0.2s; }
-.story-item:hover .story-avatar { transform: translateY(-2px); }
-.story-name { font-size: 0.65rem; font-weight: 500; color: #8b93a6; }
-.quick-notifications { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin-bottom: 20px; padding: 4px 0; }
-.quick-notifications::-webkit-scrollbar { display: none; }
-.notification-badge-quick { background: #ffffff; border-radius: 30px; padding: 8px 16px; font-size: 0.8rem; font-weight: 500; color: #1a1e2b; white-space: nowrap; box-shadow: 0 4px 8px -4px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); transition: all 0.2s; cursor: pointer; }
-.notification-badge-quick:hover { background: #f0f2f5; transform: translateY(-1px); }
-.notification-badge-quick.highlight { background: #2e3440; color: white; }
-.notification-badge { position: absolute; top: -5px; right: -8px; background: #e74c3c; color: white; font-size: 0.65rem; font-weight: 600; min-width: 18px; height: 18px; border-radius: 9px; display: flex; align-items: center; justify-content: center; padding: 0 4px; border: 2px solid #ffffff; }
+
+/* NOTIFICATION BADGE — всегда красный */
+.notification-badge { position: absolute; top: -5px; right: -8px; background: #e74c3c; color: white; font-size: 0.65rem; font-weight: 600; min-width: 18px; height: 18px; border-radius: 9px; display: flex; align-items: center; justify-content: center; padding: 0 4px; border: 2px solid #ffffff; animation: badgePulse 2s infinite; }
+@keyframes badgePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
 .notification-center { position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100vh; background: #ffffff; box-shadow: -5px 0 20px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 10000; display: flex; flex-direction: column; }
 .notification-center.active { right: 0; }
 .notification-header { padding: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
@@ -86,12 +71,14 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
 .notification-item.urgent .notification-title { color: #e74c3c; }
 .notification-item.automatic { border-left-color: #3498db; }
 .notification-item.manual { border-left-color: #f1c40f; }
+.notification-item.system { border-left-color: #e74c3c; background: #fff8f8; }
 .notification-header-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
 .notification-title { font-weight: 600; color: #1a1e2b; font-size: 0.95rem; display: flex; align-items: center; gap: 6px; }
 .notification-type-badge { background: #f0f2f5; padding: 2px 8px; border-radius: 30px; font-size: 0.65rem; font-weight: 600; color: #8b93a6; }
+.notification-type-badge.red { background: #fdedec; color: #e74c3c; }
 .notification-message { color: #1a1e2b; font-size: 0.9rem; line-height: 1.5; margin-bottom: 12px; }
 .notification-meta { display: flex; gap: 16px; color: #8b93a6; font-size: 0.7rem; }
-.notification-dot { width: 8px; height: 8px; border-radius: 4px; background: #2e3440; position: absolute; top: 16px; right: 16px; }
+.notification-dot { width: 8px; height: 8px; border-radius: 4px; background: #e74c3c; position: absolute; top: 16px; right: 16px; animation: badgePulse 2s infinite; }
 .empty-notifications { text-align: center; padding: 40px 20px; color: #8b93a6; }
 .notification-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); z-index: 9999; display: none; }
 .notification-overlay.active { display: block; }
@@ -108,7 +95,6 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
 .suggestion-info { flex: 1; min-width: 0; }
 .suggestion-name { font-weight: 600; color: #1a1e2b; font-size: 0.95rem; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .suggestion-meta { font-size: 0.7rem; color: #8b93a6; display: flex; align-items: center; gap: 6px; }
-.suggestion-status { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
 .add-friend-btn { background: #2e3440; color: white; border: none; padding: 8px 16px; border-radius: 30px; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
 .add-friend-btn:hover { background: #1a1e2b; transform: scale(1.03); }
 .add-friend-btn.sent { background: #f0f2f5; color: #8b93a6; cursor: default; }
@@ -132,7 +118,6 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
 .poll-stats { display: flex; gap: 8px; margin-bottom: 12px; color: #8b93a6; font-size: 0.75rem; flex-wrap: wrap; }
 .poll-options { display: flex; gap: 8px; }
 .poll-option { flex: 1; background: #ffffff; border: 1px solid rgba(0,0,0,0.05); border-radius: 40px; padding: 8px; text-align: center; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
-.poll-option:active { transform: scale(0.97); }
 .poll-option.yes { color: #27ae60; }
 .poll-option.yes:hover { background: #e8f5e9; border-color: #27ae60; }
 .poll-option.no { color: #e74c3c; }
@@ -186,10 +171,10 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
 .suggest-card { background: #ffffff; border-radius: 28px; max-width: 400px; width: 90%; margin: 80px auto; padding: 24px; box-shadow: 0 25px 35px -15px rgba(0,0,0,0.2); animation: modalSlide 0.3s; }
 @keyframes modalSlide { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 .suggest-card h3 { font-size: 1rem; font-weight: 600; color: #1a1e2b; margin-bottom: 16px; }
-.suggest-card select, .suggest-card input, .suggest-card textarea { width: 100%; padding: 12px 16px; border: 1px solid rgba(0,0,0,0.05); border-radius: 16px; margin-bottom: 10px; background: #f8f9fc; font-size: 0.9rem; transition: border-color 0.2s; }
+.suggest-card select, .suggest-card input, .suggest-card textarea { width: 100%; padding: 12px 16px; border: 1px solid rgba(0,0,0,0.05); border-radius: 16px; margin-bottom: 10px; background: #f8f9fc; font-size: 0.9rem; }
 .suggest-card select:focus, .suggest-card input:focus, .suggest-card textarea:focus { outline: none; border-color: #2e3440; }
 .modal-buttons { display: flex; gap: 8px; margin-top: 16px; }
-.suggest-submit { flex: 2; background: #2e3440; color: white; border: none; padding: 12px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+.suggest-submit { flex: 2; background: #2e3440; color: white; border: none; padding: 12px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; }
 .suggest-submit:hover { background: #1a1e2b; }
 .suggest-cancel { flex: 1; background: #f0f2f5; color: #1a1e2b; border: none; padding: 12px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; }
 .message { position: fixed; top: 20px; right: 20px; padding: 12px 20px; border-radius: 30px; color: white; font-weight: 500; font-size: 0.85rem; z-index: 10002; animation: slideIn 0.2s; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.15); }
@@ -200,7 +185,6 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 @media (max-width: 600px) {
     body { padding: 16px 0; }
-    .notice-content { flex-direction: column; text-align: center; }
     .auth-status-bar { flex-direction: column; text-align: center; gap: 10px; }
     .auth-buttons { width: 100%; justify-content: center; }
     .friend-suggestion-item { flex-wrap: wrap; }
@@ -220,7 +204,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                     <div class="header-icons">
                         <div class="header-icon" onclick="toggleNotifications()">
                             <i class="far fa-bell"></i>
-                            <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
+                            <span class="notification-badge" id="notificationBadge">!</span>
                         </div>
                         <a href="your_account.html" class="header-icon">
                             <i class="far fa-user"></i>
@@ -237,12 +221,12 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 <div class="search-results" id="searchResults"></div>
             </div>
 
-            <div class="auth-status-bar" id="authStatusBar">
+            <div class="auth-status-bar">
                 <div class="auth-info">
                     <div class="auth-avatar" id="authAvatar">
                         <img src="https://i.pravatar.cc/300" alt="">
                     </div>
-                    <span class="auth-welcome" id="authWelcomeText">
+                    <span class="auth-welcome">
                         <span id="authDisplayName">Гость</span>
                     </span>
                 </div>
@@ -252,35 +236,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 </div>
             </div>
 
-            <div class="important-notice">
-                <div class="notice-content">
-                    <div class="notice-icon"><i class="fas fa-exclamation-triangle"></i></div>
-                    <div class="notice-text">
-                        <div class="notice-title">⚠️ Важное сообщение</div>
-                        <div class="notice-message">Уважаемые пользователи! Пожалуйста, воздержитесь от оскорблений учителей и администрации школы. Помните, что сайт может быть закрыт при нарушении правил.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stories-container">
-                <div class="stories-scroll">
-                    <div class="story-item"><div class="story-avatar">новости</div><span class="story-name">новости</span></div>
-                    <div class="story-item"><div class="story-avatar">события</div><span class="story-name">события</span></div>
-                    <div class="story-item"><div class="story-avatar">опросы</div><span class="story-name">опросы</span></div>
-                    <div class="story-item"><div class="story-avatar">темки</div><span class="story-name">темки</span></div>
-                    <div class="story-item"><div class="story-avatar">сливы</div><span class="story-name">сливы</span></div>
-                </div>
-            </div>
-
-            <div class="quick-notifications">
-                <div class="notification-badge-quick highlight">8 марта</div>
-                <div class="notification-badge-quick">prime</div>
-                <div class="notification-badge-quick">темки</div>
-                <div class="notification-badge-quick">сливы</div>
-                <div class="notification-badge-quick">новости</div>
-            </div>
-
-            <!-- БЛОК РЕКОМЕНДАЦИЙ КЕНТОВ -->
+            <!-- РЕКОМЕНДАЦИИ КЕНТОВ -->
             <div class="find-friends-block">
                 <div class="section-header">
                     <h3>🤝 найди кентов</h3>
@@ -292,9 +248,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                     <a href="your_account.html">профиль</a>
                     и включи «я ищу кентов»
                 </div>
-                <div id="friendSuggestions">
-                    <div class="loader"></div>
-                </div>
+                <div id="friendSuggestions"><div class="loader"></div></div>
             </div>
 
             <div class="create-poll">
@@ -403,6 +357,19 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Системное уведомление — всегда показывается первым
+        const SYSTEM_NOTICE = {
+            id: 'system-notice',
+            is_read: false,
+            created_at: new Date().toISOString(),
+            notification: {
+                type: 'urgent',
+                title: '⚠️ Важное сообщение',
+                message: 'Уважаемые пользователи! Пожалуйста, воздержитесь от оскорблений учителей и администрации школы. Помните, что сайт может быть закрыт при нарушении правил. Давайте сохраним это место для общения!',
+                icon: '⚠️'
+            }
+        };
 
         let userIp = null;
         let comments = [];
@@ -541,43 +508,30 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         async function loadFriendSuggestions() {
             const container = document.getElementById('friendSuggestions');
             if (!container) return;
-
             try {
                 let query = supabaseClient
                     .from('users')
                     .select('id, nickname, display_name, class, avatar_url, is_prime, status')
                     .eq('looking_for_friends', true)
                     .limit(3);
-
                 if (userId) query = query.neq('id', parseInt(userId));
-
                 const { data, error } = await query;
                 if (error) throw error;
-
                 if (!data || data.length === 0) {
-                    container.innerHTML = `
-                        <div style="text-align:center;padding:20px;color:#8b93a6;font-size:0.9rem;">
-                            😔 пока никто не ищет кентов
-                        </div>`;
+                    container.innerHTML = `<div style="text-align:center;padding:20px;color:#8b93a6;font-size:0.9rem;">😔 пока никто не ищет кентов</div>`;
                     return;
                 }
-
-                // Загружаем уже отправленные запросы если залогинен
                 if (userId) {
                     const { data: sent } = await supabaseClient
-                        .from('friends')
-                        .select('friend_id')
-                        .eq('user_id', parseInt(userId));
+                        .from('friends').select('friend_id').eq('user_id', parseInt(userId));
                     (sent || []).forEach(s => { sentFriendRequests[s.friend_id] = true; });
                 }
-
                 container.innerHTML = data.map(user => {
                     const alreadySent = sentFriendRequests[user.id];
                     return `
                         <div class="friend-suggestion-item">
                             <div class="suggestion-avatar">
-                                <img src="${escapeHtml(user.avatar_url || 'https://i.pravatar.cc/300')}" alt=""
-                                     onerror="this.src='https://i.pravatar.cc/300'">
+                                <img src="${escapeHtml(user.avatar_url || 'https://i.pravatar.cc/300')}" alt="" onerror="this.src='https://i.pravatar.cc/300'">
                             </div>
                             <div class="suggestion-info">
                                 <div class="suggestion-name">
@@ -586,7 +540,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                                 </div>
                                 <div class="suggestion-meta">
                                     <span>${escapeHtml(user.class || 'класс не указан')}</span>
-                                    ${user.status ? `<span>· "${escapeHtml(user.status.substring(0, 25))}${user.status.length > 25 ? '...' : ''}"</span>` : ''}
+                                    ${user.status ? `<span>· "${escapeHtml(user.status.substring(0,25))}${user.status.length > 25 ? '...' : ''}"</span>` : ''}
                                 </div>
                             </div>
                             <button class="add-friend-btn ${alreadySent ? 'sent' : ''}"
@@ -596,7 +550,6 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                             </button>
                         </div>`;
                 }).join('');
-
             } catch (e) {
                 console.error('Ошибка рекомендаций:', e);
                 container.innerHTML = '';
@@ -604,39 +557,24 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         }
 
         window.addFriendFromSuggestion = async function(targetId, btn) {
-            if (!userId) {
-                window.location.href = 'register.html';
-                return;
-            }
+            if (!userId) { window.location.href = 'register.html'; return; }
             if (sentFriendRequests[targetId]) return;
-
-            btn.disabled = true;
-            btn.textContent = '...';
-
+            btn.disabled = true; btn.textContent = '...';
             try {
-                const { error } = await supabaseClient
-                    .from('friends')
+                const { error } = await supabaseClient.from('friends')
                     .insert({ user_id: parseInt(userId), friend_id: targetId, status: 'pending' });
-
                 if (error) {
                     if (error.code === '23505') {
                         sentFriendRequests[targetId] = true;
-                        btn.textContent = 'отправлено';
-                        btn.classList.add('sent');
-                        return;
+                        btn.textContent = 'отправлено'; btn.classList.add('sent'); return;
                     }
                     throw error;
                 }
-
                 sentFriendRequests[targetId] = true;
-                btn.textContent = 'отправлено';
-                btn.classList.add('sent');
+                btn.textContent = 'отправлено'; btn.classList.add('sent');
                 showMessage('✅ запрос отправлен!', 'success');
-
             } catch (e) {
-                console.error('Ошибка:', e);
-                btn.disabled = false;
-                btn.textContent = '+ добавить';
+                btn.disabled = false; btn.textContent = '+ добавить';
                 showMessage('ошибка: ' + e.message, 'error');
             }
         };
@@ -654,7 +592,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 if (error) throw error;
                 votedPolls = {};
                 (data || []).forEach(v => { votedPolls[v.poll_id] = v.choice; });
-            } catch (e) { console.error('Ошибка загрузки голосов:', e); }
+            } catch (e) { console.error(e); }
         }
 
         async function loadPolls() {
@@ -665,7 +603,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 polls = data || [];
                 await loadVotedPolls();
                 displayPolls();
-            } catch (e) { console.error('Ошибка загрузки опросов:', e); }
+            } catch (e) { console.error(e); }
         }
 
         function displayPolls() {
@@ -694,10 +632,10 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                             <div style="flex:1;text-align:center;color:#e74c3c;font-weight:500;">нет: ${noP}%</div>
                         </div>
                         <div class="poll-options">
-                            <div class="poll-option yes ${hasVoted ? (myVote === 'yes' ? 'voted-yes' : 'disabled') : ''}"
-                                 onclick="${hasVoted ? '' : `votePoll(${poll.id}, 'yes')`}">да</div>
-                            <div class="poll-option no ${hasVoted ? (myVote === 'no' ? 'voted-no' : 'disabled') : ''}"
-                                 onclick="${hasVoted ? '' : `votePoll(${poll.id}, 'no')`}">нет</div>
+                            <div class="poll-option yes ${hasVoted ? (myVote==='yes' ? 'voted-yes' : 'disabled') : ''}"
+                                 onclick="${hasVoted ? '' : `votePoll(${poll.id},'yes')`}">да</div>
+                            <div class="poll-option no ${hasVoted ? (myVote==='no' ? 'voted-no' : 'disabled') : ''}"
+                                 onclick="${hasVoted ? '' : `votePoll(${poll.id},'no')`}">нет</div>
                         </div>
                         <div class="poll-progress">
                             <div class="progress-bar yes" style="width:${yesP}%"></div>
@@ -720,11 +658,9 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                     .insert({ question, author: userNickname, ip_address: userIp, yes_votes: 0, no_votes: 0 })
                     .select().single();
                 if (error) throw error;
-                polls.unshift(data);
-                lastPollTime = now;
+                polls.unshift(data); lastPollTime = now;
                 document.getElementById('pollQuestionInput').value = '';
-                displayPolls();
-                showMessage('✅ опрос создан!', 'success');
+                displayPolls(); showMessage('✅ опрос создан!', 'success');
             } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
             finally { btn.disabled = false; btn.textContent = '➕ создать опрос'; }
         }
@@ -744,10 +680,8 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 const field = choice === 'yes' ? 'yes_votes' : 'no_votes';
                 const newCount = (poll[field] || 0) + 1;
                 await supabaseClient.from('polls').update({ [field]: newCount }).eq('id', pollId);
-                poll[field] = newCount;
-                votedPolls[pollId] = choice;
-                displayPolls();
-                showMessage('✅ голос учтён!', 'success');
+                poll[field] = newCount; votedPolls[pollId] = choice;
+                displayPolls(); showMessage('✅ голос учтён!', 'success');
             } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
         };
 
@@ -764,7 +698,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 if (error) throw error;
                 likedComments = {};
                 (data || []).forEach(l => { likedComments[l.comment_id] = true; });
-            } catch (e) { console.error('Ошибка загрузки лайков:', e); }
+            } catch (e) { console.error(e); }
         }
 
         window.likeComment = async function(commentId) {
@@ -779,8 +713,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                     throw error;
                 }
                 likedComments[commentId] = true;
-                displayComments();
-                showMessage('❤️ лайк добавлен', 'success');
+                displayComments(); showMessage('❤️ лайк добавлен', 'success');
             } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
         };
 
@@ -809,7 +742,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 return;
             }
             list.innerHTML = comments.map(comment => {
-                const date = new Date(comment.created_at).toLocaleString('ru', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+                const date = new Date(comment.created_at).toLocaleString('ru', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
                 let cls = 'comment-item';
                 let badges = '';
                 if (comment.verified_as) { cls += ' premium'; badges = '<span class="premium-badge">prime</span>'; }
@@ -858,7 +791,16 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         // УВЕДОМЛЕНИЯ
         // ============================================
         async function loadNotifications() {
-            if (!userId) return;
+            // Системное уведомление всегда первое
+            notifications = [SYSTEM_NOTICE];
+            unreadCount = 1;
+            updateNotificationBadge();
+
+            if (!userId) {
+                displayNotifications();
+                return;
+            }
+
             try {
                 const { data, error } = await supabaseClient
                     .from('user_notifications')
@@ -866,12 +808,17 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                     .eq('user_id', parseInt(userId))
                     .order('created_at', { ascending: false });
                 if (error) throw error;
-                notifications = data || [];
-                unreadCount = notifications.filter(n => !n.is_read).length;
+
+                const userNotifs = data || [];
+                notifications = [SYSTEM_NOTICE, ...userNotifs];
+                unreadCount = 1 + userNotifs.filter(n => !n.is_read).length;
                 updateNotificationBadge();
                 displayNotifications();
                 setupRealtimeNotifications();
-            } catch (e) { console.error('Ошибка уведомлений:', e); }
+            } catch (e) {
+                console.error('Ошибка уведомлений:', e);
+                displayNotifications();
+            }
         }
 
         function setupRealtimeNotifications() {
@@ -881,7 +828,7 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'user_notifications', filter: `user_id=eq.${userId}` },
                     async (payload) => {
                         const { data } = await supabaseClient.from('notifications').select('*').eq('id', payload.new.notification_id).single();
-                        notifications.unshift({ ...payload.new, notification: data });
+                        notifications.splice(1, 0, { ...payload.new, notification: data });
                         unreadCount++;
                         updateNotificationBadge();
                         displayNotifications();
@@ -894,10 +841,10 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
             const popup = document.createElement('div');
             popup.style.cssText = `position:fixed;top:20px;right:20px;background:white;border-radius:16px;padding:16px;
                 box-shadow:0 10px 20px -8px rgba(0,0,0,0.2);
-                border-left:4px solid ${n.type === 'urgent' ? '#e74c3c' : n.type === 'automatic' ? '#3498db' : '#f1c40f'};
+                border-left:4px solid ${n.type==='urgent'?'#e74c3c':n.type==='automatic'?'#3498db':'#f1c40f'};
                 z-index:10002;max-width:300px;animation:slideIn 0.3s;`;
             popup.innerHTML = `<div style="display:flex;align-items:center;gap:12px;">
-                <div style="font-size:24px;">${n.icon || '📢'}</div>
+                <div style="font-size:24px;">${n.icon||'📢'}</div>
                 <div><div style="font-weight:600;margin-bottom:4px;">${escapeHtml(n.title)}</div>
                 <div style="font-size:0.85rem;color:#8b93a6;">${escapeHtml(n.message)}</div></div></div>`;
             document.body.appendChild(popup);
@@ -906,45 +853,64 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
 
         function updateNotificationBadge() {
             const badge = document.getElementById('notificationBadge');
-            if (unreadCount > 0) { badge.style.display = 'flex'; badge.textContent = unreadCount > 99 ? '99+' : unreadCount; }
-            else { badge.style.display = 'none'; }
+            // Бейдж всегда виден — минимум "!" от системного уведомления
+            badge.style.display = 'flex';
+            badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
         }
 
         async function markAsRead(notificationId) {
+            // Системное уведомление нельзя закрыть
+            if (notificationId === 'system-notice') return;
             if (!userId) return;
             try {
                 await supabaseClient.from('user_notifications')
-                    .update({ is_read: true, read_at: new Date().toISOString() }).eq('id', notificationId);
+                    .update({ is_read: true, read_at: new Date().toISOString() })
+                    .eq('id', notificationId);
                 const n = notifications.find(n => n.id === notificationId);
-                if (n && !n.is_read) { n.is_read = true; unreadCount--; updateNotificationBadge(); displayNotifications(); }
+                if (n && !n.is_read) {
+                    n.is_read = true;
+                    unreadCount--;
+                    // Минимум 1 — системное уведомление всегда "непрочитано"
+                    if (unreadCount < 1) unreadCount = 1;
+                    updateNotificationBadge();
+                    displayNotifications();
+                }
             } catch (e) { console.error(e); }
         }
 
         function displayNotifications() {
             const list = document.getElementById('notificationList');
             if (!list) return;
+
             let filtered = notifications;
             if (currentFilter === 'urgent') filtered = notifications.filter(n => n.notification?.type === 'urgent');
             else if (currentFilter === 'automatic') filtered = notifications.filter(n => n.notification?.type === 'automatic');
             else if (currentFilter === 'manual') filtered = notifications.filter(n => n.notification?.type === 'manual');
             else if (currentFilter === 'unread') filtered = notifications.filter(n => !n.is_read);
+
             if (filtered.length === 0) {
                 list.innerHTML = '<div class="empty-notifications"><i class="far fa-bell-slash" style="font-size:48px;opacity:0.5;display:block;margin-bottom:16px;"></i><p>нет уведомлений</p></div>';
                 return;
             }
+
             const typeLabels = { urgent: 'срочное', automatic: 'автоматическое', manual: 'ручное' };
+
             list.innerHTML = filtered.map(item => {
                 const notif = item.notification;
-                const date = new Date(item.created_at).toLocaleString('ru', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
-                return `<div class="notification-item ${item.is_read ? '' : 'unread'} ${notif?.type || ''}" onclick="markAsRead(${item.id})">
-                    <div class="notification-header-row">
-                        <span class="notification-title">${notif?.icon || '📢'} ${escapeHtml(notif?.title || 'Уведомление')}</span>
-                        <span class="notification-type-badge">${typeLabels[notif?.type] || 'системное'}</span>
-                    </div>
-                    <div class="notification-message">${escapeHtml(notif?.message || '')}</div>
-                    <div class="notification-meta"><span><i class="far fa-clock"></i> ${date}</span></div>
-                    ${!item.is_read ? '<div class="notification-dot"></div>' : ''}
-                </div>`;
+                const isSystem = item.id === 'system-notice';
+                const date = isSystem ? 'всегда' : new Date(item.created_at).toLocaleString('ru', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+                return `
+                    <div class="notification-item unread ${notif?.type || ''} ${isSystem ? 'system' : ''}"
+                         onclick="${isSystem ? '' : `markAsRead(${item.id})`}"
+                         style="${isSystem ? 'cursor:default;' : ''}">
+                        <div class="notification-header-row">
+                            <span class="notification-title">${notif?.icon || '📢'} ${escapeHtml(notif?.title || 'Уведомление')}</span>
+                            <span class="notification-type-badge ${isSystem ? 'red' : ''}">${isSystem ? 'важное' : (typeLabels[notif?.type] || 'системное')}</span>
+                        </div>
+                        <div class="notification-message">${escapeHtml(notif?.message || '')}</div>
+                        <div class="notification-meta"><span><i class="far fa-clock"></i> ${date}</span></div>
+                        <div class="notification-dot"></div>
+                    </div>`;
             }).join('');
         }
 
