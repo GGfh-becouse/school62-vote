@@ -257,13 +257,14 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
                 <button class="create-poll-btn" id="createPollBtn">➕ создать опрос</button>
             </div>
 
-            <div class="active-polls">
-                <div class="section-header">
-                    <h3>активные голосования</h3>
-                    <a href="votes.html" class="section-link">все →</a>
-                </div>
-                <div id="pollsList"></div>
-            </div>
+<!-- АКТИВНЫЕ ГОЛОСОВАНИЯ — только ссылка -->
+<div class="active-polls">
+    <div class="section-header">
+        <h3>активные голосования</h3>
+        <a href="votes.html" class="section-link">все →</a>
+    </div>
+    <div id="pollPreview"></div>
+</div>
 
             <div class="stats-container">
                 <div class="stat-item">
@@ -606,43 +607,75 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
             } catch (e) { console.error(e); }
         }
 
-        function displayPolls() {
-            const pollsList = document.getElementById('pollsList');
-            if (!pollsList) return;
-            if (!polls || polls.length === 0) {
-                pollsList.innerHTML = '<div style="text-align:center;padding:20px;color:#8b93a6;">нет активных опросов</div>';
-                return;
-            }
-            pollsList.innerHTML = polls.map(poll => {
-                const total = (poll.yes_votes || 0) + (poll.no_votes || 0);
-                const yesP = total > 0 ? Math.round((poll.yes_votes / total) * 100) : 0;
-                const noP = total > 0 ? Math.round((poll.no_votes / total) * 100) : 0;
-                const myVote = votedPolls[poll.id];
-                const hasVoted = !!myVote;
-                return `
-                    <div class="poll-card ${hasVoted ? 'voted' : ''}">
-                        <div class="poll-question">${escapeHtml(poll.question)}</div>
-                        <div class="poll-stats">
-                            <span>👤 ${escapeHtml(poll.author || 'Аноним')}</span>
-                            <span>📊 ${total} голосов</span>
-                            ${hasVoted ? `<span style="color:#27ae60;">✓ ${myVote === 'yes' ? 'да' : 'нет'}</span>` : ''}
-                        </div>
-                        <div style="display:flex;gap:8px;margin-bottom:8px;">
-                            <div style="flex:1;text-align:center;color:#27ae60;font-weight:500;">да: ${yesP}%</div>
-                            <div style="flex:1;text-align:center;color:#e74c3c;font-weight:500;">нет: ${noP}%</div>
-                        </div>
-                        <div class="poll-options">
-                            <div class="poll-option yes ${hasVoted ? (myVote==='yes' ? 'voted-yes' : 'disabled') : ''}"
-                                 onclick="${hasVoted ? '' : `votePoll(${poll.id},'yes')`}">да</div>
-                            <div class="poll-option no ${hasVoted ? (myVote==='no' ? 'voted-no' : 'disabled') : ''}"
-                                 onclick="${hasVoted ? '' : `votePoll(${poll.id},'no')`}">нет</div>
-                        </div>
-                        <div class="poll-progress">
-                            <div class="progress-bar yes" style="width:${yesP}%"></div>
-                        </div>
-                    </div>`;
-            }).join('');
-        }
+function displayPolls() {
+    const container = document.getElementById('pollPreview');
+    if (!container) return;
+
+    if (!polls || polls.length === 0) {
+        container.innerHTML = `
+            <a href="votes.html" style="display:flex;align-items:center;justify-content:space-between;
+                padding:16px;background:#f8f9fc;border-radius:18px;text-decoration:none;
+                border:1px solid rgba(0,0,0,0.02);transition:all 0.2s;color:#1a1e2b;"
+                onmouseover="this.style.transform='translateX(4px)'"
+                onmouseout="this.style.transform=''">
+                <span style="font-size:0.9rem;color:#8b93a6;">нет активных опросов</span>
+                <span style="color:#2e3440;font-weight:600;">создать →</span>
+            </a>`;
+        return;
+    }
+
+    // Берём самый популярный (по голосам), если ничьих — последний
+    const popular = polls.reduce((max, p) => {
+        const totalMax = (max.yes_votes || 0) + (max.no_votes || 0);
+        const totalP = (p.yes_votes || 0) + (p.no_votes || 0);
+        return totalP > totalMax ? p : max;
+    }, polls[0]);
+
+    const total = (popular.yes_votes || 0) + (popular.no_votes || 0);
+    const yesP = total > 0 ? Math.round((popular.yes_votes / total) * 100) : 0;
+    const noP  = total > 0 ? Math.round((popular.no_votes  / total) * 100) : 0;
+    const myVote = votedPolls[popular.id];
+    const hasVoted = !!myVote;
+
+    container.innerHTML = `
+        <div class="poll-card ${hasVoted ? 'voted' : ''}">
+            <div class="poll-question">${escapeHtml(popular.question)}</div>
+            <div class="poll-stats">
+                <span>👤 ${escapeHtml(popular.author || 'Аноним')}</span>
+                <span>📊 ${total} голосов</span>
+                ${hasVoted ? `<span style="color:#27ae60;">✓ ${myVote === 'yes' ? 'да' : 'нет'}</span>` : ''}
+            </div>
+            <div style="display:flex;gap:8px;margin-bottom:8px;">
+                <div style="flex:1;text-align:center;color:#27ae60;font-weight:500;">да: ${yesP}%</div>
+                <div style="flex:1;text-align:center;color:#e74c3c;font-weight:500;">нет: ${noP}%</div>
+            </div>
+            <div class="poll-options">
+                <div class="poll-option yes ${hasVoted ? (myVote==='yes' ? 'voted-yes' : 'disabled') : ''}"
+                     onclick="${hasVoted ? '' : `votePoll(${popular.id},'yes')`}">да</div>
+                <div class="poll-option no ${hasVoted ? (myVote==='no' ? 'voted-no' : 'disabled') : ''}"
+                     onclick="${hasVoted ? '' : `votePoll(${popular.id},'no')`}">нет</div>
+            </div>
+            <div class="poll-progress">
+                <div class="progress-bar yes" style="width:${yesP}%"></div>
+            </div>
+        </div>
+        ${polls.length > 1 ? `
+        <a href="votes.html" style="display:flex;align-items:center;justify-content:center;gap:6px;
+            padding:12px;background:#f8f9fc;border-radius:18px;text-decoration:none;
+            color:#2e3440;font-size:0.85rem;font-weight:500;border:1px solid rgba(0,0,0,0.02);
+            transition:all 0.2s;margin-top:8px;"
+            onmouseover="this.style.background='#f0f2f5';this.style.transform='translateY(-1px)'"
+            onmouseout="this.style.background='#f8f9fc';this.style.transform=''">
+            ещё ${polls.length - 1} ${declension(polls.length - 1, 'опрос', 'опроса', 'опросов')} →
+        </a>` : ''}`;
+}
+
+function declension(n, one, few, many) {
+    const mod10 = n % 10, mod100 = n % 100;
+    if (mod10 === 1 && mod100 !== 11) return `${n} ${one}`;
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return `${n} ${few}`;
+    return `${n} ${many}`;
+}
 
         async function createPoll() {
             const question = document.getElementById('pollQuestionInput').value.trim();
