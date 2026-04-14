@@ -232,462 +232,826 @@ input:checked + .toggle-slider:before { transform: translateX(24px); }
 </head>
 <body>
 <div class="container">
-    <div class="main-content" id="mainContent">
-        <!-- динамический контент будет рендериться через JS -->
-    </div>
-</div>
+    <div class="main-content">
 
-<script>
-// ======================== ДАННЫЕ ПРОФИЛЯ (localStorage) ========================
-let profile = {
-    nickname: "krg62",
-    class: "🔮 Маг",
-    isPrime: true,
-    avatar: "https://i.pravatar.cc/300?img=7",
-    status: "🎧 Слушаю музыку и отдыхаю",
-    lookingForTeam: true,
-    frame: "standard", // standard, neon, gold, event
-    stickers: [],
-    music: {
-        url: "",
-        embedHtml: "",
-        service: ""
-    },
-    friends: [
-        { id: "f1", name: "Алексей", class: "🗡 Воин", avatar: "https://i.pravatar.cc/150?img=3", status: "online", isFriend: true, requestPending: false },
-        { id: "f2", name: "Мария", class: "✨ Волшебница", avatar: "https://i.pravatar.cc/150?img=5", status: "offline", isFriend: true, requestPending: false },
-        { id: "f3", name: "Дмитрий", class: "🏹 Лучник", avatar: "https://i.pravatar.cc/150?img=12", status: "online", isFriend: false, requestPending: true }
-    ]
-};
-
-// Загружаем данные из localStorage
-function loadProfileData() {
-    const saved = localStorage.getItem("krg62_profile");
-    if(saved) {
-        try {
-            const parsed = JSON.parse(saved);
-            profile = { ...profile, ...parsed };
-            if(!profile.stickers) profile.stickers = [];
-            if(!profile.music) profile.music = { url: "", embedHtml: "", service: "" };
-            if(!profile.friends) profile.friends = [];
-        } catch(e) {}
-    }
-}
-loadProfileData();
-
-function saveProfileData() {
-    localStorage.setItem("krg62_profile", JSON.stringify(profile));
-}
-
-// Вспомогательные функции
-function showMessage(text, type = "success") {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = `message ${type}`;
-    msgDiv.innerText = text;
-    document.body.appendChild(msgDiv);
-    setTimeout(() => msgDiv.remove(), 2500);
-}
-
-// Парсинг YouTube
-function parseYouTubeUrl(url) {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-}
-
-// Парсинг Spotify трека (простой fallback)
-function parseSpotifyTrack(url) {
-    const match = url.match(/track\/([a-zA-Z0-9]+)/);
-    return match ? match[1] : null;
-}
-
-// Генерация embed кода
-function generateMusicEmbed(url) {
-    if(!url.trim()) return { embedHtml: "", service: "" };
-    let embedHtml = "";
-    let service = "";
-    const videoId = parseYouTubeUrl(url);
-    if(videoId) {
-        embedHtml = `<iframe width="100%" height="180" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-        service = "youtube";
-    } else if(url.includes("spotify.com/track/")) {
-        const trackId = parseSpotifyTrack(url);
-        if(trackId) {
-            embedHtml = `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/${trackId}" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
-            service = "spotify";
-        }
-    } else if(url.includes("soundcloud.com")) {
-        embedHtml = `<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&color=%232e3440&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>`;
-        service = "soundcloud";
-    }
-    return { embedHtml, service };
-}
-
-// Обновление музыки
-function updateMusic(url) {
-    const { embedHtml, service } = generateMusicEmbed(url);
-    profile.music = { url, embedHtml, service };
-    saveProfileData();
-    render();
-}
-
-// Удаление музыки
-function clearMusic() {
-    profile.music = { url: "", embedHtml: "", service: "" };
-    saveProfileData();
-    render();
-    showMessage("Музыка удалена из профиля", "success");
-}
-
-// Стикеры
-function addSticker(url) {
-    if(!url.trim()) return showMessage("Введите URL стикера", "error");
-    if(profile.stickers.length >= 9) return showMessage("Максимум 9 стикеров", "error");
-    profile.stickers.push({ url: url.trim(), position: `pos-${profile.stickers.length+1}` });
-    saveProfileData();
-    render();
-    showMessage("Стикер добавлен! Перетащите его нажав на крестик для удаления", "success");
-}
-
-function removeSticker(index) {
-    profile.stickers.splice(index, 1);
-    saveProfileData();
-    render();
-    showMessage("Стикер удален", "success");
-}
-
-// Рамки
-function setFrame(frameType) {
-    profile.frame = frameType;
-    saveProfileData();
-    render();
-    showMessage(`Рамка "${frameType}" установлена`, "success");
-}
-
-// Статус
-function updateStatus(newStatus) {
-    if(newStatus.trim()) profile.status = newStatus.trim();
-    else profile.status = "😊 Активен";
-    saveProfileData();
-    render();
-    showMessage("Статус обновлен", "success");
-}
-
-// Looking for team
-function toggleLooking() {
-    profile.lookingForTeam = !profile.lookingForTeam;
-    saveProfileData();
-    render();
-    showMessage(profile.lookingForTeam ? "Теперь вы ищете команду" : "Вы отключили поиск команды", "success");
-}
-
-// Друзья: принятие/отклонение/удаление
-function acceptFriend(friendId) {
-    const friend = profile.friends.find(f => f.id === friendId);
-    if(friend && friend.requestPending) {
-        friend.isFriend = true;
-        friend.requestPending = false;
-        saveProfileData();
-        render();
-        showMessage(`Вы добавили ${friend.name} в друзья`, "success");
-    }
-}
-function rejectFriend(friendId) {
-    profile.friends = profile.friends.filter(f => f.id !== friendId);
-    saveProfileData();
-    render();
-    showMessage("Заявка отклонена", "success");
-}
-function removeFriend(friendId) {
-    profile.friends = profile.friends.filter(f => f.id !== friendId);
-    saveProfileData();
-    render();
-    showMessage("Друг удален", "success");
-}
-
-// Смена аватара
-function changeAvatar() {
-    const newAvatar = prompt("Введите URL нового аватара:", profile.avatar);
-    if(newAvatar && newAvatar.trim()) {
-        profile.avatar = newAvatar.trim();
-        saveProfileData();
-        render();
-        showMessage("Аватар обновлен", "success");
-    }
-}
-
-// ======================== RENDER ========================
-function render() {
-    const container = document.getElementById("mainContent");
-    if(!container) return;
-    
-    const frameClass = profile.frame === "neon" ? "avatar-frame-neon" : (profile.frame === "gold" ? "avatar-frame-gold" : (profile.frame === "event" ? "avatar-frame-event" : ""));
-    
-    let stickersHtml = "";
-    profile.stickers.forEach((sticker, idx) => {
-        const posClass = `sticker-pos-${idx+1}`;
-        stickersHtml += `<div class="sticker ${posClass}" style="background: transparent;">
-                            <img src="${sticker.url}" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
-                            <div class="sticker-remove" data-sticker-index="${idx}">✕</div>
-                         </div>`;
-    });
-    
-    const musicHtml = profile.music.embedHtml ? `
-        <div class="music-embed-preview">
-            ${profile.music.embedHtml}
-            <button class="music-clear-btn" id="clearMusicBtn"><i class="fas fa-trash-alt"></i> Очистить музыку</button>
-        </div>
-    ` : `<div class="music-hint"><i class="fas fa-headphones"></i> Вставьте ссылку на YouTube, Spotify или SoundCloud</div>`;
-    
-    // Список друзей (вкладки)
-    const friendsList = profile.friends.filter(f => f.isFriend === true);
-    const requestsList = profile.friends.filter(f => f.requestPending === true && f.isFriend === false);
-    
-    const friendsHtml = `
-        <div class="friends-tabs">
-            <button class="friend-tab active" data-tab="friends">Друзья (${friendsList.length})</button>
-            <button class="friend-tab" data-tab="requests">Заявки (${requestsList.length})</button>
-        </div>
-        <div class="friends-list" id="friendsListContainer">
-            ${renderFriendsList('friends')}
-        </div>
-    `;
-    
-    const stickersInventoryHtml = profile.stickers.map((sticker, idx) => `
-        <div class="sticker-item" data-sticker-inventory="${idx}">
-            <img src="${sticker.url}" alt="sticker">
-            <div class="sticker-rarity">★ стикер</div>
-        </div>
-    `).join("");
-    
-    const html = `
         <div class="header">
             <div class="header-content">
                 <div class="logo">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3106/3106772.png" class="logo-img" alt="logo">
-                    <h1>krg62</h1>
+                    <img src="top_logotype.png" alt="krg62" class="logo-img">
+                    <h1>профиль</h1>
                 </div>
                 <div class="header-icons">
-                    <i class="fas fa-bell header-icon"></i>
-                    <i class="fas fa-cog header-icon"></i>
+                    <a href="your_account.html" class="header-icon">
+                        <i class="far fa-user"></i>
+                    </a>
                 </div>
             </div>
         </div>
-        
-        <div class="user-info-bar">
+
+        <div class="user-info-bar" id="userInfoBar">
             <div class="user-info-left">
-                <div class="user-avatar-mini"><img src="${profile.avatar}" alt="avatar"></div>
+                <div class="user-avatar-mini">
+                    <img src="https://i.pravatar.cc/300" id="miniAvatar" alt="">
+                </div>
                 <div class="user-details">
-                    <div class="user-nickname">${profile.nickname}</div>
+                    <span class="user-nickname" id="userNickname">Загрузка...</span>
                     <div class="user-meta">
-                        <span class="user-class">${profile.class}</span>
-                        ${profile.isPrime ? '<span class="user-prime">PRIME</span>' : ''}
+                        <span class="user-class" id="userClass"></span>
+                        <span class="user-prime" id="userPrime">обычный</span>
                     </div>
                 </div>
             </div>
-            <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+            <button class="logout-btn" id="logoutBtn">выйти</button>
         </div>
-        
+
         <div class="profile-card">
             <div class="profile-header">
-                <div class="avatar-container">
+                <div class="avatar-container" id="avatarContainer">
                     <div class="avatar-wrapper">
-                        <img src="${profile.avatar}" class="avatar" alt="avatar">
-                        ${frameClass ? `<div class="${frameClass}"></div>` : ""}
-                        ${stickersHtml}
+                        <img src="https://i.pravatar.cc/300" class="avatar" id="avatar" alt="Аватар">
+                        <div id="avatarFrame"></div>
                     </div>
                 </div>
                 <div class="avatar-actions">
-                    <button class="change-avatar-btn" id="changeAvatarBtn"><i class="fas fa-camera"></i> Сменить аватар</button>
+                    <button class="change-avatar-btn" id="changeAvatarBtn">
+                        <i class="far fa-image"></i> сменить аватар
+                    </button>
                 </div>
             </div>
-            
+
             <div class="status-section">
-                <div class="status-display"><i class="fas fa-comment-dots"></i> ${profile.status}</div>
+                <div class="status-display" id="statusDisplay">Статус не установлен</div>
                 <div class="status-input">
-                    <input type="text" id="statusInput" placeholder="Новый статус..." value="${profile.status.replace(/<[^>]*>/g, '')}">
-                    <button id="updateStatusBtn">Обновить</button>
+                    <input type="text" id="statusInput" placeholder="ваш статус..." maxlength="50">
+                    <button id="updateStatusBtn">обновить</button>
                 </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="action-btn" onclick="updateDisplayName()">
+                    <i class="far fa-edit"></i> сменить имя
+                </button>
+                <button class="action-btn" onclick="updateClass()">
+                    <i class="far fa-graduation-cap"></i> сменить класс
+                </button>
             </div>
         </div>
-        
-        <!-- МУЗЫКА -->
-        <div class="music-section">
+
+        <!-- ========== МУЗЫКА — НОВАЯ ФУНКЦИЯ ========== -->
+        <div class="music-section" id="musicSection">
             <div class="music-section-header">
                 <div class="music-section-title">
-                    <i class="fas fa-music" style="color:#667eea"></i>
-                    <h3>МУЗЫКА В ПРОФИЛЕ</h3>
-                    <div class="music-new-badge">NEW</div>
-                </div>
-                <div class="equalizer" id="equalizerWidget">
-                    <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+                    <div class="equalizer" id="equalizerBars">
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                    </div>
+                    <h3>музыка в профиле</h3>
+                    <span class="music-new-badge">NEW</span>
                 </div>
             </div>
+
             <div class="music-services">
-                <div class="music-service-badge yt"><i class="fab fa-youtube"></i> YouTube</div>
-                <div class="music-service-badge"><i class="fab fa-spotify"></i> Spotify</div>
-                <div class="music-service-badge sc"><i class="fab fa-soundcloud"></i> SoundCloud</div>
+                <div class="music-service-badge yt">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#FF0000">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    YouTube
+                </div>
+                <div class="music-service-badge sc">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#FF5500">
+                        <path d="M1.175 12.225c-.017 0-.034.002-.05.006a.327.327 0 0 0-.268.313l-.357 2.19.357 2.19a.327.327 0 0 0 .318.268c.175 0 .318-.143.318-.318v-4.33a.318.318 0 0 0-.318-.319zm1.675-.55c-.026 0-.052.003-.077.01a.376.376 0 0 0-.299.363l-.399 2.475.399 2.475a.376.376 0 0 0 .376.376c.207 0 .376-.169.376-.376V12.05a.376.376 0 0 0-.376-.375zm1.742-.204c-.034 0-.067.005-.1.015a.424.424 0 0 0-.325.412l-.44 2.625.44 2.625a.424.424 0 0 0 .425.424c.234 0 .424-.19.424-.424v-5.25a.424.424 0 0 0-.424-.427zm1.742-.143c-.04 0-.081.006-.12.018a.474.474 0 0 0-.353.457l-.478 2.77.478 2.77a.474.474 0 0 0 .473.474c.261 0 .473-.212.473-.474v-5.54a.474.474 0 0 0-.473-.475zm1.741-.089c-.048 0-.096.008-.142.022a.524.524 0 0 0-.38.502l-.516 2.915.516 2.915a.524.524 0 0 0 .522.524c.288 0 .522-.234.522-.524V11.76a.524.524 0 0 0-.522-.521zm1.742-.044c-.055 0-.11.009-.163.026a.573.573 0 0 0-.407.547l-.554 3.06.554 3.06a.573.573 0 0 0 .57.574c.316 0 .571-.256.571-.574v-6.12a.573.573 0 0 0-.571-.573zm1.742-.025c-.062 0-.124.01-.184.03a.622.622 0 0 0-.434.591l-.592 3.205.592 3.205a.622.622 0 0 0 .618.623c.344 0 .622-.278.622-.623V11.76a.622.622 0 0 0-.622-.59zm5.566-2.413c-.26 0-.51.034-.75.097C15.355 6.05 13.38 4.5 11.026 4.5c-.617 0-1.205.127-1.736.352-.205.086-.26.174-.262.255v13.624c.003.085.064.156.15.17l8.524.001c.797 0 1.443-.646 1.443-1.443v-5.572c0-.797-.646-1.443-1.443-1.443z"/>
+                    </svg>
+                    SoundCloud
+                </div>
             </div>
+
+            <div class="music-hint">
+                <i class="fas fa-info-circle"></i>
+                вставь ссылку на трек — он будет виден в твоём профиле
+            </div>
+
             <div class="music-input-row">
-                <input type="text" class="music-url-input" id="musicUrlInput" placeholder="Вставьте ссылку на трек..." value="${profile.music.url.replace(/"/g, '&quot;')}">
-                <button class="music-save-btn" id="saveMusicBtn"><i class="fas fa-save"></i> Сохранить</button>
+                <input type="text" id="musicUrlInput" class="music-url-input"
+                    placeholder="https://youtube.com/watch?v=... или soundcloud.com/...">
+                <button class="music-save-btn" onclick="saveMusicUrl()">
+                    <i class="fas fa-save"></i> сохранить
+                </button>
             </div>
-            ${musicHtml}
+
+            <div id="musicPreview"></div>
         </div>
-        
-        <div class="profile-actions">
-            <button class="action-btn" id="shareProfileBtn"><i class="fas fa-share-alt"></i> Поделиться</button>
-            <button class="action-btn" id="reportBtn"><i class="fas fa-flag"></i> Пожаловаться</button>
-        </div>
-        
-        <div class="looking-toggle-card">
+
+        <!-- ИЩУ КЕНТОВ -->
+        <div class="looking-toggle-card" id="lookingToggleCard">
             <div class="looking-toggle-label">
-                <i class="fas fa-users"></i>
+                <i class="fas fa-user-friends"></i>
                 <div class="looking-toggle-text">
-                    <div class="title">Поиск команды / напарников</div>
-                    <div class="subtitle">Другие увидят, что вы в поиске</div>
+                    <div class="title">🤝 я ищу кентов</div>
+                    <div class="subtitle">другие пользователи смогут найти вас в списке</div>
                 </div>
             </div>
             <label class="toggle-switch">
-                <input type="checkbox" id="lookingToggle" ${profile.lookingForTeam ? "checked" : ""}>
+                <input type="checkbox" id="lookingForFriendsToggle">
                 <span class="toggle-slider"></span>
             </label>
         </div>
-        
-        <div class="friends-section" id="friendsSection">
+
+        <!-- КЕНТЫ -->
+        <div class="friends-section">
             <div class="friends-header">
-                <h3><i class="fas fa-user-friends"></i> Друзья и заявки</h3>
-                <span class="friends-count">${profile.friends.filter(f=>f.isFriend).length}</span>
+                <h3><i class="far fa-user-friends"></i> кенты</h3>
+                <span class="friends-count" id="friendsCount">0</span>
             </div>
-            ${friendsHtml}
+            <div class="friends-tabs">
+                <button class="friend-tab active" onclick="switchFriendsTab('friends')">мои кенты</button>
+                <button class="friend-tab" onclick="switchFriendsTab('requests')">запросы</button>
+                <button class="friend-tab" onclick="switchFriendsTab('sent')">отправленные</button>
+            </div>
+            <div class="friends-list" id="friendsList">
+                <div class="loader"></div>
+            </div>
         </div>
-        
+
+        <!-- РАМКИ -->
         <div class="frames-section">
-            <h3><i class="fas fa-image"></i> Рамки аватара</h3>
+            <h3><i class="far fa-image"></i> рамки для аватарки</h3>
             <div class="frames-grid">
-                <div class="frame-option ${profile.frame === 'standard' ? 'active' : ''}" data-frame="standard"><div class="frame-preview standard"></div>Стандарт</div>
-                <div class="frame-option ${profile.frame === 'neon' ? 'active' : ''}" data-frame="neon"><div class="frame-preview neon"></div>Неон</div>
-                <div class="frame-option ${profile.frame === 'gold' ? 'active' : ''}" data-frame="gold"><div class="frame-preview gold"></div>Золото</div>
-                <div class="frame-option ${profile.frame === 'event' ? 'active' : ''}" data-frame="event"><div class="frame-preview event"></div>Ивент</div>
+                <div class="frame-option" onclick="selectFrame('standard')">
+                    <div class="frame-preview standard"></div>
+                    <div>обычная</div>
+                </div>
+                <div class="frame-option" onclick="selectFrame('neon')">
+                    <div class="frame-preview neon"></div>
+                    <div>неон</div>
+                </div>
+                <div class="frame-option" onclick="selectFrame('gold')">
+                    <div class="frame-preview gold"></div>
+                    <div>золото</div>
+                </div>
+                <div class="frame-option" onclick="selectFrame('event')">
+                    <div class="frame-preview event"></div>
+                    <div>ивент</div>
+                </div>
             </div>
         </div>
-        
+
+        <!-- СТИКЕРЫ -->
         <div class="stickers-section">
-            <h3><i class="fas fa-smile-wink"></i> Стикеры на аватар <span class="sticker-counter">${profile.stickers.length}/9</span></h3>
+            <h3>
+                <i class="far fa-star"></i> мои стикеры
+                <span class="sticker-counter" id="stickerCounter">0/1</span>
+            </h3>
             <div class="sticker-url-input">
-                <input type="text" id="stickerUrlInput" placeholder="URL картинки-стикера (PNG/JPG)">
-                <button id="addStickerBtn">➕ Добавить стикер</button>
+                <input type="text" id="stickerUrlInput" placeholder="url стикера...">
+                <button id="addStickerByUrlBtn">добавить</button>
             </div>
-            <div class="stickers-grid" id="stickersInventory">
-                ${stickersInventoryHtml || '<div class="empty-friends">Нет стикеров. Добавьте первый!</div>'}
+            <div class="stickers-grid" id="stickersGrid"></div>
+            <div class="prime-note">
+                <i class="far fa-crown"></i> prime: до 5 стикеров
             </div>
-            <div class="prime-note"><i class="fas fa-star"></i> Стикеры можно удалить кликом на крестик на аватаре</div>
         </div>
-    `;
-    
-    container.innerHTML = html;
-    
-    // Event listeners
-    document.getElementById("changeAvatarBtn")?.addEventListener("click", changeAvatar);
-    document.getElementById("updateStatusBtn")?.addEventListener("click", () => {
-        const input = document.getElementById("statusInput");
-        updateStatus(input.value);
-    });
-    document.getElementById("saveMusicBtn")?.addEventListener("click", () => {
-        const urlInput = document.getElementById("musicUrlInput");
-        updateMusic(urlInput.value);
-    });
-    document.getElementById("clearMusicBtn")?.addEventListener("click", clearMusic);
-    document.getElementById("lookingToggle")?.addEventListener("change", toggleLooking);
-    document.getElementById("logoutBtn")?.addEventListener("click", () => showMessage("Выход из профиля (демо)", "success"));
-    document.getElementById("shareProfileBtn")?.addEventListener("click", () => showMessage("Ссылка скопирована! (демо)", "success"));
-    document.getElementById("reportBtn")?.addEventListener("click", () => showMessage("Жалоба отправлена", "success"));
-    document.getElementById("addStickerBtn")?.addEventListener("click", () => {
-        const urlInput = document.getElementById("stickerUrlInput");
-        addSticker(urlInput.value);
-    });
-    
-    // рамки
-    document.querySelectorAll(".frame-option").forEach(el => {
-        el.addEventListener("click", () => setFrame(el.dataset.frame));
-    });
-    
-    // удаление стикеров через аватар
-    document.querySelectorAll(".sticker-remove").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const idx = btn.dataset.stickerIndex;
-            if(idx !== undefined) removeSticker(parseInt(idx));
-        });
-    });
-    
-    // друзья табы
-    const tabFriends = document.querySelector(".friend-tab[data-tab='friends']");
-    const tabRequests = document.querySelector(".friend-tab[data-tab='requests']");
-    if(tabFriends && tabRequests) {
-        tabFriends.addEventListener("click", () => {
-            document.querySelectorAll(".friend-tab").forEach(t => t.classList.remove("active"));
-            tabFriends.classList.add("active");
-            const listContainer = document.getElementById("friendsListContainer");
-            if(listContainer) listContainer.innerHTML = renderFriendsList('friends');
-        });
-        tabRequests.addEventListener("click", () => {
-            document.querySelectorAll(".friend-tab").forEach(t => t.classList.remove("active"));
-            tabRequests.classList.add("active");
-            const listContainer = document.getElementById("friendsListContainer");
-            if(listContainer) listContainer.innerHTML = renderFriendsList('requests');
-        });
+
+        <div style="text-align:center;margin-top:20px;padding:10px;">
+            <a href="rules.html" style="color:#8b93a6;font-size:0.75rem;text-decoration:none;">
+                <i class="fas fa-scroll"></i> правила сообщества
+            </a>
+        </div>
+    </div>
+</div>
+
+<nav class="bottom-nav">
+    <a href="index.html" class="nav-item-bottom">
+        <i class="fas fa-home nav-icon-bottom"></i><span>главная</span>
+    </a>
+    <a href="votes.html" class="nav-item-bottom">
+        <i class="fas fa-chart-bar nav-icon-bottom"></i><span>голосования</span>
+    </a>
+    <a href="threads.html" class="nav-item-bottom">
+        <i class="fas fa-comment nav-icon-bottom"></i><span>темки</span>
+    </a>
+    <a href="slivy.html" class="nav-item-bottom">
+        <i class="fas fa-image nav-icon-bottom"></i><span>сливы</span>
+    </a>
+    <a href="your_account.html" class="nav-item-bottom active">
+        <i class="fas fa-user nav-icon-bottom"></i><span>аккаунт</span>
+    </a>
+</nav>
+
+<div id="messageContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let currentUser = null;
+    let currentStickers = [];
+    let maxStickers = 1;
+    let currentFrame = 'standard';
+    let friends = [];
+    let friendRequests = [];
+    let sentRequests = [];
+
+    const stickerPositions = [
+        'sticker-pos-1','sticker-pos-2','sticker-pos-3','sticker-pos-4','sticker-pos-5',
+        'sticker-pos-6','sticker-pos-7','sticker-pos-8','sticker-pos-9'
+    ];
+
+    // ============================================
+    // ВСПОМОГАТЕЛЬНЫЕ
+    // ============================================
+    function showMessage(text, type) {
+        const container = document.getElementById('messageContainer');
+        const msg = document.createElement('div');
+        msg.className = `message ${type}`;
+        msg.textContent = text;
+        container.appendChild(msg);
+        setTimeout(() => {
+            msg.style.animation = 'slideIn 0.3s reverse';
+            setTimeout(() => msg.remove(), 280);
+        }, 2700);
     }
-    
-    function renderFriendsList(type) {
-        let items = type === 'friends' ? profile.friends.filter(f => f.isFriend) : profile.friends.filter(f => f.requestPending && !f.isFriend);
-        if(items.length === 0) return `<div class="empty-friends">${type === 'friends' ? 'У вас пока нет друзей' : 'Нет входящих заявок'}</div>`;
-        return items.map(f => `
-            <div class="friend-item" data-friend-id="${f.id}">
-                <div class="friend-avatar"><img src="${f.avatar}" alt="avatar"></div>
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // ============================================
+    // МУЗЫКА
+    // ============================================
+    function detectMusicService(url) {
+        if (!url) return null;
+        if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube';
+        if (url.includes('soundcloud.com')) return 'soundcloud';
+        return null;
+    }
+
+    function getYouTubeId(url) {
+        const patterns = [
+            /youtube\.com\/watch\?v=([^&]+)/,
+            /youtu\.be\/([^?]+)/,
+            /youtube\.com\/embed\/([^?]+)/
+        ];
+        for (const p of patterns) {
+            const m = url.match(p);
+            if (m) return m[1];
+        }
+        return null;
+    }
+
+    function renderMusicPreview(url) {
+        const preview = document.getElementById('musicPreview');
+        const bars = document.getElementById('equalizerBars');
+        if (!preview) return;
+
+        const service = detectMusicService(url);
+
+        if (!service) {
+            preview.innerHTML = '';
+            // Останавливаем эквалайзер
+            if (bars) bars.querySelectorAll('.eq-bar').forEach(b => b.classList.add('paused'));
+            return;
+        }
+
+        // Запускаем эквалайзер
+        if (bars) bars.querySelectorAll('.eq-bar').forEach(b => b.classList.remove('paused'));
+
+        if (service === 'youtube') {
+            const videoId = getYouTubeId(url);
+            if (!videoId) { preview.innerHTML = ''; return; }
+            preview.innerHTML = `
+                <div class="music-embed-preview">
+                    <iframe height="120"
+                        src="https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                        allowfullscreen></iframe>
+                </div>
+                <button class="music-clear-btn" onclick="clearMusicUrl()">
+                    <i class="fas fa-times"></i> удалить музыку
+                </button>`;
+        } else if (service === 'soundcloud') {
+            const encoded = encodeURIComponent(url);
+            preview.innerHTML = `
+                <div class="music-embed-preview">
+                    <iframe height="120"
+                        src="https://w.soundcloud.com/player/?url=${encoded}&color=%232e3440&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"
+                        frameborder="0" allow="autoplay"></iframe>
+                </div>
+                <button class="music-clear-btn" onclick="clearMusicUrl()">
+                    <i class="fas fa-times"></i> удалить музыку
+                </button>`;
+        }
+    }
+
+    async function saveMusicUrl() {
+        const input = document.getElementById('musicUrlInput');
+        const url = input.value.trim();
+
+        if (url && !detectMusicService(url)) {
+            showMessage('поддерживается только YouTube и SoundCloud', 'error');
+            return;
+        }
+
+        try {
+            const { error } = await supabaseClient
+                .from('users')
+                .update({ music_url: url || null })
+                .eq('id', currentUser.id);
+
+            if (error) throw error;
+
+            currentUser.music_url = url || null;
+            renderMusicPreview(url);
+            saveProfileToLocalStorage();
+            showMessage(url ? '✅ музыка сохранена' : '✅ музыка удалена', 'success');
+        } catch (e) {
+            showMessage('ошибка: ' + e.message, 'error');
+        }
+    }
+
+    window.clearMusicUrl = async function() {
+        document.getElementById('musicUrlInput').value = '';
+        await saveMusicUrl();
+    };
+
+    function loadMusicSection() {
+        if (!currentUser) return;
+        const input = document.getElementById('musicUrlInput');
+        if (input && currentUser.music_url) {
+            input.value = currentUser.music_url;
+            renderMusicPreview(currentUser.music_url);
+        } else {
+            // Эквалайзер в паузе если музыки нет
+            const bars = document.getElementById('equalizerBars');
+            if (bars) bars.querySelectorAll('.eq-bar').forEach(b => b.classList.add('paused'));
+        }
+    }
+
+    // Enter для сохранения музыки
+    document.getElementById('musicUrlInput')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') saveMusicUrl();
+    });
+
+    // ============================================
+    // РАМКИ
+    // ============================================
+    function selectFrame(frameType) {
+        currentFrame = frameType;
+        const frameDiv = document.getElementById('avatarFrame');
+        const frames = {
+            standard: '',
+            neon: '<div class="avatar-frame-neon"></div>',
+            gold: '<div class="avatar-frame-gold"></div>',
+            event: '<div class="avatar-frame-event"></div>'
+        };
+        if (frameDiv) frameDiv.innerHTML = frames[frameType] || '';
+        document.querySelectorAll('.frame-option').forEach(opt => opt.classList.remove('active'));
+        const activeFrame = document.querySelector(`.frame-option[onclick*="'${frameType}'"]`);
+        if (activeFrame) activeFrame.classList.add('active');
+        saveProfileToLocalStorage();
+    }
+
+    // ============================================
+    // LOCALSTORAGE
+    // ============================================
+    function saveProfileToLocalStorage() {
+        if (!currentUser) return;
+        const profileData = {
+            id: currentUser.id,
+            nickname: currentUser.nickname,
+            real_name: currentUser.real_name,
+            class: currentUser.class,
+            avatar_url: currentUser.avatar_url,
+            status: currentUser.status,
+            is_prime: currentUser.is_prime,
+            display_name: currentUser.display_name || currentUser.nickname,
+            looking_for_friends: currentUser.looking_for_friends,
+            music_url: currentUser.music_url || null,
+            frame: currentFrame,
+            stickers: currentStickers.map(s => ({ id: s.id, url: s.sticker_url, position: s.position }))
+        };
+        localStorage.setItem('profileData', JSON.stringify(profileData));
+    }
+
+    function loadProfileFromLocalStorage() {
+        const profileData = localStorage.getItem('profileData');
+        if (!profileData) return false;
+        try {
+            const data = JSON.parse(profileData);
+            currentFrame = data.frame || 'standard';
+            const avatar = document.getElementById('avatar');
+            const miniAvatar = document.getElementById('miniAvatar');
+            const userNickname = document.getElementById('userNickname');
+            const userClass = document.getElementById('userClass');
+            const statusDisplay = document.getElementById('statusDisplay');
+            if (avatar) avatar.src = data.avatar_url || 'https://i.pravatar.cc/300';
+            if (miniAvatar) miniAvatar.src = data.avatar_url || 'https://i.pravatar.cc/300';
+            if (userNickname) userNickname.textContent = data.display_name || data.nickname;
+            if (userClass) userClass.textContent = data.class;
+            if (statusDisplay) statusDisplay.textContent = data.status || 'Статус не установлен';
+            selectFrame(currentFrame);
+            if (data.stickers) {
+                currentStickers = data.stickers.map(s => ({ id: s.id, sticker_url: s.url, position: s.position }));
+                renderStickers();
+            }
+            return true;
+        } catch (e) { return false; }
+    }
+
+    // ============================================
+    // PRIME
+    // ============================================
+    async function checkPrimeStatus() {
+        try {
+            const { data } = await supabaseClient
+                .from('verified_users')
+                .select('*')
+                .eq('username', currentUser.nickname)
+                .maybeSingle();
+            if (data) {
+                currentUser.is_prime = true;
+                await supabaseClient.from('users').update({ is_prime: true }).eq('id', currentUser.id);
+            }
+        } catch (e) { console.error(e); }
+    }
+
+    // ============================================
+    // ДРУЗЬЯ
+    // ============================================
+    window.switchFriendsTab = function(tab) {
+        const tabs = document.querySelectorAll('.friend-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => {
+            if (tab === 'friends') return t.textContent.includes('мои кенты');
+            if (tab === 'requests') return t.textContent.includes('запросы');
+            if (tab === 'sent') return t.textContent.includes('отправленные');
+        });
+        if (activeTab) activeTab.classList.add('active');
+        if (tab === 'friends') displayFriends();
+        else if (tab === 'requests') displayFriendRequests();
+        else if (tab === 'sent') displaySentRequests();
+    };
+
+    function displayFriends() {
+        const list = document.getElementById('friendsList');
+        if (!friends || friends.length === 0) {
+            list.innerHTML = '<div class="empty-friends">🤝 пока нет кентов</div>';
+            return;
+        }
+        list.innerHTML = friends.filter(Boolean).map(friend => `
+            <div class="friend-item">
+                <div class="friend-avatar"><img src="${friend.avatar_url || 'https://i.pravatar.cc/300'}" alt=""></div>
                 <div class="friend-info">
-                    <div class="friend-name">${f.name}</div>
-                    <div class="friend-meta"><span class="friend-class">${f.class}</span><span class="friend-status">${f.status === 'online' ? 'В сети' : 'Не в сети'}</span></div>
+                    <div class="friend-name">${escapeHtml(friend.display_name || friend.nickname || 'Пользователь')}</div>
+                    <div class="friend-meta">
+                        <span class="friend-class">${escapeHtml(friend.class || 'класс')}</span>
+                        ${friend.status ? `<span class="friend-status">"${escapeHtml(friend.status.substring(0,20))}${friend.status.length > 20 ? '...' : ''}"</span>` : ''}
+                    </div>
                 </div>
                 <div class="friend-actions">
-                    ${type === 'friends' ? `<button class="friend-btn remove" data-friend-remove="${f.id}">Удалить</button>` : 
-                      `<button class="friend-btn accept" data-friend-accept="${f.id}">Принять</button>
-                       <button class="friend-btn reject" data-friend-reject="${f.id}">Отклонить</button>`}
+                    <button class="friend-btn remove" onclick="removeFriend('${friend.id}')">
+                        <i class="fas fa-user-minus"></i>
+                    </button>
                 </div>
-            </div>
-        `).join("");
+            </div>`).join('');
     }
-    
-    // делегирование для кнопок друзей
-    container.querySelectorAll(".friend-btn.remove").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            const id = btn.dataset.friendRemove;
-            if(id) removeFriend(id);
-        });
-    });
-    container.querySelectorAll(".friend-btn.accept").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            const id = btn.dataset.friendAccept;
-            if(id) acceptFriend(id);
-        });
-    });
-    container.querySelectorAll(".friend-btn.reject").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            const id = btn.dataset.friendReject;
-            if(id) rejectFriend(id);
-        });
-    });
-    
-    // анимация эквалайзера если есть музыка
-    const eqBars = document.querySelectorAll(".eq-bar");
-    if(!profile.music.embedHtml) {
-        eqBars.forEach(bar => bar.classList.add("paused"));
-    } else {
-        eqBars.forEach(bar => bar.classList.remove("paused"));
-    }
-}
 
-render();
+    function displayFriendRequests() {
+        const list = document.getElementById('friendsList');
+        if (!friendRequests || friendRequests.length === 0) {
+            list.innerHTML = '<div class="empty-friends">📭 нет запросов</div>';
+            return;
+        }
+        list.innerHTML = friendRequests.filter(r => r?.user).map(request => `
+            <div class="friend-item">
+                <div class="friend-avatar"><img src="${request.user.avatar_url || 'https://i.pravatar.cc/300'}" alt=""></div>
+                <div class="friend-info">
+                    <div class="friend-name">${escapeHtml(request.user.display_name || request.user.nickname)}</div>
+                    <div class="friend-meta">
+                        <span class="friend-class">${escapeHtml(request.user.class || 'класс')}</span>
+                        ${request.user.is_prime ? '<span class="friend-status" style="color:#f1c40f;">prime</span>' : ''}
+                    </div>
+                </div>
+                <div class="friend-actions">
+                    <button class="friend-btn accept" onclick="acceptFriendRequest('${request.id}')"><i class="fas fa-check"></i></button>
+                    <button class="friend-btn reject" onclick="rejectFriendRequest('${request.id}')"><i class="fas fa-times"></i></button>
+                </div>
+            </div>`).join('');
+    }
+
+    function displaySentRequests() {
+        const list = document.getElementById('friendsList');
+        if (!sentRequests || sentRequests.length === 0) {
+            list.innerHTML = '<div class="empty-friends">📤 нет отправленных</div>';
+            return;
+        }
+        list.innerHTML = sentRequests.filter(r => r?.user).map(request => `
+            <div class="friend-item">
+                <div class="friend-avatar"><img src="${request.user.avatar_url || 'https://i.pravatar.cc/300'}" alt=""></div>
+                <div class="friend-info">
+                    <div class="friend-name">${escapeHtml(request.user.display_name || request.user.nickname)}</div>
+                    <div class="friend-meta">
+                        <span class="friend-class">${escapeHtml(request.user.class || 'класс')}</span>
+                        <span class="friend-status" style="color:#8b93a6;">ожидание</span>
+                    </div>
+                </div>
+                <div class="friend-actions">
+                    <button class="friend-btn reject" onclick="cancelFriendRequest('${request.id}')"><i class="fas fa-times"></i></button>
+                </div>
+            </div>`).join('');
+    }
+
+    window.acceptFriendRequest = async function(requestId) {
+        try {
+            const { error } = await supabaseClient.from('friends')
+                .update({ status: 'accepted', updated_at: new Date().toISOString() })
+                .eq('id', parseInt(requestId));
+            if (error) throw error;
+            showMessage('✅ запрос принят', 'success');
+            await loadFriends();
+        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+    };
+
+    window.rejectFriendRequest = async function(requestId) {
+        try {
+            const { error } = await supabaseClient.from('friends').delete().eq('id', parseInt(requestId));
+            if (error) throw error;
+            showMessage('❌ запрос отклонён', 'success');
+            await loadFriends();
+        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+    };
+
+    window.cancelFriendRequest = async function(requestId) {
+        try {
+            const { error } = await supabaseClient.from('friends').delete().eq('id', parseInt(requestId));
+            if (error) throw error;
+            showMessage('✖️ запрос отменён', 'success');
+            await loadFriends();
+        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+    };
+
+    window.removeFriend = async function(friendId) {
+        if (!confirm('Удалить из кентов?')) return;
+        const uid = parseInt(currentUser.id);
+        const fid = parseInt(friendId);
+        try {
+            const { error: e1 } = await supabaseClient.from('friends').delete()
+                .eq('user_id', uid).eq('friend_id', fid).eq('status', 'accepted');
+            if (e1 && e1.code === 'PGRST116') {
+                const { error: e2 } = await supabaseClient.from('friends').delete()
+                    .eq('user_id', fid).eq('friend_id', uid).eq('status', 'accepted');
+                if (e2) throw e2;
+            } else if (e1) throw e1;
+            showMessage('👋 кент удалён', 'success');
+            await loadFriends();
+        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+    };
+
+    async function loadFriends() {
+        try {
+            const uid = parseInt(currentUser.id);
+            const { data: s } = await supabaseClient.from('friends')
+                .select('friend_id, users!friends_friend_id_fkey(id,nickname,display_name,class,avatar_url,is_prime,status)')
+                .eq('user_id', uid).eq('status', 'accepted');
+            const { data: r } = await supabaseClient.from('friends')
+                .select('user_id, users!friends_user_id_fkey(id,nickname,display_name,class,avatar_url,is_prime,status)')
+                .eq('friend_id', uid).eq('status', 'accepted');
+            friends = [...(s?.map(f => f.users) || []), ...(r?.map(f => f.users) || [])];
+            document.getElementById('friendsCount').textContent = friends.length;
+
+            const { data: rq } = await supabaseClient.from('friends')
+                .select('id, user_id, users!friends_user_id_fkey(id,nickname,display_name,class,avatar_url,is_prime)')
+                .eq('friend_id', uid).eq('status', 'pending');
+            const { data: sq } = await supabaseClient.from('friends')
+                .select('id, friend_id, users!friends_friend_id_fkey(id,nickname,display_name,class,avatar_url,is_prime)')
+                .eq('user_id', uid).eq('status', 'pending');
+
+            friendRequests = (rq || []).map(r => ({ id: r.id, user: r.users }));
+            sentRequests = (sq || []).map(s => ({ id: s.id, user: s.users }));
+            switchFriendsTab('friends');
+        } catch (e) { console.error(e); }
+    }
+
+    // ============================================
+    // LOOKING FOR FRIENDS
+    // ============================================
+    async function loadLookingForFriendsStatus() {
+        if (!currentUser) return;
+        try {
+            const { data } = await supabaseClient.from('users')
+                .select('looking_for_friends').eq('id', currentUser.id).single();
+            const toggle = document.getElementById('lookingForFriendsToggle');
+            if (toggle) toggle.checked = data?.looking_for_friends || false;
+        } catch (e) { console.error(e); }
+    }
+
+    async function updateLookingForFriendsStatus(value) {
+        if (!currentUser) return;
+        try {
+            const { error } = await supabaseClient.from('users')
+                .update({ looking_for_friends: value }).eq('id', currentUser.id);
+            if (error) throw error;
+            currentUser.looking_for_friends = value;
+            showMessage(value ? '✅ вы в поиске кентов' : '❌ скрыты из поиска', 'success');
+        } catch (e) {
+            showMessage('ошибка: ' + e.message, 'error');
+            const toggle = document.getElementById('lookingForFriendsToggle');
+            if (toggle) toggle.checked = !value;
+        }
+    }
+
+    // ============================================
+    // СТИКЕРЫ
+    // ============================================
+    async function loadStickers() {
+        try {
+            const { data, error } = await supabaseClient.from('user_stickers')
+                .select('*').eq('user_id', currentUser.id);
+            if (error) throw error;
+            currentStickers = data || [];
+            renderStickers();
+            document.getElementById('stickerCounter').textContent = `${currentStickers.length}/${maxStickers}`;
+            const grid = document.getElementById('stickersGrid');
+            if (currentStickers.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#8b93a6;padding:20px;">нет стикеров</div>';
+            } else {
+                grid.innerHTML = currentStickers.map(s => `
+                    <div class="sticker-item">
+                        <img src="${s.sticker_url}" alt="Стикер">
+                        <div class="sticker-rarity">${s.rarity || 'обычный'}</div>
+                    </div>`).join('');
+            }
+        } catch (e) { console.error(e); }
+    }
+
+    function renderStickers() {
+        const container = document.getElementById('avatarContainer');
+        container.querySelectorAll('.sticker, .sticker-remove').forEach(s => s.remove());
+        currentStickers.forEach((sticker, index) => {
+            const el = document.createElement('img');
+            el.src = sticker.sticker_url;
+            el.className = `sticker ${sticker.position || stickerPositions[index]}`;
+            el.onerror = () => el.remove();
+            const removeBtn = document.createElement('div');
+            removeBtn.className = 'sticker-remove';
+            removeBtn.innerHTML = '✕';
+            removeBtn.onclick = (e) => { e.stopPropagation(); removeSticker(sticker.id); };
+            container.appendChild(el);
+            container.appendChild(removeBtn);
+        });
+        document.getElementById('stickerCounter').textContent = `${currentStickers.length}/${maxStickers}`;
+        saveProfileToLocalStorage();
+    }
+
+    async function addStickerByUrl() {
+        const urlInput = document.getElementById('stickerUrlInput');
+        const url = urlInput.value.trim();
+        if (!url) { showMessage('введите url стикера', 'error'); return; }
+        if (currentStickers.length >= maxStickers) { showMessage(`лимит стикеров: ${maxStickers}`, 'error'); return; }
+        try {
+            const { data, error } = await supabaseClient.from('user_stickers')
+                .insert({ user_id: currentUser.id, sticker_url: url, position: stickerPositions[currentStickers.length], rarity: 'обычный' })
+                .select().single();
+            if (error) throw error;
+            currentStickers.push(data);
+            renderStickers();
+            urlInput.value = '';
+            saveProfileToLocalStorage();
+            showMessage('✅ стикер добавлен', 'success');
+        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+    }
+
+    async function removeSticker(stickerId) {
+        try {
+            const { error } = await supabaseClient.from('user_stickers').delete().eq('id', stickerId);
+            if (error) throw error;
+            currentStickers = currentStickers.filter(s => s.id !== stickerId);
+            renderStickers();
+            saveProfileToLocalStorage();
+            showMessage('стикер удалён', 'success');
+        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+    }
+
+    // ============================================
+    // ОБНОВЛЕНИЕ ДАННЫХ
+    // ============================================
+    window.updateDisplayName = async function() {
+        const newName = prompt('виртуальное имя:', currentUser.display_name || currentUser.nickname);
+        if (newName === null) return;
+        try {
+            const displayName = newName.trim() || currentUser.nickname;
+            const { error } = await supabaseClient.from('users')
+                .update({ display_name: displayName }).eq('id', currentUser.id);
+            if (error) throw error;
+            currentUser.display_name = displayName;
+            document.getElementById('userNickname').textContent = displayName;
+            saveProfileToLocalStorage();
+            showMessage('✅ имя обновлено', 'success');
+        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+    };
+
+    window.updateClass = async function() {
+        const classes = ['7А','7Б','8А','8Б','9А','9Б','10А','11А'];
+        const newClass = prompt(`класс (${classes.join(', ')}):`, currentUser.class);
+        if (!newClass || !classes.includes(newClass)) { showMessage('выберите класс из списка', 'error'); return; }
+        try {
+            const { error } = await supabaseClient.from('users')
+                .update({ class: newClass }).eq('id', currentUser.id);
+            if (error) throw error;
+            currentUser.class = newClass;
+            document.getElementById('userClass').textContent = newClass;
+            saveProfileToLocalStorage();
+            showMessage('✅ класс обновлён', 'success');
+        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+    };
+
+    async function changeAvatar() {
+        const url = prompt('url новой аватарки:', currentUser.avatar_url);
+        if (!url) return;
+        try {
+            const { error } = await supabaseClient.from('users')
+                .update({ avatar_url: url }).eq('id', currentUser.id);
+            if (error) throw error;
+            document.getElementById('avatar').src = url;
+            document.getElementById('miniAvatar').src = url;
+            currentUser.avatar_url = url;
+            saveProfileToLocalStorage();
+            showMessage('✅ аватар обновлён', 'success');
+        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+    }
+
+    async function updateStatus() {
+        const status = document.getElementById('statusInput').value.trim();
+        if (status.length > 50) { showMessage('максимум 50 символов', 'error'); return; }
+        try {
+            const { error } = await supabaseClient.from('users')
+                .update({ status }).eq('id', currentUser.id);
+            if (error) throw error;
+            currentUser.status = status;
+            document.getElementById('statusDisplay').textContent = status || 'Статус не установлен';
+            document.getElementById('statusInput').value = '';
+            saveProfileToLocalStorage();
+            showMessage('✅ статус обновлён', 'success');
+        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
+    }
+
+    // ============================================
+    // AUTH
+    // ============================================
+    async function checkAuth() {
+        const userId = localStorage.getItem('userId');
+        if (!userId) { window.location.href = 'login.html'; return; }
+        try {
+            loadProfileFromLocalStorage();
+            const { data, error } = await supabaseClient.from('users')
+                .select('*').eq('id', userId).single();
+            if (error || !data) { localStorage.clear(); window.location.href = 'login.html'; return; }
+            currentUser = data;
+            await checkPrimeStatus();
+            maxStickers = currentUser.is_prime ? 5 : 1;
+            document.getElementById('userNickname').textContent = currentUser.display_name || currentUser.nickname;
+            document.getElementById('userClass').textContent = currentUser.class || 'класс не указан';
+            document.getElementById('userPrime').textContent = currentUser.is_prime ? 'prime' : 'обычный';
+            const avatarUrl = currentUser.avatar_url || 'https://i.pravatar.cc/300';
+            document.getElementById('avatar').src = avatarUrl;
+            document.getElementById('miniAvatar').src = avatarUrl;
+            document.getElementById('statusDisplay').textContent = currentUser.status || 'Статус не установлен';
+            await Promise.all([loadStickers(), loadFriends(), loadLookingForFriendsStatus()]);
+            saveProfileToLocalStorage();
+            loadMusicSection();
+        } catch (e) { console.error(e); localStorage.clear(); window.location.href = 'login.html'; }
+    }
+
+    // ============================================
+    // ИНИЦИАЛИЗАЦИЯ
+    // ============================================
+    document.addEventListener('DOMContentLoaded', () => {
+        checkAuth();
+
+        document.getElementById('addStickerByUrlBtn').addEventListener('click', addStickerByUrl);
+        document.getElementById('changeAvatarBtn').addEventListener('click', changeAvatar);
+        document.getElementById('updateStatusBtn').addEventListener('click', updateStatus);
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        });
+        document.getElementById('lookingForFriendsToggle')?.addEventListener('change', (e) => {
+            updateLookingForFriendsStatus(e.target.checked);
+        });
+        document.getElementById('stickerUrlInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addStickerByUrl();
+        });
+        document.getElementById('statusInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') updateStatus();
+        });
+    });
 </script>
 </body>
 </html>
