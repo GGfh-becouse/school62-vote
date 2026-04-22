@@ -1,1057 +1,1589 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>профиль | krg62</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 32px 0; }
-.container { max-width: 600px; width: 100%; background: #f8f9fc; position: relative; padding: 0 16px; }
-.main-content { display: block; padding-bottom: 90px; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>профиль пользователя | школа 62</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-@keyframes musicPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(46,52,64,0.15), 0 10px 20px -8px rgba(0,0,0,0.08); }
-    50% { box-shadow: 0 0 0 6px rgba(46,52,64,0.06), 0 14px 28px -8px rgba(0,0,0,0.12); }
-}
-@keyframes newBadgePop {
-    0% { transform: scale(0); }
-    70% { transform: scale(1.15); }
-    100% { transform: scale(1); }
-}
-@keyframes equalizer {
-    0%, 100% { height: 6px; }
-    25% { height: 14px; }
-    50% { height: 8px; }
-    75% { height: 16px; }
-}
+        body {
+            background: #f8f9fc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 32px 0;
+        }
 
-.header { background: #ffffff; border-radius: 24px; padding: 16px 20px; margin: 8px 0 24px 0; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.02); animation: fadeDown 0.4s cubic-bezier(0.22,1,0.36,1) both; }
-.header-content { display: flex; justify-content: space-between; align-items: center; }
-.logo { display: flex; align-items: center; gap: 8px; }
-.logo-img { height: 36px; width: auto; object-fit: contain; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
-.logo:hover .logo-img { transform: rotate(-6deg) scale(1.08); }
-.logo h1 { font-size: 1.4rem; font-weight: 600; color: #1a1e2b; letter-spacing: -0.5px; }
-.header-icons { display: flex; gap: 16px; }
-.header-icon { font-size: 1.2rem; color: #8b93a6; transition: color 0.2s, transform 0.2s; cursor: pointer; text-decoration: none; }
-.header-icon:hover { color: #2e3440; transform: scale(1.15); }
-@media (max-width: 600px) { .logo-img { height: 28px; } }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #f8f9fc;
+            position: relative;
+            padding: 0 16px;
+        }
 
-.user-info-bar { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
-.user-info-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-.user-avatar-mini { width: 56px; height: 56px; border-radius: 18px; overflow: hidden; border: 2px solid rgba(0,0,0,0.05); transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1); }
-.user-avatar-mini:hover { transform: scale(1.08); }
-.user-avatar-mini img { width: 100%; height: 100%; object-fit: cover; }
-.user-details { display: flex; flex-direction: column; gap: 6px; }
-.user-nickname { font-weight: 600; font-size: 1.2rem; color: #1a1e2b; }
-.user-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.user-class { background: #f0f2f5; color: #1a1e2b; padding: 4px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 500; }
-.user-prime { background: #f1c40f; color: #1a1e2b; padding: 4px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 600; }
-.logout-btn { background: #f0f2f5; color: #1a1e2b; border: none; padding: 10px 20px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; border: 1px solid rgba(0,0,0,0.02); }
-.logout-btn:hover { background: #e4e6e9; transform: translateY(-1px); }
+        .main-content {
+            display: block;
+            padding-bottom: 90px;
+        }
 
-.profile-card { background: #ffffff; border-radius: 28px; padding: 28px; margin-bottom: 24px; box-shadow: 0 20px 30px -10px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.02); animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
-.profile-header { display: flex; gap: 30px; flex-wrap: wrap; margin-bottom: 30px; }
-.avatar-container { position: relative; width: 200px; height: 200px; flex-shrink: 0; margin: 0 auto; }
-.avatar-wrapper { position: relative; width: 100%; height: 100%; }
-.avatar { width: 100%; height: 100%; border-radius: 24px; object-fit: cover; border: 2px solid rgba(0,0,0,0.05); box-shadow: 0 8px 16px -8px rgba(0,0,0,0.2); transition: transform 0.3s; }
-.avatar-container:hover .avatar { transform: scale(1.02); }
-.avatar-frame-neon { position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 26px; border: 3px solid #00ff88; box-shadow: 0 0 15px #00ff88; pointer-events: none; }
-.avatar-frame-gold { position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 26px; border: 3px solid #f1c40f; box-shadow: 0 0 15px #f1c40f; pointer-events: none; }
-.avatar-frame-event { position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 26px; border: 3px solid #ff6b6b; box-shadow: 0 0 15px #ff6b6b; pointer-events: none; }
-.sticker { position: absolute; width: 70px; height: 70px; border-radius: 16px; object-fit: cover; border: none; box-shadow: 0 4px 8px -4px rgba(0,0,0,0.2); z-index: 5; }
-.sticker-pos-1 { top: -10px; left: -10px; width: 60px; height: 60px; }
-.sticker-pos-2 { top: -10px; right: -10px; width: 60px; height: 60px; }
-.sticker-pos-3 { bottom: -10px; left: -10px; width: 60px; height: 60px; }
-.sticker-pos-4 { bottom: -10px; right: -10px; width: 60px; height: 60px; }
-.sticker-pos-5 { top: 50%; left: 50%; transform: translate(-50%,-50%); width: 120px; height: 120px; }
-.sticker-pos-6 { top: -10px; left: 50%; transform: translateX(-50%); }
-.sticker-pos-7 { bottom: -10px; left: 50%; transform: translateX(-50%); }
-.sticker-pos-8 { left: -10px; top: 50%; transform: translateY(-50%); }
-.sticker-pos-9 { right: -10px; top: 50%; transform: translateY(-50%); }
-.sticker-remove { position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; background: #e74c3c; color: white; border-radius: 10px; font-size: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 15; }
-.avatar-actions { display: flex; flex-direction: column; gap: 10px; justify-content: center; flex: 1; }
-.change-avatar-btn { background: #f0f2f5; color: #1a1e2b; border: none; padding: 12px 20px; border-radius: 40px; font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; border: 1px solid rgba(0,0,0,0.02); display: inline-flex; align-items: center; gap: 8px; }
-.change-avatar-btn:hover { background: #e4e6e9; transform: translateY(-1px); }
+        /* АНИМАЦИИ */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes musicPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(46,52,64,0.12), 0 10px 20px -8px rgba(0,0,0,0.07); }
+            50% { box-shadow: 0 0 0 6px rgba(46,52,64,0.05), 0 14px 28px -8px rgba(0,0,0,0.10); }
+        }
+        @keyframes gradientMove { 0% { background-position: 0%; } 100% { background-position: 200%; } }
+        @keyframes equalizer {
+            0%, 100% { height: 6px; }
+            25% { height: 14px; }
+            50% { height: 8px; }
+            75% { height: 16px; }
+        }
+        @keyframes newBadgePop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
 
-.status-section { margin-bottom: 24px; }
-.status-display { background: #f8f9fc; border-radius: 18px; padding: 16px 20px; margin-bottom: 12px; color: #1a1e2b; font-size: 0.95rem; border-left: 3px solid #2e3440; border: 1px solid rgba(0,0,0,0.02); }
-.status-input { display: flex; gap: 10px; }
-.status-input input { flex: 1; padding: 14px 18px; border: 1px solid rgba(0,0,0,0.05); border-radius: 18px; font-size: 0.9rem; background: #f8f9fc; transition: all 0.2s; }
-.status-input input:focus { outline: none; border-color: #2e3440; background: #ffffff; box-shadow: 0 0 0 3px rgba(46,52,64,0.06); }
-.status-input button { background: #2e3440; color: white; border: none; padding: 14px 24px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
-.status-input button:hover { background: #1a1e2b; transform: translateY(-1px); }
+        /* HEADER */
+        .header {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 16px 20px;
+            margin: 8px 0 16px 0;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            animation: fadeDown 0.4s cubic-bezier(0.22,1,0.36,1) both;
+        }
 
-/* ===================== МУЗЫКА — НОВАЯ ФУНКЦИЯ ===================== */
-.music-section { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 24px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.15s both, musicPulse 3s ease-in-out 1s 3; position: relative; overflow: hidden; }
-.music-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #2e3440, #667eea, #764ba2, #2e3440); background-size: 200%; animation: gradientMove 3s linear infinite; }
-@keyframes gradientMove { 0% { background-position: 0%; } 100% { background-position: 200%; } }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.music-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.music-section-title { display: flex; align-items: center; gap: 10px; }
-.music-section-title h3 { font-size: 0.85rem; font-weight: 600; color: #8b93a6; text-transform: uppercase; letter-spacing: 0.5px; }
-.music-new-badge { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 3px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; animation: newBadgePop 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.5s both; }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.equalizer { display: flex; align-items: flex-end; gap: 2px; height: 20px; }
-.eq-bar { width: 3px; background: linear-gradient(to top, #2e3440, #667eea); border-radius: 2px; }
-.eq-bar:nth-child(1) { animation: equalizer 0.8s ease-in-out infinite; }
-.eq-bar:nth-child(2) { animation: equalizer 0.8s ease-in-out 0.15s infinite; }
-.eq-bar:nth-child(3) { animation: equalizer 0.8s ease-in-out 0.3s infinite; }
-.eq-bar:nth-child(4) { animation: equalizer 0.8s ease-in-out 0.1s infinite; }
-.eq-bar.paused { animation-play-state: paused; height: 4px !important; }
+        .logo-img {
+            height: 36px;
+            width: auto;
+            object-fit: contain;
+        }
 
-.music-services { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-.music-service-badge { display: flex; align-items: center; gap: 6px; background: #f8f9fc; border: 1px solid rgba(0,0,0,0.05); padding: 6px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 500; color: #1a1e2b; }
-.music-service-badge img { width: 16px; height: 16px; object-fit: contain; }
-.music-service-badge.yt { border-color: rgba(255,0,0,0.2); background: #fff5f5; }
-.music-service-badge.sc { border-color: rgba(255,85,0,0.2); background: #fff8f5; }
+        .logo h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #1a1e2b;
+            letter-spacing: -0.5px;
+        }
 
-.music-input-row { display: flex; gap: 10px; margin-bottom: 10px; }
-.music-url-input { flex: 1; padding: 14px 18px; border: 1px solid rgba(0,0,0,0.05); border-radius: 18px; font-size: 0.9rem; background: #f8f9fc; transition: all 0.3s cubic-bezier(0.22,1,0.36,1); min-width: 0; }
-.music-url-input:focus { outline: none; border-color: #667eea; background: #ffffff; box-shadow: 0 0 0 3px rgba(102,126,234,0.08); transform: translateY(-1px); }
-.music-url-input::placeholder { color: #b5bcc8; }
-.music-save-btn { background: linear-gradient(135deg, #2e3440, #4a5568); color: white; border: none; padding: 14px 20px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
-.music-save-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 16px -6px rgba(46,52,64,0.3); }
-.music-save-btn:active { transform: scale(0.97); }
+        .header-icons {
+            display: flex;
+            gap: 16px;
+        }
 
-.music-hint { font-size: 0.75rem; color: #b5bcc8; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+        .header-icon {
+            font-size: 1.2rem;
+            color: #8b93a6;
+            transition: color 0.2s, transform 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+        }
 
-.music-embed-preview { border-radius: 18px; overflow: hidden; box-shadow: 0 8px 20px -8px rgba(0,0,0,0.12); transition: all 0.3s; }
-.music-embed-preview:hover { box-shadow: 0 12px 28px -8px rgba(0,0,0,0.18); transform: translateY(-2px); }
-.music-embed-preview iframe { display: block; border: none; width: 100%; }
-.music-clear-btn { display: flex; align-items: center; gap: 6px; background: none; border: none; color: #c0392b; font-size: 0.75rem; cursor: pointer; padding: 8px 0; margin-top: 8px; transition: opacity 0.2s; }
-.music-clear-btn:hover { opacity: 0.7; }
+        .header-icon:hover {
+            color: #2e3440;
+            transform: scale(1.15);
+        }
 
-.profile-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
-.action-btn { background: #f0f2f5; color: #1a1e2b; border: none; padding: 12px 18px; border-radius: 40px; font-weight: 500; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; border: 1px solid rgba(0,0,0,0.02); display: inline-flex; align-items: center; gap: 6px; }
-.action-btn:hover { background: #e4e6e9; transform: translateY(-1px); }
+        /* BACK LINK */
+        .back-link {
+            margin-bottom: 16px;
+            animation: fadeUp 0.4s cubic-bezier(0.22,1,0.36,1) 0.05s both;
+        }
 
-.looking-toggle-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 24px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); display: flex; align-items: center; justify-content: space-between; transition: all 0.2s; animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
-.looking-toggle-label { display: flex; align-items: center; gap: 12px; }
-.looking-toggle-label i { font-size: 1.4rem; color: #667eea; }
-.looking-toggle-text .title { font-weight: 600; color: #1a1e2b; font-size: 1rem; }
-.looking-toggle-text .subtitle { font-size: 0.7rem; color: #8b93a6; margin-top: 2px; }
-.toggle-switch { position: relative; display: inline-block; width: 52px; height: 28px; }
-.toggle-switch input { opacity: 0; width: 0; height: 0; }
-.toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: 0.3s; border-radius: 28px; }
-.toggle-slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 3px; bottom: 3px; background-color: white; transition: 0.3s; border-radius: 50%; }
-input:checked + .toggle-slider { background: linear-gradient(135deg, #667eea, #764ba2); }
-input:checked + .toggle-slider:before { transform: translateX(24px); }
+        .back-btn {
+            background: #f0f2f5;
+            color: #1a1e2b;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
 
-.friends-section { background: #f8f9fc; border-radius: 24px; padding: 20px; margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.02); animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.25s both; }
-.friends-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.friends-header h3 { font-size: 0.85rem; font-weight: 600; color: #8b93a6; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; }
-.friends-count { background: #2e3440; color: white; padding: 4px 10px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; }
-.friends-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 12px; flex-wrap: wrap; }
-.friend-tab { background: none; border: none; padding: 8px 16px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; color: #8b93a6; cursor: pointer; transition: all 0.2s; }
-.friend-tab:hover { background: #f0f2f5; color: #1a1e2b; }
-.friend-tab.active { background: #2e3440; color: white; }
-.friends-list { display: flex; flex-direction: column; gap: 12px; max-height: 300px; overflow-y: auto; padding-right: 4px; }
-.friend-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #ffffff; border-radius: 18px; border: 1px solid rgba(0,0,0,0.02); transition: transform 0.2s; }
-.friend-item:hover { transform: translateX(4px); }
-.friend-avatar { width: 48px; height: 48px; border-radius: 16px; overflow: hidden; border: 2px solid rgba(0,0,0,0.05); }
-.friend-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.friend-info { flex: 1; }
-.friend-name { font-weight: 600; color: #1a1e2b; margin-bottom: 2px; }
-.friend-meta { display: flex; gap: 8px; align-items: center; }
-.friend-class { font-size: 0.7rem; color: #8b93a6; background: #f0f2f5; padding: 2px 8px; border-radius: 30px; }
-.friend-status { font-size: 0.7rem; color: #27ae60; }
-.friend-actions { display: flex; gap: 8px; }
-.friend-btn { background: #f0f2f5; border: none; padding: 6px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
-.friend-btn.accept { background: #2e3440; color: white; }
-.friend-btn.accept:hover { background: #1a1e2b; }
-.friend-btn.reject { color: #e74c3c; }
-.friend-btn.reject:hover { background: #fdedec; }
-.friend-btn.remove { color: #e74c3c; }
-.friend-btn.remove:hover { background: #fdedec; }
-.empty-friends { text-align: center; padding: 30px; color: #8b93a6; font-size: 0.9rem; }
+        .back-btn:hover {
+            background: #e4e6e9;
+            transform: translateX(-2px);
+        }
 
-.frames-section { background: #f8f9fc; border-radius: 20px; padding: 20px; margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.02); animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.3s both; }
-.frames-section h3 { font-size: 0.85rem; font-weight: 600; color: #8b93a6; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-.frames-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
-.frame-option { background: #ffffff; border-radius: 16px; padding: 12px; text-align: center; border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s; font-size: 0.8rem; }
-.frame-option:hover { border-color: #2e3440; transform: translateY(-2px); }
-.frame-option.active { border: 2px solid #2e3440; }
-.frame-preview { width: 50px; height: 50px; margin: 0 auto 8px; border-radius: 12px; }
-.frame-preview.standard { background: #2e3440; }
-.frame-preview.neon { background: #00ff88; box-shadow: 0 0 10px #00ff88; }
-.frame-preview.gold { background: #f1c40f; box-shadow: 0 0 10px #f1c40f; }
-.frame-preview.event { background: linear-gradient(45deg, #ff6b6b, #f1c40f); }
+        /* USER INFO BAR */
+        .user-info-bar {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.08s both;
+            flex-wrap: wrap;
+        }
 
-.stickers-section { background: #f8f9fc; border-radius: 20px; padding: 20px; margin-bottom: 24px; border: 1px solid rgba(0,0,0,0.02); animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.35s both; }
-.stickers-section h3 { font-size: 0.85rem; font-weight: 600; color: #8b93a6; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-.sticker-counter { background: #2e3440; color: white; padding: 2px 10px; border-radius: 30px; font-size: 0.7rem; }
-.sticker-url-input { display: flex; gap: 10px; margin-bottom: 16px; }
-.sticker-url-input input { flex: 1; padding: 12px 16px; border: 1px solid rgba(0,0,0,0.05); border-radius: 16px; font-size: 0.9rem; background: #ffffff; transition: all 0.2s; }
-.sticker-url-input input:focus { outline: none; border-color: #2e3440; }
-.sticker-url-input button { background: #2e3440; color: white; border: none; padding: 12px 20px; border-radius: 30px; font-weight: 500; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
-.sticker-url-input button:hover { background: #1a1e2b; }
-.stickers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; margin-bottom: 16px; }
-.sticker-item { background: #ffffff; border-radius: 16px; padding: 12px; text-align: center; border: 1px solid rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s; }
-.sticker-item:hover { border-color: #2e3440; transform: translateY(-2px); }
-.sticker-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 12px; margin-bottom: 5px; }
-.sticker-rarity { font-size: 0.65rem; color: #8b93a6; }
-.prime-note { color: #8b93a6; font-size: 0.75rem; margin-top: 8px; }
+        .user-avatar-mini {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+            transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+        }
 
-.bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); max-width: 560px; width: calc(100% - 32px); border-radius: 40px; padding: 6px; display: flex; justify-content: space-around; box-shadow: 0 10px 30px -8px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.02); z-index: 1000; backdrop-filter: blur(12px); background: rgba(255,255,255,0.95); animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.4s both; }
-.nav-item-bottom { display: flex; flex-direction: column; align-items: center; color: #8b93a6; text-decoration: none; font-size: 0.6rem; font-weight: 500; flex: 1; padding: 8px 0; border-radius: 30px; transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1); }
-.nav-item-bottom.active { background: #f0f2f5; color: #2e3440; }
-.nav-item-bottom:hover { color: #2e3440; background: #f8f9fc; transform: translateY(-2px); }
-.nav-icon-bottom { font-size: 1.2rem; margin-bottom: 2px; transition: transform 0.2s; }
-.nav-item-bottom:hover .nav-icon-bottom { transform: scale(1.2); }
+        .user-avatar-mini:hover {
+            transform: scale(1.07);
+        }
 
-.message { position: fixed; top: 20px; right: 20px; padding: 12px 20px; border-radius: 30px; color: white; font-weight: 500; font-size: 0.85rem; z-index: 10002; animation: slideIn 0.3s cubic-bezier(0.22,1,0.36,1); box-shadow: 0 10px 20px -8px rgba(0,0,0,0.2); }
-.message.success { background: #2e3440; }
-.message.error { background: #c0392b; }
-.loader { border: 2px solid #f0f2f5; border-top: 2px solid #2e3440; border-radius: 50%; width: 24px; height: 24px; animation: spin 0.8s linear infinite; margin: 20px auto; }
+        .user-avatar-mini img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-@media (max-width: 600px) {
-    body { padding: 16px 0; }
-    .profile-header { justify-content: center; text-align: center; }
-    .avatar-actions { align-items: center; }
-    .status-input { flex-direction: column; }
-    .sticker-url-input { flex-direction: column; }
-    .user-info-bar { flex-direction: column; text-align: center; }
-    .user-info-left { justify-content: center; }
-    .looking-toggle-card { flex-direction: column; text-align: center; gap: 15px; }
-    .music-input-row { flex-direction: column; }
-    .music-save-btn { width: 100%; }
-}
-.logo-img { height: 36px; width: auto; object-fit: contain; }
-@media (max-width: 600px) { .logo-img { height: 28px; } }
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        .user-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-nickname-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .user-nickname {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #1a1e2b;
+            letter-spacing: -0.3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            display: block;
+        }
+
+        .user-meta {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .user-class {
+            background: #f0f2f5;
+            color: #1a1e2b;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .user-prime {
+            background: #f1c40f;
+            color: #1a1e2b;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* MINI PROFILE CARD */
+        .profile-mini-card {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            width: 260px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s cubic-bezier(0.22,1,0.36,1);
+            pointer-events: none;
+            transform: translateY(4px);
+        }
+
+        .user-nickname-wrapper:hover .profile-mini-card {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+
+        .mini-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .mini-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+            object-fit: cover;
+            border: 2px solid rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+        }
+
+        .mini-info h4 {
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 2px;
+            font-size: 0.9rem;
+        }
+
+        .mini-info p {
+            font-size: 0.7rem;
+            color: #8b93a6;
+        }
+
+        .mini-stats {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-top: 1px solid #f0f2f5;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .mini-stat {
+            flex: 1;
+            text-align: center;
+        }
+
+        .mini-stat-value {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1a1e2b;
+        }
+
+        .mini-stat-label {
+            font-size: 0.6rem;
+            color: #8b93a6;
+        }
+
+        .mini-sticker {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .mini-status {
+            font-size: 0.82rem;
+            color: #1a1e2b;
+            font-style: italic;
+            background: #f8f9fc;
+            padding: 8px 12px;
+            border-radius: 12px;
+            line-height: 1.4;
+        }
+
+        /* FRIEND ACTION */
+        .friend-action {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+        }
+
+        .friend-action-btn {
+            background: #2e3440;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 16px -6px rgba(46, 52, 64, 0.35);
+        }
+
+        .friend-action-btn:hover {
+            background: #1a1e2b;
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .friend-action-btn:active {
+            transform: scale(0.97);
+        }
+
+        .friend-action-btn.pending {
+            background: #8b93a6;
+            cursor: default;
+            box-shadow: none;
+        }
+
+        .friend-action-btn.pending:hover {
+            transform: none;
+            background: #8b93a6;
+        }
+
+        .friend-action-btn.accepted {
+            background: #27ae60;
+            cursor: default;
+            box-shadow: 0 6px 16px -6px rgba(39, 174, 96, 0.35);
+        }
+
+        .friend-action-btn.accepted:hover {
+            transform: none;
+            background: #27ae60;
+        }
+
+        /* PROFILE CARD */
+        .profile-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.12s both;
+        }
+
+        /* AVATAR */
+        .avatar-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 24px;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            object-fit: cover;
+            border: 2px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .avatar-container:hover .avatar {
+            transform: scale(1.02);
+        }
+
+        /* FRAMES */
+        .avatar-frame-neon { position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 26px; border: 3px solid #00ff88; box-shadow: 0 0 15px #00ff88; pointer-events: none; }
+        .avatar-frame-gold { position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 26px; border: 3px solid #f1c40f; box-shadow: 0 0 15px #f1c40f; pointer-events: none; }
+        .avatar-frame-event { position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 26px; border: 3px solid #ff6b6b; box-shadow: 0 0 15px #ff6b6b; pointer-events: none; }
+
+        /* STICKERS */
+        .sticker { position: absolute; width: 70px; height: 70px; border-radius: 16px; object-fit: cover; border: none; box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.2); z-index: 5; }
+        .sticker-pos-1 { top: -10px; left: -10px; width: 60px; height: 60px; }
+        .sticker-pos-2 { top: -10px; right: -10px; width: 60px; height: 60px; }
+        .sticker-pos-3 { bottom: -10px; left: -10px; width: 60px; height: 60px; }
+        .sticker-pos-4 { bottom: -10px; right: -10px; width: 60px; height: 60px; }
+        .sticker-pos-5 { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; }
+        .sticker-pos-6 { top: -10px; left: 50%; transform: translateX(-50%); }
+        .sticker-pos-7 { bottom: -10px; left: 50%; transform: translateX(-50%); }
+        .sticker-pos-8 { left: -10px; top: 50%; transform: translateY(-50%); }
+        .sticker-pos-9 { right: -10px; top: 50%; transform: translateY(-50%); }
+
+        /* STATUS SECTION */
+        .status-section {
+            background: #f8f9fc;
+            border-radius: 18px;
+            padding: 16px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .status-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-text {
+            font-size: 0.95rem;
+            color: #1a1e2b;
+            line-height: 1.5;
+        }
+
+        /* МУЗЫКА — перенесено из your_account */
+        .music-section {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.02);
+            animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.18s both, musicPulse 3s ease-in-out 1s 3;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #2e3440, #667eea, #764ba2, #2e3440);
+            background-size: 200%;
+            animation: gradientMove 3s linear infinite;
+        }
+
+        .music-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .music-section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .music-section-title h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .music-new-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: newBadgePop 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.5s both;
+        }
+
+        .equalizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 20px;
+        }
+
+        .eq-bar {
+            width: 3px;
+            background: linear-gradient(to top, #2e3440, #667eea);
+            border-radius: 2px;
+        }
+
+        .eq-bar:nth-child(1) { animation: equalizer 0.8s ease-in-out infinite; }
+        .eq-bar:nth-child(2) { animation: equalizer 0.8s ease-in-out 0.15s infinite; }
+        .eq-bar:nth-child(3) { animation: equalizer 0.8s ease-in-out 0.3s infinite; }
+        .eq-bar:nth-child(4) { animation: equalizer 0.8s ease-in-out 0.1s infinite; }
+        .eq-bar.paused { animation-play-state: paused; height: 4px !important; }
+
+        .music-empty {
+            text-align: center;
+            padding: 20px;
+            color: #b5bcc8;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .music-embed-preview {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px -6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .music-embed-preview:hover {
+            box-shadow: 0 10px 24px -6px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .music-embed-preview iframe {
+            display: block;
+            border: none;
+            width: 100%;
+        }
+
+        /* FRIENDS SECTION */
+        .friends-section {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.22s both;
+        }
+
+        .friends-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .friends-header h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .friends-count {
+            background: #2e3440;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            max-height: 320px;
+            overflow-y: auto;
+            padding-right: 2px;
+        }
+
+        .friends-grid::-webkit-scrollbar { width: 4px; }
+        .friends-grid::-webkit-scrollbar-track { background: transparent; }
+        .friends-grid::-webkit-scrollbar-thumb { background: #e4e6e9; border-radius: 4px; }
+
+        .friend-card {
+            background: #f8f9fc;
+            border-radius: 18px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .friend-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .friend-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 0, 0, 0.04);
+            flex-shrink: 0;
+        }
+
+        .friend-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .friend-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .friend-name {
+            font-weight: 600;
+            color: #1a1e2b;
+            margin-bottom: 3px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .friend-class {
+            font-size: 0.65rem;
+            color: #8b93a6;
+            background: #f0f2f5;
+            padding: 2px 8px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+
+        .friend-badge {
+            display: inline-flex;
+            align-items: center;
+            background: #f1c40f;
+            color: #1a1e2b;
+            padding: 2px 6px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            margin-left: 3px;
+        }
+
+        .empty-friends {
+            text-align: center;
+            padding: 30px;
+            color: #8b93a6;
+            font-size: 0.9rem;
+            grid-column: 1 / -1;
+        }
+
+        /* STICKERS GRID */
+        .stickers-grid-section {
+            background: #f8f9fc;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.26s both;
+        }
+
+        .stickers-grid-section h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stickers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 12px;
+        }
+
+        .sticker-thumb {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: transform 0.2s;
+        }
+
+        .sticker-thumb:hover { transform: translateY(-2px); }
+
+        .sticker-thumb img {
+            width: 56px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 6px;
+        }
+
+        .sticker-rarity {
+            font-size: 0.65rem;
+            color: #8b93a6;
+        }
+
+        /* REACTIONS */
+        .reactions-section {
+            background: #f8f9fc;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+        }
+
+        .reactions-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b93a6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 14px;
+        }
+
+        .reactions-grid {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .reaction-item {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 40px;
+            padding: 10px 18px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reaction-item:hover {
+            border-color: #2e3440;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 14px -6px rgba(0,0,0,0.1);
+        }
+
+        .reaction-item:active {
+            transform: scale(0.95);
+        }
+
+        .reaction-count {
+            font-size: 0.85rem;
+            color: #8b93a6;
+            font-weight: 500;
+        }
+
+        /* BOTTOM NAVIGATION */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 560px;
+            width: calc(100% - 32px);
+            border-radius: 40px;
+            padding: 6px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav-item-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #8b93a6;
+            text-decoration: none;
+            font-size: 0.6rem;
+            font-weight: 500;
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 30px;
+            transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+        }
+
+        .nav-item-bottom.active {
+            background: #f0f2f5;
+            color: #2e3440;
+        }
+
+        .nav-item-bottom:hover {
+            color: #2e3440;
+            background: #f8f9fc;
+            transform: translateY(-2px);
+        }
+
+        .nav-icon-bottom {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+            transition: transform 0.2s;
+        }
+
+        .nav-item-bottom:hover .nav-icon-bottom {
+            transform: scale(1.18);
+        }
+
+        /* MESSAGES */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 30px;
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            z-index: 10002;
+            animation: slideIn 0.3s cubic-bezier(0.22,1,0.36,1);
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.2);
+        }
+
+        .message.success { background: #2e3440; }
+        .message.error { background: #c0392b; }
+
+        /* LOADER */
+        .loader {
+            border: 2px solid #f0f2f5;
+            border-top: 2px solid #2e3440;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            animation: spin 0.8s linear infinite;
+            margin: 30px auto;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            body { padding: 12px 0; }
+
+            .logo-img { height: 28px; }
+
+            .user-info-bar {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .user-nickname {
+                max-width: 160px;
+            }
+
+            .avatar-container {
+                width: 170px;
+                height: 170px;
+            }
+
+            .profile-card {
+                padding: 20px;
+            }
+
+            .music-section {
+                padding: 16px;
+            }
+
+            .reactions-grid {
+                justify-content: center;
+            }
+
+            .reaction-item {
+                padding: 9px 14px;
+                font-size: 1rem;
+            }
+
+            .friends-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-mini-card {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="main-content">
+    <div class="container">
+        <div class="main-content">
 
-        <div class="header">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="top_logotype.png" alt="krg62" class="logo-img">
-                    <h1>профиль</h1>
-                </div>
-                <div class="header-icons">
-                    <a href="your_account.html" class="header-icon">
-                        <i class="far fa-user"></i>
-                    </a>
+            <!-- Header -->
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <img src="top_logotype.png" alt="Школа 62" class="logo-img">
+                        <h1>стена</h1>
+                    </div>
+                    <div class="header-icons">
+                        <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="header-icon">
+                            <i class="far fa-user"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="user-info-bar" id="userInfoBar">
-            <div class="user-info-left">
+            <!-- Back link -->
+            <div class="back-link">
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> назад
+                </a>
+            </div>
+
+            <!-- User Info Bar -->
+            <div class="user-info-bar" id="userInfoBar">
                 <div class="user-avatar-mini">
                     <img src="https://i.pravatar.cc/300" id="miniAvatar" alt="">
                 </div>
                 <div class="user-details">
-                    <span class="user-nickname" id="userNickname">Загрузка...</span>
+                    <div class="user-nickname-wrapper" id="nicknameWrapper">
+                        <span class="user-nickname" id="userNickname">Загрузка...</span>
+                        <!-- Мини-карточка вставляется JS'ом -->
+                    </div>
                     <div class="user-meta">
                         <span class="user-class" id="userClass"></span>
-                        <span class="user-prime" id="userPrime">обычный</span>
+                        <span class="user-prime" id="userPrime"></span>
                     </div>
                 </div>
             </div>
-            <button class="logout-btn" id="logoutBtn">выйти</button>
-        </div>
 
-        <div class="profile-card">
-            <div class="profile-header">
+            <!-- Friend Action Button -->
+            <div class="friend-action">
+                <button class="friend-action-btn" id="friendActionBtn" onclick="handleFriendAction()">
+                    <i class="far fa-user-plus"></i> добавить в кенты
+                </button>
+            </div>
+
+            <!-- Profile Card -->
+            <div class="profile-card">
                 <div class="avatar-container" id="avatarContainer">
                     <div class="avatar-wrapper">
                         <img src="https://i.pravatar.cc/300" class="avatar" id="avatar" alt="Аватар">
                         <div id="avatarFrame"></div>
                     </div>
                 </div>
-                <div class="avatar-actions">
-                    <button class="change-avatar-btn" id="changeAvatarBtn">
-                        <i class="far fa-image"></i> сменить аватар
-                    </button>
-                </div>
-            </div>
 
-            <div class="status-section">
-                <div class="status-display" id="statusDisplay">Статус не установлен</div>
-                <div class="status-input">
-                    <input type="text" id="statusInput" placeholder="ваш статус..." maxlength="50">
-                    <button id="updateStatusBtn">обновить</button>
-                </div>
-            </div>
-
-            <div class="profile-actions">
-                <button class="action-btn" onclick="updateDisplayName()">
-                    <i class="far fa-edit"></i> сменить имя
-                </button>
-                <button class="action-btn" onclick="updateClass()">
-                    <i class="far fa-graduation-cap"></i> сменить класс
-                </button>
-            </div>
-        </div>
-
-        <!-- ========== МУЗЫКА — НОВАЯ ФУНКЦИЯ ========== -->
-        <div class="music-section" id="musicSection">
-            <div class="music-section-header">
-                <div class="music-section-title">
-                    <div class="equalizer" id="equalizerBars">
-                        <div class="eq-bar"></div>
-                        <div class="eq-bar"></div>
-                        <div class="eq-bar"></div>
-                        <div class="eq-bar"></div>
+                <div class="status-section">
+                    <div class="status-label">
+                        <i class="far fa-pen"></i> статус
                     </div>
-                    <h3>музыка в профиле</h3>
-                    <span class="music-new-badge">NEW</span>
+                    <div class="status-text" id="statusDisplay">Загрузка...</div>
                 </div>
             </div>
 
-            <div class="music-services">
-                <div class="music-service-badge yt">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#FF0000">
-                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                    </svg>
-                    YouTube
+            <!-- МУЗЫКА В ПРОФИЛЕ -->
+            <div class="music-section" id="musicSection" style="display:none;">
+                <div class="music-section-header">
+                    <div class="music-section-title">
+                        <div class="equalizer" id="equalizerBars">
+                            <div class="eq-bar"></div>
+                            <div class="eq-bar"></div>
+                            <div class="eq-bar"></div>
+                            <div class="eq-bar"></div>
+                        </div>
+                        <h3>музыка</h3>
+                        <span class="music-new-badge">NEW</span>
+                    </div>
                 </div>
-                <div class="music-service-badge sc">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#FF5500">
-                        <path d="M1.175 12.225c-.017 0-.034.002-.05.006a.327.327 0 0 0-.268.313l-.357 2.19.357 2.19a.327.327 0 0 0 .318.268c.175 0 .318-.143.318-.318v-4.33a.318.318 0 0 0-.318-.319zm1.675-.55c-.026 0-.052.003-.077.01a.376.376 0 0 0-.299.363l-.399 2.475.399 2.475a.376.376 0 0 0 .376.376c.207 0 .376-.169.376-.376V12.05a.376.376 0 0 0-.376-.375zm1.742-.204c-.034 0-.067.005-.1.015a.424.424 0 0 0-.325.412l-.44 2.625.44 2.625a.424.424 0 0 0 .425.424c.234 0 .424-.19.424-.424v-5.25a.424.424 0 0 0-.424-.427zm1.742-.143c-.04 0-.081.006-.12.018a.474.474 0 0 0-.353.457l-.478 2.77.478 2.77a.474.474 0 0 0 .473.474c.261 0 .473-.212.473-.474v-5.54a.474.474 0 0 0-.473-.475zm1.741-.089c-.048 0-.096.008-.142.022a.524.524 0 0 0-.38.502l-.516 2.915.516 2.915a.524.524 0 0 0 .522.524c.288 0 .522-.234.522-.524V11.76a.524.524 0 0 0-.522-.521zm1.742-.044c-.055 0-.11.009-.163.026a.573.573 0 0 0-.407.547l-.554 3.06.554 3.06a.573.573 0 0 0 .57.574c.316 0 .571-.256.571-.574v-6.12a.573.573 0 0 0-.571-.573zm1.742-.025c-.062 0-.124.01-.184.03a.622.622 0 0 0-.434.591l-.592 3.205.592 3.205a.622.622 0 0 0 .618.623c.344 0 .622-.278.622-.623V11.76a.622.622 0 0 0-.622-.59zm5.566-2.413c-.26 0-.51.034-.75.097C15.355 6.05 13.38 4.5 11.026 4.5c-.617 0-1.205.127-1.736.352-.205.086-.26.174-.262.255v13.624c.003.085.064.156.15.17l8.524.001c.797 0 1.443-.646 1.443-1.443v-5.572c0-.797-.646-1.443-1.443-1.443z"/>
-                    </svg>
-                    SoundCloud
+                <div id="musicPreview"></div>
+            </div>
+
+            <!-- КЕНТЫ -->
+            <div class="friends-section">
+                <div class="friends-header">
+                    <h3><i class="far fa-user-friends"></i> кенты</h3>
+                    <span class="friends-count" id="friendsCount">0</span>
                 </div>
-            </div>
-
-            <div class="music-hint">
-                <i class="fas fa-info-circle"></i>
-                вставь ссылку на трек — он будет виден в твоём профиле
-            </div>
-
-            <div class="music-input-row">
-                <input type="text" id="musicUrlInput" class="music-url-input"
-                    placeholder="https://youtube.com/watch?v=... или soundcloud.com/...">
-                <button class="music-save-btn" onclick="saveMusicUrl()">
-                    <i class="fas fa-save"></i> сохранить
-                </button>
-            </div>
-
-            <div id="musicPreview"></div>
-        </div>
-
-        <!-- ИЩУ КЕНТОВ -->
-        <div class="looking-toggle-card" id="lookingToggleCard">
-            <div class="looking-toggle-label">
-                <i class="fas fa-user-friends"></i>
-                <div class="looking-toggle-text">
-                    <div class="title">🤝 я ищу кентов</div>
-                    <div class="subtitle">другие пользователи смогут найти вас в списке</div>
+                <div class="friends-grid" id="friendsGrid">
+                    <div class="loader"></div>
                 </div>
             </div>
-            <label class="toggle-switch">
-                <input type="checkbox" id="lookingForFriendsToggle">
-                <span class="toggle-slider"></span>
-            </label>
-        </div>
 
-        <!-- КЕНТЫ -->
-        <div class="friends-section">
-            <div class="friends-header">
-                <h3><i class="far fa-user-friends"></i> кенты</h3>
-                <span class="friends-count" id="friendsCount">0</span>
+            <!-- СТИКЕРЫ -->
+            <div class="stickers-grid-section" id="stickersSection" style="display: none;">
+                <h3><i class="far fa-star"></i> стикеры</h3>
+                <div class="stickers-grid" id="stickersGrid"></div>
             </div>
-            <div class="friends-tabs">
-                <button class="friend-tab active" onclick="switchFriendsTab('friends')">мои кенты</button>
-                <button class="friend-tab" onclick="switchFriendsTab('requests')">запросы</button>
-                <button class="friend-tab" onclick="switchFriendsTab('sent')">отправленные</button>
-            </div>
-            <div class="friends-list" id="friendsList">
-                <div class="loader"></div>
-            </div>
-        </div>
 
-        <!-- РАМКИ -->
-        <div class="frames-section">
-            <h3><i class="far fa-image"></i> рамки для аватарки</h3>
-            <div class="frames-grid">
-                <div class="frame-option" onclick="selectFrame('standard')">
-                    <div class="frame-preview standard"></div>
-                    <div>обычная</div>
-                </div>
-                <div class="frame-option" onclick="selectFrame('neon')">
-                    <div class="frame-preview neon"></div>
-                    <div>неон</div>
-                </div>
-                <div class="frame-option" onclick="selectFrame('gold')">
-                    <div class="frame-preview gold"></div>
-                    <div>золото</div>
-                </div>
-                <div class="frame-option" onclick="selectFrame('event')">
-                    <div class="frame-preview event"></div>
-                    <div>ивент</div>
-                </div>
+            <!-- РЕАКЦИИ -->
+            <div class="reactions-section">
+                <div class="reactions-title">реакции</div>
+                <div class="reactions-grid" id="reactionsGrid"></div>
             </div>
-        </div>
 
-        <!-- СТИКЕРЫ -->
-        <div class="stickers-section">
-            <h3>
-                <i class="far fa-star"></i> мои стикеры
-                <span class="sticker-counter" id="stickerCounter">0/1</span>
-            </h3>
-            <div class="sticker-url-input">
-                <input type="text" id="stickerUrlInput" placeholder="url стикера...">
-                <button id="addStickerByUrlBtn">добавить</button>
-            </div>
-            <div class="stickers-grid" id="stickersGrid"></div>
-            <div class="prime-note">
-                <i class="far fa-crown"></i> prime: до 5 стикеров
-            </div>
-        </div>
-
-        <div style="text-align:center;margin-top:20px;padding:10px;">
-            <a href="rules.html" style="color:#8b93a6;font-size:0.75rem;text-decoration:none;">
-                <i class="fas fa-scroll"></i> правила сообщества
-            </a>
         </div>
     </div>
-</div>
 
-<nav class="bottom-nav">
-    <a href="index.html" class="nav-item-bottom">
-        <i class="fas fa-home nav-icon-bottom"></i><span>главная</span>
-    </a>
-    <a href="votes.html" class="nav-item-bottom">
-        <i class="fas fa-chart-bar nav-icon-bottom"></i><span>голосования</span>
-    </a>
-    <a href="threads.html" class="nav-item-bottom">
-        <i class="fas fa-comment nav-icon-bottom"></i><span>темки</span>
-    </a>
-    <a href="slivy.html" class="nav-item-bottom">
-        <i class="fas fa-image nav-icon-bottom"></i><span>сливы</span>
-    </a>
-    <a href="your_account.html" class="nav-item-bottom active">
-        <i class="fas fa-user nav-icon-bottom"></i><span>аккаунт</span>
-    </a>
-</nav>
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="https://ggfh-becouse.github.io/school62-vote/index.html" class="nav-item-bottom">
+            <i class="fas fa-home nav-icon-bottom"></i>
+            <span>главная</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/votes.html" class="nav-item-bottom">
+            <i class="fas fa-chart-bar nav-icon-bottom"></i>
+            <span>голосования</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/threads.html" class="nav-item-bottom">
+            <i class="fas fa-comment nav-icon-bottom"></i>
+            <span>темки</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/slivy.html" class="nav-item-bottom">
+            <i class="fas fa-image nav-icon-bottom"></i>
+            <span>сливы</span>
+        </a>
+        <a href="https://ggfh-becouse.github.io/school62-vote/your_account.html" class="nav-item-bottom">
+            <i class="fas fa-user nav-icon-bottom"></i>
+            <span>аккаунт</span>
+        </a>
+    </nav>
 
-<div id="messageContainer"></div>
+    <div id="messageContainer"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-    const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    let currentUser = null;
-    let currentStickers = [];
-    let maxStickers = 1;
-    let currentFrame = 'standard';
-    let friends = [];
-    let friendRequests = [];
-    let sentRequests = [];
+        let profileUser = null;
+        let currentUserId = localStorage.getItem('userId');
+        let friendStatus = null;
+        let friendRequestId = null;
+        let friends = [];
 
-    const stickerPositions = [
-        'sticker-pos-1','sticker-pos-2','sticker-pos-3','sticker-pos-4','sticker-pos-5',
-        'sticker-pos-6','sticker-pos-7','sticker-pos-8','sticker-pos-9'
-    ];
-
-    // ============================================
-    // ВСПОМОГАТЕЛЬНЫЕ
-    // ============================================
-    function showMessage(text, type) {
-        const container = document.getElementById('messageContainer');
-        const msg = document.createElement('div');
-        msg.className = `message ${type}`;
-        msg.textContent = text;
-        container.appendChild(msg);
-        setTimeout(() => {
-            msg.style.animation = 'slideIn 0.3s reverse';
-            setTimeout(() => msg.remove(), 280);
-        }, 2700);
-    }
-
-    function escapeHtml(text) {
-        if (!text) return '';
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
-    // ============================================
-    // МУЗЫКА
-    // ============================================
-    function detectMusicService(url) {
-        if (!url) return null;
-        if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube';
-        if (url.includes('soundcloud.com')) return 'soundcloud';
-        return null;
-    }
-
-    function getYouTubeId(url) {
-        const patterns = [
-            /youtube\.com\/watch\?v=([^&]+)/,
-            /youtu\.be\/([^?]+)/,
-            /youtube\.com\/embed\/([^?]+)/
-        ];
-        for (const p of patterns) {
-            const m = url.match(p);
-            if (m) return m[1];
-        }
-        return null;
-    }
-
-    function renderMusicPreview(url) {
-        const preview = document.getElementById('musicPreview');
-        const bars = document.getElementById('equalizerBars');
-        if (!preview) return;
-
-        const service = detectMusicService(url);
-
-        if (!service) {
-            preview.innerHTML = '';
-            // Останавливаем эквалайзер
-            if (bars) bars.querySelectorAll('.eq-bar').forEach(b => b.classList.add('paused'));
-            return;
+        // ============================================
+        // УТИЛИТЫ
+        // ============================================
+        function showMessage(text, type) {
+            const container = document.getElementById('messageContainer');
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            container.appendChild(msg);
+            setTimeout(() => {
+                msg.style.animation = 'slideIn 0.3s reverse';
+                setTimeout(() => msg.remove(), 280);
+            }, 2700);
         }
 
-        // Запускаем эквалайзер
-        if (bars) bars.querySelectorAll('.eq-bar').forEach(b => b.classList.remove('paused'));
-
-        if (service === 'youtube') {
-            const videoId = getYouTubeId(url);
-            if (!videoId) { preview.innerHTML = ''; return; }
-            preview.innerHTML = `
-                <div class="music-embed-preview">
-                    <iframe height="120"
-                        src="https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
-                        allowfullscreen></iframe>
-                </div>
-                <button class="music-clear-btn" onclick="clearMusicUrl()">
-                    <i class="fas fa-times"></i> удалить музыку
-                </button>`;
-        } else if (service === 'soundcloud') {
-            const encoded = encodeURIComponent(url);
-            preview.innerHTML = `
-                <div class="music-embed-preview">
-                    <iframe height="120"
-                        src="https://w.soundcloud.com/player/?url=${encoded}&color=%232e3440&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"
-                        frameborder="0" allow="autoplay"></iframe>
-                </div>
-                <button class="music-clear-btn" onclick="clearMusicUrl()">
-                    <i class="fas fa-times"></i> удалить музыку
-                </button>`;
-        }
-    }
-
-    async function saveMusicUrl() {
-        const input = document.getElementById('musicUrlInput');
-        const url = input.value.trim();
-
-        if (url && !detectMusicService(url)) {
-            showMessage('поддерживается только YouTube и SoundCloud', 'error');
-            return;
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
-        try {
-            const { error } = await supabaseClient
-                .from('users')
-                .update({ music_url: url || null })
-                .eq('id', currentUser.id);
-
-            if (error) throw error;
-
-            currentUser.music_url = url || null;
-            renderMusicPreview(url);
-            saveProfileToLocalStorage();
-            showMessage(url ? '✅ музыка сохранена' : '✅ музыка удалена', 'success');
-        } catch (e) {
-            showMessage('ошибка: ' + e.message, 'error');
+        // ============================================
+        // МУЗЫКА — только просмотр
+        // ============================================
+        function detectMusicService(url) {
+            if (!url) return null;
+            if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube';
+            if (url.includes('soundcloud.com')) return 'soundcloud';
+            return null;
         }
-    }
 
-    window.clearMusicUrl = async function() {
-        document.getElementById('musicUrlInput').value = '';
-        await saveMusicUrl();
-    };
+        function getYouTubeId(url) {
+            const patterns = [
+                /youtube\.com\/watch\?v=([^&]+)/,
+                /youtu\.be\/([^?]+)/,
+                /youtube\.com\/embed\/([^?]+)/
+            ];
+            for (const p of patterns) {
+                const m = url.match(p);
+                if (m) return m[1];
+            }
+            return null;
+        }
 
-    function loadMusicSection() {
-        if (!currentUser) return;
-        const input = document.getElementById('musicUrlInput');
-        if (input && currentUser.music_url) {
-            input.value = currentUser.music_url;
-            renderMusicPreview(currentUser.music_url);
-        } else {
-            // Эквалайзер в паузе если музыки нет
+        function renderMusicSection(url) {
+            const section = document.getElementById('musicSection');
+            const preview = document.getElementById('musicPreview');
             const bars = document.getElementById('equalizerBars');
-            if (bars) bars.querySelectorAll('.eq-bar').forEach(b => b.classList.add('paused'));
-        }
-    }
 
-    // Enter для сохранения музыки
-    document.getElementById('musicUrlInput')?.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') saveMusicUrl();
-    });
-
-    // ============================================
-    // РАМКИ
-    // ============================================
-    function selectFrame(frameType) {
-        currentFrame = frameType;
-        const frameDiv = document.getElementById('avatarFrame');
-        const frames = {
-            standard: '',
-            neon: '<div class="avatar-frame-neon"></div>',
-            gold: '<div class="avatar-frame-gold"></div>',
-            event: '<div class="avatar-frame-event"></div>'
-        };
-        if (frameDiv) frameDiv.innerHTML = frames[frameType] || '';
-        document.querySelectorAll('.frame-option').forEach(opt => opt.classList.remove('active'));
-        const activeFrame = document.querySelector(`.frame-option[onclick*="'${frameType}'"]`);
-        if (activeFrame) activeFrame.classList.add('active');
-        saveProfileToLocalStorage();
-    }
-
-    // ============================================
-    // LOCALSTORAGE
-    // ============================================
-    function saveProfileToLocalStorage() {
-        if (!currentUser) return;
-        const profileData = {
-            id: currentUser.id,
-            nickname: currentUser.nickname,
-            real_name: currentUser.real_name,
-            class: currentUser.class,
-            avatar_url: currentUser.avatar_url,
-            status: currentUser.status,
-            is_prime: currentUser.is_prime,
-            display_name: currentUser.display_name || currentUser.nickname,
-            looking_for_friends: currentUser.looking_for_friends,
-            music_url: currentUser.music_url || null,
-            frame: currentFrame,
-            stickers: currentStickers.map(s => ({ id: s.id, url: s.sticker_url, position: s.position }))
-        };
-        localStorage.setItem('profileData', JSON.stringify(profileData));
-    }
-
-    function loadProfileFromLocalStorage() {
-        const profileData = localStorage.getItem('profileData');
-        if (!profileData) return false;
-        try {
-            const data = JSON.parse(profileData);
-            currentFrame = data.frame || 'standard';
-            const avatar = document.getElementById('avatar');
-            const miniAvatar = document.getElementById('miniAvatar');
-            const userNickname = document.getElementById('userNickname');
-            const userClass = document.getElementById('userClass');
-            const statusDisplay = document.getElementById('statusDisplay');
-            if (avatar) avatar.src = data.avatar_url || 'https://i.pravatar.cc/300';
-            if (miniAvatar) miniAvatar.src = data.avatar_url || 'https://i.pravatar.cc/300';
-            if (userNickname) userNickname.textContent = data.display_name || data.nickname;
-            if (userClass) userClass.textContent = data.class;
-            if (statusDisplay) statusDisplay.textContent = data.status || 'Статус не установлен';
-            selectFrame(currentFrame);
-            if (data.stickers) {
-                currentStickers = data.stickers.map(s => ({ id: s.id, sticker_url: s.url, position: s.position }));
-                renderStickers();
+            if (!url) {
+                section.style.display = 'none';
+                return;
             }
-            return true;
-        } catch (e) { return false; }
-    }
 
-    // ============================================
-    // PRIME
-    // ============================================
-    async function checkPrimeStatus() {
-        try {
-            const { data } = await supabaseClient
-                .from('verified_users')
-                .select('*')
-                .eq('username', currentUser.nickname)
-                .maybeSingle();
-            if (data) {
-                currentUser.is_prime = true;
-                await supabaseClient.from('users').update({ is_prime: true }).eq('id', currentUser.id);
+            const service = detectMusicService(url);
+            if (!service) {
+                section.style.display = 'none';
+                return;
             }
-        } catch (e) { console.error(e); }
-    }
 
-    // ============================================
-    // ДРУЗЬЯ
-    // ============================================
-    window.switchFriendsTab = function(tab) {
-        const tabs = document.querySelectorAll('.friend-tab');
-        tabs.forEach(t => t.classList.remove('active'));
-        const activeTab = Array.from(tabs).find(t => {
-            if (tab === 'friends') return t.textContent.includes('мои кенты');
-            if (tab === 'requests') return t.textContent.includes('запросы');
-            if (tab === 'sent') return t.textContent.includes('отправленные');
-        });
-        if (activeTab) activeTab.classList.add('active');
-        if (tab === 'friends') displayFriends();
-        else if (tab === 'requests') displayFriendRequests();
-        else if (tab === 'sent') displaySentRequests();
-    };
+            section.style.display = 'block';
 
-    function displayFriends() {
-        const list = document.getElementById('friendsList');
-        if (!friends || friends.length === 0) {
-            list.innerHTML = '<div class="empty-friends">🤝 пока нет кентов</div>';
-            return;
-        }
-        list.innerHTML = friends.filter(Boolean).map(friend => `
-            <div class="friend-item">
-                <div class="friend-avatar"><img src="${friend.avatar_url || 'https://i.pravatar.cc/300'}" alt=""></div>
-                <div class="friend-info">
-                    <div class="friend-name">${escapeHtml(friend.display_name || friend.nickname || 'Пользователь')}</div>
-                    <div class="friend-meta">
-                        <span class="friend-class">${escapeHtml(friend.class || 'класс')}</span>
-                        ${friend.status ? `<span class="friend-status">"${escapeHtml(friend.status.substring(0,20))}${friend.status.length > 20 ? '...' : ''}"</span>` : ''}
-                    </div>
-                </div>
-                <div class="friend-actions">
-                    <button class="friend-btn remove" onclick="removeFriend('${friend.id}')">
-                        <i class="fas fa-user-minus"></i>
-                    </button>
-                </div>
-            </div>`).join('');
-    }
+            // запускаем эквалайзер
+            if (bars) bars.querySelectorAll('.eq-bar').forEach(b => b.classList.remove('paused'));
 
-    function displayFriendRequests() {
-        const list = document.getElementById('friendsList');
-        if (!friendRequests || friendRequests.length === 0) {
-            list.innerHTML = '<div class="empty-friends">📭 нет запросов</div>';
-            return;
-        }
-        list.innerHTML = friendRequests.filter(r => r?.user).map(request => `
-            <div class="friend-item">
-                <div class="friend-avatar"><img src="${request.user.avatar_url || 'https://i.pravatar.cc/300'}" alt=""></div>
-                <div class="friend-info">
-                    <div class="friend-name">${escapeHtml(request.user.display_name || request.user.nickname)}</div>
-                    <div class="friend-meta">
-                        <span class="friend-class">${escapeHtml(request.user.class || 'класс')}</span>
-                        ${request.user.is_prime ? '<span class="friend-status" style="color:#f1c40f;">prime</span>' : ''}
-                    </div>
-                </div>
-                <div class="friend-actions">
-                    <button class="friend-btn accept" onclick="acceptFriendRequest('${request.id}')"><i class="fas fa-check"></i></button>
-                    <button class="friend-btn reject" onclick="rejectFriendRequest('${request.id}')"><i class="fas fa-times"></i></button>
-                </div>
-            </div>`).join('');
-    }
-
-    function displaySentRequests() {
-        const list = document.getElementById('friendsList');
-        if (!sentRequests || sentRequests.length === 0) {
-            list.innerHTML = '<div class="empty-friends">📤 нет отправленных</div>';
-            return;
-        }
-        list.innerHTML = sentRequests.filter(r => r?.user).map(request => `
-            <div class="friend-item">
-                <div class="friend-avatar"><img src="${request.user.avatar_url || 'https://i.pravatar.cc/300'}" alt=""></div>
-                <div class="friend-info">
-                    <div class="friend-name">${escapeHtml(request.user.display_name || request.user.nickname)}</div>
-                    <div class="friend-meta">
-                        <span class="friend-class">${escapeHtml(request.user.class || 'класс')}</span>
-                        <span class="friend-status" style="color:#8b93a6;">ожидание</span>
-                    </div>
-                </div>
-                <div class="friend-actions">
-                    <button class="friend-btn reject" onclick="cancelFriendRequest('${request.id}')"><i class="fas fa-times"></i></button>
-                </div>
-            </div>`).join('');
-    }
-
-    window.acceptFriendRequest = async function(requestId) {
-        try {
-            const { error } = await supabaseClient.from('friends')
-                .update({ status: 'accepted', updated_at: new Date().toISOString() })
-                .eq('id', parseInt(requestId));
-            if (error) throw error;
-            showMessage('✅ запрос принят', 'success');
-            await loadFriends();
-        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
-    };
-
-    window.rejectFriendRequest = async function(requestId) {
-        try {
-            const { error } = await supabaseClient.from('friends').delete().eq('id', parseInt(requestId));
-            if (error) throw error;
-            showMessage('❌ запрос отклонён', 'success');
-            await loadFriends();
-        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
-    };
-
-    window.cancelFriendRequest = async function(requestId) {
-        try {
-            const { error } = await supabaseClient.from('friends').delete().eq('id', parseInt(requestId));
-            if (error) throw error;
-            showMessage('✖️ запрос отменён', 'success');
-            await loadFriends();
-        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
-    };
-
-    window.removeFriend = async function(friendId) {
-        if (!confirm('Удалить из кентов?')) return;
-        const uid = parseInt(currentUser.id);
-        const fid = parseInt(friendId);
-        try {
-            const { error: e1 } = await supabaseClient.from('friends').delete()
-                .eq('user_id', uid).eq('friend_id', fid).eq('status', 'accepted');
-            if (e1 && e1.code === 'PGRST116') {
-                const { error: e2 } = await supabaseClient.from('friends').delete()
-                    .eq('user_id', fid).eq('friend_id', uid).eq('status', 'accepted');
-                if (e2) throw e2;
-            } else if (e1) throw e1;
-            showMessage('👋 кент удалён', 'success');
-            await loadFriends();
-        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
-    };
-
-    async function loadFriends() {
-        try {
-            const uid = parseInt(currentUser.id);
-            const { data: s } = await supabaseClient.from('friends')
-                .select('friend_id, users!friends_friend_id_fkey(id,nickname,display_name,class,avatar_url,is_prime,status)')
-                .eq('user_id', uid).eq('status', 'accepted');
-            const { data: r } = await supabaseClient.from('friends')
-                .select('user_id, users!friends_user_id_fkey(id,nickname,display_name,class,avatar_url,is_prime,status)')
-                .eq('friend_id', uid).eq('status', 'accepted');
-            friends = [...(s?.map(f => f.users) || []), ...(r?.map(f => f.users) || [])];
-            document.getElementById('friendsCount').textContent = friends.length;
-
-            const { data: rq } = await supabaseClient.from('friends')
-                .select('id, user_id, users!friends_user_id_fkey(id,nickname,display_name,class,avatar_url,is_prime)')
-                .eq('friend_id', uid).eq('status', 'pending');
-            const { data: sq } = await supabaseClient.from('friends')
-                .select('id, friend_id, users!friends_friend_id_fkey(id,nickname,display_name,class,avatar_url,is_prime)')
-                .eq('user_id', uid).eq('status', 'pending');
-
-            friendRequests = (rq || []).map(r => ({ id: r.id, user: r.users }));
-            sentRequests = (sq || []).map(s => ({ id: s.id, user: s.users }));
-            switchFriendsTab('friends');
-        } catch (e) { console.error(e); }
-    }
-
-    // ============================================
-    // LOOKING FOR FRIENDS
-    // ============================================
-    async function loadLookingForFriendsStatus() {
-        if (!currentUser) return;
-        try {
-            const { data } = await supabaseClient.from('users')
-                .select('looking_for_friends').eq('id', currentUser.id).single();
-            const toggle = document.getElementById('lookingForFriendsToggle');
-            if (toggle) toggle.checked = data?.looking_for_friends || false;
-        } catch (e) { console.error(e); }
-    }
-
-    async function updateLookingForFriendsStatus(value) {
-        if (!currentUser) return;
-        try {
-            const { error } = await supabaseClient.from('users')
-                .update({ looking_for_friends: value }).eq('id', currentUser.id);
-            if (error) throw error;
-            currentUser.looking_for_friends = value;
-            showMessage(value ? '✅ вы в поиске кентов' : '❌ скрыты из поиска', 'success');
-        } catch (e) {
-            showMessage('ошибка: ' + e.message, 'error');
-            const toggle = document.getElementById('lookingForFriendsToggle');
-            if (toggle) toggle.checked = !value;
-        }
-    }
-
-    // ============================================
-    // СТИКЕРЫ
-    // ============================================
-    async function loadStickers() {
-        try {
-            const { data, error } = await supabaseClient.from('user_stickers')
-                .select('*').eq('user_id', currentUser.id);
-            if (error) throw error;
-            currentStickers = data || [];
-            renderStickers();
-            document.getElementById('stickerCounter').textContent = `${currentStickers.length}/${maxStickers}`;
-            const grid = document.getElementById('stickersGrid');
-            if (currentStickers.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#8b93a6;padding:20px;">нет стикеров</div>';
-            } else {
-                grid.innerHTML = currentStickers.map(s => `
-                    <div class="sticker-item">
-                        <img src="${s.sticker_url}" alt="Стикер">
-                        <div class="sticker-rarity">${s.rarity || 'обычный'}</div>
-                    </div>`).join('');
+            if (service === 'youtube') {
+                const videoId = getYouTubeId(url);
+                if (!videoId) { section.style.display = 'none'; return; }
+                preview.innerHTML = `
+                    <div class="music-embed-preview">
+                        <iframe height="120"
+                            src="https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+                            allowfullscreen></iframe>
+                    </div>`;
+            } else if (service === 'soundcloud') {
+                const encoded = encodeURIComponent(url);
+                preview.innerHTML = `
+                    <div class="music-embed-preview">
+                        <iframe height="120"
+                            src="https://w.soundcloud.com/player/?url=${encoded}&color=%232e3440&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false"
+                            frameborder="0" allow="autoplay"></iframe>
+                    </div>`;
             }
-        } catch (e) { console.error(e); }
-    }
+        }
 
-    function renderStickers() {
-        const container = document.getElementById('avatarContainer');
-        container.querySelectorAll('.sticker, .sticker-remove').forEach(s => s.remove());
-        currentStickers.forEach((sticker, index) => {
-            const el = document.createElement('img');
-            el.src = sticker.sticker_url;
-            el.className = `sticker ${sticker.position || stickerPositions[index]}`;
-            el.onerror = () => el.remove();
-            const removeBtn = document.createElement('div');
-            removeBtn.className = 'sticker-remove';
-            removeBtn.innerHTML = '✕';
-            removeBtn.onclick = (e) => { e.stopPropagation(); removeSticker(sticker.id); };
-            container.appendChild(el);
-            container.appendChild(removeBtn);
-        });
-        document.getElementById('stickerCounter').textContent = `${currentStickers.length}/${maxStickers}`;
-        saveProfileToLocalStorage();
-    }
+        // ============================================
+        // ЗАГРУЗКА ПРОФИЛЯ
+        // ============================================
+        async function loadProfile() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const profileId = urlParams.get('id');
 
-    async function addStickerByUrl() {
-        const urlInput = document.getElementById('stickerUrlInput');
-        const url = urlInput.value.trim();
-        if (!url) { showMessage('введите url стикера', 'error'); return; }
-        if (currentStickers.length >= maxStickers) { showMessage(`лимит стикеров: ${maxStickers}`, 'error'); return; }
-        try {
-            const { data, error } = await supabaseClient.from('user_stickers')
-                .insert({ user_id: currentUser.id, sticker_url: url, position: stickerPositions[currentStickers.length], rarity: 'обычный' })
-                .select().single();
-            if (error) throw error;
-            currentStickers.push(data);
-            renderStickers();
-            urlInput.value = '';
-            saveProfileToLocalStorage();
-            showMessage('✅ стикер добавлен', 'success');
-        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
-    }
+            if (!profileId) {
+                showMessage('ID пользователя не указан', 'error');
+                setTimeout(() => window.history.back(), 2000);
+                return;
+            }
 
-    async function removeSticker(stickerId) {
-        try {
-            const { error } = await supabaseClient.from('user_stickers').delete().eq('id', stickerId);
-            if (error) throw error;
-            currentStickers = currentStickers.filter(s => s.id !== stickerId);
-            renderStickers();
-            saveProfileToLocalStorage();
-            showMessage('стикер удалён', 'success');
-        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
-    }
+            if (profileId === currentUserId) {
+                window.location.href = 'https://ggfh-becouse.github.io/school62-vote/your_account.html';
+                return;
+            }
 
-    // ============================================
-    // ОБНОВЛЕНИЕ ДАННЫХ
-    // ============================================
-    window.updateDisplayName = async function() {
-        const newName = prompt('виртуальное имя:', currentUser.display_name || currentUser.nickname);
-        if (newName === null) return;
-        try {
-            const displayName = newName.trim() || currentUser.nickname;
-            const { error } = await supabaseClient.from('users')
-                .update({ display_name: displayName }).eq('id', currentUser.id);
-            if (error) throw error;
-            currentUser.display_name = displayName;
-            document.getElementById('userNickname').textContent = displayName;
-            saveProfileToLocalStorage();
-            showMessage('✅ имя обновлено', 'success');
-        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
-    };
+            try {
+                const { data, error } = await supabaseClient
+                    .from('users')
+                    .select('*')
+                    .eq('id', profileId)
+                    .single();
 
-    window.updateClass = async function() {
-        const classes = ['7А','7Б','8А','8Б','9А','9Б','10А','11А'];
-        const newClass = prompt(`класс (${classes.join(', ')}):`, currentUser.class);
-        if (!newClass || !classes.includes(newClass)) { showMessage('выберите класс из списка', 'error'); return; }
-        try {
-            const { error } = await supabaseClient.from('users')
-                .update({ class: newClass }).eq('id', currentUser.id);
-            if (error) throw error;
-            currentUser.class = newClass;
-            document.getElementById('userClass').textContent = newClass;
-            saveProfileToLocalStorage();
-            showMessage('✅ класс обновлён', 'success');
-        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
-    };
+                if (error || !data) {
+                    showMessage('Пользователь не найден', 'error');
+                    setTimeout(() => window.history.back(), 2000);
+                    return;
+                }
 
-    async function changeAvatar() {
-        const url = prompt('url новой аватарки:', currentUser.avatar_url);
-        if (!url) return;
-        try {
-            const { error } = await supabaseClient.from('users')
-                .update({ avatar_url: url }).eq('id', currentUser.id);
-            if (error) throw error;
-            document.getElementById('avatar').src = url;
-            document.getElementById('miniAvatar').src = url;
-            currentUser.avatar_url = url;
-            saveProfileToLocalStorage();
-            showMessage('✅ аватар обновлён', 'success');
-        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
-    }
+                profileUser = data;
 
-    async function updateStatus() {
-        const status = document.getElementById('statusInput').value.trim();
-        if (status.length > 50) { showMessage('максимум 50 символов', 'error'); return; }
-        try {
-            const { error } = await supabaseClient.from('users')
-                .update({ status }).eq('id', currentUser.id);
-            if (error) throw error;
-            currentUser.status = status;
-            document.getElementById('statusDisplay').textContent = status || 'Статус не установлен';
-            document.getElementById('statusInput').value = '';
-            saveProfileToLocalStorage();
-            showMessage('✅ статус обновлён', 'success');
-        } catch (e) { showMessage('ошибка: ' + e.message, 'error'); }
-    }
+                await Promise.all([
+                    loadUserData(),
+                    loadStickers(),
+                    loadReactions(),
+                    loadFrame(),
+                    checkFriendStatus(),
+                    loadFriends()
+                ]);
 
-    // ============================================
-    // AUTH
-    // ============================================
-    async function checkAuth() {
-        const userId = localStorage.getItem('userId');
-        if (!userId) { window.location.href = 'login.html'; return; }
-        try {
-            loadProfileFromLocalStorage();
-            const { data, error } = await supabaseClient.from('users')
-                .select('*').eq('id', userId).single();
-            if (error || !data) { localStorage.clear(); window.location.href = 'login.html'; return; }
-            currentUser = data;
-            await checkPrimeStatus();
-            maxStickers = currentUser.is_prime ? 5 : 1;
-            document.getElementById('userNickname').textContent = currentUser.display_name || currentUser.nickname;
-            document.getElementById('userClass').textContent = currentUser.class || 'класс не указан';
-            document.getElementById('userPrime').textContent = currentUser.is_prime ? 'prime' : 'обычный';
-            const avatarUrl = currentUser.avatar_url || 'https://i.pravatar.cc/300';
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showMessage('Ошибка загрузки профиля', 'error');
+            }
+        }
+
+        // ============================================
+        // ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
+        // ============================================
+        async function loadUserData() {
+            document.getElementById('userNickname').textContent = profileUser.display_name || profileUser.nickname;
+            document.getElementById('userClass').textContent = profileUser.class || 'Класс не указан';
+            document.getElementById('userPrime').textContent = profileUser.is_prime ? 'prime' : 'обычный';
+
+            const avatarUrl = profileUser.avatar_url || 'https://i.pravatar.cc/300';
             document.getElementById('avatar').src = avatarUrl;
             document.getElementById('miniAvatar').src = avatarUrl;
-            document.getElementById('statusDisplay').textContent = currentUser.status || 'Статус не установлен';
-            await Promise.all([loadStickers(), loadFriends(), loadLookingForFriendsStatus()]);
-            saveProfileToLocalStorage();
-            loadMusicSection();
-        } catch (e) { console.error(e); localStorage.clear(); window.location.href = 'login.html'; }
-    }
 
-    // ============================================
-    // ИНИЦИАЛИЗАЦИЯ
-    // ============================================
-    document.addEventListener('DOMContentLoaded', () => {
-        checkAuth();
+            document.getElementById('statusDisplay').textContent = profileUser.status || 'Статус не установлен';
 
-        document.getElementById('addStickerByUrlBtn').addEventListener('click', addStickerByUrl);
-        document.getElementById('changeAvatarBtn').addEventListener('click', changeAvatar);
-        document.getElementById('updateStatusBtn').addEventListener('click', updateStatus);
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            localStorage.clear();
-            window.location.href = 'login.html';
+            // Музыка
+            renderMusicSection(profileUser.music_url || null);
+        }
+
+        async function loadFrame() {
+            const frameDiv = document.getElementById('avatarFrame');
+            const frame = profileUser.frame || 'standard';
+            const frames = {
+                standard: '',
+                neon: '<div class="avatar-frame-neon"></div>',
+                gold: '<div class="avatar-frame-gold"></div>',
+                event: '<div class="avatar-frame-event"></div>'
+            };
+            frameDiv.innerHTML = frames[frame] || '';
+        }
+
+        // ============================================
+        // СТИКЕРЫ
+        // ============================================
+        async function loadStickers() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('user_stickers')
+                    .select('*')
+                    .eq('user_id', profileUser.id);
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    document.getElementById('stickersSection').style.display = 'none';
+                    return;
+                }
+
+                document.getElementById('stickersSection').style.display = 'block';
+
+                // Стикеры на аватарке
+                const container = document.getElementById('avatarContainer');
+                container.querySelectorAll('.sticker').forEach(s => s.remove());
+                data.forEach(sticker => {
+                    const el = document.createElement('img');
+                    el.src = sticker.sticker_url;
+                    el.className = `sticker ${sticker.position}`;
+                    el.onerror = () => el.remove();
+                    container.appendChild(el);
+                });
+
+                // Грид стикеров
+                document.getElementById('stickersGrid').innerHTML = data.map(s => `
+                    <div class="sticker-thumb">
+                        <img src="${s.sticker_url}" alt="Стикер">
+                        <div class="sticker-rarity">${s.rarity || 'обычный'}</div>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Ошибка загрузки стикеров:', error);
+            }
+        }
+
+        // ============================================
+        // КЕНТЫ
+        // ============================================
+        async function loadFriends() {
+            try {
+                const userId = parseInt(profileUser.id);
+
+                const { data: sentFriends } = await supabaseClient
+                    .from('friends')
+                    .select('friend_id, users!friends_friend_id_fkey(id,nickname,display_name,class,avatar_url,is_prime,status)')
+                    .eq('user_id', userId)
+                    .eq('status', 'accepted');
+
+                const { data: receivedFriends } = await supabaseClient
+                    .from('friends')
+                    .select('user_id, users!friends_user_id_fkey(id,nickname,display_name,class,avatar_url,is_prime,status)')
+                    .eq('friend_id', userId)
+                    .eq('status', 'accepted');
+
+                friends = [
+                    ...(sentFriends?.map(f => f.users) || []),
+                    ...(receivedFriends?.map(f => f.users) || [])
+                ];
+
+                document.getElementById('friendsCount').textContent = friends.length;
+                displayFriends();
+
+            } catch (error) {
+                console.error('Ошибка загрузки друзей:', error);
+                document.getElementById('friendsCount').textContent = '0';
+                document.getElementById('friendsGrid').innerHTML = '<div class="empty-friends">⚠️ ошибка загрузки</div>';
+            }
+        }
+
+        function displayFriends() {
+            const grid = document.getElementById('friendsGrid');
+
+            if (!friends || friends.length === 0) {
+                grid.innerHTML = '<div class="empty-friends">🤝 нет кентов</div>';
+                return;
+            }
+
+            grid.innerHTML = friends.filter(Boolean).map(friend => `
+                <a href="https://ggfh-becouse.github.io/school62-vote/check_account.html?id=${friend.id}" class="friend-card">
+                    <div class="friend-avatar">
+                        <img src="${friend.avatar_url || 'https://i.pravatar.cc/300'}" alt="">
+                    </div>
+                    <div class="friend-info">
+                        <div class="friend-name">
+                            ${escapeHtml(friend.display_name || friend.nickname || 'Пользователь')}
+                            ${friend.is_prime ? '<span class="friend-badge"><i class="fas fa-crown"></i></span>' : ''}
+                        </div>
+                        <span class="friend-class">${escapeHtml(friend.class || 'класс')}</span>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        // ============================================
+        // СТАТУС ДРУЖБЫ
+        // ============================================
+        async function checkFriendStatus() {
+            if (!currentUserId) {
+                friendStatus = 'none';
+                updateFriendButton();
+                return;
+            }
+
+            try {
+                const { data: sentData } = await supabaseClient
+                    .from('friends')
+                    .select('id, status')
+                    .eq('user_id', parseInt(currentUserId))
+                    .eq('friend_id', parseInt(profileUser.id))
+                    .maybeSingle();
+
+                if (sentData) {
+                    friendStatus = sentData.status === 'pending' ? 'sent' : 'accepted';
+                    friendRequestId = sentData.id;
+                    updateFriendButton();
+                    return;
+                }
+
+                const { data: receivedData } = await supabaseClient
+                    .from('friends')
+                    .select('id, status')
+                    .eq('user_id', parseInt(profileUser.id))
+                    .eq('friend_id', parseInt(currentUserId))
+                    .maybeSingle();
+
+                if (receivedData) {
+                    friendStatus = receivedData.status === 'pending' ? 'pending' : 'accepted';
+                    friendRequestId = receivedData.id;
+                    updateFriendButton();
+                    return;
+                }
+
+                friendStatus = 'none';
+                updateFriendButton();
+
+            } catch (error) {
+                console.error('Ошибка проверки статуса дружбы:', error);
+                friendStatus = 'none';
+                updateFriendButton();
+            }
+        }
+
+        function updateFriendButton() {
+            const btn = document.getElementById('friendActionBtn');
+            const states = {
+                none:     { html: '<i class="far fa-user-plus"></i> добавить в кенты', cls: '' },
+                sent:     { html: '<i class="far fa-clock"></i> запрос отправлен', cls: 'pending' },
+                pending:  { html: '<i class="far fa-bell"></i> принять запрос', cls: '' },
+                accepted: { html: '<i class="far fa-check"></i> уже в кентах', cls: 'accepted' }
+            };
+            const s = states[friendStatus] || states.none;
+            btn.innerHTML = s.html;
+            btn.className = `friend-action-btn ${s.cls}`;
+        }
+
+        window.handleFriendAction = async function() {
+            if (!currentUserId) {
+                showMessage('войдите, чтобы добавлять в кенты', 'error');
+                return;
+            }
+
+            try {
+                if (friendStatus === 'none') {
+                    const { data, error } = await supabaseClient
+                        .from('friends')
+                        .insert({
+                            user_id: parseInt(currentUserId),
+                            friend_id: parseInt(profileUser.id),
+                            status: 'pending',
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        })
+                        .select().single();
+
+                    if (error) {
+                        if (error.code === '23505') { await checkFriendStatus(); return; }
+                        throw error;
+                    }
+                    friendStatus = 'sent';
+                    friendRequestId = data.id;
+                    updateFriendButton();
+                    showMessage('✅ запрос отправлен', 'success');
+
+                } else if (friendStatus === 'pending') {
+                    const { error } = await supabaseClient.from('friends')
+                        .update({ status: 'accepted', updated_at: new Date().toISOString() })
+                        .eq('id', friendRequestId);
+                    if (error) throw error;
+                    friendStatus = 'accepted';
+                    updateFriendButton();
+                    showMessage('✅ запрос принят', 'success');
+
+                } else if (friendStatus === 'sent') {
+                    if (!confirm('Отменить запрос?')) return;
+                    const { error } = await supabaseClient.from('friends').delete().eq('id', friendRequestId);
+                    if (error) throw error;
+                    friendStatus = 'none';
+                    friendRequestId = null;
+                    updateFriendButton();
+                    showMessage('✖️ запрос отменён', 'success');
+
+                } else if (friendStatus === 'accepted') {
+                    if (!confirm('Удалить из кентов?')) return;
+                    const uid = parseInt(currentUserId);
+                    const pid = parseInt(profileUser.id);
+
+                    const { error: e1 } = await supabaseClient.from('friends').delete()
+                        .eq('user_id', uid).eq('friend_id', pid).eq('status', 'accepted');
+
+                    if (e1 && e1.code === 'PGRST116') {
+                        const { error: e2 } = await supabaseClient.from('friends').delete()
+                            .eq('user_id', pid).eq('friend_id', uid).eq('status', 'accepted');
+                        if (e2) throw e2;
+                    } else if (e1) throw e1;
+
+                    friendStatus = 'none';
+                    updateFriendButton();
+                    showMessage('👋 кент удалён', 'success');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showMessage('ошибка: ' + error.message, 'error');
+            }
+        };
+
+        // ============================================
+        // РЕАКЦИИ
+        // ============================================
+        async function loadReactions() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('profile_reactions')
+                    .select('*')
+                    .eq('user_id', profileUser.id);
+
+                if (error) throw error;
+
+                const reactions = ['❤️', '🔥', '😎', '🤡', '💀'];
+                document.getElementById('reactionsGrid').innerHTML = reactions.map(reaction => {
+                    const found = data?.find(r => r.reaction === reaction);
+                    const count = found?.count || 0;
+                    return `
+                        <div class="reaction-item" onclick="addReaction('${reaction}')">
+                            ${reaction} <span class="reaction-count">${count}</span>
+                        </div>`;
+                }).join('');
+
+            } catch (error) {
+                console.error('Ошибка загрузки реакций:', error);
+            }
+        }
+
+        window.addReaction = async function(reaction) {
+            if (!currentUserId) {
+                showMessage('войдите, чтобы ставить реакции', 'error');
+                return;
+            }
+            if (currentUserId === profileUser.id) {
+                showMessage('нельзя ставить реакции себе', 'error');
+                return;
+            }
+            try {
+                const { error } = await supabaseClient
+                    .from('profile_reactions')
+                    .upsert({
+                        user_id: profileUser.id,
+                        reaction: reaction,
+                        count: supabaseClient.rpc('increment', { x: 1 })
+                    });
+                if (error) throw error;
+                await loadReactions();
+                showMessage('✅ реакция добавлена', 'success');
+            } catch (error) {
+                console.error('Ошибка:', error);
+                showMessage('ошибка: ' + error.message, 'error');
+            }
+        };
+
+        // ============================================
+        // МИНИ КАРТОЧКА
+        // ============================================
+        async function createMiniCard() {
+            const wrapper = document.getElementById('nicknameWrapper');
+
+            const { count: commentsCount } = await supabaseClient
+                .from('comments')
+                .select('*', { count: 'exact', head: true })
+                .eq('name', profileUser.nickname);
+
+            const { count: stickersCount } = await supabaseClient
+                .from('user_stickers')
+                .select('*', { count: 'exact', head: true })
+                .eq('user_id', profileUser.id);
+
+            const { data: stickers } = await supabaseClient
+                .from('user_stickers')
+                .select('*')
+                .eq('user_id', profileUser.id)
+                .limit(1);
+
+            const miniCard = document.createElement('div');
+            miniCard.className = 'profile-mini-card';
+            miniCard.innerHTML = `
+                <div class="mini-header">
+                    <img src="${profileUser.avatar_url || 'https://i.pravatar.cc/300'}" class="mini-avatar">
+                    <div class="mini-info">
+                        <h4>${escapeHtml(profileUser.display_name || profileUser.nickname)}</h4>
+                        <p>${escapeHtml(profileUser.class || 'класс не указан')}</p>
+                    </div>
+                    ${stickers?.length ? `<img src="${stickers[0].sticker_url}" class="mini-sticker">` : ''}
+                </div>
+                <div class="mini-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value">${commentsCount || 0}</div>
+                        <div class="mini-stat-label">комменты</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value">${stickersCount || 0}</div>
+                        <div class="mini-stat-label">стикеры</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value">${friends.length}</div>
+                        <div class="mini-stat-label">кенты</div>
+                    </div>
+                </div>
+                ${profileUser.status ? `<div class="mini-status">"${escapeHtml(profileUser.status)}"</div>` : ''}
+            `;
+            wrapper.appendChild(miniCard);
+        }
+
+        // ============================================
+        // ИНИЦИАЛИЗАЦИЯ
+        // ============================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadProfile();
+            setTimeout(createMiniCard, 600);
         });
-        document.getElementById('lookingForFriendsToggle')?.addEventListener('change', (e) => {
-            updateLookingForFriendsStatus(e.target.checked);
-        });
-        document.getElementById('stickerUrlInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addStickerByUrl();
-        });
-        document.getElementById('statusInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') updateStatus();
-        });
-    });
-</script>
+    </script>
 </body>
 </html>
