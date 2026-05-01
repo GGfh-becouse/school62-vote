@@ -3,127 +3,697 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>krg62 | голосования</title>
+<title>krg62 | дуэль голосований</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 32px 0; }
-.container { max-width: 600px; width: 100%; position: relative; padding: 0 16px; }
-.main-content { display: block; padding-bottom: 90px; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-@keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-@keyframes progressGrow { from { width: 0 !important; } to { } }
-@keyframes modalSlide { from { opacity: 0; transform: translateY(-20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+body {
+    background: #f8f9fc;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 32px 0;
+}
 
-.header { background: #ffffff; border-radius: 24px; padding: 16px 20px; margin: 8px 0 16px 0; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.02); animation: fadeDown 0.4s cubic-bezier(0.22,1,0.36,1) both; transition: box-shadow 0.3s; }
-.header:hover { box-shadow: 0 14px 28px -8px rgba(0,0,0,0.13); }
-.header-content { display: flex; justify-content: space-between; align-items: center; }
-.logo { display: flex; align-items: center; gap: 8px; }
-.logo-img { height: 36px; width: auto; object-fit: contain; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
-.logo:hover .logo-img { transform: rotate(-6deg) scale(1.08); }
-.logo h1 { font-size: 1.4rem; font-weight: 600; color: #1a1e2b; letter-spacing: -0.5px; }
-.header-icons { display: flex; gap: 16px; align-items: center; }
-.header-icon { font-size: 1.2rem; color: #8b93a6; transition: color 0.2s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; text-decoration: none; position: relative; }
-.header-icon:hover { color: #2e3440; transform: scale(1.18); }
-@media (max-width: 600px) { .logo-img { height: 28px; } }
+.container {
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    padding: 0 16px;
+}
 
-.auth-status-bar { background: #ffffff; border-radius: 40px; padding: 12px 20px; margin-bottom: 20px; box-shadow: 0 4px 8px -4px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
-.auth-info { display: flex; align-items: center; gap: 10px; }
-.auth-avatar { width: 32px; height: 32px; border-radius: 10px; overflow: hidden; border: 2px solid rgba(0,0,0,0.05); transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1); }
-.auth-avatar:hover { transform: scale(1.1); }
-.auth-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.auth-welcome { font-size: 0.9rem; color: #1a1e2b; font-weight: 500; }
-.auth-badge { background: #f1c40f; color: #1a1e2b; padding: 2px 8px; border-radius: 30px; font-size: 0.65rem; font-weight: 600; margin-left: 6px; }
-.auth-buttons { display: flex; gap: 8px; }
-.auth-btn { background: #f0f2f5; border: none; padding: 8px 16px; border-radius: 30px; font-weight: 500; font-size: 0.8rem; cursor: pointer; transition: all 0.2s cubic-bezier(0.22,1,0.36,1); text-decoration: none; color: #1a1e2b; display: inline-flex; align-items: center; gap: 4px; }
-.auth-btn:hover { background: #e4e6e9; transform: translateY(-1px); }
-.auth-btn.primary { background: #2e3440; color: white; }
-.auth-btn.primary:hover { background: #1a1e2b; }
+.main-content {
+    display: block;
+    padding-bottom: 90px;
+}
 
-.page-header { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 20px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
-.page-header-left h2 { font-size: 1.3rem; font-weight: 600; color: #1a1e2b; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-.page-header-left p { font-size: 0.85rem; color: #8b93a6; }
-.polls-count-badge { background: #2e3440; color: white; padding: 6px 14px; border-radius: 30px; font-size: 0.8rem; font-weight: 600; }
+/* Анимации */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-.create-poll-section { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 24px; box-shadow: 0 10px 20px -8px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02); animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.15s both; transition: box-shadow 0.3s; }
-.create-poll-section:hover { box-shadow: 0 14px 28px -8px rgba(0,0,0,0.08); }
-.create-poll-section h3 { font-size: 0.85rem; font-weight: 600; color: #8b93a6; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-.poll-input { width: 100%; padding: 14px 18px; border: 1px solid rgba(0,0,0,0.05); border-radius: 18px; font-size: 0.95rem; background: #f8f9fc; transition: all 0.3s cubic-bezier(0.22,1,0.36,1); margin-bottom: 12px; }
-.poll-input:focus { outline: none; border-color: #2e3440; background: #ffffff; box-shadow: 0 0 0 3px rgba(46,52,64,0.06); transform: translateY(-1px); }
-.create-poll-btn { background: #2e3440; color: white; border: none; padding: 12px 20px; border-radius: 30px; font-weight: 500; font-size: 0.9rem; cursor: pointer; transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1); width: 100%; }
-.create-poll-btn:hover { background: #1a1e2b; transform: translateY(-2px); box-shadow: 0 8px 16px -6px rgba(46,52,64,0.3); }
-.create-poll-btn:active { transform: translateY(0) scale(0.98); }
-.create-poll-btn:disabled { background: #8b93a6; cursor: not-allowed; transform: none; box-shadow: none; }
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-.polls-list { animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
+@keyframes cardGlow {
+    0% { box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+    50% { box-shadow: 0 20px 40px rgba(46,52,64,0.2); }
+    100% { box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+}
 
-.poll-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 8px 16px -8px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.02); transition: all 0.25s cubic-bezier(0.22,1,0.36,1); animation: fadeUp 0.4s cubic-bezier(0.22,1,0.36,1) both; }
-.poll-card:hover { transform: translateY(-3px); box-shadow: 0 16px 30px -10px rgba(0,0,0,0.1); }
-.poll-card.voted { opacity: 0.9; }
+@keyframes votePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); background: #27ae60; color: white; }
+    100% { transform: scale(1); }
+}
 
-.poll-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 12px; }
-.poll-question { font-weight: 600; font-size: 1rem; color: #1a1e2b; line-height: 1.4; flex: 1; }
-.poll-voted-badge { background: #e8f5e9; color: #27ae60; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
 
-.poll-author { display: flex; align-items: center; gap: 6px; color: #8b93a6; font-size: 0.8rem; margin-bottom: 16px; }
-.poll-author i { font-size: 0.75rem; }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-.poll-results { margin-bottom: 16px; }
-.poll-result-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.poll-result-label { font-size: 0.85rem; font-weight: 500; width: 28px; flex-shrink: 0; }
-.poll-result-label.yes { color: #27ae60; }
-.poll-result-label.no { color: #e74c3c; }
-.poll-result-bar-wrap { flex: 1; background: #f0f2f5; border-radius: 8px; height: 10px; overflow: hidden; }
-.poll-result-bar { height: 100%; border-radius: 8px; transition: width 0.6s cubic-bezier(0.22,1,0.36,1); animation: progressGrow 0.6s cubic-bezier(0.22,1,0.36,1) both; }
-.poll-result-bar.yes { background: linear-gradient(90deg, #27ae60, #2ecc71); }
-.poll-result-bar.no { background: linear-gradient(90deg, #e74c3c, #c0392b); }
-.poll-result-pct { font-size: 0.8rem; font-weight: 600; width: 36px; text-align: right; flex-shrink: 0; }
-.poll-result-pct.yes { color: #27ae60; }
-.poll-result-pct.no { color: #e74c3c; }
+/* Хедер */
+.header {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 16px 24px;
+    margin: 8px 0 20px 0;
+    box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.02);
+    animation: fadeDown 0.4s cubic-bezier(0.22,1,0.36,1) both;
+}
 
-.poll-options { display: flex; gap: 10px; margin-bottom: 14px; }
-.poll-option { flex: 1; border: 1.5px solid rgba(0,0,0,0.06); border-radius: 40px; padding: 10px; text-align: center; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1); background: #f8f9fc; }
-.poll-option:hover:not(.disabled):not(.voted-yes):not(.voted-no) { transform: scale(1.04) translateY(-1px); }
-.poll-option:active:not(.disabled) { transform: scale(0.96); }
-.poll-option.yes { color: #27ae60; }
-.poll-option.yes:hover:not(.disabled) { background: #e8f5e9; border-color: #27ae60; box-shadow: 0 4px 10px -4px rgba(39,174,96,0.3); }
-.poll-option.no { color: #e74c3c; }
-.poll-option.no:hover:not(.disabled) { background: #fdedec; border-color: #e74c3c; box-shadow: 0 4px 10px -4px rgba(231,76,60,0.3); }
-.poll-option.voted-yes { background: #e8f5e9; border-color: #27ae60; color: #27ae60; cursor: default; }
-.poll-option.voted-no { background: #fdedec; border-color: #e74c3c; color: #e74c3c; cursor: default; }
-.poll-option.disabled { cursor: default; opacity: 0.6; }
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-.poll-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.03); }
-.poll-total { font-size: 0.75rem; color: #8b93a6; display: flex; align-items: center; gap: 4px; }
-.poll-date { font-size: 0.7rem; color: #b5bcc8; }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-.empty-state { text-align: center; padding: 60px 20px; color: #8b93a6; background: #ffffff; border-radius: 24px; box-shadow: 0 8px 16px -8px rgba(0,0,0,0.05); }
-.empty-state i { font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block; }
+.logo-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
 
-.bottom-nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); max-width: 560px; width: calc(100% - 32px); border-radius: 40px; padding: 6px; display: flex; justify-content: space-around; box-shadow: 0 10px 30px -8px rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.02); z-index: 1000; backdrop-filter: blur(12px); background: rgba(255,255,255,0.95); animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.4s both; }
-.nav-item-bottom { display: flex; flex-direction: column; align-items: center; color: #8b93a6; text-decoration: none; font-size: 0.6rem; font-weight: 500; flex: 1; padding: 8px 0; border-radius: 30px; transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1); }
-.nav-item-bottom.active { background: #f0f2f5; color: #2e3440; }
-.nav-item-bottom:hover { color: #2e3440; background: #f8f9fc; transform: translateY(-2px); }
-.nav-icon-bottom { font-size: 1.2rem; margin-bottom: 2px; transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1); }
-.nav-item-bottom:hover .nav-icon-bottom { transform: scale(1.2); }
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1e2b;
+    letter-spacing: -0.5px;
+}
 
-.message { position: fixed; top: 20px; right: 20px; padding: 12px 20px; border-radius: 30px; color: white; font-weight: 500; font-size: 0.85rem; z-index: 10002; animation: slideInRight 0.3s cubic-bezier(0.22,1,0.36,1); box-shadow: 0 10px 20px -8px rgba(0,0,0,0.2); }
-.message.success { background: #2e3440; }
-.message.error { background: #c0392b; }
+.header-icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
 
-.loader { border: 2px solid #f0f2f5; border-top: 2px solid #2e3440; border-radius: 50%; width: 28px; height: 28px; animation: spin 0.8s linear infinite; margin: 40px auto; }
+.header-icon {
+    font-size: 1.3rem;
+    color: #8b93a6;
+    transition: all 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+}
 
-@media (max-width: 600px) {
-    body { padding: 16px 0; }
-    .auth-status-bar { flex-direction: column; text-align: center; gap: 10px; }
-    .auth-buttons { width: 100%; justify-content: center; }
-    .page-header { flex-direction: column; align-items: flex-start; }
+.header-icon:hover {
+    color: #2e3440;
+    transform: scale(1.1);
+}
+
+/* Блок авторизации */
+.auth-status-bar {
+    background: #ffffff;
+    border-radius: 40px;
+    padding: 12px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px -4px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.05s both;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.auth-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.auth-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.auth-welcome {
+    font-size: 0.95rem;
+    color: #1a1e2b;
+    font-weight: 500;
+}
+
+.auth-badge {
+    background: linear-gradient(135deg, #f1c40f, #e67e22);
+    color: #1a1e2b;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-left: 8px;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.auth-btn {
+    background: #f0f2f5;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: #1a1e2b;
+}
+
+.auth-btn:hover {
+    background: #e4e6e9;
+    transform: translateY(-2px);
+}
+
+.auth-btn.primary {
+    background: #2e3440;
+    color: white;
+}
+
+.auth-btn.primary:hover {
+    background: #1a1e2b;
+}
+
+/* Статистика */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 16px -8px rgba(0,0,0,0.06);
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #2e3440;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #8b93a6;
+    margin-top: 4px;
+}
+
+/* Заголовок дуэли */
+.duel-header {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.15s both;
+}
+
+.duel-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1e2b;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #2e3440, #4a5568);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.duel-subtitle {
+    color: #8b93a6;
+    margin-top: 8px;
+    font-size: 0.9rem;
+}
+
+/* Карточки дуэли */
+.duel-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+    align-items: stretch;
+}
+
+.duel-card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 28px 24px;
+    box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+.duel-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 25px 45px -12px rgba(0,0,0,0.2);
+}
+
+.duel-card.selected-left {
+    border-color: #27ae60;
+    background: linear-gradient(135deg, #ffffff, #f0fff4);
+}
+
+.duel-card.selected-right {
+    border-color: #e74c3c;
+    background: linear-gradient(135deg, #ffffff, #fff5f5);
+}
+
+.duel-card.voting {
+    animation: cardGlow 0.3s ease;
+}
+
+.card-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: white;
+}
+
+.rank-s {
+    background: linear-gradient(135deg, #ffd700, #ff8c00);
+}
+
+.rank-a {
+    background: linear-gradient(135deg, #a0a0a0, #696969);
+}
+
+.rank-b {
+    background: linear-gradient(135deg, #cd7f32, #8b4513);
+}
+
+.rank-c {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+}
+
+.rank-d {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+}
+
+.duel-card-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1e2b;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.duel-card-class {
+    font-size: 0.85rem;
+    color: #8b93a6;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.class-icon {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.duel-card-points {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #2e3440;
+    margin: 16px 0;
+}
+
+.duel-card-rank {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.duel-vs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #8b93a6;
+    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+}
+
+.vs-circle {
+    width: 70px;
+    height: 70px;
+    background: #f0f2f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #2e3440;
+}
+
+/* Кнопка битвы */
+.battle-btn-container {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.25s both;
+}
+
+.battle-btn {
+    background: linear-gradient(135deg, #2e3440, #4a5568);
+    color: white;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 8px 20px rgba(46,52,64,0.3);
+}
+
+.battle-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 28px rgba(46,52,64,0.4);
+}
+
+.battle-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.battle-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Таблица лидеров */
+.leaderboard-section {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 24px;
+    margin-top: 32px;
+    box-shadow: 0 10px 25px -10px rgba(0,0,0,0.08);
+    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+}
+
+.leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.leaderboard-header h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1a1e2b;
+}
+
+.rank-filter {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-btn {
+    background: #f0f2f5;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn.active {
+    background: #2e3440;
+    color: white;
+}
+
+.filter-btn:hover:not(.active) {
+    background: #e4e6e9;
+}
+
+.leaderboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    background: #f8f9fc;
+    border-radius: 16px;
+    transition: all 0.2s;
+}
+
+.leaderboard-item:hover {
+    background: #f0f2f5;
+    transform: translateX(4px);
+}
+
+.rank-number {
+    width: 40px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #8b93a6;
+}
+
+.rank-number.top-1 {
+    color: #ffd700;
+}
+
+.rank-number.top-2 {
+    color: #c0c0c0;
+}
+
+.rank-number.top-3 {
+    color: #cd7f32;
+}
+
+.leaderboard-info {
+    flex: 1;
+}
+
+.leaderboard-name {
+    font-weight: 600;
+    color: #1a1e2b;
+}
+
+.leaderboard-class {
+    font-size: 0.7rem;
+    color: #8b93a6;
+}
+
+.leaderboard-points {
+    font-weight: 700;
+    color: #2e3440;
+    font-size: 1.1rem;
+}
+
+.leaderboard-rank {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+/* Админ панель */
+.admin-section {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 24px;
+    margin-top: 24px;
+    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.35s both;
+}
+
+.admin-section h3 {
+    font-size: 1rem;
+    color: #8b93a6;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.admin-form {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.admin-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #e0e4e8;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    background: #f8f9fc;
+}
+
+.admin-input:focus {
+    outline: none;
+    border-color: #2e3440;
+}
+
+.admin-btn {
+    background: #2e3440;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.admin-btn:hover {
+    background: #1a1e2b;
+}
+
+/* Боттом нав */
+.bottom-nav {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 560px;
+    width: calc(100% - 32px);
+    border-radius: 40px;
+    padding: 8px;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 10px 30px -8px rgba(0,0,0,0.15);
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 1000;
+}
+
+.nav-item-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #8b93a6;
+    text-decoration: none;
+    font-size: 0.6rem;
+    font-weight: 500;
+    flex: 1;
+    padding: 8px 0;
+    border-radius: 30px;
+    transition: all 0.2s;
+}
+
+.nav-item-bottom.active {
+    background: #f0f2f5;
+    color: #2e3440;
+}
+
+.nav-icon-bottom {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+/* Сообщения */
+.message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    border-radius: 30px;
+    color: white;
+    font-weight: 500;
+    z-index: 10002;
+    animation: slideInRight 0.3s cubic-bezier(0.22,1,0.36,1);
+    box-shadow: 0 10px 20px -8px rgba(0,0,0,0.2);
+}
+
+.message.success { background: #27ae60; }
+.message.error { background: #e74c3c; }
+.message.info { background: #3498db; }
+
+@media (max-width: 768px) {
+    .duel-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .duel-vs {
+        order: -1;
+    }
+    
+    .duel-card {
+        padding: 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -135,12 +705,12 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
         <div class="header">
             <div class="header-content">
                 <div class="logo">
-                    <img src="top_logotype.png" alt="krg62" class="logo-img">
-                    <h1>голосования</h1>
+                    <img src="top_logotype.png" alt="krg62" class="logo-img" onerror="this.style.display='none'">
+                    <h1>дуэль голосований</h1>
                 </div>
                 <div class="header-icons">
-                    <a href="your_account.html" class="header-icon">
-                        <i class="far fa-user"></i>
+                    <a href="#" class="header-icon" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i>
                     </a>
                 </div>
             </div>
@@ -148,410 +718,553 @@ body { background: #f8f9fc; min-height: 100vh; display: flex; justify-content: c
 
         <div class="auth-status-bar">
             <div class="auth-info">
-                <div class="auth-avatar" id="authAvatar">
-                    <img src="https://i.pravatar.cc/300" alt="">
+                <div class="auth-avatar">
+                    <img src="https://i.pravatar.cc/300" alt="" id="avatarImg">
                 </div>
                 <span class="auth-welcome">
                     <span id="authDisplayName">Гость</span>
+                    <span class="auth-badge" id="primeBadge" style="display:none;"><i class="fas fa-crown"></i> prime</span>
                 </span>
             </div>
             <div class="auth-buttons" id="authButtons">
-                <a href="login.html" class="auth-btn">войти</a>
-                <a href="register.html" class="auth-btn primary">регистрация</a>
+                <a href="#" class="auth-btn" id="loginBtn">войти</a>
+                <a href="#" class="auth-btn primary" id="registerBtn">регистрация</a>
             </div>
         </div>
 
-        <div class="page-header">
-            <div class="page-header-left">
-                <h2><i class="fas fa-chart-bar"></i> все опросы</h2>
-                <p>голосуй и смотри результаты</p>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value" id="totalPlayers">0</div>
+                <div class="stat-label">участников</div>
             </div>
-            <span class="polls-count-badge" id="pollsCountBadge">0 опросов</span>
+            <div class="stat-card">
+                <div class="stat-icon">⚔️</div>
+                <div class="stat-value" id="totalBattles">0</div>
+                <div class="stat-label">всего битв</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-value" id="topPlayerName">-</div>
+                <div class="stat-label">лидер</div>
+            </div>
         </div>
 
-        <div class="create-poll-section">
-            <h3><i class="fas fa-plus-circle"></i> создать голосование</h3>
-            <input type="text" id="pollQuestionInput" class="poll-input" placeholder="введите вопрос..." maxlength="100">
-            <button class="create-poll-btn" id="createPollBtn">➕ создать опрос</button>
+        <div class="duel-header">
+            <h2><i class="fas fa-fist-raised"></i> выбери сильнейшего <i class="fas fa-fist-raised"></i></h2>
+            <div class="duel-subtitle">кликни на карточку, которая достойна победы!</div>
         </div>
 
-        <div class="polls-list" id="pollsList">
-            <div class="loader"></div>
+        <div class="duel-container" id="duelContainer">
+            <div class="duel-card" id="cardLeft" onclick="selectCard('left')">
+                <div class="card-badge rank-s" id="leftBadge">S ранг</div>
+                <div class="duel-card-name" id="leftName">Загрузка...</div>
+                <div class="duel-card-class" id="leftClass"></div>
+                <div class="duel-card-points" id="leftPoints">0</div>
+                <div class="duel-card-rank" id="leftRankLabel"></div>
+            </div>
+            <div class="duel-vs">
+                <div class="vs-circle">VS</div>
+            </div>
+            <div class="duel-card" id="cardRight" onclick="selectCard('right')">
+                <div class="card-badge rank-s" id="rightBadge">S ранг</div>
+                <div class="duel-card-name" id="rightName">Загрузка...</div>
+                <div class="duel-card-class" id="rightClass"></div>
+                <div class="duel-card-points" id="rightPoints">0</div>
+                <div class="duel-card-rank" id="rightRankLabel"></div>
+            </div>
+        </div>
+
+        <div class="battle-btn-container">
+            <button class="battle-btn" id="battleBtn" onclick="castVote()">
+                <i class="fas fa-gavel"></i> отдать голос
+            </button>
+        </div>
+
+        <div class="leaderboard-section">
+            <div class="leaderboard-header">
+                <h3><i class="fas fa-trophy"></i> таблица лидеров</h3>
+                <div class="rank-filter">
+                    <button class="filter-btn active" data-rank="all">все</button>
+                    <button class="filter-btn" data-rank="S">S ранг</button>
+                    <button class="filter-btn" data-rank="A">A ранг</button>
+                    <button class="filter-btn" data-rank="B">B ранг</button>
+                    <button class="filter-btn" data-rank="C">C ранг</button>
+                    <button class="filter-btn" data-rank="D">D ранг</button>
+                </div>
+            </div>
+            <div class="leaderboard-list" id="leaderboardList">
+                <div style="text-align:center;padding:40px;">загрузка...</div>
+            </div>
+        </div>
+
+        <div class="admin-section" id="adminSection" style="display:none;">
+            <h3><i class="fas fa-user-shield"></i> админ панель</h3>
+            <div class="admin-form">
+                <input type="text" id="newPlayerName" class="admin-input" placeholder="имя игрока">
+                <input type="text" id="newPlayerClass" class="admin-input" placeholder="класс (например: Воин)">
+                <select id="newPlayerRank" class="admin-input">
+                    <option value="S">S ранг</option>
+                    <option value="A">A ранг</option>
+                    <option value="B">B ранг</option>
+                    <option value="C">C ранг</option>
+                    <option value="D">D ранг</option>
+                </select>
+                <button class="admin-btn" id="addPlayerBtn"><i class="fas fa-plus"></i> добавить</button>
+            </div>
         </div>
 
     </div>
 </div>
 
 <nav class="bottom-nav">
-    <a href="index.html" class="nav-item-bottom">
+    <a href="#" class="nav-item-bottom" onclick="return false;">
         <i class="fas fa-home nav-icon-bottom"></i><span>главная</span>
     </a>
-    <a href="votes.html" class="nav-item-bottom active">
-        <i class="fas fa-chart-bar nav-icon-bottom"></i><span>голосования</span>
+    <a href="#" class="nav-item-bottom active" onclick="return false;">
+        <i class="fas fa-fist-raised nav-icon-bottom"></i><span>дуэль</span>
     </a>
-    <a href="threads.html" class="nav-item-bottom">
+    <a href="#" class="nav-item-bottom" onclick="return false;">
         <i class="fas fa-comment nav-icon-bottom"></i><span>темки</span>
     </a>
-    <a href="slivy.html" class="nav-item-bottom">
+    <a href="#" class="nav-item-bottom" onclick="return false;">
         <i class="fas fa-image nav-icon-bottom"></i><span>сливы</span>
     </a>
-    <a href="your_account.html" class="nav-item-bottom">
+    <a href="#" class="nav-item-bottom" onclick="return false;">
         <i class="fas fa-user nav-icon-bottom"></i><span>аккаунт</span>
     </a>
 </nav>
 
 <div id="messageContainer"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-    const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    let userIp = null;
-    let polls = [];
-    let votedPolls = {};
-    let lastPollTime = 0;
-
-    const userId = localStorage.getItem('userId');
-    const userNickname = localStorage.getItem('userNickname');
-    const userAvatar = localStorage.getItem('userAvatar');
-    const savedPrime = localStorage.getItem('primeUser');
-    let primeUser = null;
-    if (savedPrime) { try { primeUser = JSON.parse(savedPrime); } catch(e) {} }
-
     // ============================================
-    // ВСПОМОГАТЕЛЬНЫЕ
+    // ДАННЫЕ ИГРОКОВ (локальное хранилище)
     // ============================================
-    async function getUserIp() {
-        try {
-            const r = await fetch('https://api.ipify.org?format=json');
-            const d = await r.json();
-            userIp = d.ip;
-        } catch { userIp = 'u-' + Math.random().toString(36).substring(2, 10); }
-        return userIp;
+    let players = [];
+    let selectedSide = null; // 'left' or 'right'
+    let battleHistory = [];
+    let currentUserId = null;
+    let currentUserName = null;
+    
+    // Ранги и множители голосов
+    const rankMultipliers = {
+        'S': 10,
+        'A': 9,
+        'B': 8,
+        'C': 7,
+        'D': 6
+    };
+    
+    const rankNames = {
+        'S': 'S',
+        'A': 'A',
+        'B': 'B',
+        'C': 'C',
+        'D': 'D'
+    };
+    
+    const rankColors = {
+        'S': '#ffd700',
+        'A': '#a0a0a0',
+        'B': '#cd7f32',
+        'C': '#4a90e2',
+        'D': '#95a5a6'
+    };
+    
+    // Загрузка данных из localStorage
+    function loadData() {
+        const saved = localStorage.getItem('duel_players');
+        if (saved) {
+            players = JSON.parse(saved);
+        } else {
+            // Стартовые игроки
+            players = [
+                { id: 1, name: 'Александр', class: 'Воин', rank: 'S', points: 1250, wins: 45, battles: 50 },
+                { id: 2, name: 'Екатерина', class: 'Маг', rank: 'A', points: 980, wins: 38, battles: 42 },
+                { id: 3, name: 'Дмитрий', class: 'Лучник', rank: 'S', points: 1100, wins: 42, battles: 48 },
+                { id: 4, name: 'Анна', class: 'Жрица', rank: 'B', points: 720, wins: 28, battles: 35 },
+                { id: 5, name: 'Максим', class: 'Танк', rank: 'C', points: 540, wins: 20, battles: 30 },
+                { id: 6, name: 'Ольга', class: 'Разбойник', rank: 'A', points: 890, wins: 35, battles: 40 }
+            ];
+            saveData();
+        }
+        
+        const history = localStorage.getItem('duel_history');
+        if (history) {
+            battleHistory = JSON.parse(history);
+        }
     }
-
+    
+    function saveData() {
+        localStorage.setItem('duel_players', JSON.stringify(players));
+        localStorage.setItem('duel_history', JSON.stringify(battleHistory));
+    }
+    
+    // Получение ранга по очкам
+    function getRankByPoints(points) {
+        if (points >= 1000) return 'S';
+        if (points >= 800) return 'A';
+        if (points >= 600) return 'B';
+        if (points >= 400) return 'C';
+        return 'D';
+    }
+    
+    // Обновление ранга игрока
+    function updatePlayerRank(player) {
+        const newRank = getRankByPoints(player.points);
+        if (newRank !== player.rank) {
+            player.rank = newRank;
+            return true;
+        }
+        return false;
+    }
+    
+    // Голосование
+    function castVote() {
+        if (!selectedSide) {
+            showMessage('выбери карточку, за которую хочешь проголосовать!', 'error');
+            return;
+        }
+        
+        if (!currentUserId) {
+            showMessage('войдите, чтобы голосовать', 'error');
+            return;
+        }
+        
+        const leftCard = document.getElementById('cardLeft');
+        const rightCard = document.getElementById('cardRight');
+        
+        const leftPlayerId = parseInt(leftCard.getAttribute('data-id'));
+        const rightPlayerId = parseInt(rightCard.getAttribute('data-id'));
+        
+        let winnerId, loserId;
+        let winnerMultiplier, loserMultiplier;
+        
+        if (selectedSide === 'left') {
+            winnerId = leftPlayerId;
+            loserId = rightPlayerId;
+        } else {
+            winnerId = rightPlayerId;
+            loserId = leftPlayerId;
+        }
+        
+        const winner = players.find(p => p.id === winnerId);
+        const loser = players.find(p => p.id === loserId);
+        
+        if (!winner || !loser) {
+            showMessage('ошибка: игрок не найден', 'error');
+            return;
+        }
+        
+        winnerMultiplier = rankMultipliers[winner.rank];
+        loserMultiplier = rankMultipliers[loser.rank];
+        
+        // Начисление баллов победителю
+        const pointsGained = winnerMultiplier;
+        winner.points += pointsGained;
+        winner.wins = (winner.wins || 0) + 1;
+        winner.battles = (winner.battles || 0) + 1;
+        
+        // Проигравший теряет баллы (но не меньше 0)
+        loser.points = Math.max(0, loser.points - loserMultiplier);
+        loser.battles = (loser.battles || 0) + 1;
+        
+        // Обновление рангов
+        updatePlayerRank(winner);
+        updatePlayerRank(loser);
+        
+        // Сохраняем историю
+        battleHistory.unshift({
+            id: Date.now(),
+            winner: winner.name,
+            loser: loser.name,
+            points: pointsGained,
+            date: new Date().toLocaleString('ru'),
+            voter: currentUserName
+        });
+        
+        // Ограничиваем историю последними 50 записями
+        if (battleHistory.length > 50) battleHistory.pop();
+        
+        saveData();
+        
+        // Анимация
+        const winnerCard = selectedSide === 'left' ? leftCard : rightCard;
+        winnerCard.style.animation = 'votePulse 0.5s ease';
+        setTimeout(() => {
+            winnerCard.style.animation = '';
+        }, 500);
+        
+        showMessage(`🏆 ${winner.name} +${pointsGained} баллов!`, 'success');
+        
+        // Сброс выбора и обновление UI
+        selectedSide = null;
+        document.getElementById('cardLeft').classList.remove('selected-left');
+        document.getElementById('cardRight').classList.remove('selected-right');
+        
+        // Обновляем дуэль новыми соперниками
+        generateRandomDuel();
+        updateLeaderboard();
+        updateStats();
+    }
+    
+    // Генерация случайной дуэли
+    function generateRandomDuel() {
+        if (players.length < 2) return;
+        
+        let player1, player2;
+        do {
+            const randomIndex1 = Math.floor(Math.random() * players.length);
+            const randomIndex2 = Math.floor(Math.random() * players.length);
+            player1 = players[randomIndex1];
+            player2 = players[randomIndex2];
+        } while (player1.id === player2.id && players.length > 1);
+        
+        updateDuelCards(player1, player2);
+    }
+    
+    // Обновление карточек дуэли
+    function updateDuelCards(player1, player2) {
+        const leftCard = document.getElementById('cardLeft');
+        const rightCard = document.getElementById('cardRight');
+        
+        leftCard.setAttribute('data-id', player1.id);
+        rightCard.setAttribute('data-id', player2.id);
+        
+        // Левая карточка
+        document.getElementById('leftName').innerHTML = `<i class="fas fa-user"></i> ${player1.name}`;
+        document.getElementById('leftClass').innerHTML = `<span class="class-icon" style="background:${rankColors[player1.rank]}"></span> ${player1.class}`;
+        document.getElementById('leftPoints').innerHTML = `${player1.points} <span style="font-size:0.9rem;">баллов</span>`;
+        
+        const leftBadge = document.getElementById('leftBadge');
+        leftBadge.textContent = `${player1.rank} ранг`;
+        leftBadge.className = `card-badge rank-${player1.rank.toLowerCase()}`;
+        
+        const leftRankLabel = document.getElementById('leftRankLabel');
+        leftRankLabel.textContent = `★ множитель: ${rankMultipliers[player1.rank]}`;
+        leftRankLabel.style.background = rankColors[player1.rank] + '20';
+        leftRankLabel.style.color = rankColors[player1.rank];
+        
+        // Правая карточка
+        document.getElementById('rightName').innerHTML = `<i class="fas fa-user"></i> ${player2.name}`;
+        document.getElementById('rightClass').innerHTML = `<span class="class-icon" style="background:${rankColors[player2.rank]}"></span> ${player2.class}`;
+        document.getElementById('rightPoints').innerHTML = `${player2.points} <span style="font-size:0.9rem;">баллов</span>`;
+        
+        const rightBadge = document.getElementById('rightBadge');
+        rightBadge.textContent = `${player2.rank} ранг`;
+        rightBadge.className = `card-badge rank-${player2.rank.toLowerCase()}`;
+        
+        const rightRankLabel = document.getElementById('rightRankLabel');
+        rightRankLabel.textContent = `★ множитель: ${rankMultipliers[player2.rank]}`;
+        rightRankLabel.style.background = rankColors[player2.rank] + '20';
+        rightRankLabel.style.color = rankColors[player2.rank];
+    }
+    
+    // Выбор карточки
+    function selectCard(side) {
+        if (!currentUserId) {
+            showMessage('войдите, чтобы голосовать', 'error');
+            return;
+        }
+        
+        selectedSide = side;
+        
+        const leftCard = document.getElementById('cardLeft');
+        const rightCard = document.getElementById('cardRight');
+        
+        if (side === 'left') {
+            leftCard.classList.add('selected-left');
+            rightCard.classList.remove('selected-right');
+        } else {
+            rightCard.classList.add('selected-right');
+            leftCard.classList.remove('selected-left');
+        }
+        
+        showMessage(`выбрано: ${side === 'left' ? 'левый' : 'правый'} боец`, 'info');
+    }
+    
+    // Обновление таблицы лидеров
+    function updateLeaderboard(filterRank = 'all') {
+        const list = document.getElementById('leaderboardList');
+        let filtered = [...players];
+        
+        if (filterRank !== 'all') {
+            filtered = filtered.filter(p => p.rank === filterRank);
+        }
+        
+        filtered.sort((a, b) => b.points - a.points);
+        
+        if (filtered.length === 0) {
+            list.innerHTML = '<div style="text-align:center;padding:40px;color:#8b93a6;">нет игроков</div>';
+            return;
+        }
+        
+        list.innerHTML = filtered.map((player, idx) => {
+            let rankClass = '';
+            if (idx === 0) rankClass = 'top-1';
+            else if (idx === 1) rankClass = 'top-2';
+            else if (idx === 2) rankClass = 'top-3';
+            
+            return `
+                <div class="leaderboard-item">
+                    <div class="rank-number ${rankClass}">${idx + 1}</div>
+                    <div class="leaderboard-info">
+                        <div class="leaderboard-name">${escapeHtml(player.name)}</div>
+                        <div class="leaderboard-class">${escapeHtml(player.class)}</div>
+                    </div>
+                    <div class="leaderboard-points">${player.points}</div>
+                    <div class="leaderboard-rank" style="background:${rankColors[player.rank]}20;color:${rankColors[player.rank]}">
+                        ${player.rank} ранг
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    // Обновление статистики
+    function updateStats() {
+        document.getElementById('totalPlayers').textContent = players.length;
+        document.getElementById('totalBattles').textContent = battleHistory.length;
+        
+        const topPlayer = [...players].sort((a, b) => b.points - a.points)[0];
+        if (topPlayer) {
+            document.getElementById('topPlayerName').textContent = topPlayer.name;
+        } else {
+            document.getElementById('topPlayerName').textContent = '-';
+        }
+    }
+    
+    // Добавление игрока (админ)
+    function addPlayer(name, playerClass, rank) {
+        if (!name || !playerClass) {
+            showMessage('заполните все поля', 'error');
+            return false;
+        }
+        
+        const newId = Math.max(...players.map(p => p.id), 0) + 1;
+        const basePoints = rank === 'S' ? 1000 : rank === 'A' ? 800 : rank === 'B' ? 600 : rank === 'C' ? 400 : 300;
+        
+        players.push({
+            id: newId,
+            name: name.trim(),
+            class: playerClass.trim(),
+            rank: rank,
+            points: basePoints,
+            wins: 0,
+            battles: 0
+        });
+        
+        saveData();
+        updateLeaderboard();
+        updateStats();
+        generateRandomDuel();
+        showMessage(`✅ игрок ${name} добавлен!`, 'success');
+        return true;
+    }
+    
+    // Авторизация (простая для демо)
+    function loginAsGuest() {
+        currentUserId = Date.now();
+        currentUserName = 'Гость_' + Math.floor(Math.random() * 1000);
+        updateAuthDisplay();
+        showMessage(`добро пожаловать, ${currentUserName}!`, 'success');
+    }
+    
+    function updateAuthDisplay() {
+        const nameSpan = document.getElementById('authDisplayName');
+        const avatarImg = document.getElementById('avatarImg');
+        const primeBadge = document.getElementById('primeBadge');
+        const authBtns = document.getElementById('authButtons');
+        
+        if (currentUserId) {
+            nameSpan.textContent = currentUserName;
+            avatarImg.src = `https://i.pravatar.cc/300?img=${currentUserId % 70}`;
+            primeBadge.style.display = 'none';
+            authBtns.innerHTML = `<button class="auth-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> выйти</button>`;
+        } else {
+            nameSpan.textContent = 'Гость';
+            avatarImg.src = 'https://i.pravatar.cc/300';
+            primeBadge.style.display = 'none';
+            authBtns.innerHTML = `
+                <button class="auth-btn" onclick="loginAsGuest()">гость</button>
+                <button class="auth-btn primary" onclick="loginAsGuest()">войти</button>
+            `;
+        }
+    }
+    
+    function logout() {
+        currentUserId = null;
+        currentUserName = null;
+        selectedSide = null;
+        document.getElementById('cardLeft').classList.remove('selected-left');
+        document.getElementById('cardRight').classList.remove('selected-right');
+        updateAuthDisplay();
+        showMessage('вы вышли из системы', 'info');
+    }
+    
+    function showMessage(text, type) {
+        const container = document.getElementById('messageContainer');
+        const msg = document.createElement('div');
+        msg.className = `message ${type}`;
+        msg.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check' : type === 'error' ? 'fa-exclamation' : 'fa-info'}"></i> ${text}`;
+        container.appendChild(msg);
+        setTimeout(() => {
+            msg.style.animation = 'slideInRight 0.3s cubic-bezier(0.22,1,0.36,1) reverse';
+            setTimeout(() => msg.remove(), 280);
+        }, 2500);
+    }
+    
     function escapeHtml(text) {
         if (!text) return '';
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
-
-    function showMessage(text, type) {
-        const container = document.getElementById('messageContainer');
-        const msg = document.createElement('div');
-        msg.className = `message ${type}`;
-        msg.textContent = text;
-        container.appendChild(msg);
-        setTimeout(() => {
-            msg.style.animation = 'slideInRight 0.3s cubic-bezier(0.22,1,0.36,1) reverse';
-            setTimeout(() => msg.remove(), 280);
-        }, 2700);
-    }
-
-    // ============================================
-    // AUTH
-    // ============================================
-    function updateAuthDisplay() {
-        const authAvatar = document.getElementById('authAvatar').querySelector('img');
-        const authDisplayName = document.getElementById('authDisplayName');
-        const authButtons = document.getElementById('authButtons');
-
-        if (userId && userNickname) {
-            authDisplayName.textContent = userNickname;
-            authAvatar.src = userAvatar || 'https://i.pravatar.cc/300';
-            const oldBadge = document.querySelector('.auth-badge');
-            if (oldBadge) oldBadge.remove();
-            if (primeUser) {
-                const badge = document.createElement('span');
-                badge.className = 'auth-badge';
-                badge.innerHTML = '<i class="fas fa-crown"></i> prime';
-                authDisplayName.parentNode.appendChild(badge);
-            }
-            authButtons.innerHTML = `<a href="your_account.html" class="auth-btn"><i class="far fa-user"></i> профиль</a>`;
-        } else {
-            authDisplayName.textContent = 'Гость';
-            authAvatar.src = 'https://i.pravatar.cc/300';
-            authButtons.innerHTML = `
-                <a href="login.html" class="auth-btn">войти</a>
-                <a href="register.html" class="auth-btn primary">регистрация</a>`;
-        }
-    }
-
-    // ============================================
-    // ЗАГРУЗКА ГОЛОСОВ ПОЛЬЗОВАТЕЛЯ
-    // ============================================
-    async function loadVotedPolls() {
-        if (!userId && !userIp) return;
-        try {
-            let query = supabaseClient.from('poll_votes').select('poll_id, choice');
-            if (userId) query = query.eq('user_id', parseInt(userId));
-            else query = query.eq('ip_address', userIp);
-            const { data, error } = await query;
-            if (error) throw error;
-            votedPolls = {};
-            (data || []).forEach(v => { votedPolls[v.poll_id] = v.choice; });
-        } catch (e) { console.error(e); }
-    }
-
-    // ============================================
-    // ЗАГРУЗКА ОПРОСОВ
-    // ============================================
-    async function loadPolls() {
-        const list = document.getElementById('pollsList');
-        list.innerHTML = '<div class="loader"></div>';
-
-        try {
-            const { data, error } = await supabaseClient
-                .from('polls')
-                .select('*')
-                .order('created_at', { ascending: false });
-            if (error) throw error;
-
-            polls = data || [];
-            await loadVotedPolls();
-            displayPolls();
-
-            const badge = document.getElementById('pollsCountBadge');
-            badge.textContent = `${polls.length} ${declension(polls.length, 'опрос', 'опроса', 'опросов')}`;
-
-        } catch (e) {
-            console.error(e);
-            list.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>ошибка загрузки</p></div>`;
-        }
-    }
-
-    function declension(n, one, few, many) {
-        const mod10 = n % 10, mod100 = n % 100;
-        if (mod10 === 1 && mod100 !== 11) return `${n} ${one}`;
-        if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return `${n} ${few}`;
-        return `${n} ${many}`;
-    }
-
-    // ============================================
-    // ОТОБРАЖЕНИЕ ОПРОСОВ
-    // ============================================
-    function displayPolls() {
-        const list = document.getElementById('pollsList');
-
-        if (!polls || polls.length === 0) {
-            list.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-chart-bar"></i>
-                    <p>пока нет опросов</p>
-                    <p style="font-size:0.8rem;margin-top:8px;">создай первый!</p>
-                </div>`;
-            return;
-        }
-
-        list.innerHTML = polls.map((poll, i) => {
-            const total = (poll.yes_votes || 0) + (poll.no_votes || 0);
-            const yesP = total > 0 ? Math.round((poll.yes_votes / total) * 100) : 0;
-            const noP = total > 0 ? Math.round((poll.no_votes / total) * 100) : 0;
-            const myVote = votedPolls[poll.id];
-            const hasVoted = !!myVote;
-
-            const date = new Date(poll.created_at).toLocaleString('ru', {
-                day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
-            });
-
-            return `
-                <div class="poll-card ${hasVoted ? 'voted' : ''}" style="animation-delay:${i * 0.06}s">
-                    <div class="poll-card-header">
-                        <div class="poll-question">${escapeHtml(poll.question)}</div>
-                        ${hasVoted ? `<span class="poll-voted-badge">✓ ${myVote === 'yes' ? 'да' : 'нет'}</span>` : ''}
-                    </div>
-
-                    <div class="poll-author">
-                        <i class="far fa-user"></i>
-                        ${escapeHtml(poll.author || 'Аноним')}
-                    </div>
-
-                    <div class="poll-results">
-                        <div class="poll-result-row">
-                            <span class="poll-result-label yes">да</span>
-                            <div class="poll-result-bar-wrap">
-                                <div class="poll-result-bar yes" style="width:${yesP}%"></div>
-                            </div>
-                            <span class="poll-result-pct yes">${yesP}%</span>
-                        </div>
-                        <div class="poll-result-row">
-                            <span class="poll-result-label no">нет</span>
-                            <div class="poll-result-bar-wrap">
-                                <div class="poll-result-bar no" style="width:${noP}%"></div>
-                            </div>
-                            <span class="poll-result-pct no">${noP}%</span>
-                        </div>
-                    </div>
-
-                    ${!hasVoted ? `
-                    <div class="poll-options">
-                        <div class="poll-option yes" onclick="votePoll(${poll.id}, 'yes')">
-                            <i class="fas fa-check"></i> да
-                        </div>
-                        <div class="poll-option no" onclick="votePoll(${poll.id}, 'no')">
-                            <i class="fas fa-times"></i> нет
-                        </div>
-                    </div>` : `
-                    <div class="poll-options">
-                        <div class="poll-option ${myVote === 'yes' ? 'voted-yes' : 'disabled'}">
-                            <i class="fas fa-check"></i> да
-                        </div>
-                        <div class="poll-option ${myVote === 'no' ? 'voted-no' : 'disabled'}">
-                            <i class="fas fa-times"></i> нет
-                        </div>
-                    </div>`}
-
-                    <div class="poll-footer">
-                        <span class="poll-total">
-                            <i class="far fa-chart-bar"></i> ${total} ${declension(total, 'голос', 'голоса', 'голосов')}
-                        </span>
-                        <span class="poll-date">${date}</span>
-                    </div>
-                </div>`;
-        }).join('');
-    }
-
-    // ============================================
-    // ГОЛОСОВАНИЕ
-    // ============================================
-    window.votePoll = async function(pollId, choice) {
-        if (!userId) {
-            showMessage('войдите, чтобы голосовать', 'error');
-            setTimeout(() => window.location.href = 'login.html', 1500);
-            return;
-        }
-
-        if (votedPolls[pollId]) {
-            showMessage('вы уже голосовали', 'error');
-            return;
-        }
-
-        // Блокируем кнопки сразу
-        const card = event.target.closest('.poll-card');
-        if (card) {
-            card.querySelectorAll('.poll-option').forEach(o => {
-                o.style.pointerEvents = 'none';
-                o.style.opacity = '0.6';
-            });
-        }
-
-        try {
-            if (!userIp) await getUserIp();
-
-            const { error: voteError } = await supabaseClient
-                .from('poll_votes')
-                .insert({ poll_id: pollId, user_id: parseInt(userId), ip_address: userIp, choice });
-
-            if (voteError) {
-                if (voteError.code === '23505') {
-                    votedPolls[pollId] = choice;
-                    displayPolls();
-                    showMessage('вы уже голосовали', 'error');
-                    return;
-                }
-                throw voteError;
-            }
-
-            // Обновляем счётчик
-            const poll = polls.find(p => p.id === pollId);
-            const field = choice === 'yes' ? 'yes_votes' : 'no_votes';
-            const newCount = (poll[field] || 0) + 1;
-
-            await supabaseClient.from('polls').update({ [field]: newCount }).eq('id', pollId);
-
-            poll[field] = newCount;
-            votedPolls[pollId] = choice;
-            displayPolls();
-            showMessage('✅ голос учтён!', 'success');
-
-        } catch (e) {
-            console.error(e);
-            showMessage('ошибка: ' + e.message, 'error');
-            // Возвращаем кнопки
-            if (card) {
-                card.querySelectorAll('.poll-option').forEach(o => {
-                    o.style.pointerEvents = '';
-                    o.style.opacity = '';
-                });
-            }
-        }
-    };
-
-    // ============================================
-    // СОЗДАНИЕ ОПРОСА
-    // ============================================
-    async function createPoll() {
-        const question = document.getElementById('pollQuestionInput').value.trim();
-
-        if (!question || question.length < 5) {
-            showMessage('слишком короткий вопрос', 'error');
-            return;
-        }
-
-        if (!userId) {
-            showMessage('войдите, чтобы создать опрос', 'error');
-            setTimeout(() => window.location.href = 'login.html', 1500);
-            return;
-        }
-
-        const now = Date.now();
-        if (now - lastPollTime < 30000) {
-            showMessage('подождите 30 секунд', 'error');
-            return;
-        }
-
-        const btn = document.getElementById('createPollBtn');
-        btn.disabled = true;
-        btn.textContent = '⏳ создание...';
-
-        try {
-            if (!userIp) await getUserIp();
-
-            const { data, error } = await supabaseClient
-                .from('polls')
-                .insert({ question, author: userNickname, ip_address: userIp, yes_votes: 0, no_votes: 0 })
-                .select()
-                .single();
-
-            if (error) throw error;
-
-            polls.unshift(data);
-            lastPollTime = now;
-            document.getElementById('pollQuestionInput').value = '';
-
-            // Обновляем счётчик
-            const badge = document.getElementById('pollsCountBadge');
-            badge.textContent = `${polls.length} ${declension(polls.length, 'опрос', 'опроса', 'опросов')}`;
-
-            displayPolls();
-            showMessage('✅ опрос создан!', 'success');
-
-        } catch (e) {
-            showMessage('ошибка: ' + e.message, 'error');
-        } finally {
-            btn.disabled = false;
-            btn.textContent = '➕ создать опрос';
-        }
-    }
-
-    // ============================================
-    // ИНИЦИАЛИЗАЦИЯ
-    // ============================================
-    document.getElementById('createPollBtn').addEventListener('click', createPoll);
-
-    document.getElementById('pollQuestionInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') createPoll();
-    });
-
-    async function initApp() {
-        await getUserIp();
+    
+    // Инициализация
+    function init() {
+        loadData();
+        
+        // Проверка на админа (можно сделать по паролю, но для демо показываем всегда)
+        document.getElementById('adminSection').style.display = 'block';
+        
+        generateRandomDuel();
+        updateLeaderboard();
+        updateStats();
         updateAuthDisplay();
-        await loadPolls();
+        
+        // Фильтры таблицы
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                updateLeaderboard(this.getAttribute('data-rank'));
+            });
+        });
+        
+        // Добавление игрока
+        document.getElementById('addPlayerBtn').addEventListener('click', () => {
+            const name = document.getElementById('newPlayerName').value;
+            const playerClass = document.getElementById('newPlayerClass').value;
+            const rank = document.getElementById('newPlayerRank').value;
+            addPlayer(name, playerClass, rank);
+            document.getElementById('newPlayerName').value = '';
+            document.getElementById('newPlayerClass').value = '';
+        });
+        
+        // Обновление дуэли
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            generateRandomDuel();
+            selectedSide = null;
+            document.getElementById('cardLeft').classList.remove('selected-left');
+            document.getElementById('cardRight').classList.remove('selected-right');
+            showMessage('новая дуэль готова!', 'info');
+        });
     }
-
-    initApp();
+    
+    // Запуск
+    init();
 </script>
 </body>
 </html>
