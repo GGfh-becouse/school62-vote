@@ -167,7 +167,6 @@ body {
     color: white;
 }
 
-/* Guest mode indicator */
 .guest-mode-badge {
     background: #3498db20;
     border: 1px solid #3498db;
@@ -727,34 +726,23 @@ body {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
     // ========== ВСТАВЬТЕ ВАШИ ДАННЫЕ SUPABASE ЗДЕСЬ ==========
-    const SUPABASE_URL = 'https://ваш_проект.supabase.co';     // ЗАМЕНИТЕ!
-    const SUPABASE_KEY = 'ваш_публичный_ключ';                 // ЗАМЕНИТЕ!
+    const SUPABASE_URL = 'https://wdcwxvxkvyncybsefotj.supabase.co';     // ЗАМЕНИТЕ!
+    const SUPABASE_KEY = 'sb_publishable_VMEPI3FAZoKDgX4ae_pqcg_Euvs40hM';                 // ЗАМЕНИТЕ!
     // ========================================================
     
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     
     // Глобальные переменные
-    let currentUser = null;      // { id, email, nickname, isPrime }
+    let currentUser = null;
     let currentIP = null;
-    let hasVotedAsGuest = false;  // голосовал ли этот IP как гость
+    let hasVotedAsGuest = false;
     let selectedSide = null;
     let currentDuel = { left: null, right: null };
     let players = [];
     
-    // Множители рангов (для обычного голоса)
+    // Множители рангов
     const rankMultipliers = { 'S': 10, 'A': 9, 'B': 8, 'C': 7, 'D': 6 };
-    const BONUS_FOR_AUTH_VOTE = 20;  // бонус за голос с аккаунта
-    
-    // ========== ИНИЦИАЛИЗАЦИЯ SUPABASE ТАБЛИЦ ==========
-    // Нужно создать таблицы:
-    // 1. players: id, name, class, rank, points, wins, battles, created_at
-    // 2. guest_votes: id, ip_address, voted_at, selected_player_id
-    // 3. user_votes: id, user_id, voted_at, selected_player_id, bonus_applied
-    
-    async function initTables() {
-        // Проверяем и создаем таблицы через SQL (надо выполнить в Supabase SQL Editor)
-        console.log('Убедитесь, что таблицы созданы в Supabase');
-    }
+    const BONUS_FOR_AUTH_VOTE = 20;
     
     // ========== РАБОТА С IP ==========
     async function getIP() {
@@ -773,7 +761,7 @@ body {
     async function checkGuestVoted() {
         if (!currentIP) await getIP();
         try {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('guest_votes')
                 .select('id')
                 .eq('ip_address', currentIP)
@@ -792,7 +780,7 @@ body {
     async function saveGuestVote(selectedPlayerId) {
         if (!currentIP) await getIP();
         try {
-            const { error } = await supabase
+            const { error } = await supabaseClient
                 .from('guest_votes')
                 .insert({ ip_address: currentIP, selected_player_id: selectedPlayerId });
             
@@ -809,7 +797,7 @@ body {
     async function saveUserVote(selectedPlayerId, bonusApplied = false) {
         if (!currentUser) return false;
         try {
-            const { error } = await supabase
+            const { error } = await supabaseClient
                 .from('user_votes')
                 .insert({ 
                     user_id: currentUser.id, 
@@ -828,7 +816,7 @@ body {
     async function checkUserVoted() {
         if (!currentUser) return false;
         try {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('user_votes')
                 .select('id')
                 .eq('user_id', currentUser.id)
@@ -844,7 +832,7 @@ body {
     // ========== РАБОТА С ИГРОКАМИ ==========
     async function loadPlayers() {
         try {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('players')
                 .select('*')
                 .order('points', { ascending: false });
@@ -862,14 +850,13 @@ body {
     
     async function updatePlayerPoints(playerId, newPoints) {
         try {
-            const { error } = await supabase
+            const { error } = await supabaseClient
                 .from('players')
                 .update({ points: newPoints })
                 .eq('id', playerId);
             
             if (error) throw error;
             
-            // Обновляем локальный массив
             const player = players.find(p => p.id === playerId);
             if (player) player.points = newPoints;
             
@@ -883,7 +870,7 @@ body {
     async function addPlayerToDB(name, playerClass, rank) {
         const basePoints = { 'S': 1000, 'A': 800, 'B': 600, 'C': 400, 'D': 300 }[rank] || 500;
         try {
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('players')
                 .insert({ 
                     name: name.trim(), 
@@ -919,7 +906,6 @@ body {
             return;
         }
         
-        // Определяем, кто голосует
         const isLoggedIn = !!currentUser;
         let canVote = false;
         let bonusApplied = false;
@@ -928,7 +914,6 @@ body {
             const hasUserVoted = await checkUserVoted();
             if (hasUserVoted) {
                 showMessage(`⚠️ Вы уже голосовали с аккаунта! ${winner.name} получает +${BONUS_FOR_AUTH_VOTE} бонусных баллов!`, 'info');
-                // Даже если уже голосовал, отправляем бонус выбранному
                 const newPoints = winner.points + BONUS_FOR_AUTH_VOTE;
                 await updatePlayerPoints(winner.id, newPoints);
                 await saveUserVote(winner.id, true);
@@ -942,7 +927,6 @@ body {
             }
             canVote = true;
         } else {
-            // Гость
             const hasGuestVoted = await checkGuestVoted();
             if (hasGuestVoted) {
                 showMessage(`🔒 Вы уже голосовали как гость! ${winner.name} получит +${BONUS_FOR_AUTH_VOTE} бонусных баллов, если войдёте в аккаунт!`, 'info');
@@ -954,7 +938,6 @@ body {
         
         if (!canVote) return;
         
-        // Расчёт очков
         let pointsToAdd = rankMultipliers[winner.rank] || 10;
         let pointsToSubtract = rankMultipliers[loser.rank] || 6;
         
@@ -966,11 +949,9 @@ body {
         const newWinnerPoints = winner.points + pointsToAdd;
         const newLoserPoints = Math.max(0, loser.points - pointsToSubtract);
         
-        // Обновляем в БД
         await updatePlayerPoints(winner.id, newWinnerPoints);
         await updatePlayerPoints(loser.id, newLoserPoints);
         
-        // Сохраняем голос
         if (isLoggedIn) {
             await saveUserVote(winner.id, bonusApplied);
             showMessage(`🏆 ${winner.name} +${pointsToAdd} баллов (${bonusApplied ? '+20 бонус' : ''})!`, 'success');
@@ -979,11 +960,9 @@ body {
             showMessage(`🏆 ${winner.name} +${pointsToAdd} баллов! Войдите в аккаунт для бонуса +20 в следующий раз!`, 'success');
         }
         
-        // Обновляем локальные данные
         winner.points = newWinnerPoints;
         loser.points = newLoserPoints;
         
-        // Обновляем ранг (если нужно по очкам)
         updateRankIfNeeded(winner);
         updateRankIfNeeded(loser);
         
@@ -1000,7 +979,6 @@ body {
         const newRank = getRankByPoints(player.points);
         if (newRank !== player.rank) {
             player.rank = newRank;
-            // Можно обновить в БД, но для простоты оставим
         }
     }
     
@@ -1033,7 +1011,6 @@ body {
         const right = currentDuel.right;
         if (!left || !right) return;
         
-        // Левая карточка
         document.getElementById('leftName').innerHTML = `<i class="fas fa-user"></i> ${escapeHtml(left.name)}`;
         document.getElementById('leftClass').innerHTML = `<span class="class-dot" style="background:${getRankColor(left.rank)}"></span> ${escapeHtml(left.class)}`;
         document.getElementById('leftPoints').innerHTML = `${left.points} <span style="font-size:0.8rem;">баллов</span>`;
@@ -1044,7 +1021,6 @@ body {
         document.getElementById('leftRankLabel').style.color = getRankColor(left.rank);
         document.getElementById('cardLeft').setAttribute('data-id', left.id);
         
-        // Правая карточка
         document.getElementById('rightName').innerHTML = `<i class="fas fa-user"></i> ${escapeHtml(right.name)}`;
         document.getElementById('rightClass').innerHTML = `<span class="class-dot" style="background:${getRankColor(right.rank)}"></span> ${escapeHtml(right.class)}`;
         document.getElementById('rightPoints').innerHTML = `${right.points} <span style="font-size:0.8rem;">баллов</span>`;
@@ -1126,16 +1102,15 @@ body {
     }
     
     function promptLogin() {
-        const nickname = prompt('Введите никнейм для создания аккаунта (или войдите):');
+        const nickname = prompt('Введите никнейм для создания аккаунта:');
         if (nickname && nickname.trim()) {
             loginUser(nickname.trim());
         }
     }
     
     async function loginUser(nickname) {
-        // Простая имитация логина - в реальном проекте используйте Supabase Auth
         currentUser = {
-            id: Date.now(),
+            id: 'user_' + Date.now(),
             nickname: nickname,
             email: `${nickname}@local.com`,
             isPrime: false
@@ -1163,7 +1138,7 @@ body {
         if (currentUser) {
             authBar.innerHTML = `
                 <div class="auth-info">
-                    <div class="auth-avatar"><img src="https://i.pravatar.cc/300?img=${currentUser.id % 70}"></div>
+                    <div class="auth-avatar"><img src="https://i.pravatar.cc/300?img=${Math.floor(Math.random() * 70)}"></div>
                     <span class="auth-welcome">${escapeHtml(currentUser.nickname)}</span>
                 </div>
                 <div class="auth-buttons">
@@ -1232,7 +1207,6 @@ body {
     async function init() {
         await getIP();
         
-        // Восстановление сессии
         const savedUser = localStorage.getItem('duel_user');
         if (savedUser) {
             try {
@@ -1242,7 +1216,6 @@ body {
         
         await loadPlayers();
         if (players.length === 0) {
-            // Добавляем демо-бойцов, если таблица пуста
             const demoPlayers = [
                 { name: 'Александр', class: 'Воин', rank: 'S', points: 1200 },
                 { name: 'Екатерина', class: 'Маг', rank: 'A', points: 950 },
@@ -1258,7 +1231,6 @@ body {
         generateRandomDuel();
         updateAuthDisplay();
         
-        // Фильтры
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -1267,7 +1239,6 @@ body {
             });
         });
         
-        // Кнопки
         document.getElementById('battleBtn').onclick = castVote;
         document.getElementById('refreshBtn').onclick = () => {
             generateRandomDuel();
