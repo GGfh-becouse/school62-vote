@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
 <title>krg62 | дуэль голосований</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,44 +18,30 @@
 body {
     background: #f8f9fc;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 32px 0;
+    padding: 16px 0 80px 0;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 600px;
     width: 100%;
-    position: relative;
-    padding: 0 16px;
-}
-
-.main-content {
-    display: block;
-    padding-bottom: 90px;
+    margin: 0 auto;
+    padding: 0 12px;
 }
 
 /* Анимации */
 @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-12px); }
+    from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes cardGlow {
-    0% { box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-    50% { box-shadow: 0 20px 40px rgba(46,52,64,0.2); }
-    100% { box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
 }
 
 @keyframes votePulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.05); background: #27ae60; color: white; }
+    50% { transform: scale(1.02); background: #e8f5e9; }
     100% { transform: scale(1); }
 }
 
@@ -64,20 +50,14 @@ body {
     to { opacity: 1; transform: translateX(0); }
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 /* Хедер */
 .header {
     background: #ffffff;
-    border-radius: 24px;
-    padding: 16px 24px;
-    margin: 8px 0 20px 0;
-    box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1);
-    border: 1px solid rgba(0,0,0,0.02);
-    animation: fadeDown 0.4s cubic-bezier(0.22,1,0.36,1) both;
+    border-radius: 20px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    animation: fadeDown 0.3s ease;
 }
 
 .header-content {
@@ -89,71 +69,59 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 
 .logo-img {
-    height: 40px;
+    height: 32px;
     width: auto;
-    object-fit: contain;
 }
 
 .logo h1 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #1a1e2b;
-    letter-spacing: -0.5px;
 }
 
 .header-icons {
     display: flex;
-    gap: 20px;
-    align-items: center;
+    gap: 12px;
 }
 
 .header-icon {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #8b93a6;
     transition: all 0.2s;
     cursor: pointer;
-    text-decoration: none;
-}
-
-.header-icon:hover {
-    color: #2e3440;
-    transform: scale(1.1);
 }
 
 /* Блок авторизации */
 .auth-status-bar {
     background: #ffffff;
-    border-radius: 40px;
-    padding: 12px 24px;
-    margin-bottom: 24px;
-    box-shadow: 0 4px 12px -4px rgba(0,0,0,0.05);
+    border-radius: 30px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.05s both;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
+    animation: fadeUp 0.3s ease;
 }
 
 .auth-info {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .auth-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     overflow: hidden;
     background: #f0f2f5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .auth-avatar img {
@@ -163,42 +131,35 @@ body {
 }
 
 .auth-welcome {
-    font-size: 0.95rem;
-    color: #1a1e2b;
+    font-size: 0.85rem;
     font-weight: 500;
+    color: #1a1e2b;
 }
 
 .auth-badge {
     background: linear-gradient(135deg, #f1c40f, #e67e22);
     color: #1a1e2b;
-    padding: 4px 12px;
-    border-radius: 30px;
-    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.6rem;
     font-weight: 700;
-    margin-left: 8px;
+    margin-left: 6px;
 }
 
 .auth-buttons {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .auth-btn {
     background: #f0f2f5;
     border: none;
-    padding: 8px 20px;
-    border-radius: 30px;
+    padding: 6px 14px;
+    border-radius: 25px;
     font-weight: 500;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     cursor: pointer;
     transition: all 0.2s;
-    text-decoration: none;
-    color: #1a1e2b;
-}
-
-.auth-btn:hover {
-    background: #e4e6e9;
-    transform: translateY(-2px);
 }
 
 .auth-btn.primary {
@@ -206,100 +167,91 @@ body {
     color: white;
 }
 
-.auth-btn.primary:hover {
-    background: #1a1e2b;
+/* Guest mode indicator */
+.guest-mode-badge {
+    background: #3498db20;
+    border: 1px solid #3498db;
+    color: #3498db;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 /* Статистика */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-bottom: 32px;
-    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.3s ease;
 }
 
 .stat-card {
     background: #ffffff;
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 16px;
+    padding: 12px;
     text-align: center;
-    box-shadow: 0 8px 16px -8px rgba(0,0,0,0.06);
-    transition: transform 0.2s;
-}
-
-.stat-card:hover {
-    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 
 .stat-icon {
-    font-size: 2rem;
-    margin-bottom: 8px;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
 }
 
 .stat-value {
-    font-size: 1.8rem;
+    font-size: 1.3rem;
     font-weight: 800;
     color: #2e3440;
 }
 
 .stat-label {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    color: #8b93a6;
+}
+
+/* Дуэль */
+.duel-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.duel-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a1e2b;
+}
+
+.duel-subtitle {
+    font-size: 0.75rem;
     color: #8b93a6;
     margin-top: 4px;
 }
 
-/* Заголовок дуэли */
-.duel-header {
-    text-align: center;
-    margin-bottom: 32px;
-    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.15s both;
-}
-
-.duel-header h2 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #1a1e2b;
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: linear-gradient(135deg, #2e3440, #4a5568);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.duel-subtitle {
-    color: #8b93a6;
-    margin-top: 8px;
-    font-size: 0.9rem;
-}
-
-/* Карточки дуэли */
 .duel-container {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 24px;
-    margin-bottom: 32px;
-    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
 }
 
 .duel-card {
     background: #ffffff;
-    border-radius: 28px;
-    padding: 28px 24px;
-    box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
-    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
     border: 2px solid transparent;
-    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both;
+    position: relative;
 }
 
 .duel-card:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 25px 45px -12px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
 }
 
 .duel-card.selected-left {
@@ -312,181 +264,143 @@ body {
     background: linear-gradient(135deg, #ffffff, #fff5f5);
 }
 
-.duel-card.voting {
-    animation: cardGlow 0.3s ease;
-}
-
 .card-badge {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    padding: 6px 14px;
-    border-radius: 30px;
-    font-size: 0.7rem;
+    top: 12px;
+    right: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.65rem;
     font-weight: 700;
     color: white;
 }
 
-.rank-s {
-    background: linear-gradient(135deg, #ffd700, #ff8c00);
-}
-
-.rank-a {
-    background: linear-gradient(135deg, #a0a0a0, #696969);
-}
-
-.rank-b {
-    background: linear-gradient(135deg, #cd7f32, #8b4513);
-}
-
-.rank-c {
-    background: linear-gradient(135deg, #4a90e2, #357abd);
-}
-
-.rank-d {
-    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
-}
+.rank-S { background: linear-gradient(135deg, #ffd700, #ff8c00); }
+.rank-A { background: linear-gradient(135deg, #a0a0a0, #696969); }
+.rank-B { background: linear-gradient(135deg, #cd7f32, #8b4513); }
+.rank-C { background: linear-gradient(135deg, #4a90e2, #357abd); }
+.rank-D { background: linear-gradient(135deg, #95a5a6, #7f8c8d); }
 
 .duel-card-name {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #1a1e2b;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    margin-bottom: 6px;
+    padding-right: 60px;
 }
 
 .duel-card-class {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: #8b93a6;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
-.class-icon {
-    width: 6px;
-    height: 6px;
+.class-dot {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     display: inline-block;
 }
 
 .duel-card-points {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: #2e3440;
-    margin: 16px 0;
 }
 
 .duel-card-rank {
     display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 15px;
+    font-size: 0.65rem;
     font-weight: 600;
     margin-top: 8px;
 }
 
 .duel-vs {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
+    text-align: center;
+    font-size: 1rem;
     font-weight: 800;
     color: #8b93a6;
-    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.2s both;
-}
-
-.vs-circle {
-    width: 70px;
-    height: 70px;
     background: #f0f2f5;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #2e3440;
+    margin: -8px auto;
+    position: relative;
+    z-index: 1;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 /* Кнопка битвы */
 .battle-btn-container {
     text-align: center;
-    margin-bottom: 32px;
-    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.25s both;
+    margin-bottom: 24px;
 }
 
 .battle-btn {
     background: linear-gradient(135deg, #2e3440, #4a5568);
     color: white;
     border: none;
-    padding: 16px 48px;
-    border-radius: 50px;
-    font-size: 1.1rem;
+    padding: 14px 32px;
+    border-radius: 40px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    box-shadow: 0 8px 20px rgba(46,52,64,0.3);
-}
-
-.battle-btn:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 12px 28px rgba(46,52,64,0.4);
-}
-
-.battle-btn:active {
-    transform: translateY(0) scale(0.98);
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 280px;
 }
 
 .battle-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    transform: none;
 }
 
 /* Таблица лидеров */
 .leaderboard-section {
     background: #ffffff;
-    border-radius: 28px;
-    padding: 24px;
-    margin-top: 32px;
-    box-shadow: 0 10px 25px -10px rgba(0,0,0,0.08);
-    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.3s both;
+    border-radius: 24px;
+    padding: 16px;
+    margin-top: 20px;
 }
 
 .leaderboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
 }
 
 .leaderboard-header h3 {
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #1a1e2b;
 }
 
 .rank-filter {
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    flex-wrap: wrap;
 }
 
 .filter-btn {
     background: #f0f2f5;
     border: none;
-    padding: 6px 16px;
-    border-radius: 30px;
-    font-size: 0.8rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
 }
 
 .filter-btn.active {
@@ -494,49 +408,33 @@ body {
     color: white;
 }
 
-.filter-btn:hover:not(.active) {
-    background: #e4e6e9;
-}
-
 .leaderboard-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .leaderboard-item {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 12px 16px;
+    gap: 12px;
+    padding: 10px 12px;
     background: #f8f9fc;
-    border-radius: 16px;
-    transition: all 0.2s;
-}
-
-.leaderboard-item:hover {
-    background: #f0f2f5;
-    transform: translateX(4px);
+    border-radius: 14px;
 }
 
 .rank-number {
-    width: 40px;
-    font-size: 1.2rem;
+    width: 32px;
+    font-size: 1rem;
     font-weight: 700;
     color: #8b93a6;
 }
 
-.rank-number.top-1 {
-    color: #ffd700;
-}
-
-.rank-number.top-2 {
-    color: #c0c0c0;
-}
-
-.rank-number.top-3 {
-    color: #cd7f32;
-}
+.rank-number.top-1 { color: #ffd700; }
+.rank-number.top-2 { color: #c0c0c0; }
+.rank-number.top-3 { color: #cd7f32; }
 
 .leaderboard-info {
     flex: 1;
@@ -544,94 +442,66 @@ body {
 
 .leaderboard-name {
     font-weight: 600;
+    font-size: 0.85rem;
     color: #1a1e2b;
 }
 
 .leaderboard-class {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: #8b93a6;
 }
 
 .leaderboard-points {
     font-weight: 700;
+    font-size: 0.9rem;
     color: #2e3440;
-    font-size: 1.1rem;
 }
 
 .leaderboard-rank {
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.6rem;
     font-weight: 600;
 }
 
-/* Админ панель */
-.admin-section {
-    background: #ffffff;
-    border-radius: 28px;
-    padding: 24px;
-    margin-top: 24px;
-    animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) 0.35s both;
-}
-
-.admin-section h3 {
-    font-size: 1rem;
-    color: #8b93a6;
+/* IP Alert */
+.ip-alert {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 12px;
+    padding: 12px;
     margin-bottom: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.admin-form {
+    font-size: 0.75rem;
+    color: #856404;
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 8px;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.admin-input {
-    flex: 1;
-    padding: 12px 16px;
-    border: 1px solid #e0e4e8;
-    border-radius: 16px;
-    font-size: 0.9rem;
-    background: #f8f9fc;
-}
-
-.admin-input:focus {
-    outline: none;
-    border-color: #2e3440;
-}
-
-.admin-btn {
-    background: #2e3440;
-    color: white;
+.ip-alert button {
+    background: #ffc107;
     border: none;
-    padding: 12px 24px;
-    border-radius: 16px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
 }
 
-.admin-btn:hover {
-    background: #1a1e2b;
-}
-
-/* Боттом нав */
+/* Bottom nav */
 .bottom-nav {
     position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 560px;
-    width: calc(100% - 32px);
-    border-radius: 40px;
-    padding: 8px;
-    display: flex;
-    justify-content: space-around;
-    box-shadow: 0 10px 30px -8px rgba(0,0,0,0.15);
+    bottom: 0;
+    left: 0;
+    right: 0;
     background: rgba(255,255,255,0.95);
     backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 16px 12px;
+    border-top: 1px solid rgba(0,0,0,0.05);
     z-index: 1000;
 }
 
@@ -642,58 +512,87 @@ body {
     color: #8b93a6;
     text-decoration: none;
     font-size: 0.6rem;
-    font-weight: 500;
-    flex: 1;
-    padding: 8px 0;
-    border-radius: 30px;
-    transition: all 0.2s;
+    gap: 4px;
 }
 
 .nav-item-bottom.active {
-    background: #f0f2f5;
     color: #2e3440;
 }
 
 .nav-icon-bottom {
     font-size: 1.2rem;
-    margin-bottom: 4px;
 }
 
 /* Сообщения */
 .message {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 12px 24px;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
     border-radius: 30px;
     color: white;
     font-weight: 500;
+    font-size: 0.8rem;
     z-index: 10002;
-    animation: slideInRight 0.3s cubic-bezier(0.22,1,0.36,1);
-    box-shadow: 0 10px 20px -8px rgba(0,0,0,0.2);
+    animation: slideInRight 0.3s ease;
+    white-space: nowrap;
+    max-width: 90%;
+    white-space: normal;
+    text-align: center;
 }
 
 .message.success { background: #27ae60; }
 .message.error { background: #e74c3c; }
 .message.info { background: #3498db; }
 
-@media (max-width: 768px) {
-    .duel-container {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-    
-    .duel-vs {
-        order: -1;
-    }
-    
-    .duel-card {
-        padding: 20px;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* Админ панель */
+.admin-section {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 16px;
+    margin-top: 16px;
+}
+
+.admin-section h3 {
+    font-size: 0.8rem;
+    color: #8b93a6;
+    margin-bottom: 12px;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-input, .admin-select {
+    padding: 10px 12px;
+    border: 1px solid #e0e4e8;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    background: #f8f9fc;
+}
+
+.admin-btn {
+    background: #2e3440;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.loader {
+    text-align: center;
+    padding: 40px;
+    color: #8b93a6;
+}
+
+@media (min-width: 480px) {
+    .container { padding: 0 16px; }
+    .duel-card-name { font-size: 1.3rem; }
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -706,68 +605,56 @@ body {
             <div class="header-content">
                 <div class="logo">
                     <img src="top_logotype.png" alt="krg62" class="logo-img" onerror="this.style.display='none'">
-                    <h1>дуэль голосований</h1>
+                    <h1>дуэль</h1>
                 </div>
                 <div class="header-icons">
-                    <a href="#" class="header-icon" id="refreshBtn">
+                    <div class="header-icon" id="refreshBtn">
                         <i class="fas fa-sync-alt"></i>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="auth-status-bar">
-            <div class="auth-info">
-                <div class="auth-avatar">
-                    <img src="https://i.pravatar.cc/300" alt="" id="avatarImg">
-                </div>
-                <span class="auth-welcome">
-                    <span id="authDisplayName">Гость</span>
-                    <span class="auth-badge" id="primeBadge" style="display:none;"><i class="fas fa-crown"></i> prime</span>
-                </span>
-            </div>
-            <div class="auth-buttons" id="authButtons">
-                <a href="#" class="auth-btn" id="loginBtn">войти</a>
-                <a href="#" class="auth-btn primary" id="registerBtn">регистрация</a>
-            </div>
+        <div class="auth-status-bar" id="authBar">
+            <!-- динамически -->
         </div>
+
+        <div id="ipAlertContainer"></div>
 
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon">👥</div>
                 <div class="stat-value" id="totalPlayers">0</div>
-                <div class="stat-label">участников</div>
+                <div class="stat-label">бойцов</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">⚔️</div>
                 <div class="stat-value" id="totalBattles">0</div>
-                <div class="stat-label">всего битв</div>
+                <div class="stat-label">битв</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🏆</div>
-                <div class="stat-value" id="topPlayerName">-</div>
-                <div class="stat-label">лидер</div>
+                <div class="stat-value" id="topPlayerPoints">0</div>
+                <div class="stat-label">топ очков</div>
             </div>
         </div>
 
         <div class="duel-header">
-            <h2><i class="fas fa-fist-raised"></i> выбери сильнейшего <i class="fas fa-fist-raised"></i></h2>
-            <div class="duel-subtitle">кликни на карточку, которая достойна победы!</div>
+            <h2><i class="fas fa-fist-raised"></i> кто сильнее?</h2>
+            <div class="duel-subtitle">кликни на бойца, затем "отдать голос"</div>
         </div>
 
         <div class="duel-container" id="duelContainer">
+            <div class="duel-vs">VS</div>
             <div class="duel-card" id="cardLeft" onclick="selectCard('left')">
-                <div class="card-badge rank-s" id="leftBadge">S ранг</div>
+                <div class="card-badge rank-S" id="leftBadge">S</div>
                 <div class="duel-card-name" id="leftName">Загрузка...</div>
                 <div class="duel-card-class" id="leftClass"></div>
                 <div class="duel-card-points" id="leftPoints">0</div>
                 <div class="duel-card-rank" id="leftRankLabel"></div>
             </div>
-            <div class="duel-vs">
-                <div class="vs-circle">VS</div>
-            </div>
             <div class="duel-card" id="cardRight" onclick="selectCard('right')">
-                <div class="card-badge rank-s" id="rightBadge">S ранг</div>
+                <div class="card-badge rank-S" id="rightBadge">S</div>
                 <div class="duel-card-name" id="rightName">Загрузка...</div>
                 <div class="duel-card-class" id="rightClass"></div>
                 <div class="duel-card-points" id="rightPoints">0</div>
@@ -776,41 +663,41 @@ body {
         </div>
 
         <div class="battle-btn-container">
-            <button class="battle-btn" id="battleBtn" onclick="castVote()">
+            <button class="battle-btn" id="battleBtn">
                 <i class="fas fa-gavel"></i> отдать голос
             </button>
         </div>
 
         <div class="leaderboard-section">
             <div class="leaderboard-header">
-                <h3><i class="fas fa-trophy"></i> таблица лидеров</h3>
+                <h3><i class="fas fa-trophy"></i> рейтинг</h3>
                 <div class="rank-filter">
                     <button class="filter-btn active" data-rank="all">все</button>
-                    <button class="filter-btn" data-rank="S">S ранг</button>
-                    <button class="filter-btn" data-rank="A">A ранг</button>
-                    <button class="filter-btn" data-rank="B">B ранг</button>
-                    <button class="filter-btn" data-rank="C">C ранг</button>
-                    <button class="filter-btn" data-rank="D">D ранг</button>
+                    <button class="filter-btn" data-rank="S">S</button>
+                    <button class="filter-btn" data-rank="A">A</button>
+                    <button class="filter-btn" data-rank="B">B</button>
+                    <button class="filter-btn" data-rank="C">C</button>
+                    <button class="filter-btn" data-rank="D">D</button>
                 </div>
             </div>
             <div class="leaderboard-list" id="leaderboardList">
-                <div style="text-align:center;padding:40px;">загрузка...</div>
+                <div class="loader">загрузка...</div>
             </div>
         </div>
 
-        <div class="admin-section" id="adminSection" style="display:none;">
+        <div class="admin-section" id="adminSection">
             <h3><i class="fas fa-user-shield"></i> админ панель</h3>
             <div class="admin-form">
-                <input type="text" id="newPlayerName" class="admin-input" placeholder="имя игрока">
-                <input type="text" id="newPlayerClass" class="admin-input" placeholder="класс (например: Воин)">
-                <select id="newPlayerRank" class="admin-input">
+                <input type="text" id="newPlayerName" class="admin-input" placeholder="имя">
+                <input type="text" id="newPlayerClass" class="admin-input" placeholder="класс">
+                <select id="newPlayerRank" class="admin-select">
                     <option value="S">S ранг</option>
                     <option value="A">A ранг</option>
                     <option value="B">B ранг</option>
                     <option value="C">C ранг</option>
                     <option value="D">D ранг</option>
                 </select>
-                <button class="admin-btn" id="addPlayerBtn"><i class="fas fa-plus"></i> добавить</button>
+                <button class="admin-btn" id="addPlayerBtn">+ добавить</button>
             </div>
         </div>
 
@@ -837,71 +724,286 @@ body {
 
 <div id="messageContainer"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // ============================================
-    // ДАННЫЕ ИГРОКОВ (локальное хранилище)
-    // ============================================
+    // ========== ВСТАВЬТЕ ВАШИ ДАННЫЕ SUPABASE ЗДЕСЬ ==========
+    const SUPABASE_URL = 'https://ваш_проект.supabase.co';     // ЗАМЕНИТЕ!
+    const SUPABASE_KEY = 'ваш_публичный_ключ';                 // ЗАМЕНИТЕ!
+    // ========================================================
+    
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    
+    // Глобальные переменные
+    let currentUser = null;      // { id, email, nickname, isPrime }
+    let currentIP = null;
+    let hasVotedAsGuest = false;  // голосовал ли этот IP как гость
+    let selectedSide = null;
+    let currentDuel = { left: null, right: null };
     let players = [];
-    let selectedSide = null; // 'left' or 'right'
-    let battleHistory = [];
-    let currentUserId = null;
-    let currentUserName = null;
     
-    // Ранги и множители голосов
-    const rankMultipliers = {
-        'S': 10,
-        'A': 9,
-        'B': 8,
-        'C': 7,
-        'D': 6
-    };
+    // Множители рангов (для обычного голоса)
+    const rankMultipliers = { 'S': 10, 'A': 9, 'B': 8, 'C': 7, 'D': 6 };
+    const BONUS_FOR_AUTH_VOTE = 20;  // бонус за голос с аккаунта
     
-    const rankNames = {
-        'S': 'S',
-        'A': 'A',
-        'B': 'B',
-        'C': 'C',
-        'D': 'D'
-    };
+    // ========== ИНИЦИАЛИЗАЦИЯ SUPABASE ТАБЛИЦ ==========
+    // Нужно создать таблицы:
+    // 1. players: id, name, class, rank, points, wins, battles, created_at
+    // 2. guest_votes: id, ip_address, voted_at, selected_player_id
+    // 3. user_votes: id, user_id, voted_at, selected_player_id, bonus_applied
     
-    const rankColors = {
-        'S': '#ffd700',
-        'A': '#a0a0a0',
-        'B': '#cd7f32',
-        'C': '#4a90e2',
-        'D': '#95a5a6'
-    };
+    async function initTables() {
+        // Проверяем и создаем таблицы через SQL (надо выполнить в Supabase SQL Editor)
+        console.log('Убедитесь, что таблицы созданы в Supabase');
+    }
     
-    // Загрузка данных из localStorage
-    function loadData() {
-        const saved = localStorage.getItem('duel_players');
-        if (saved) {
-            players = JSON.parse(saved);
-        } else {
-            // Стартовые игроки
-            players = [
-                { id: 1, name: 'Александр', class: 'Воин', rank: 'S', points: 1250, wins: 45, battles: 50 },
-                { id: 2, name: 'Екатерина', class: 'Маг', rank: 'A', points: 980, wins: 38, battles: 42 },
-                { id: 3, name: 'Дмитрий', class: 'Лучник', rank: 'S', points: 1100, wins: 42, battles: 48 },
-                { id: 4, name: 'Анна', class: 'Жрица', rank: 'B', points: 720, wins: 28, battles: 35 },
-                { id: 5, name: 'Максим', class: 'Танк', rank: 'C', points: 540, wins: 20, battles: 30 },
-                { id: 6, name: 'Ольга', class: 'Разбойник', rank: 'A', points: 890, wins: 35, battles: 40 }
-            ];
-            saveData();
+    // ========== РАБОТА С IP ==========
+    async function getIP() {
+        try {
+            const res = await fetch('https://api.ipify.org?format=json');
+            const data = await res.json();
+            currentIP = data.ip;
+            return currentIP;
+        } catch(e) {
+            currentIP = 'unknown-' + Date.now();
+            return currentIP;
+        }
+    }
+    
+    // Проверка, голосовал ли этот IP как гость
+    async function checkGuestVoted() {
+        if (!currentIP) await getIP();
+        try {
+            const { data, error } = await supabase
+                .from('guest_votes')
+                .select('id')
+                .eq('ip_address', currentIP)
+                .maybeSingle();
+            
+            if (error && error.code !== 'PGRST116') throw error;
+            hasVotedAsGuest = !!data;
+            return hasVotedAsGuest;
+        } catch(e) {
+            console.error('Ошибка проверки guest_votes:', e);
+            return false;
+        }
+    }
+    
+    // Сохранить голос гостя
+    async function saveGuestVote(selectedPlayerId) {
+        if (!currentIP) await getIP();
+        try {
+            const { error } = await supabase
+                .from('guest_votes')
+                .insert({ ip_address: currentIP, selected_player_id: selectedPlayerId });
+            
+            if (error) throw error;
+            hasVotedAsGuest = true;
+            return true;
+        } catch(e) {
+            console.error('Ошибка сохранения guest_vote:', e);
+            return false;
+        }
+    }
+    
+    // Сохранить голос пользователя
+    async function saveUserVote(selectedPlayerId, bonusApplied = false) {
+        if (!currentUser) return false;
+        try {
+            const { error } = await supabase
+                .from('user_votes')
+                .insert({ 
+                    user_id: currentUser.id, 
+                    selected_player_id: selectedPlayerId,
+                    bonus_applied: bonusApplied
+                });
+            if (error) throw error;
+            return true;
+        } catch(e) {
+            console.error('Ошибка сохранения user_vote:', e);
+            return false;
+        }
+    }
+    
+    // Проверка, голосовал ли пользователь ранее
+    async function checkUserVoted() {
+        if (!currentUser) return false;
+        try {
+            const { data, error } = await supabase
+                .from('user_votes')
+                .select('id')
+                .eq('user_id', currentUser.id)
+                .maybeSingle();
+            
+            if (error && error.code !== 'PGRST116') throw error;
+            return !!data;
+        } catch(e) {
+            return false;
+        }
+    }
+    
+    // ========== РАБОТА С ИГРОКАМИ ==========
+    async function loadPlayers() {
+        try {
+            const { data, error } = await supabase
+                .from('players')
+                .select('*')
+                .order('points', { ascending: false });
+            
+            if (error) throw error;
+            players = data || [];
+            updateStats();
+            updateLeaderboard();
+            return players;
+        } catch(e) {
+            console.error('Ошибка загрузки игроков:', e);
+            return [];
+        }
+    }
+    
+    async function updatePlayerPoints(playerId, newPoints) {
+        try {
+            const { error } = await supabase
+                .from('players')
+                .update({ points: newPoints })
+                .eq('id', playerId);
+            
+            if (error) throw error;
+            
+            // Обновляем локальный массив
+            const player = players.find(p => p.id === playerId);
+            if (player) player.points = newPoints;
+            
+            return true;
+        } catch(e) {
+            console.error('Ошибка обновления очков:', e);
+            return false;
+        }
+    }
+    
+    async function addPlayerToDB(name, playerClass, rank) {
+        const basePoints = { 'S': 1000, 'A': 800, 'B': 600, 'C': 400, 'D': 300 }[rank] || 500;
+        try {
+            const { data, error } = await supabase
+                .from('players')
+                .insert({ 
+                    name: name.trim(), 
+                    class: playerClass.trim(), 
+                    rank: rank, 
+                    points: basePoints,
+                    wins: 0,
+                    battles: 0
+                })
+                .select();
+            
+            if (error) throw error;
+            if (data) players.push(data[0]);
+            return true;
+        } catch(e) {
+            console.error('Ошибка добавления игрока:', e);
+            return false;
+        }
+    }
+    
+    // ========== ЛОГИКА ГОЛОСОВАНИЯ ==========
+    async function castVote() {
+        if (!selectedSide) {
+            showMessage('👆 выбери бойца!', 'error');
+            return;
         }
         
-        const history = localStorage.getItem('duel_history');
-        if (history) {
-            battleHistory = JSON.parse(history);
+        const winner = selectedSide === 'left' ? currentDuel.left : currentDuel.right;
+        const loser = selectedSide === 'left' ? currentDuel.right : currentDuel.left;
+        
+        if (!winner || !loser) {
+            showMessage('Ошибка: бойцы не найдены', 'error');
+            return;
+        }
+        
+        // Определяем, кто голосует
+        const isLoggedIn = !!currentUser;
+        let canVote = false;
+        let bonusApplied = false;
+        
+        if (isLoggedIn) {
+            const hasUserVoted = await checkUserVoted();
+            if (hasUserVoted) {
+                showMessage(`⚠️ Вы уже голосовали с аккаунта! ${winner.name} получает +${BONUS_FOR_AUTH_VOTE} бонусных баллов!`, 'info');
+                // Даже если уже голосовал, отправляем бонус выбранному
+                const newPoints = winner.points + BONUS_FOR_AUTH_VOTE;
+                await updatePlayerPoints(winner.id, newPoints);
+                await saveUserVote(winner.id, true);
+                showMessage(`✨ ${winner.name} +${BONUS_FOR_AUTH_VOTE} бонусных баллов!`, 'success');
+                selectedSide = null;
+                document.getElementById('cardLeft').classList.remove('selected-left');
+                document.getElementById('cardRight').classList.remove('selected-right');
+                await loadPlayers();
+                generateRandomDuel();
+                return;
+            }
+            canVote = true;
+        } else {
+            // Гость
+            const hasGuestVoted = await checkGuestVoted();
+            if (hasGuestVoted) {
+                showMessage(`🔒 Вы уже голосовали как гость! ${winner.name} получит +${BONUS_FOR_AUTH_VOTE} бонусных баллов, если войдёте в аккаунт!`, 'info');
+                showAuthPrompt();
+                return;
+            }
+            canVote = true;
+        }
+        
+        if (!canVote) return;
+        
+        // Расчёт очков
+        let pointsToAdd = rankMultipliers[winner.rank] || 10;
+        let pointsToSubtract = rankMultipliers[loser.rank] || 6;
+        
+        if (isLoggedIn) {
+            pointsToAdd += BONUS_FOR_AUTH_VOTE;
+            bonusApplied = true;
+        }
+        
+        const newWinnerPoints = winner.points + pointsToAdd;
+        const newLoserPoints = Math.max(0, loser.points - pointsToSubtract);
+        
+        // Обновляем в БД
+        await updatePlayerPoints(winner.id, newWinnerPoints);
+        await updatePlayerPoints(loser.id, newLoserPoints);
+        
+        // Сохраняем голос
+        if (isLoggedIn) {
+            await saveUserVote(winner.id, bonusApplied);
+            showMessage(`🏆 ${winner.name} +${pointsToAdd} баллов (${bonusApplied ? '+20 бонус' : ''})!`, 'success');
+        } else {
+            await saveGuestVote(winner.id);
+            showMessage(`🏆 ${winner.name} +${pointsToAdd} баллов! Войдите в аккаунт для бонуса +20 в следующий раз!`, 'success');
+        }
+        
+        // Обновляем локальные данные
+        winner.points = newWinnerPoints;
+        loser.points = newLoserPoints;
+        
+        // Обновляем ранг (если нужно по очкам)
+        updateRankIfNeeded(winner);
+        updateRankIfNeeded(loser);
+        
+        selectedSide = null;
+        document.getElementById('cardLeft').classList.remove('selected-left');
+        document.getElementById('cardRight').classList.remove('selected-right');
+        
+        await loadPlayers();
+        generateRandomDuel();
+        updateAuthDisplay();
+    }
+    
+    function updateRankIfNeeded(player) {
+        const newRank = getRankByPoints(player.points);
+        if (newRank !== player.rank) {
+            player.rank = newRank;
+            // Можно обновить в БД, но для простоты оставим
         }
     }
     
-    function saveData() {
-        localStorage.setItem('duel_players', JSON.stringify(players));
-        localStorage.setItem('duel_history', JSON.stringify(battleHistory));
-    }
-    
-    // Получение ранга по очкам
     function getRankByPoints(points) {
         if (points >= 1000) return 'S';
         if (points >= 800) return 'A';
@@ -910,309 +1012,178 @@ body {
         return 'D';
     }
     
-    // Обновление ранга игрока
-    function updatePlayerRank(player) {
-        const newRank = getRankByPoints(player.points);
-        if (newRank !== player.rank) {
-            player.rank = newRank;
-            return true;
-        }
-        return false;
-    }
-    
-    // Голосование
-    function castVote() {
-        if (!selectedSide) {
-            showMessage('выбери карточку, за которую хочешь проголосовать!', 'error');
-            return;
-        }
-        
-        if (!currentUserId) {
-            showMessage('войдите, чтобы голосовать', 'error');
-            return;
-        }
-        
-        const leftCard = document.getElementById('cardLeft');
-        const rightCard = document.getElementById('cardRight');
-        
-        const leftPlayerId = parseInt(leftCard.getAttribute('data-id'));
-        const rightPlayerId = parseInt(rightCard.getAttribute('data-id'));
-        
-        let winnerId, loserId;
-        let winnerMultiplier, loserMultiplier;
-        
-        if (selectedSide === 'left') {
-            winnerId = leftPlayerId;
-            loserId = rightPlayerId;
-        } else {
-            winnerId = rightPlayerId;
-            loserId = leftPlayerId;
-        }
-        
-        const winner = players.find(p => p.id === winnerId);
-        const loser = players.find(p => p.id === loserId);
-        
-        if (!winner || !loser) {
-            showMessage('ошибка: игрок не найден', 'error');
-            return;
-        }
-        
-        winnerMultiplier = rankMultipliers[winner.rank];
-        loserMultiplier = rankMultipliers[loser.rank];
-        
-        // Начисление баллов победителю
-        const pointsGained = winnerMultiplier;
-        winner.points += pointsGained;
-        winner.wins = (winner.wins || 0) + 1;
-        winner.battles = (winner.battles || 0) + 1;
-        
-        // Проигравший теряет баллы (но не меньше 0)
-        loser.points = Math.max(0, loser.points - loserMultiplier);
-        loser.battles = (loser.battles || 0) + 1;
-        
-        // Обновление рангов
-        updatePlayerRank(winner);
-        updatePlayerRank(loser);
-        
-        // Сохраняем историю
-        battleHistory.unshift({
-            id: Date.now(),
-            winner: winner.name,
-            loser: loser.name,
-            points: pointsGained,
-            date: new Date().toLocaleString('ru'),
-            voter: currentUserName
-        });
-        
-        // Ограничиваем историю последними 50 записями
-        if (battleHistory.length > 50) battleHistory.pop();
-        
-        saveData();
-        
-        // Анимация
-        const winnerCard = selectedSide === 'left' ? leftCard : rightCard;
-        winnerCard.style.animation = 'votePulse 0.5s ease';
-        setTimeout(() => {
-            winnerCard.style.animation = '';
-        }, 500);
-        
-        showMessage(`🏆 ${winner.name} +${pointsGained} баллов!`, 'success');
-        
-        // Сброс выбора и обновление UI
-        selectedSide = null;
-        document.getElementById('cardLeft').classList.remove('selected-left');
-        document.getElementById('cardRight').classList.remove('selected-right');
-        
-        // Обновляем дуэль новыми соперниками
-        generateRandomDuel();
-        updateLeaderboard();
-        updateStats();
-    }
-    
-    // Генерация случайной дуэли
+    // ========== UI ФУНКЦИИ ==========
     function generateRandomDuel() {
         if (players.length < 2) return;
         
-        let player1, player2;
+        let p1, p2;
         do {
-            const randomIndex1 = Math.floor(Math.random() * players.length);
-            const randomIndex2 = Math.floor(Math.random() * players.length);
-            player1 = players[randomIndex1];
-            player2 = players[randomIndex2];
-        } while (player1.id === player2.id && players.length > 1);
+            const i1 = Math.floor(Math.random() * players.length);
+            const i2 = Math.floor(Math.random() * players.length);
+            p1 = players[i1];
+            p2 = players[i2];
+        } while (p1.id === p2.id && players.length > 1);
         
-        updateDuelCards(player1, player2);
+        currentDuel = { left: p1, right: p2 };
+        updateDuelCards();
     }
     
-    // Обновление карточек дуэли
-    function updateDuelCards(player1, player2) {
-        const leftCard = document.getElementById('cardLeft');
-        const rightCard = document.getElementById('cardRight');
-        
-        leftCard.setAttribute('data-id', player1.id);
-        rightCard.setAttribute('data-id', player2.id);
+    function updateDuelCards() {
+        const left = currentDuel.left;
+        const right = currentDuel.right;
+        if (!left || !right) return;
         
         // Левая карточка
-        document.getElementById('leftName').innerHTML = `<i class="fas fa-user"></i> ${player1.name}`;
-        document.getElementById('leftClass').innerHTML = `<span class="class-icon" style="background:${rankColors[player1.rank]}"></span> ${player1.class}`;
-        document.getElementById('leftPoints').innerHTML = `${player1.points} <span style="font-size:0.9rem;">баллов</span>`;
-        
-        const leftBadge = document.getElementById('leftBadge');
-        leftBadge.textContent = `${player1.rank} ранг`;
-        leftBadge.className = `card-badge rank-${player1.rank.toLowerCase()}`;
-        
-        const leftRankLabel = document.getElementById('leftRankLabel');
-        leftRankLabel.textContent = `★ множитель: ${rankMultipliers[player1.rank]}`;
-        leftRankLabel.style.background = rankColors[player1.rank] + '20';
-        leftRankLabel.style.color = rankColors[player1.rank];
+        document.getElementById('leftName').innerHTML = `<i class="fas fa-user"></i> ${escapeHtml(left.name)}`;
+        document.getElementById('leftClass').innerHTML = `<span class="class-dot" style="background:${getRankColor(left.rank)}"></span> ${escapeHtml(left.class)}`;
+        document.getElementById('leftPoints').innerHTML = `${left.points} <span style="font-size:0.8rem;">баллов</span>`;
+        document.getElementById('leftBadge').textContent = left.rank;
+        document.getElementById('leftBadge').className = `card-badge rank-${left.rank}`;
+        document.getElementById('leftRankLabel').textContent = `⚡ множитель: ${rankMultipliers[left.rank]}`;
+        document.getElementById('leftRankLabel').style.background = `${getRankColor(left.rank)}20`;
+        document.getElementById('leftRankLabel').style.color = getRankColor(left.rank);
+        document.getElementById('cardLeft').setAttribute('data-id', left.id);
         
         // Правая карточка
-        document.getElementById('rightName').innerHTML = `<i class="fas fa-user"></i> ${player2.name}`;
-        document.getElementById('rightClass').innerHTML = `<span class="class-icon" style="background:${rankColors[player2.rank]}"></span> ${player2.class}`;
-        document.getElementById('rightPoints').innerHTML = `${player2.points} <span style="font-size:0.9rem;">баллов</span>`;
-        
-        const rightBadge = document.getElementById('rightBadge');
-        rightBadge.textContent = `${player2.rank} ранг`;
-        rightBadge.className = `card-badge rank-${player2.rank.toLowerCase()}`;
-        
-        const rightRankLabel = document.getElementById('rightRankLabel');
-        rightRankLabel.textContent = `★ множитель: ${rankMultipliers[player2.rank]}`;
-        rightRankLabel.style.background = rankColors[player2.rank] + '20';
-        rightRankLabel.style.color = rankColors[player2.rank];
+        document.getElementById('rightName').innerHTML = `<i class="fas fa-user"></i> ${escapeHtml(right.name)}`;
+        document.getElementById('rightClass').innerHTML = `<span class="class-dot" style="background:${getRankColor(right.rank)}"></span> ${escapeHtml(right.class)}`;
+        document.getElementById('rightPoints').innerHTML = `${right.points} <span style="font-size:0.8rem;">баллов</span>`;
+        document.getElementById('rightBadge').textContent = right.rank;
+        document.getElementById('rightBadge').className = `card-badge rank-${right.rank}`;
+        document.getElementById('rightRankLabel').textContent = `⚡ множитель: ${rankMultipliers[right.rank]}`;
+        document.getElementById('rightRankLabel').style.background = `${getRankColor(right.rank)}20`;
+        document.getElementById('rightRankLabel').style.color = getRankColor(right.rank);
+        document.getElementById('cardRight').setAttribute('data-id', right.id);
     }
     
-    // Выбор карточки
+    function getRankColor(rank) {
+        const colors = { 'S': '#ffd700', 'A': '#a0a0a0', 'B': '#cd7f32', 'C': '#4a90e2', 'D': '#95a5a6' };
+        return colors[rank] || '#8b93a6';
+    }
+    
     function selectCard(side) {
-        if (!currentUserId) {
-            showMessage('войдите, чтобы голосовать', 'error');
-            return;
-        }
-        
-        selectedSide = side;
-        
-        const leftCard = document.getElementById('cardLeft');
-        const rightCard = document.getElementById('cardRight');
-        
-        if (side === 'left') {
-            leftCard.classList.add('selected-left');
-            rightCard.classList.remove('selected-right');
+        if (selectedSide === side) {
+            selectedSide = null;
+            document.getElementById('cardLeft').classList.remove('selected-left');
+            document.getElementById('cardRight').classList.remove('selected-right');
         } else {
-            rightCard.classList.add('selected-right');
-            leftCard.classList.remove('selected-left');
+            selectedSide = side;
+            document.getElementById('cardLeft').classList.remove('selected-left');
+            document.getElementById('cardRight').classList.remove('selected-right');
+            document.getElementById(`card${side === 'left' ? 'Left' : 'Right'}`).classList.add(`selected-${side}`);
         }
-        
-        showMessage(`выбрано: ${side === 'left' ? 'левый' : 'правый'} боец`, 'info');
     }
     
-    // Обновление таблицы лидеров
-    function updateLeaderboard(filterRank = 'all') {
+    async function updateLeaderboard(filterRank = 'all') {
         const list = document.getElementById('leaderboardList');
         let filtered = [...players];
-        
-        if (filterRank !== 'all') {
-            filtered = filtered.filter(p => p.rank === filterRank);
-        }
-        
+        if (filterRank !== 'all') filtered = filtered.filter(p => p.rank === filterRank);
         filtered.sort((a, b) => b.points - a.points);
         
         if (filtered.length === 0) {
-            list.innerHTML = '<div style="text-align:center;padding:40px;color:#8b93a6;">нет игроков</div>';
+            list.innerHTML = '<div class="loader">нет бойцов</div>';
             return;
         }
         
-        list.innerHTML = filtered.map((player, idx) => {
+        list.innerHTML = filtered.map((p, idx) => {
             let rankClass = '';
             if (idx === 0) rankClass = 'top-1';
             else if (idx === 1) rankClass = 'top-2';
             else if (idx === 2) rankClass = 'top-3';
-            
             return `
                 <div class="leaderboard-item">
                     <div class="rank-number ${rankClass}">${idx + 1}</div>
                     <div class="leaderboard-info">
-                        <div class="leaderboard-name">${escapeHtml(player.name)}</div>
-                        <div class="leaderboard-class">${escapeHtml(player.class)}</div>
+                        <div class="leaderboard-name">${escapeHtml(p.name)}</div>
+                        <div class="leaderboard-class">${escapeHtml(p.class)}</div>
                     </div>
-                    <div class="leaderboard-points">${player.points}</div>
-                    <div class="leaderboard-rank" style="background:${rankColors[player.rank]}20;color:${rankColors[player.rank]}">
-                        ${player.rank} ранг
+                    <div class="leaderboard-points">${p.points}</div>
+                    <div class="leaderboard-rank" style="background:${getRankColor(p.rank)}20;color:${getRankColor(p.rank)}">
+                        ${p.rank}
                     </div>
                 </div>
             `;
         }).join('');
     }
     
-    // Обновление статистики
     function updateStats() {
         document.getElementById('totalPlayers').textContent = players.length;
-        document.getElementById('totalBattles').textContent = battleHistory.length;
-        
-        const topPlayer = [...players].sort((a, b) => b.points - a.points)[0];
-        if (topPlayer) {
-            document.getElementById('topPlayerName').textContent = topPlayer.name;
-        } else {
-            document.getElementById('topPlayerName').textContent = '-';
+        const totalBattles = players.reduce((sum, p) => sum + (p.battles || 0), 0);
+        document.getElementById('totalBattles').textContent = totalBattles;
+        const topPoints = players.length > 0 ? Math.max(...players.map(p => p.points)) : 0;
+        document.getElementById('topPlayerPoints').textContent = topPoints;
+    }
+    
+    function showAuthPrompt() {
+        const container = document.getElementById('ipAlertContainer');
+        container.innerHTML = `
+            <div class="ip-alert">
+                <i class="fas fa-info-circle"></i>
+                <span>Вы уже голосовали как гость! Войдите в аккаунт, чтобы отправить +20 бонусных баллов выбранному бойцу!</span>
+                <button onclick="promptLogin()">войти</button>
+            </div>
+        `;
+    }
+    
+    function promptLogin() {
+        const nickname = prompt('Введите никнейм для создания аккаунта (или войдите):');
+        if (nickname && nickname.trim()) {
+            loginUser(nickname.trim());
         }
     }
     
-    // Добавление игрока (админ)
-    function addPlayer(name, playerClass, rank) {
-        if (!name || !playerClass) {
-            showMessage('заполните все поля', 'error');
-            return false;
-        }
-        
-        const newId = Math.max(...players.map(p => p.id), 0) + 1;
-        const basePoints = rank === 'S' ? 1000 : rank === 'A' ? 800 : rank === 'B' ? 600 : rank === 'C' ? 400 : 300;
-        
-        players.push({
-            id: newId,
-            name: name.trim(),
-            class: playerClass.trim(),
-            rank: rank,
-            points: basePoints,
-            wins: 0,
-            battles: 0
-        });
-        
-        saveData();
-        updateLeaderboard();
-        updateStats();
-        generateRandomDuel();
-        showMessage(`✅ игрок ${name} добавлен!`, 'success');
-        return true;
+    async function loginUser(nickname) {
+        // Простая имитация логина - в реальном проекте используйте Supabase Auth
+        currentUser = {
+            id: Date.now(),
+            nickname: nickname,
+            email: `${nickname}@local.com`,
+            isPrime: false
+        };
+        localStorage.setItem('duel_user', JSON.stringify(currentUser));
+        document.getElementById('ipAlertContainer').innerHTML = '';
+        showMessage(`✅ Добро пожаловать, ${nickname}! Теперь ваши голоса дают +20 бонусных баллов!`, 'success');
+        await updateAuthDisplay();
     }
     
-    // Авторизация (простая для демо)
-    function loginAsGuest() {
-        currentUserId = Date.now();
-        currentUserName = 'Гость_' + Math.floor(Math.random() * 1000);
-        updateAuthDisplay();
-        showMessage(`добро пожаловать, ${currentUserName}!`, 'success');
-    }
-    
-    function updateAuthDisplay() {
-        const nameSpan = document.getElementById('authDisplayName');
-        const avatarImg = document.getElementById('avatarImg');
-        const primeBadge = document.getElementById('primeBadge');
-        const authBtns = document.getElementById('authButtons');
-        
-        if (currentUserId) {
-            nameSpan.textContent = currentUserName;
-            avatarImg.src = `https://i.pravatar.cc/300?img=${currentUserId % 70}`;
-            primeBadge.style.display = 'none';
-            authBtns.innerHTML = `<button class="auth-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> выйти</button>`;
-        } else {
-            nameSpan.textContent = 'Гость';
-            avatarImg.src = 'https://i.pravatar.cc/300';
-            primeBadge.style.display = 'none';
-            authBtns.innerHTML = `
-                <button class="auth-btn" onclick="loginAsGuest()">гость</button>
-                <button class="auth-btn primary" onclick="loginAsGuest()">войти</button>
-            `;
-        }
-    }
-    
-    function logout() {
-        currentUserId = null;
-        currentUserName = null;
+    function logoutUser() {
+        currentUser = null;
+        localStorage.removeItem('duel_user');
         selectedSide = null;
         document.getElementById('cardLeft').classList.remove('selected-left');
         document.getElementById('cardRight').classList.remove('selected-right');
         updateAuthDisplay();
-        showMessage('вы вышли из системы', 'info');
+        showMessage('👋 Вы вышли из аккаунта', 'info');
     }
     
-    function showMessage(text, type) {
-        const container = document.getElementById('messageContainer');
-        const msg = document.createElement('div');
-        msg.className = `message ${type}`;
-        msg.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check' : type === 'error' ? 'fa-exclamation' : 'fa-info'}"></i> ${text}`;
-        container.appendChild(msg);
-        setTimeout(() => {
-            msg.style.animation = 'slideInRight 0.3s cubic-bezier(0.22,1,0.36,1) reverse';
-            setTimeout(() => msg.remove(), 280);
-        }, 2500);
+    async function updateAuthDisplay() {
+        const authBar = document.getElementById('authBar');
+        const hasVoted = currentUser ? await checkUserVoted() : await checkGuestVoted();
+        
+        if (currentUser) {
+            authBar.innerHTML = `
+                <div class="auth-info">
+                    <div class="auth-avatar"><img src="https://i.pravatar.cc/300?img=${currentUser.id % 70}"></div>
+                    <span class="auth-welcome">${escapeHtml(currentUser.nickname)}</span>
+                </div>
+                <div class="auth-buttons">
+                    <button class="auth-btn" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> выход</button>
+                </div>
+            `;
+        } else {
+            authBar.innerHTML = `
+                <div class="auth-info">
+                    <div class="auth-avatar"><img src="https://i.pravatar.cc/300"></div>
+                    <span class="auth-welcome">
+                        Гость ${hasVoted ? '(голос учтён)' : ''}
+                        <span class="guest-mode-badge"><i class="fas fa-globe"></i> гость</span>
+                    </span>
+                </div>
+                <div class="auth-buttons">
+                    <button class="auth-btn" onclick="promptLogin()">аккаунт +20</button>
+                </div>
+            `;
+        }
     }
     
     function escapeHtml(text) {
@@ -1222,48 +1193,92 @@ body {
         return div.innerHTML;
     }
     
-    // Инициализация
-    function init() {
-        loadData();
+    function showMessage(text, type) {
+        const container = document.getElementById('messageContainer');
+        const msg = document.createElement('div');
+        msg.className = `message ${type}`;
+        msg.innerHTML = text;
+        container.appendChild(msg);
+        setTimeout(() => {
+            msg.style.opacity = '0';
+            setTimeout(() => msg.remove(), 300);
+        }, 2500);
+    }
+    
+    // ========== АДМИНКА ==========
+    async function addPlayer() {
+        const name = document.getElementById('newPlayerName').value;
+        const playerClass = document.getElementById('newPlayerClass').value;
+        const rank = document.getElementById('newPlayerRank').value;
         
-        // Проверка на админа (можно сделать по паролю, но для демо показываем всегда)
-        document.getElementById('adminSection').style.display = 'block';
+        if (!name || !playerClass) {
+            showMessage('Заполните имя и класс', 'error');
+            return;
+        }
+        
+        const success = await addPlayerToDB(name, playerClass, rank);
+        if (success) {
+            showMessage(`✅ ${name} добавлен!`, 'success');
+            document.getElementById('newPlayerName').value = '';
+            document.getElementById('newPlayerClass').value = '';
+            await loadPlayers();
+            generateRandomDuel();
+        } else {
+            showMessage('Ошибка добавления', 'error');
+        }
+    }
+    
+    // ========== ИНИЦИАЛИЗАЦИЯ ==========
+    async function init() {
+        await getIP();
+        
+        // Восстановление сессии
+        const savedUser = localStorage.getItem('duel_user');
+        if (savedUser) {
+            try {
+                currentUser = JSON.parse(savedUser);
+            } catch(e) {}
+        }
+        
+        await loadPlayers();
+        if (players.length === 0) {
+            // Добавляем демо-бойцов, если таблица пуста
+            const demoPlayers = [
+                { name: 'Александр', class: 'Воин', rank: 'S', points: 1200 },
+                { name: 'Екатерина', class: 'Маг', rank: 'A', points: 950 },
+                { name: 'Дмитрий', class: 'Лучник', rank: 'S', points: 1100 },
+                { name: 'Анна', class: 'Жрица', rank: 'B', points: 700 }
+            ];
+            for (const p of demoPlayers) {
+                await addPlayerToDB(p.name, p.class, p.rank);
+            }
+            await loadPlayers();
+        }
         
         generateRandomDuel();
-        updateLeaderboard();
-        updateStats();
         updateAuthDisplay();
         
-        // Фильтры таблицы
+        // Фильтры
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                updateLeaderboard(this.getAttribute('data-rank'));
+                updateLeaderboard(this.dataset.rank);
             });
         });
         
-        // Добавление игрока
-        document.getElementById('addPlayerBtn').addEventListener('click', () => {
-            const name = document.getElementById('newPlayerName').value;
-            const playerClass = document.getElementById('newPlayerClass').value;
-            const rank = document.getElementById('newPlayerRank').value;
-            addPlayer(name, playerClass, rank);
-            document.getElementById('newPlayerName').value = '';
-            document.getElementById('newPlayerClass').value = '';
-        });
-        
-        // Обновление дуэли
-        document.getElementById('refreshBtn').addEventListener('click', () => {
+        // Кнопки
+        document.getElementById('battleBtn').onclick = castVote;
+        document.getElementById('refreshBtn').onclick = () => {
             generateRandomDuel();
             selectedSide = null;
             document.getElementById('cardLeft').classList.remove('selected-left');
             document.getElementById('cardRight').classList.remove('selected-right');
-            showMessage('новая дуэль готова!', 'info');
-        });
+            showMessage('🔄 Новая дуэль!', 'info');
+        };
+        document.getElementById('addPlayerBtn').onclick = addPlayer;
     }
     
-    // Запуск
     init();
 </script>
 </body>
